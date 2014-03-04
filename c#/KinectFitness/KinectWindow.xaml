@@ -1,0 +1,22 @@
+﻿<Page x:Class="KinectFitness.KinectWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" Title="Kinect Window" Loaded="Page_Loaded" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" d:DesignHeight="800" d:DesignWidth="1000" Background="Black">
+
+    <Grid Height="800" Width="1000">
+        <MediaElement Height="503" HorizontalAlignment="Left" Margin="28,46,0,0" Name="MediaPlayer" VerticalAlignment="Top" Width="565" UnloadedBehavior="Manual" />
+        <Canvas Margin="0">
+            <Button Canvas.Left="236" Canvas.Top="556" Content="Play" Height="33" Name="btnPlay" Width="112" Background="#FF1CB841" BorderBrush="White" Click="btnPlay_Click" Foreground="White" FontSize="16" FontWeight="Bold" />
+            <Border BorderBrush="Silver" BorderThickness="1" Height="240" Name="border1" Width="320" Canvas.Left="674" Canvas.Top="244"></Border>
+            <my:KinectSkeletonViewer Name="kinectSkeletonViewer1" Height="240" Width="320" Kinect="{Binding ElementName=kinectSensorChooser1, Path=Kinect}" Unloaded="kinectSkeletonViewer1_Unloaded" Canvas.Left="674" Canvas.Top="244" />
+            <Image Canvas.Left="678" Canvas.Top="6" Height="232" Name="Doctor" Stretch="Fill" Width="316" Source="/KinectFitness;component/no-avatar.jpg" />
+            <my:KinectSensorChooser Name="kinectSensorChooser1" Width="276" Height="204" Canvas.Left="698" Canvas.Top="264" />
+            <Image Canvas.Left="104" Canvas.Top="6" Height="50" Name="rightHand" Stretch="Fill" Width="56" Source="/KinectFitness;component/right%20hand.png" />
+            <Image Canvas.Left="28" Canvas.Top="0" Height="68" Name="leftHand" Stretch="Fill" Width="70" Source="/KinectFitness;component/left%20hand.png" />
+            <Button Canvas.Left="592" Canvas.Top="316" Content="Camera Up" Height="24" Name="btnUp" Click="motorUp_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
+            <Button Canvas.Left="592" Canvas.Top="365" Content="Camera Down" Height="24" Name="btnDown" Click="motorDown_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
+        </Canvas>
+    </Grid>
+</Page>
