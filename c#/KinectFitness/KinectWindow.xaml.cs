@@ -15,27 +15,92 @@ using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Diagnostics;
 
+
+
 namespace KinectFitness
 {
     /// <summary>
     /// Interaction logic for KinectWindow.xaml
     /// </summary>
+    /// 
+
+
+   
+
     public partial class KinectWindow : Page
     {
         public KinectWindow()
         {
             InitializeComponent();
+            
         }
         
         bool closing = false;
         const int skeletonCount = 6;
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
+        long numberOfPts;
+        Stopwatch stopwatch;
+        Random r;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
+            initializeUI();
+            
         }
+
+        void initializeTimer()
+        {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(heartRate);
+            dispatcherTimer.Interval = new TimeSpan(0,0,1);
+            dispatcherTimer.Start();
+            stopwatch = new Stopwatch();
+            stopwatch.Start();
+            r = new Random();
+        }
+
+        /**
+         * Pseudo Heart Rate Simulator
+         */
+        private void heartRate(object sender, EventArgs e)
+        {            
+            int heartRate = r.Next(50,130);
+            heartRateToPoints(heartRate);
+        }
+
+        /**
+         * Checks the heart rate and converts it to points
+         */
+        void heartRateToPoints(int heartRate)
+        {
+            stopwatch.Stop();
+            long elapsed = stopwatch.ElapsedMilliseconds;
+            if (heartRate > 90 && heartRate < 110)
+            {
+                numberOfPts += elapsed;
+                setPoints();
+            }
+            
+            stopwatch.Reset();
+            stopwatch.Start();
+        }
+
+        void setPoints()
+        {
+            points.Text = numberOfPts + "Pts.";
+
+        }
+
+        void initializeUI()
+        {
+            pointsBar.Foreground = Brushes.Red;
+            numberOfPts = 0;
+            points.Text = numberOfPts + "Pts.";
+        }
+
+
 
         void kinectSensorChooser1_KinectSensorChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -254,6 +319,7 @@ namespace KinectFitness
             {
                 MediaPlayer.Play();
                 btnPlay.Content = "Pause";
+                initializeTimer();
             }
             else
             {

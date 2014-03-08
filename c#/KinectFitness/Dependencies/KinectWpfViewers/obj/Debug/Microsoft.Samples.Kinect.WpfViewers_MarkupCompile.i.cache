@@ -4,7 +4,7 @@
 library
 C#
 .cs
-C:\Users\Brad\documents\Downloads\KinectforWindowsSDKV1\KinectforWindowsSDKV1\Dependencies\KinectWpfViewers\obj\Debug\
+C:\Users\Brad\302\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\Debug\
 Microsoft.Samples.Kinect.WpfViewers
 none
 false
@@ -16,5 +16,5 @@ DEBUG;TRACE
 13-216429321
 KinectSensorChooser.xaml;KinectAudioViewer.xaml;KinectDepthViewer.xaml;KinectColorViewer.xaml;KinectDiagnosticViewer.xaml;KinectSettings.xaml;KinectSkeletonViewer.xaml;
 
-False
+True
 
