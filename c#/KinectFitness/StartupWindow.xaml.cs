@@ -37,9 +37,20 @@ namespace KinectFitness
 
         }
 
-        private void Change_Opacity(object sender, RoutedEventArgs e)
+        private void mouse_hover(object sender, RoutedEventArgs e)
         {
-            textBlock1.Opacity = 0.5;
+                playButton.Opacity = 1;
+                playborder.Opacity = 1;
+
+
+        }
+
+        private void mouse_leave(object sender, RoutedEventArgs e)
+        {
+
+                playButton.Opacity = 0.8;
+                playborder.Opacity = 0;
+
         }
 
     }
