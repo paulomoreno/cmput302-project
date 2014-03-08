@@ -5,10 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" Title="Kinect Fitness" Height="800" Width="1000">
 
-    <Grid Margin="10,0,10,10" Background="{x:Null}">
-        <Button Grid.Row="1" Margin="0,212,371,0" Width="257" HorizontalAlignment="Right" Click="Button_Play" Padding="0" Background="#FF40B2C0" BorderBrush="#FF21A2BA" Foreground="White" FontFamily="Arial" FontWeight="Bold" FontSize="20" BorderThickness="0" ClickMode="Release" Height="70" VerticalAlignment="Top">PLAY</Button>
-        <Button Grid.Row="1" Margin="0,412,371,308" Width="260" HorizontalAlignment="Right" Click="Button_Options" Padding="0" Background="#FF40B2C0" BorderBrush="#FF21A2BA" Foreground="White" FontFamily="Arial" FontWeight="Bold" FontSize="20">OPTIONS</Button>
-        <TextBlock Grid.Row="1" Height="96" HorizontalAlignment="Left" Name="textBlock1" Text="HCI FITNESS" VerticalAlignment="Top" Width="980" Foreground="White" Background="#FF40B2C0" FontSize="64" TextAlignment="Center" FontFamily="Raavi" FontWeight="Bold" />
+    <Grid Margin="10,0,10,10" Background="Gray">
+        <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="51,212,0,0" Name="playButton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/playbutton.png" OpacityMask="#E67993EA" />
+        <Image Height="164" HorizontalAlignment="Left" Margin="274,212,0,0" Name="optionsButton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/optionsbutton.png" Grid.Row="1" />
+        <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="513,212,0,0" Name="tutorialbutton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/tutorialbutton.png" />
+        <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="751,212,0,0" Name="quitbutton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/quitbutton.png" />
+        <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="51,212,0,0" Name="playborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
+        <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="274,212,0,0" Name="optionsborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
+        <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="513,212,0,0" Name="tutorialborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
+        <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="751,212,0,0" Name="quitborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>

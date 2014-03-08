@@ -37,5 +37,10 @@ namespace KinectFitness
 
         }
 
+        private void Change_Opacity(object sender, RoutedEventArgs e)
+        {
+            textBlock1.Opacity = 0.5;
+        }
+
     }
 }
