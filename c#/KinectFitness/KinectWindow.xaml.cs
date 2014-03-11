@@ -84,6 +84,11 @@ namespace KinectFitness
                 numberOfPts += elapsed;
                 setPoints();
             }
+
+            var heartarrowangle = heartarrow.RenderTransform as RotateTransform;
+            heartarrowangle.Angle = heartRate*3;
+
+            
             
             stopwatch.Reset();
             stopwatch.Start();
@@ -95,53 +100,13 @@ namespace KinectFitness
         void setPoints()
         {
             points.Text = numberOfPts + "Pts.";
-            pointsBar.Value = numberOfPts / 100;
-            double pointsBarValue = pointsBar.Value;
-            if (pointsBarValue < 10)
-            {
-                pointsBar.Foreground = Brushes.DarkRed;
-            }
-            else if (pointsBarValue > 10 && pointsBarValue < 20 )
-            {
-                pointsBar.Foreground = Brushes.Red;
-            }
-            else if (pointsBarValue > 20 && pointsBarValue < 30)
-            {
-                pointsBar.Foreground = Brushes.OrangeRed;
-            }
-            else if (pointsBarValue > 30 && pointsBarValue < 40)
-            {
-                pointsBar.Foreground = Brushes.Orange;
-            }
-            else if (pointsBarValue > 40 && pointsBarValue < 50)
-            {
-                pointsBar.Foreground = Brushes.Yellow;
-            }
-            else if (pointsBarValue > 50 && pointsBarValue < 60)
-            {
-                pointsBar.Foreground = Brushes.YellowGreen;
-            }
-            else if (pointsBarValue > 60 && pointsBarValue < 70)
-            {
-                pointsBar.Foreground = Brushes.LightGreen;
-            }
-            else if (pointsBarValue > 70 && pointsBarValue < 80)
-            {
-                pointsBar.Foreground = Brushes.Green;
-            }
-            else if (pointsBarValue > 80 && pointsBarValue < 90)
-            {
-                pointsBar.Foreground = Brushes.ForestGreen;
-            }
         }
 
         void initializeUI()
         {
-            pointsBar.Foreground = Brushes.DarkRed;
             numberOfPts = 0;
             points.Text = numberOfPts + "Pts.";
-            pointsBar.Value = 0;
-            videoPlaying = false;
+            videoPlaying = false;            
         }
 
         /**
