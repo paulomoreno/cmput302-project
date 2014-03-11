@@ -135,6 +135,20 @@
   <ItemGroup>
     <Resource Include="quitbutton.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pauseicon.png" />
+    <Resource Include="playicon.png" />
+    <Resource Include="stopicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="hoverplayicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="hoverpauseicon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

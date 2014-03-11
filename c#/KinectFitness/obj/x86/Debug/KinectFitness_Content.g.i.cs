@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("quitbutton.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("hoverpauseicon.png")]
 
 

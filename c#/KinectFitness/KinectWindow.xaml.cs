@@ -36,10 +36,11 @@ namespace KinectFitness
         }
         
         bool closing = false;
+        bool videoPlaying;
         const int skeletonCount = 6;
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
-        long numberOfPts;
+        double numberOfPts;
         Stopwatch stopwatch;
         Random r;
 
@@ -48,6 +49,7 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
             initializeUI();
             
+           
         }
 
         void initializeTimer()
@@ -67,7 +69,7 @@ namespace KinectFitness
         private void heartRate(object sender, EventArgs e)
         {            
             int heartRate = r.Next(50,130);
-            heartRateToPoints(heartRate);
+            heartRateToPoints(heartRate);            
         }
 
         /**
@@ -87,17 +89,112 @@ namespace KinectFitness
             stopwatch.Start();
         }
 
+        /**
+         * Sets the points to the progress bar and number of points
+         */
         void setPoints()
         {
             points.Text = numberOfPts + "Pts.";
-
+            pointsBar.Value = numberOfPts / 100;
+            double pointsBarValue = pointsBar.Value;
+            if (pointsBarValue < 10)
+            {
+                pointsBar.Foreground = Brushes.DarkRed;
+            }
+            else if (pointsBarValue > 10 && pointsBarValue < 20 )
+            {
+                pointsBar.Foreground = Brushes.Red;
+            }
+            else if (pointsBarValue > 20 && pointsBarValue < 30)
+            {
+                pointsBar.Foreground = Brushes.OrangeRed;
+            }
+            else if (pointsBarValue > 30 && pointsBarValue < 40)
+            {
+                pointsBar.Foreground = Brushes.Orange;
+            }
+            else if (pointsBarValue > 40 && pointsBarValue < 50)
+            {
+                pointsBar.Foreground = Brushes.Yellow;
+            }
+            else if (pointsBarValue > 50 && pointsBarValue < 60)
+            {
+                pointsBar.Foreground = Brushes.YellowGreen;
+            }
+            else if (pointsBarValue > 60 && pointsBarValue < 70)
+            {
+                pointsBar.Foreground = Brushes.LightGreen;
+            }
+            else if (pointsBarValue > 70 && pointsBarValue < 80)
+            {
+                pointsBar.Foreground = Brushes.Green;
+            }
+            else if (pointsBarValue > 80 && pointsBarValue < 90)
+            {
+                pointsBar.Foreground = Brushes.ForestGreen;
+            }
         }
 
         void initializeUI()
         {
-            pointsBar.Foreground = Brushes.Red;
+            pointsBar.Foreground = Brushes.DarkRed;
             numberOfPts = 0;
             points.Text = numberOfPts + "Pts.";
+            pointsBar.Value = 0;
+            videoPlaying = false;
+        }
+
+        /**
+         * Highlights play when the mouse hovers over them
+         */
+        private void hoverPlay(object sender, RoutedEventArgs e)
+        {
+            Image i = (Image)sender;
+
+            if (i.Name.Equals(playicon.Name))
+            {
+                if (!videoPlaying)
+                {
+                    playicon.Opacity = 0;
+                    hoverplayicon.Opacity = 1;
+                    pauseicon.Opacity = 0;
+                    hoverpauseicon.Opacity = 0;                    
+                }
+                else
+                {
+                    playicon.Opacity = 0;
+                    hoverplayicon.Opacity = 0;
+                    pauseicon.Opacity = 0;
+                    hoverpauseicon.Opacity = 1;
+                }
+            }
+            
+        }
+
+        /**
+         * Stops highlighting the images when the mouse leaves
+         */
+        private void leavePlay(object sender, RoutedEventArgs e)
+        {
+            Image i = (Image)sender;
+
+            if (i.Name.Equals(playicon.Name))
+            {
+                if (!videoPlaying)
+                {
+                    playicon.Opacity = 1;
+                    hoverplayicon.Opacity = 0;
+                    pauseicon.Opacity = 0;
+                    hoverpauseicon.Opacity = 0;
+                }
+                else
+                {
+                    playicon.Opacity = 0;
+                    hoverplayicon.Opacity = 0;
+                    pauseicon.Opacity = 1;
+                    hoverpauseicon.Opacity = 0;
+                }
+            }
         }
 
 
@@ -237,8 +334,6 @@ namespace KinectFitness
                     {
                         sensor.AudioSource.Stop();
                     }
-
-
                 }
             }
         }
@@ -249,7 +344,6 @@ namespace KinectFitness
             // instead of in top/left corner
             Canvas.SetLeft(element, point.X - element.Width / 2);
             Canvas.SetTop(element, point.Y - element.Height / 2);
-
         }
 
         private void ScalePosition(FrameworkElement element, Joint joint)
@@ -314,17 +408,18 @@ namespace KinectFitness
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
             MediaPlayer.Source = new Uri("C:\\Users\\Public\\Videos\\Sample Videos\\Wildlife.wmv");
+            
 
-            if (btnPlay.Content.ToString() == "Play")
+            if (!videoPlaying)
             {
-                MediaPlayer.Play();
-                btnPlay.Content = "Pause";
+                MediaPlayer.Play();                
+                videoPlaying = true;
                 initializeTimer();
             }
             else
             {
-                MediaPlayer.Pause();
-                btnPlay.Content = "Play";
+                MediaPlayer.Stop();
+                videoPlaying = false;
             }
         }
 

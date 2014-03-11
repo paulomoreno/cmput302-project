@@ -1,6 +1,8 @@
-﻿<NavigationWindow x:Class="KinectFitness.MainWindow"
+﻿<Window x:Class="KinectFitness.MainWindow"  
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="Kinect Fitness" Height="350" Width="500" Source="StartupWindow.xaml">
+    Title="Kinect Fitness" Height="500" Width="1000" >
+    <Frame Name="loginFrame" NavigationUIVisibility="Hidden">
+    </Frame>
 
-</NavigationWindow>
+</Window>

@@ -14,22 +14,20 @@ using System.Windows.Shapes;
 
 namespace KinectFitness
 {
-    /// <summary>
-    /// Interaction logic for StartupWindow.xaml
-    /// </summary>
     public partial class StartupWindow : Page
     {
         public StartupWindow()
         {
             InitializeComponent();
+            var navWindow = Window.GetWindow(this) as NavigationWindow;
+            if (navWindow != null) navWindow.ShowsNavigationUI = false;
         }
 
         private void Button_Play(object sender, RoutedEventArgs e)
         {
-            // View Expense Report
             KinectWindow kw = new KinectWindow();
             this.NavigationService.Navigate(kw);
-
+            
         }
 
         private void Button_Options(object sender, RoutedEventArgs e)
@@ -37,19 +35,53 @@ namespace KinectFitness
 
         }
 
+        /**
+         * Highlights images when the mouse hovers over them
+         */
         private void mouse_hover(object sender, RoutedEventArgs e)
         {
-                playButton.Opacity = 1;
+            Image i = (Image)sender;
+
+            if (i.Name.Equals(playButton.Name))
+            {
                 playborder.Opacity = 1;
-
-
+            }
+            else if (i.Name.Equals(optionsButton.Name))
+            {
+                optionsborder.Opacity = 1;
+            }
+            else if (i.Name.Equals(tutorialbutton.Name))
+            {
+                tutorialborder.Opacity = 1;
+            }
+            else if (i.Name.Equals(quitbutton.Name))
+            {
+                quitborder.Opacity = 1;
+            }
         }
 
+        /**
+         * Stops highlighting the images when the mouse leaves
+         */
         private void mouse_leave(object sender, RoutedEventArgs e)
         {
-
-                playButton.Opacity = 0.8;
-                playborder.Opacity = 0;
+                Image i = (Image)sender;   
+                if(i.Name.Equals(playButton.Name))
+                {
+                    playborder.Opacity = 0;
+                }
+                else if (i.Name.Equals(optionsButton.Name))
+                {
+                    optionsborder.Opacity = 0;
+                }
+                else if (i.Name.Equals(tutorialbutton.Name))
+                {
+                    tutorialborder.Opacity = 0;
+                }
+                else if (i.Name.Equals(quitbutton.Name))
+                {
+                    quitborder.Opacity = 0;
+                }
 
         }
 

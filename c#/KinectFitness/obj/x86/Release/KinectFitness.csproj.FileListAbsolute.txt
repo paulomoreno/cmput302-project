@@ -20,7 +20,6 @@ C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\
 C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Release\GenerateResource.write.1.tlog
 C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Release\KinectFitness.exe
 C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Release\KinectFitness.pdb
-C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.csprojResolveAssemblyReference.cache
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\MainWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\StartupWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\MainWindow.g.cs
@@ -31,8 +30,6 @@ C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.exe
 C:\Users\Brad\302\c#\KinectFitness\bin\Release\KinectFitness.exe
 C:\Users\Brad\302\c#\KinectFitness\bin\Release\KinectFitness.pdb
 C:\Users\Brad\302\c#\KinectFitness\bin\Release\Microsoft.Samples.Kinect.WpfViewers.dll
-C:\Users\Brad\302\c#\KinectFitness\bin\Release\Microsoft.Expression.Drawing.dll
-C:\Users\Brad\302\c#\KinectFitness\bin\Release\Coding4Fun.Kinect.Wpf.pdb
 C:\Users\Brad\302\c#\KinectFitness\bin\Release\Microsoft.Samples.Kinect.WpfViewers.pdb
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectWindow.g.cs
@@ -40,3 +37,4 @@ C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.g.resources
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.Properties.Resources.resources
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.csproj.GenerateResource.Cache
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.pdb
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.csprojResolveAssemblyReference.cache
