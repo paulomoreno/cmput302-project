@@ -32,12 +32,12 @@
             <my:KinectSkeletonViewer Name="kinectSkeletonViewer1" Height="240" Width="320" Kinect="{Binding ElementName=kinectSensorChooser1, Path=Kinect}" Unloaded="kinectSkeletonViewer1_Unloaded" Canvas.Left="977" Canvas.Top="210" />
             <Image Canvas.Left="1032" Canvas.Top="6" Height="198" Name="Doctor" Stretch="Fill" Width="262" Source="/KinectFitness;component/no-avatar.jpg" />
             <my:KinectSensorChooser Name="kinectSensorChooser1" Width="276" Height="204" Canvas.Left="1005" Canvas.Top="227" />
-            <Image Canvas.Left="104" Canvas.Top="6" Height="50" Name="rightHand" Stretch="Fill" Width="56" Source="/KinectFitness;component/right%20hand.png" />
-            <Image Canvas.Left="28" Canvas.Top="0" Height="68" Name="leftHand" Stretch="Fill" Width="70" Source="/KinectFitness;component/left%20hand.png" />
+            <Image Canvas.Left="104" Canvas.Top="6" Height="50" Name="rightHand" Stretch="Fill" Width="56" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="3"  />
+            <Image Canvas.Left="28" Canvas.Top="6" Height="50" Name="leftHand" Stretch="Fill" Width="54" Source="/KinectFitness;component/left%20hand.gif" Panel.ZIndex="3"/>
             <Button Canvas.Left="895" Canvas.Top="319" Content="Camera Up" Height="24" Name="btnUp" Click="motorUp_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
             <Button Canvas.Left="895" Canvas.Top="369" Content="Camera Down" Height="24" Name="btnDown" Click="motorDown_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
                 <TextBlock Canvas.Left="977" Canvas.Top="455" Height="80" Name="points" Text="0 Pts." Width="316" Foreground="White" FontSize="64" FontFamily="Corbel" />
-                <Image Canvas.Left="0" Canvas.Top="591" Height="84" Name="playicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/playicon.png" Mouse.MouseEnter="hoverPlay" Mouse.MouseLeave="leavePlay" Mouse.MouseUp="btnPlay_Click" Panel.ZIndex="1" />
+                <Image Canvas.Left="0" Canvas.Top="591" Height="84" Name="playicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/playicon.png"  Mouse.MouseEnter="hoverPlay" Mouse.MouseLeave="leavePlay" Mouse.MouseUp="btnPlay_Click" Panel.ZIndex="1" />
                 <Image Canvas.Left="0" Canvas.Top="591" Height="84" Name="hoverplayicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/hoverplayicon.png" Opacity="0" />
                 <Rectangle Canvas.Left="0" Canvas.Top="0" Height="675" Name="mediaBackground" Stroke="{x:Null}" Width="855" OpacityMask="{x:Null}" Fill="#FF414141" Panel.ZIndex="-3" />
                 <Rectangle Canvas.Left="0" Canvas.Top="591" Height="84" Name="rectanglePlayer" Stroke="{x:Null}" Width="855" Fill="#FF7F7F7F" Panel.ZIndex="-2" />

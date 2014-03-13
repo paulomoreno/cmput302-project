@@ -37,6 +37,7 @@ namespace KinectFitness
         
         bool closing = false;
         bool videoPlaying;
+        bool timerInitialized;
         const int skeletonCount = 6;
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
@@ -44,20 +45,34 @@ namespace KinectFitness
         Stopwatch stopwatch;
         Random r;
 
+        //Hand Positions
+        Rect leftHandPos;
+        Rect rightHandPos;
+
+        //Button Positions
+        Rect playIconPos;
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
-            initializeUI();
-            
-           
+            initializeUI();           
         }
 
         void initializeTimer()
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            
+            //Timer for Pseudo Heart Rate
             dispatcherTimer.Tick += new EventHandler(heartRate);
             dispatcherTimer.Interval = new TimeSpan(0,0,1);
             dispatcherTimer.Start();
+
+            //Timer to check for hand positions
+            dispatcherTimer.Tick += new EventHandler(checkHands);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+            dispatcherTimer.Start();
+
+
             stopwatch = new Stopwatch();
             stopwatch.Start();
             r = new Random();
@@ -86,9 +101,7 @@ namespace KinectFitness
             }
 
             var heartarrowangle = heartarrow.RenderTransform as RotateTransform;
-            heartarrowangle.Angle = heartRate*3;
-
-            
+            heartarrowangle.Angle = heartRate*3;                  
             
             stopwatch.Reset();
             stopwatch.Start();
@@ -98,16 +111,44 @@ namespace KinectFitness
          * Sets the points to the progress bar and number of points
          */
         void setPoints()
-        {
-            points.Text = numberOfPts + "Pts.";
+        {            
+            points.Text = numberOfPts + "Pts.";            
         }
 
+        /**
+         * Initializes the UI
+         */
         void initializeUI()
         {
             numberOfPts = 0;
             points.Text = numberOfPts + "Pts.";
-            videoPlaying = false;            
+            videoPlaying = false;
+            timerInitialized = false;
+          
+            //Get positions of buttons
+            leftHandPos = new Rect();
+            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
+            leftHandPos.Size = new Size(leftHand.Width, leftHand.Height);
+            rightHandPos = new Rect();
+            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
+            rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
+            playIconPos = new Rect();
+            playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
+            playIconPos.Size = new Size(playicon.Width, playicon.Height);
         }
+
+        /**
+         * Checks to see if hands are hovering over a button
+         */
+        private void checkHands(object sender, EventArgs e)
+        {
+            points.Text = leftHandPos.Top.ToString();
+            if (leftHandPos.IntersectsWith(playIconPos) || rightHandPos.IntersectsWith(playIconPos))
+            {                
+                btnPlay_Click(sender, new RoutedEventArgs());
+            }
+        }
+
 
         /**
          * Highlights play when the mouse hovers over them
@@ -223,6 +264,8 @@ namespace KinectFitness
             //set scaled position
             ScalePosition(leftHand, first.Joints[JointType.HandLeft]);
             ScalePosition(rightHand, first.Joints[JointType.HandRight]);
+            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
+            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
         }
 
         void GetCameraPoint(Skeleton first, AllFramesReadyEventArgs e)
@@ -379,7 +422,11 @@ namespace KinectFitness
             {
                 MediaPlayer.Play();                
                 videoPlaying = true;
-                initializeTimer();
+                if (!timerInitialized)
+                {
+                    initializeTimer();
+                    timerInitialized = true;
+                }
             }
             else
             {
