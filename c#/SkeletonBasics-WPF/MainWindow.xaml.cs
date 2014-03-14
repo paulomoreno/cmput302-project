@@ -379,14 +379,32 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
             Vector3D RightShoulder = new Vector3D(skeleton.Joints[JointType.ShoulderRight].Position.X,
                 skeleton.Joints[JointType.ShoulderRight].Position.Y, skeleton.Joints[JointType.ShoulderRight].Position.Z);
 
+            Vector3D LeftElbow = new Vector3D(skeleton.Joints[JointType.ElbowLeft].Position.X,
+                skeleton.Joints[JointType.ElbowLeft].Position.Y, skeleton.Joints[JointType.ElbowLeft].Position.Z);
+            Vector3D LeftHand = new Vector3D(skeleton.Joints[JointType.HandLeft].Position.X,
+                skeleton.Joints[JointType.HandLeft].Position.Y, skeleton.Joints[JointType.HandLeft].Position.Z);
+            Vector3D LeftShoulder = new Vector3D(skeleton.Joints[JointType.ShoulderLeft].Position.X,
+                skeleton.Joints[JointType.ShoulderLeft].Position.Y, skeleton.Joints[JointType.ShoulderLeft].Position.Z);
+
+            Vector3D RightKnee = new Vector3D(skeleton.Joints[JointType.KneeRight].Position.X,
+               skeleton.Joints[JointType.KneeRight].Position.Y, skeleton.Joints[JointType.KneeRight].Position.Z);
+            Vector3D RightHip = new Vector3D(skeleton.Joints[JointType.HipRight].Position.X,
+                skeleton.Joints[JointType.HipRight].Position.Y, skeleton.Joints[JointType.HipRight].Position.Z);
+            Vector3D RightFoot = new Vector3D(skeleton.Joints[JointType.FootRight].Position.X,
+                skeleton.Joints[JointType.FootRight].Position.Y, skeleton.Joints[JointType.FootRight].Position.Z);
+
             Vector3D RERS = Vector3D.Subtract(RightElbow, RightShoulder);
             Vector3D RERH = Vector3D.Subtract(RightElbow, RightHand);
             double REAngle = Vector3D.AngleBetween(RERS, RERH);
-           // double RHRSAngle = Vector3D.AngleBetween(RHRE, RightShoulder); 
+            string angle1 = System.Convert.ToString(REAngle);
+            MessageBox.Show(angle1);
 
-            string angle = System.Convert.ToString(REAngle);
-            MessageBox.Show(angle);
-            
+            Vector3D LELS = Vector3D.Subtract(LeftElbow, LeftShoulder);
+            Vector3D LELH = Vector3D.Subtract(LeftElbow, LeftHand);
+            double LEAngle = Vector3D.AngleBetween(LELS, LELH);
+
+            string angle2 = System.Convert.ToString(LEAngle);
+            MessageBox.Show(angle2);
             
         }
 
