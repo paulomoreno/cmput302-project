@@ -144,6 +144,8 @@ namespace KinectFitness
             playIconPos = new Rect();
             playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
             playIconPos.Size = new Size(playicon.Width, playicon.Height);
+
+            FitnessPlayer.Source = new Uri("C:\\Users\\Public\\Videos\\Sample Videos\\Wildlife.wmv");
         }
 
         /**
@@ -157,7 +159,7 @@ namespace KinectFitness
                 hoverTimer.Start();
                 hoverPlay(playicon, new RoutedEventArgs());
                 //Check if hand has been hovering on target for 1 second or more   
-                if (hoverTimer.ElapsedMilliseconds >= 3000)
+                if (hoverTimer.ElapsedMilliseconds >= 1000)
                 {
                     //Presses the play button
                     btnPlay_Click(sender, new RoutedEventArgs());
@@ -438,23 +440,28 @@ namespace KinectFitness
 
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-            MediaPlayer.Source = new Uri("C:\\Users\\Public\\Videos\\Sample Videos\\Wildlife.wmv");
+
             
 
             if (!videoPlaying)
             {
-                MediaPlayer.Play();                
+                
+                //Set Movie to be played
+                
+                FitnessPlayer.Play();                
                 videoPlaying = true;
                 if (!timerInitialized)
                 {
                     initializeTimer();
                     timerInitialized = true;
-                }
+                }                
             }
             else
             {
-                MediaPlayer.Stop();
+                
+                FitnessPlayer.Pause();
                 videoPlaying = false;
+               
             }
         }
 
