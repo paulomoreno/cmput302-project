@@ -11,6 +11,12 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
     using System.Windows.Media;
     using Microsoft.Kinect;
     using System.Windows.Media.Media3D;
+    using System.Diagnostics;
+    using System;
+    using System.Windows.Controls;
+    using System.Collections.Generic;
+    
+   
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -90,6 +96,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
             InitializeComponent();
         }
 
+       
         /// <summary>
         /// Draws indicators to show which edges are clipping skeleton data
         /// </summary>
@@ -363,15 +370,30 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
 
         private void MatchSkeletonData()
         {
+           List<Skeleton> _savedSkeletons = new List<Skeleton>();
+            foreach (var skeleton in skeletons)
+            {
+                if (skeleton.TrackingState != SkeletonTrackingState.Tracked)
+                    continue;
+
+                _savedSkeletons.Add(skeleton);
+            }
         }
+
 
         /// <summary>
         /// Calculates the angles between joints to match with another skeleton
         /// </summary>http://stackoverflow.com/questions/15989322/calculate-kinect-skeleton-knee-and-elbow-angles-using-existing-joint-angles
         /// http://www.youtube.com/watch?v=htiGSeS-rKs
+        /// http://stackoverflow.com/questions/13886243/reading-location-of-joint-and-timestamp
         /// <param name="skeleton"></param>
         private void CalculateSkeletonAngles(Skeleton skeleton)
         {
+
+            double[] rightElbowArr = new double[0];
+            DateTime jointTime;
+            DateTime jointTime2;
+
             Vector3D RightElbow = new Vector3D(skeleton.Joints[JointType.ElbowRight].Position.X,
                 skeleton.Joints[JointType.ElbowRight].Position.Y, skeleton.Joints[JointType.ElbowRight].Position.Z);
             Vector3D RightHand = new Vector3D(skeleton.Joints[JointType.HandRight].Position.X,
@@ -393,18 +415,41 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
             Vector3D RightFoot = new Vector3D(skeleton.Joints[JointType.FootRight].Position.X,
                 skeleton.Joints[JointType.FootRight].Position.Y, skeleton.Joints[JointType.FootRight].Position.Z);
 
+            Vector3D LeftKnee = new Vector3D(skeleton.Joints[JointType.KneeLeft].Position.X,
+               skeleton.Joints[JointType.KneeLeft].Position.Y, skeleton.Joints[JointType.KneeLeft].Position.Z);
+            Vector3D LeftHip = new Vector3D(skeleton.Joints[JointType.HipLeft].Position.X,
+                skeleton.Joints[JointType.HipLeft].Position.Y, skeleton.Joints[JointType.HipLeft].Position.Z);
+            Vector3D LeftFoot = new Vector3D(skeleton.Joints[JointType.FootLeft].Position.X,
+                skeleton.Joints[JointType.FootLeft].Position.Y, skeleton.Joints[JointType.FootLeft].Position.Z);
+
+
             Vector3D RERS = Vector3D.Subtract(RightElbow, RightShoulder);
             Vector3D RERH = Vector3D.Subtract(RightElbow, RightHand);
             double REAngle = Vector3D.AngleBetween(RERS, RERH);
+
+            //rightElbowArr = new double[3]
+            //righeElbow[0] = 
             string angle1 = System.Convert.ToString(REAngle);
-            MessageBox.Show(angle1);
+            //Debug.WriteLine(angle1);
+            //MessageBox.Show(angle1);
+
+           
+           
+                jointTime = DateTime.Now;
+                jointTime2 = DateTime.Now.AddSeconds(10);
+
+
+                TimeSpan timeSpan =  jointTime2.Subtract(jointTime);
+                
+                //Debug.WriteLine(jointTime);
+            
 
             Vector3D LELS = Vector3D.Subtract(LeftElbow, LeftShoulder);
             Vector3D LELH = Vector3D.Subtract(LeftElbow, LeftHand);
             double LEAngle = Vector3D.AngleBetween(LELS, LELH);
 
             string angle2 = System.Convert.ToString(LEAngle);
-            MessageBox.Show(angle2);
+            //MessageBox.Show(angle2);
             
         }
 
