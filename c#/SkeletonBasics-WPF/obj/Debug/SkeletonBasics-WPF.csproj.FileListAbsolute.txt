@@ -10,3 +10,5 @@ C:\Users\Nancy\Documents\SkeletonBasics-WPF\obj\Debug\Microsoft.Samples.Kinect.S
 C:\Users\Nancy\Documents\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.csproj.GenerateResource.Cache
 C:\Users\Nancy\Documents\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.exe
 C:\Users\Nancy\Documents\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.pdb
+C:\Users\Brad\302\c#\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.exe
+C:\Users\Brad\302\c#\SkeletonBasics-WPF\obj\Debug\SkeletonBasics-WPF.pdb
