@@ -43,7 +43,9 @@ namespace KinectFitness
         KinectSensor ksensor;
         double numberOfPts;
         Stopwatch stopwatch;
+        Stopwatch hoverTimer;
         Random r;
+
 
         //Hand Positions
         Rect leftHandPos;
@@ -55,7 +57,20 @@ namespace KinectFitness
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
-            initializeUI();           
+            initializeUI();
+            initializeHoverChecker();
+        }
+
+        void initializeHoverChecker()
+        {
+
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            //Timer to check for hand positions
+            dispatcherTimer.Tick += new EventHandler(checkHands);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Start();
+
+            hoverTimer = new Stopwatch();
         }
 
         void initializeTimer()
@@ -66,12 +81,6 @@ namespace KinectFitness
             dispatcherTimer.Tick += new EventHandler(heartRate);
             dispatcherTimer.Interval = new TimeSpan(0,0,1);
             dispatcherTimer.Start();
-
-            //Timer to check for hand positions
-            dispatcherTimer.Tick += new EventHandler(checkHands);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
-            dispatcherTimer.Start();
-
 
             stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -142,11 +151,25 @@ namespace KinectFitness
          */
         private void checkHands(object sender, EventArgs e)
         {
-            points.Text = leftHandPos.Top.ToString();
+
             if (leftHandPos.IntersectsWith(playIconPos) || rightHandPos.IntersectsWith(playIconPos))
-            {                
-                btnPlay_Click(sender, new RoutedEventArgs());
+            {
+                hoverTimer.Start();
+                hoverPlay(playicon, new RoutedEventArgs());
+                //Check if hand has been hovering on target for 1 second or more   
+                if (hoverTimer.ElapsedMilliseconds >= 3000)
+                {
+                    //Presses the play button
+                    btnPlay_Click(sender, new RoutedEventArgs());
+                    //Resets hoverTimer
+                    hoverTimer.Reset();
+                }
             }
+            else  //If hand is not hovering on any button.  Reset timer.
+            {
+                hoverTimer.Reset();                
+                leavePlay(playicon, new RoutedEventArgs());
+            }                       
         }
 
 
