@@ -5,6 +5,7 @@ winexe
 C#
 .cs
 C:\Users\Brad\302\c#\SkeletonBasics-WPF\obj\Debug\
+
 Microsoft.Samples.Kinect.SkeletonBasics
 none
 false
@@ -14,6 +15,7 @@ C:\Users\Brad\302\c#\SkeletonBasics-WPF\App.xaml
 
 6-840453515
 13-216429321
+
 MainWindow.xaml;
 
 False
