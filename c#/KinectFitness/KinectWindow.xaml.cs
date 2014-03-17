@@ -45,7 +45,7 @@ namespace KinectFitness
         Stopwatch stopwatch;
         Stopwatch hoverTimer;
         Random r;
-
+        Skeleton first;
 
         //Hand Positions
         Rect leftHandPos;
@@ -59,6 +59,7 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
             initializeUI();
             initializeHoverChecker();
+            initializeRecorder();
         }
 
         void initializeHoverChecker()
@@ -71,6 +72,16 @@ namespace KinectFitness
             dispatcherTimer.Start();
 
             hoverTimer = new Stopwatch();
+        }
+
+        void initializeRecorder()
+        {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+
+            //Timer to record joint angles every 5 seconds
+            dispatcherTimer.Tick += new EventHandler(recordSkeletonData);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 5000);
+            dispatcherTimer.Start();
         }
 
         void initializeTimer()
@@ -86,6 +97,8 @@ namespace KinectFitness
             stopwatch.Start();
             r = new Random();
         }
+
+
 
         /**
          * Pseudo Heart Rate Simulator
@@ -121,7 +134,7 @@ namespace KinectFitness
          */
         void setPoints()
         {            
-            points.Text = numberOfPts + "Pts.";            
+            //points.Text = numberOfPts + "Pts.";            
         }
 
         /**
@@ -145,15 +158,31 @@ namespace KinectFitness
             playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
             playIconPos.Size = new Size(playicon.Width, playicon.Height);
 
+            //Set video source for video player
             FitnessPlayer.Source = new Uri("C:\\Users\\Public\\Videos\\Sample Videos\\Wildlife.wmv");
         }
 
+       
+
+        private void recordSkeletonData(object sender, EventArgs e)
+        {
+            try
+            {
+                double angle = AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]);
+                points.Text = angle.ToString();
+            }
+            catch (NullReferenceException)
+            {
+
+            }
+        }
+
         /**
-         * Checks to see if hands are hovering over a button
-         */
+        * Checks to see if hands are hovering over a button
+        */
         private void checkHands(object sender, EventArgs e)
         {
-
+            
             if (leftHandPos.IntersectsWith(playIconPos) || rightHandPos.IntersectsWith(playIconPos))
             {
                 hoverTimer.Start();
@@ -176,7 +205,7 @@ namespace KinectFitness
 
 
         /**
-         * Highlights play when the mouse hovers over them
+         * Highlights play when the mouse or hand hovers over them
          */
         private void hoverPlay(object sender, RoutedEventArgs e)
         {
@@ -278,7 +307,7 @@ namespace KinectFitness
             }
 
             //Get a skeleton
-            Skeleton first = GetFirstSkeleton(e);
+            first = GetFirstSkeleton(e);
 
             if (first == null)
             {
@@ -291,6 +320,50 @@ namespace KinectFitness
             ScalePosition(rightHand, first.Joints[JointType.HandRight]);
             leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
             rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
+
+            
+        }
+
+        //Returns the angle between the joints
+        public static double AngleBetweenJoints(Joint j1, Joint j2, Joint j3)
+        {
+            double Angulo = 0;
+            double shrhX = j1.Position.X - j2.Position.X;
+            double shrhY = j1.Position.Y - j2.Position.Y;
+            double shrhZ = j1.Position.Z - j2.Position.Z;
+            double hsl = vectorNorm(shrhX, shrhY, shrhZ);
+            double unrhX = j3.Position.X - j2.Position.X;
+            double unrhY = j3.Position.Y - j2.Position.Y;
+            double unrhZ = j3.Position.Z - j2.Position.Z;
+            double hul = vectorNorm(unrhX, unrhY, unrhZ);
+            double mhshu = shrhX * unrhX + shrhY * unrhY + shrhZ * unrhZ;
+            double x = mhshu / (hul * hsl);
+            if (x != Double.NaN)
+            {
+                if (-1 <= x && x <= 1)
+                {
+                    double angleRad = Math.Acos(x);
+                    Angulo = angleRad * (180.0 / Math.PI);
+                }
+                else
+                    Angulo = 0;
+
+
+            }
+            else
+                Angulo = 0;
+
+
+            return Angulo;
+
+        }
+
+
+        private static double vectorNorm(double x, double y, double z)
+        {
+
+            return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
+
         }
 
         void GetCameraPoint(Skeleton first, AllFramesReadyEventArgs e)
@@ -392,7 +465,7 @@ namespace KinectFitness
 
         private void motorUp_Click(object sender, RoutedEventArgs e)
         {
-            
+
             try
             {
                 int x = ksensor.ElevationAngle;
@@ -405,6 +478,10 @@ namespace KinectFitness
             catch (ArgumentOutOfRangeException)
             {
                 MessageBox.Show("Elevation angle is out of range.");
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("No Kinect Attached");
             }
         }
 
@@ -423,6 +500,10 @@ namespace KinectFitness
             {
                 MessageBox.Show("Elevation angle is out of range.");
             }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("No Kinect Attached");
+            }
         }
 
 
@@ -436,18 +517,10 @@ namespace KinectFitness
         /*
          * Media Player Stuff
          */
-
-
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
-
-            
-
             if (!videoPlaying)
-            {
-                
-                //Set Movie to be played
-                
+            {               
                 FitnessPlayer.Play();                
                 videoPlaying = true;
                 if (!timerInitialized)
@@ -457,8 +530,7 @@ namespace KinectFitness
                 }                
             }
             else
-            {
-                
+            {                
                 FitnessPlayer.Pause();
                 videoPlaying = false;
                

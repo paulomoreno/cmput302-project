@@ -371,7 +371,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
         private void MatchSkeletonData()
         {
            List<Skeleton> _savedSkeletons = new List<Skeleton>();
-            foreach (var skeleton in skeletons)
+            foreach (var skeleton in _savedSkeletons)
             {
                 if (skeleton.TrackingState != SkeletonTrackingState.Tracked)
                     continue;
