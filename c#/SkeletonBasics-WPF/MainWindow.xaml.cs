@@ -15,7 +15,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
     using System;
     using System.Windows.Controls;
     using System.Collections.Generic;
-    
+    //using Kinect.Toolbox;
    
 
     /// <summary>
@@ -212,6 +212,8 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
         private void SensorSkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
             Skeleton[] skeletons = new Skeleton[0];
+            DateTime jointTime;
+            DateTime jointTime2;
 
             using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
             {
@@ -219,6 +221,26 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
                 {
                     skeletons = new Skeleton[skeletonFrame.SkeletonArrayLength];
                     skeletonFrame.CopySkeletonDataTo(skeletons);
+
+                    jointTime = DateTime.Now;
+                    jointTime2 = DateTime.Now.AddSeconds(10);
+
+                    //get the time ex 10 second. every 10 second get the skeleton from the list an calculate the angles then compare
+                    TimeSpan timeSpan = jointTime2.Subtract(jointTime);
+
+                    //Debug.WriteLine(jointTime);
+                    if (timeSpan.Equals(10))
+                    {
+                    
+                    List<Skeleton> _savedSkeletons = new List<Skeleton>();
+                    foreach (var skeleton in skeletons)
+                    {
+                        if (skeleton.TrackingState != SkeletonTrackingState.Tracked)
+                            continue;
+
+                        _savedSkeletons.Add(skeleton);
+                    }
+                    }
                 }
             }
 
@@ -378,6 +400,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
 
                 _savedSkeletons.Add(skeleton);
             }
+
         }
 
 
@@ -391,8 +414,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
         {
 
             double[] rightElbowArr = new double[0];
-            DateTime jointTime;
-            DateTime jointTime2;
+            
 
             Vector3D RightElbow = new Vector3D(skeleton.Joints[JointType.ElbowRight].Position.X,
                 skeleton.Joints[JointType.ElbowRight].Position.Y, skeleton.Joints[JointType.ElbowRight].Position.Z);
@@ -435,13 +457,7 @@ namespace Microsoft.Samples.Kinect.SkeletonBasics
 
            
            
-                jointTime = DateTime.Now;
-                jointTime2 = DateTime.Now.AddSeconds(10);
-
-
-                TimeSpan timeSpan =  jointTime2.Subtract(jointTime);
                 
-                //Debug.WriteLine(jointTime);
             
 
             Vector3D LELS = Vector3D.Subtract(LeftElbow, LeftShoulder);
