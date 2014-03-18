@@ -51,11 +51,7 @@
                             <RotateTransform x:Name="AnimatedRotateTransform" Angle="90" />
                         </Image.RenderTransform>
                     </Image>
-
-
-
-
-
+                <TextBlock Canvas.Left="178" Canvas.Top="592" Height="83" Name="suggestionBlock" Text="" Width="676" Foreground="White" FontSize="60" />
             </Canvas>
         </Grid>
     </Border>

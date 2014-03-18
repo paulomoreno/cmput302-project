@@ -188,21 +188,58 @@ namespace KinectFitness
                 return false;
             }
             int leftElbow = AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]);
-            if (leftElbow < ja.leftElbow)
+            int rightElbow = AngleBetweenJoints(first.Joints[JointType.HandRight], first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight]);
+            int rightShoulder = AngleBetweenJoints(first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight], first.Joints[JointType.ShoulderCenter]);          
+            int leftHip = AngleBetweenJoints(first.Joints[JointType.ShoulderLeft], first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft]);
+            int rightHip = AngleBetweenJoints(first.Joints[JointType.ShoulderRight], first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight]); 
+            int leftKnee = AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]);
+            int rightKnee = AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]);
+                
+            //Check if patient's joint angle is +- 20 degrees of the exercise
+            if (leftElbow < (ja.leftElbow - 30) || leftElbow > (ja.leftElbow + 30))
             {
-                return true;
-            }
-            else
-            {
+                suggestionBlock.Text = "Fix your left elbow!";
                 return false;
             }
+            else if (rightElbow < (ja.rightElbow - 30) || rightElbow > (ja.rightElbow + 30))
+            {
+                suggestionBlock.Text = "Fix your right elbow!";
+                return false;
+            }
+            else if (leftHip < (ja.leftHip - 30) || leftHip > (ja.leftHip + 30))
+            {
+                suggestionBlock.Text = "Fix your left hip!";
+                return false;
+            }
+            else if (rightHip < (ja.rightHip - 30) || rightHip > (ja.rightHip + 30))
+            {
+                suggestionBlock.Text = "Fix your right hip!";
+                return false;
+            }
+            else if (rightKnee < (ja.rightKnee - 30) || rightKnee > (ja.rightKnee + 30))
+            {
+                suggestionBlock.Text = "Fix your right knee!";
+                return false;
+            }
+            else if (leftKnee < (ja.leftKnee - 30) || leftKnee > (ja.leftKnee + 30))
+            {
+                suggestionBlock.Text = "Fix your left knee!";
+                return false;
+            }
+            else if (rightShoulder < (ja.rightShoulder - 30) || rightShoulder > (ja.rightShoulder + 30))
+            {
+                suggestionBlock.Text = "Fix your right shoulder!";
+                return false;
+            }
+            else return true;
+
         }
         /**
          * Pause the playback of the skeleton
          */
         private void pausePlaybackSkeleton()
         {
-
+            skeletonMatcherTimer.Stop();
         }
 
         /**
@@ -624,7 +661,7 @@ namespace KinectFitness
             {                
                 FitnessPlayer.Pause();
                 videoPlaying = false;
-                pausePlaybackSkeleton();
+                //pausePlaybackSkeleton();
             }
         }
 

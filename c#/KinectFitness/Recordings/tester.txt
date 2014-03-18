@@ -1,162 +1,124 @@
-Time: 0
+Time: 3
 Left Elbow
-Time: 1
-Left Elbow
-102
-Left Shoulder
-147
-Right Elbow
-96
-Right Shoulder
-147
-Left Hip
-157
-Right Hip
-164
-Left Knee
-169
-Right Knee
-168
-End
-Time: 2
-Left Elbow
-111
+144
 Left Shoulder
 141
 Right Elbow
-96
+147
 Right Shoulder
 137
 Left Hip
-160
-Right Hip
-163
-Left Knee
-167
-Right Knee
-168
-End
-Time: 3
-Left Elbow
-118
-Left Shoulder
-156
-Right Elbow
-141
-Right Shoulder
-140
-Left Hip
-160
-Right Hip
-159
-Left Knee
-169
-Right Knee
-172
-End
-Time: 4
-Left Elbow
-117
-Left Shoulder
-160
-Right Elbow
-142
-Right Shoulder
-159
-Left Hip
-159
+162
 Right Hip
 160
 Left Knee
 166
 Right Knee
+165
+End
+Time: 4
+Left Elbow
+149
+Left Shoulder
+141
+Right Elbow
+153
+Right Shoulder
+138
+Left Hip
+158
+Right Hip
+162
+Left Knee
 169
+Right Knee
+159
 End
 Time: 5
 Left Elbow
-96
+134
 Left Shoulder
-157
-Right Elbow
-67
-Right Shoulder
-167
-Left Hip
-159
-Right Hip
-160
-Left Knee
-169
-Right Knee
-168
-End
-Time: 6
-Left Elbow
-68
-Left Shoulder
-152
-Right Elbow
-57
-Right Shoulder
 143
-Left Hip
-159
-Right Hip
-160
-Left Knee
-169
-Right Knee
-168
-End
-Time: 7
-Left Elbow
-71
-Left Shoulder
-149
 Right Elbow
-48
+40
 Right Shoulder
-141
+165
 Left Hip
 159
 Right Hip
-160
-Left Knee
-169
-Right Knee
-168
-End
-Time: 8
-Left Elbow
-161
-Left Shoulder
-139
-Right Elbow
-163
-Right Shoulder
-141
-Left Hip
-160
-Right Hip
-159
+132
 Left Knee
 171
 Right Knee
+169
+End
+Time: 6
+Left Elbow
+142
+Left Shoulder
+137
+Right Elbow
+132
+Right Shoulder
+141
+Left Hip
+156
+Right Hip
+149
+Left Knee
+163
+Right Knee
+167
+End
+Time: 7
+Left Elbow
+135
+Left Shoulder
+136
+Right Elbow
+123
+Right Shoulder
+147
+Left Hip
+157
+Right Hip
+158
+Left Knee
 168
+Right Knee
+167
+End
+Time: 8
+Left Elbow
+138
+Left Shoulder
+161
+Right Elbow
+135
+Right Shoulder
+157
+Left Hip
+156
+Right Hip
+157
+Left Knee
+169
+Right Knee
+167
 End
 Time: 9
 Left Elbow
-165
+115
 Left Shoulder
-139
-Right Elbow
 170
+Right Elbow
+118
 Right Shoulder
-140
+168
 Left Hip
-161
+156
 Right Hip
-158
+156
 Left Knee
 169
 Right Knee
@@ -164,387 +126,469 @@ Right Knee
 End
 Time: 10
 Left Elbow
-160
+99
 Left Shoulder
-141
+169
 Right Elbow
-156
+105
 Right Shoulder
-139
+166
 Left Hip
-160
+155
 Right Hip
-159
+156
 Left Knee
 169
 Right Knee
-166
+167
 End
 Time: 11
 Left Elbow
-148
+112
 Left Shoulder
-164
+128
 Right Elbow
-138
+112
 Right Shoulder
-164
+121
 Left Hip
-160
+158
 Right Hip
-160
+155
 Left Knee
-169
+172
 Right Knee
-168
+170
 End
 Time: 12
 Left Elbow
-164
+142
 Left Shoulder
-167
+166
 Right Elbow
-168
+141
 Right Shoulder
 162
 Left Hip
-157
+154
 Right Hip
-159
+153
 Left Knee
-170
+168
 Right Knee
-169
+167
 End
 Time: 13
 Left Elbow
-162
-Left Shoulder
-164
-Right Elbow
-168
-Right Shoulder
-160
-Left Hip
-156
-Right Hip
-158
-Left Knee
-170
-Right Knee
-166
-End
-Time: 14
-Left Elbow
-169
-Left Shoulder
-167
-Right Elbow
-163
-Right Shoulder
-161
-Left Hip
-155
-Right Hip
-158
-Left Knee
-171
-Right Knee
-167
-End
-Time: 15
-Left Elbow
-160
-Left Shoulder
-168
-Right Elbow
-162
-Right Shoulder
-163
-Left Hip
-157
-Right Hip
-158
-Left Knee
-171
-Right Knee
-164
-End
-Time: 16
-Left Elbow
-155
-Left Shoulder
-165
-Right Elbow
-165
-Right Shoulder
-162
-Left Hip
-164
-Right Hip
-155
-Left Knee
-172
-Right Knee
-161
-End
-Time: 17
-Left Elbow
-159
-Left Shoulder
-147
-Right Elbow
-169
-Right Shoulder
-169
-Left Hip
-170
-Right Hip
-143
-Left Knee
-166
-Right Knee
-172
-End
-Time: 18
-Left Elbow
-140
-Left Shoulder
-145
-Right Elbow
-176
-Right Shoulder
-63
-Left Hip
-149
-Right Hip
-163
-Left Knee
-147
-Right Knee
-175
-End
-Time: 19
-Left Elbow
-147
-Left Shoulder
-153
-Right Elbow
-157
-Right Shoulder
-171
-Left Hip
-158
-Right Hip
-157
-Left Knee
-173
-Right Knee
-166
-End
-Time: 20
-Left Elbow
 156
 Left Shoulder
-159
-Right Elbow
-153
-Right Shoulder
-141
-Left Hip
-138
-Right Hip
-162
-Left Knee
-165
-Right Knee
-149
-End
-Time: 21
-Left Elbow
-92
-Left Shoulder
-158
-Right Elbow
-80
-Right Shoulder
-158
-Left Hip
-154
-Right Hip
-158
-Left Knee
-173
-Right Knee
-161
-End
-Time: 22
-Left Elbow
-83
-Left Shoulder
-154
-Right Elbow
-81
-Right Shoulder
-155
-Left Hip
-155
-Right Hip
 157
-Left Knee
-169
-Right Knee
-166
-End
-Time: 23
-Left Elbow
-76
-Left Shoulder
-155
 Right Elbow
-79
-Right Shoulder
-154
-Left Hip
 155
-Right Hip
-156
-Left Knee
-170
-Right Knee
-165
-End
-Time: 24
-Left Elbow
-118
-Left Shoulder
-165
-Right Elbow
-120
-Right Shoulder
-158
-Left Hip
-155
-Right Hip
-157
-Left Knee
-170
-Right Knee
-166
-End
-Time: 25
-Left Elbow
-101
-Left Shoulder
-149
-Right Elbow
-92
 Right Shoulder
 152
 Left Hip
-156
+155
 Right Hip
-157
+146
 Left Knee
 168
 Right Knee
-166
+168
 End
-Time: 26
+Time: 14
 Left Elbow
-83
+124
 Left Shoulder
-150
+134
 Right Elbow
-115
+103
 Right Shoulder
-145
+141
+Left Hip
+166
+Right Hip
+161
+Left Knee
+172
+Right Knee
+170
+End
+Time: 15
+Left Elbow
+129
+Left Shoulder
+161
+Right Elbow
+130
+Right Shoulder
+158
+Left Hip
+155
+Right Hip
+151
+Left Knee
+171
+Right Knee
+171
+End
+Time: 16
+Left Elbow
+143
+Left Shoulder
+166
+Right Elbow
+135
+Right Shoulder
+168
+Left Hip
+155
+Right Hip
+155
+Left Knee
+171
+Right Knee
+169
+End
+Time: 17
+Left Elbow
+92
+Left Shoulder
+147
+Right Elbow
+83
+Right Shoulder
+149
 Left Hip
 161
 Right Hip
 162
 Left Knee
-174
-Right Knee
-170
-End
-Time: 27
-Left Elbow
-106
-Left Shoulder
-164
-Right Elbow
-129
-Right Shoulder
-146
-Left Hip
-157
-Right Hip
-161
-Left Knee
-166
-Right Knee
 169
-End
-Time: 28
-Left Elbow
-149
-Left Shoulder
-139
-Right Elbow
-151
-Right Shoulder
-142
-Left Hip
-157
-Right Hip
-159
-Left Knee
-167
 Right Knee
 164
 End
-Time: 29
+Time: 18
 Left Elbow
 154
 Left Shoulder
-137
+174
 Right Elbow
-157
-Right Shoulder
-138
-Left Hip
-153
-Right Hip
 165
+Right Shoulder
+168
+Left Hip
+162
+Right Hip
+159
+Left Knee
+171
+Right Knee
+171
+End
+Time: 19
+Left Elbow
+109
+Left Shoulder
+132
+Right Elbow
+106
+Right Shoulder
+142
+Left Hip
+156
+Right Hip
+162
+Left Knee
+168
+Right Knee
+167
+End
+Time: 20
+Left Elbow
+141
+Left Shoulder
+142
+Right Elbow
+149
+Right Shoulder
+154
+Left Hip
+160
+Right Hip
+158
 Left Knee
 170
 Right Knee
-164
+166
 End
-Time: 30
+Time: 21
 Left Elbow
-148
+174
 Left Shoulder
-107
+144
 Right Elbow
-132
+87
 Right Shoulder
-118
+162
 Left Hip
-163
+162
 Right Hip
-168
+159
 Left Knee
-167
+169
 Right Knee
 167
 End
+Time: 22
+Left Elbow
+169
+Left Shoulder
+140
+Right Elbow
+101
+Right Shoulder
+122
+Left Hip
+160
+Right Hip
+167
+Left Knee
+170
+Right Knee
+167
+End
+Time: 23
+Left Elbow
+157
+Left Shoulder
+141
+Right Elbow
+117
+Right Shoulder
+137
+Left Hip
+152
+Right Hip
+170
+Left Knee
+170
+Right Knee
+167
+End
+Time: 24
+Left Elbow
+133
+Left Shoulder
+147
+Right Elbow
+151
+Right Shoulder
+147
+Left Hip
+162
+Right Hip
+160
+Left Knee
+170
+Right Knee
+168
+End
+Time: 25
+Left Elbow
+148
+Left Shoulder
+154
+Right Elbow
+149
+Right Shoulder
+148
+Left Hip
+123
+Right Hip
+160
+Left Knee
+165
+Right Knee
+164
+End
+Time: 26
+Left Elbow
+153
+Left Shoulder
+160
+Right Elbow
+153
+Right Shoulder
+167
+Left Hip
+162
+Right Hip
+161
+Left Knee
+168
+Right Knee
+169
+End
+Time: 27
+Left Elbow
+156
+Left Shoulder
+155
+Right Elbow
+158
+Right Shoulder
+157
+Left Hip
+141
+Right Hip
+164
+Left Knee
+164
+Right Knee
+171
+End
+Time: 28
+Left Elbow
+154
+Left Shoulder
+159
+Right Elbow
+157
+Right Shoulder
+159
+Left Hip
+120
+Right Hip
+163
+Left Knee
+165
+Right Knee
+170
+End
+Time: 29
+Left Elbow
+132
+Left Shoulder
+162
+Right Elbow
+136
+Right Shoulder
+170
+Left Hip
+159
+Right Hip
+165
+Left Knee
+128
+Right Knee
+122
+End
+Time: 30
+Left Elbow
+150
+Left Shoulder
+139
+Right Elbow
+159
+Right Shoulder
+144
+Left Hip
+153
+Right Hip
+166
+Left Knee
+117
+Right Knee
+95
+End
 Time: 31
 Left Elbow
+126
+Left Shoulder
+145
+Right Elbow
+154
+Right Shoulder
+143
+Left Hip
+103
+Right Hip
+170
+Left Knee
+170
+Right Knee
+166
+End
 Time: 32
 Left Elbow
+151
+Left Shoulder
+137
+Right Elbow
+130
+Right Shoulder
+146
+Left Hip
+177
+Right Hip
+97
+Left Knee
+167
+Right Knee
+178
+End
 Time: 33
 Left Elbow
+164
+Left Shoulder
+134
+Right Elbow
+151
+Right Shoulder
+150
+Left Hip
+169
+Right Hip
+142
+Left Knee
+163
+Right Knee
+97
+End
 Time: 34
 Left Elbow
+140
+Left Shoulder
+152
+Right Elbow
+150
+Right Shoulder
+140
+Left Hip
+165
+Right Hip
+153
+Left Knee
+166
+Right Knee
+166
+End
+Time: 35
+Left Elbow
+154
+Left Shoulder
+120
+Right Elbow
+154
+Right Shoulder
+118
+Left Hip
+153
+Right Hip
+166
+Left Knee
+165
+Right Knee
+166
+End
