@@ -152,4 +152,3 @@ C:\Users\Brad\302\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\Release\Mic
 C:\Users\Brad\302\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\Release\Microsoft.Samples.Kinect.WpfViewers.csproj.GenerateResource.Cache
 C:\Users\Brad\302\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\Release\Microsoft.Samples.Kinect.WpfViewers.dll
 C:\Users\Brad\302\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\Release\Microsoft.Samples.Kinect.WpfViewers.pdb
-C:\Users\Brad\302\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\Release\Microsoft.Samples.Kinect.WpfViewers.csprojResolveAssemblyReference.cache

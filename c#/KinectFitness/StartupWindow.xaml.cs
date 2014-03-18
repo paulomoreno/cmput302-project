@@ -30,6 +30,12 @@ namespace KinectFitness
             
         }
 
+        private void Button_Record(object sender, RoutedEventArgs e)
+        {
+            RecordWindow rw = new RecordWindow();
+            this.NavigationService.Navigate(rw);
+        }
+
         private void Button_Options(object sender, RoutedEventArgs e)
         {
 
@@ -58,6 +64,10 @@ namespace KinectFitness
             {
                 quitborder.Opacity = 1;
             }
+            else if (i.Name.Equals(recordbutton.Name))
+            {
+                recordborder.Opacity = 1;
+            }
         }
 
         /**
@@ -81,6 +91,10 @@ namespace KinectFitness
                 else if (i.Name.Equals(quitbutton.Name))
                 {
                     quitborder.Opacity = 0;
+                }
+                else if (i.Name.Equals(recordbutton.Name))
+                {
+                    recordborder.Opacity = 0;
                 }
 
         }

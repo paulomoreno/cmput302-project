@@ -55,3 +55,5 @@ C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness_MarkupCompile.cac
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.g.resources
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.Properties.Resources.resources
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.csproj.GenerateResource.Cache
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\RecordWindow.baml
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\RecordWindow.g.cs

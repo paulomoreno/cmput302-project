@@ -37,4 +37,5 @@ C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.g.resources
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.Properties.Resources.resources
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.csproj.GenerateResource.Cache
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.pdb
-C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.csprojResolveAssemblyReference.cache
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\RecordWindow.baml
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\RecordWindow.g.cs

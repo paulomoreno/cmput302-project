@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("right%20hand.gif")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("stopbuttonwindow.png")]
 
 

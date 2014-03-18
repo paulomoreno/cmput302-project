@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" Title="Kinect Fitness"  WindowHeight="500" WindowWidth="1000" Height="500" Width="1000">
+      mc:Ignorable="d" Title="Kinect Fitness"  WindowHeight="800" WindowWidth="1000" Height="800" Width="1000">
     
     <Page.Triggers>
         <EventTrigger RoutedEvent="Window.Loaded">
@@ -26,15 +26,18 @@
             </LinearGradientBrush>
         </Border.Background>
         <Grid Margin="10,0,10,10" Background="{x:Null}">
-            <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="51,212,0,0" Name="playButton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/playbutton.png" Mouse.MouseEnter="mouse_hover" Mouse.MouseLeave="mouse_leave" Mouse.MouseUp="Button_Play" />
-            <Image Height="164" HorizontalAlignment="Left" Margin="274,212,0,0" Name="optionsButton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/optionsbutton.png" Grid.Row="1" Mouse.MouseEnter="mouse_hover" Mouse.MouseLeave="mouse_leave" />
-            <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="513,212,0,0" Name="tutorialbutton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/tutorialbutton.png" Mouse.MouseEnter="mouse_hover" Mouse.MouseLeave="mouse_leave" />
-            <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="751,212,0,0" Name="quitbutton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/quitbutton.png" Mouse.MouseEnter="mouse_hover" Mouse.MouseLeave="mouse_leave"/>
-            <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="51,212,0,0" Name="playborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
-            <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="274,212,0,0" Name="optionsborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
-            <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="513,212,0,0" Name="tutorialborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
-            <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="751,212,0,0" Name="quitborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
-            <Image Grid.Row="1" Height="149" HorizontalAlignment="Left" Margin="6,6,0,0" Name="logo" Stretch="Fill" VerticalAlignment="Top" Width="477" Source="/KinectFitness;component/logo.png" />
+            <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="400,250,0,0" Name="playButton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/playbutton.png" Mouse.MouseEnter="mouse_hover" Mouse.MouseLeave="mouse_leave" Mouse.MouseUp="Button_Play" />
+            <Image Height="164" HorizontalAlignment="Left" Margin="100,250,0,0" Name="optionsButton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/optionsbutton.png" Grid.Row="1" Mouse.MouseEnter="mouse_hover" Mouse.MouseLeave="mouse_leave" />
+            <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="700,250,0,0" Name="tutorialbutton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/tutorialbutton.png" Mouse.MouseEnter="mouse_hover" Mouse.MouseLeave="mouse_leave" />
+            <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="400,0,0,0" Name="quitbutton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/quitbutton.png" Mouse.MouseEnter="mouse_hover" Mouse.MouseLeave="mouse_leave"/>
+            <Image Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="400,500,0,0" Name="recordbutton" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/recordbutton.png" Mouse.MouseEnter="mouse_hover" Mouse.MouseLeave="mouse_leave" Mouse.MouseUp="Button_Record"/>
+            <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="400,250,0,0" Name="playborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
+            <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="100,250,0,0" Name="optionsborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
+            <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="700,250,0,0" Name="tutorialborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
+            <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="400,0,0,0" Name="quitborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
+            <Border BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Margin="400,500,0,0" Name="recordborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
+            <Image Grid.Row="1" Height="99" HorizontalAlignment="Left" Margin="6,6,0,0" Name="logo" Stretch="Fill" VerticalAlignment="Top" Width="357" Source="/KinectFitness;component/logo.png" />
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>

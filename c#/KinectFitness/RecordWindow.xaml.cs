@@ -15,233 +15,135 @@ using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Diagnostics;
 
-
-
 namespace KinectFitness
 {
     /// <summary>
-    /// Interaction logic for KinectWindow.xaml
+    /// Interaction logic for RecordWindow.xaml
     /// </summary>
-    /// 
-
-
-   
-
-    public partial class KinectWindow : Page
+    public partial class RecordWindow : Page
     {
-        public KinectWindow()
+        public RecordWindow()
         {
             InitializeComponent();
-            
+            stopButton.Opacity = 0;
+            recording = false;
         }
-        
+
         bool closing = false;
-        bool videoPlaying;
-        bool timerInitialized;
         const int skeletonCount = 6;
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
-        double numberOfPts;
-        Stopwatch stopwatch;
-        Stopwatch hoverTimer;
-        Random r;
         Skeleton first;
         List<string> jointAngles;
+        Stopwatch jointTime;
+        System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        bool recording = false;
 
-        //Hand Positions
-        Rect leftHandPos;
-        Rect rightHandPos;
-
-        //Button Positions
-        Rect playIconPos;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
-            initializeUI();
-            initializeHoverChecker();
+            kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);     
         }
-
-        void initializeHoverChecker()
+        
+        //Initializes recorder
+        void initializeRecorder()
         {
-
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            //Timer to check for hand positions
-            dispatcherTimer.Tick += new EventHandler(checkHands);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            jointAngles = new List<string>();
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            jointTime = new Stopwatch();
+            //Timer to record joint angles every 1 second
+            dispatcherTimer.Tick += new EventHandler(recordSkeletonData);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
             dispatcherTimer.Start();
-
-            hoverTimer = new Stopwatch();
         }
-
-        void initializeTimer()
-        {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            
-            //Timer for Pseudo Heart Rate
-            dispatcherTimer.Tick += new EventHandler(heartRate);
-            dispatcherTimer.Interval = new TimeSpan(0,0,1);
-            dispatcherTimer.Start();
-
-            stopwatch = new Stopwatch();
-            stopwatch.Start();
-            r = new Random();
-        }
-
-
-
-        /**
-         * Pseudo Heart Rate Simulator
-         */
-        private void heartRate(object sender, EventArgs e)
+        //Records skeleton data
+        private void recordSkeletonData(object sender, EventArgs e)
         {            
-            int heartRate = r.Next(50,130);
-            heartRateToPoints(heartRate);            
-        }
-
-        /**
-         * Checks the heart rate and converts it to points
-         */
-        void heartRateToPoints(int heartRate)
-        {
-            stopwatch.Stop();
-            long elapsed = stopwatch.ElapsedMilliseconds;
-            if (heartRate > 90 && heartRate < 110)
+            jointTime.Start();
+            try
             {
-                numberOfPts += elapsed;
-                setPoints();
+                jointAngles.Add("Time: " + (Convert.ToInt32(jointTime.ElapsedMilliseconds/1000)).ToString());
+                jointAngles.Add("Left Elbow");
+                jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]).ToString());
+                jointAngles.Add("Left Shoulder");
+                jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft], first.Joints[JointType.ShoulderCenter]).ToString());
+                jointAngles.Add("Right Elbow");
+                jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandRight], first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight]).ToString());
+                jointAngles.Add("Right Shoulder");
+                jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight], first.Joints[JointType.ShoulderCenter]).ToString());
+                jointAngles.Add("Left Hip");
+                jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ShoulderLeft], first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft]).ToString());
+                jointAngles.Add("Right Hip");
+                jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ShoulderRight], first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight]).ToString());
+                jointAngles.Add("Left Knee");
+                jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]).ToString());
+                jointAngles.Add("Right Knee");
+                jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]).ToString());
+                jointAngles.Add("\n");
             }
-
-            var heartarrowangle = heartarrow.RenderTransform as RotateTransform;
-            heartarrowangle.Angle = heartRate*3;                  
-            
-            stopwatch.Reset();
-            stopwatch.Start();
-        }
-
-        /**
-         * Sets the points to the progress bar and number of points
-         */
-        void setPoints()
-        {            
-            //points.Text = numberOfPts + "Pts.";            
-        }
-
-        /**
-         * Initializes the UI
-         */
-        void initializeUI()
-        {
-            numberOfPts = 0;
-            points.Text = numberOfPts + "Pts.";
-            videoPlaying = false;
-            timerInitialized = false;
-          
-            //Get positions of buttons
-            leftHandPos = new Rect();
-            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
-            leftHandPos.Size = new Size(leftHand.Width, leftHand.Height);
-            rightHandPos = new Rect();
-            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
-            rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
-            playIconPos = new Rect();
-            playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
-            playIconPos.Size = new Size(playicon.Width, playicon.Height);
-
-            //Set video source for video player
-            FitnessPlayer.Source = new Uri("C:\\Users\\Public\\Videos\\Sample Videos\\Wildlife.wmv");
-        }
-
-        /**
-        * Checks to see if hands are hovering over a button
-        */
-        private void checkHands(object sender, EventArgs e)
-        {
-            
-            if (leftHandPos.IntersectsWith(playIconPos) || rightHandPos.IntersectsWith(playIconPos))
+            catch (NullReferenceException)
             {
-                hoverTimer.Start();
-                hoverPlay(playicon, new RoutedEventArgs());
-                //Check if hand has been hovering on target for 1 second or more   
-                if (hoverTimer.ElapsedMilliseconds >= 1000)
-                {
-                    //Presses the play button
-                    btnPlay_Click(sender, new RoutedEventArgs());
-                    //Resets hoverTimer
-                    hoverTimer.Reset();
-                }
+
             }
-            else  //If hand is not hovering on any button.  Reset timer.
-            {
-                hoverTimer.Reset();                
-                leavePlay(playicon, new RoutedEventArgs());
-            }                       
+        }
+
+        //Stop recording skeleton data and save the 'jointAngles' string collection to a text file
+        private void stopRecordSkeletonData()
+        {
+            jointTime.Reset();
+            dispatcherTimer.Stop();            
         }
 
 
-        /**
-         * Highlights play when the mouse or hand hovers over them
-         */
-        private void hoverPlay(object sender, RoutedEventArgs e)
+        void Record_Button(object sender, RoutedEventArgs e)
         {
-            Image i = (Image)sender;
-
-            if (i.Name.Equals(playicon.Name))
+            if (!recording)
             {
-                if (!videoPlaying)
-                {
-                    playicon.Opacity = 0;
-                    hoverplayicon.Opacity = 1;
-                    pauseicon.Opacity = 0;
-                    hoverpauseicon.Opacity = 0;                    
-                }
-                else
-                {
-                    playicon.Opacity = 0;
-                    hoverplayicon.Opacity = 0;
-                    pauseicon.Opacity = 0;
-                    hoverpauseicon.Opacity = 1;
-                }
+                recordButton.Opacity = 0;
+                stopButton.Opacity = 1;
+                initializeRecorder();
+                recording = true;
             }
-            
-        }
-
-        /**
-         * Stops highlighting the images when the mouse leaves
-         */
-        private void leavePlay(object sender, RoutedEventArgs e)
-        {
-            Image i = (Image)sender;
-
-            if (i.Name.Equals(playicon.Name))
+            else
             {
-                if (!videoPlaying)
-                {
-                    playicon.Opacity = 1;
-                    hoverplayicon.Opacity = 0;
-                    pauseicon.Opacity = 0;
-                    hoverpauseicon.Opacity = 0;
-                }
-                else
-                {
-                    playicon.Opacity = 0;
-                    hoverplayicon.Opacity = 0;
-                    pauseicon.Opacity = 1;
-                    hoverpauseicon.Opacity = 0;
-                }
+                recordButton.Opacity = 1;
+                stopButton.Opacity = 0;
+                // WriteAllLines creates a file, writes a collection of strings to the file, 
+                // and then closes the file.
+                stopRecordSkeletonData();
+                recording = false;
+                SaveFileAs.Visibility = System.Windows.Visibility.Visible;
             }
         }
 
 
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            // YesButton Clicked! Let's hide our InputBox and handle the input text.
+            SaveFileAs.Visibility = System.Windows.Visibility.Collapsed;
 
+            // Do something with the Input
+            String input = InputTextBox.Text;
+            System.IO.File.WriteAllLines(@"C:\Users\Brad\302\c#\KinectFitness\" + input + ".txt", jointAngles);
+
+            // Clear InputBox.
+            InputTextBox.Text = String.Empty;
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            // NoButton Clicked! Let's hide our InputBox.
+            SaveFileAs.Visibility = System.Windows.Visibility.Collapsed;
+
+            // Clear InputBox.
+            InputTextBox.Text = String.Empty;
+        }
+        
         void kinectSensorChooser1_KinectSensorChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             KinectSensor old = (KinectSensor)e.OldValue;
-
             StopKinect(old);
-
             KinectSensor sensor = (KinectSensor)e.NewValue;
-
             if (sensor == null)
             {
                 return;
@@ -290,15 +192,10 @@ namespace KinectFitness
             }
 
             GetCameraPoint(first, e);
-            //set scaled position
-            ScalePosition(leftHand, first.Joints[JointType.HandLeft]);
-            ScalePosition(rightHand, first.Joints[JointType.HandRight]);
-            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
-            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
 
-            
+
         }
-
+        
         //Returns the angle between the joints
         public static int AngleBetweenJoints(Joint j1, Joint j2, Joint j3)
         {
@@ -340,7 +237,7 @@ namespace KinectFitness
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
 
         }
-
+        
         void GetCameraPoint(Skeleton first, AllFramesReadyEventArgs e)
         {
             using (DepthImageFrame depth = e.OpenDepthImageFrame())
@@ -350,7 +247,7 @@ namespace KinectFitness
                 {
                     return;
                 }
-                
+
                 //Map a joint location to a point on the depth map
                 //left hand
                 DepthImagePoint leftDepthPoint =
@@ -370,11 +267,6 @@ namespace KinectFitness
                 ColorImagePoint rightColorPoint =
                     depth.MapToColorImagePoint(rightDepthPoint.X, rightDepthPoint.Y,
                     ColorImageFormat.RgbResolution640x480Fps30);
-
-
-                //Set location
-                CameraPosition(leftHand, leftColorPoint);
-                CameraPosition(rightHand, rightColorPoint);
             }
         }
 
@@ -485,35 +377,7 @@ namespace KinectFitness
         private void kinectSkeletonViewer1_Unloaded(object sender, RoutedEventArgs e)
         {
             closing = true;
-            StopKinect(kinectSensorChooser1.Kinect); 
+            StopKinect(kinectSensorChooser1.Kinect);
         }
-
-
-        /*
-         * Media Player Stuff
-         */
-        private void btnPlay_Click(object sender, RoutedEventArgs e)
-        {
-            if (!videoPlaying)
-            {               
-                FitnessPlayer.Play();                
-                videoPlaying = true;
-                if (!timerInitialized)
-                {
-                    initializeTimer();
-                    timerInitialized = true;
-                }                
-            }
-            else
-            {                
-                FitnessPlayer.Pause();
-                videoPlaying = false;
-               
-            }
-        }
-
-
-
-
     }
 }
