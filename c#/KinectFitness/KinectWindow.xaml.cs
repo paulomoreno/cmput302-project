@@ -183,7 +183,12 @@ namespace KinectFitness
          */
         private bool SkeletonMatchesCloselyEnough(JointAngles ja)
         {
-            if (Convert.ToInt32(first.Joints[JointType.ElbowLeft]) < ja.leftElbow)
+            if (first == null)
+            {
+                return false;
+            }
+            int leftElbow = AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]);
+            if (leftElbow < ja.leftElbow)
             {
                 return true;
             }
