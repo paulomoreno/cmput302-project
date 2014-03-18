@@ -47,6 +47,8 @@ namespace KinectFitness
         Random r;
         Skeleton first;
         List<string> jointAngles;
+        List<JointAngles> loadedSkeleton;
+        System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
 
         //Hand Positions
         Rect leftHandPos;
@@ -60,11 +62,66 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
             initializeUI();
             initializeHoverChecker();
+            loadExercise();
+        }
+
+        private void loadExercise()
+        {
+            string line;
+            JointAngles ja = new JointAngles();
+            loadedSkeleton = new List<JointAngles>();
+            // Read the file and display it line by line.
+            System.IO.StreamReader file =
+               new System.IO.StreamReader("..\\..\\Recordings\\chosenExercise.txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                if(line.Contains("Left Shoulder"))
+                {
+                    ja.leftShoulder = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("Right Shoulder"))
+                {
+                    ja.rightShoulder = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("Left Elbow"))
+                {
+                    ja.leftElbow = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("Left Hip"))
+                {
+                    ja.leftHip = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("Left Knee"))
+                {
+                    ja.leftKnee = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("Right Elbow"))
+                {
+                    ja.rightElbow = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("Right Hip"))
+                {
+                    ja.rightHip = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("Right Knee"))
+                {
+                    ja.rightKnee = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("End"))
+                {
+                    loadedSkeleton.Add(ja);
+                    ja = new JointAngles();
+                }
+            }
+
+            file.Close();
+
+            // Suspend the screen.
+            Console.ReadLine();
         }
 
         void initializeHoverChecker()
         {
-
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             //Timer to check for hand positions
             dispatcherTimer.Tick += new EventHandler(checkHands);
@@ -88,7 +145,60 @@ namespace KinectFitness
             r = new Random();
         }
 
+        /**
+         * Starts playing back the skeleton and matching it against the user
+         */
+        private void startPlaybackSkeleton()
+        {
+            skeletonMatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            skeletonMatcherTimer.Tick += new EventHandler(matchSkeleton);
+            skeletonMatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            skeletonMatcherTimer.Start();
+        }
 
+        /**
+         * Checks if the loaded skeleton data matches the users skeleton 
+         * periodically every second
+         */
+        private void matchSkeleton(object sender, EventArgs e)
+        {
+            //Get amount of seconds passed in video
+            TimeSpan timePassedInVideo = FitnessPlayer.Position;
+            int secondsPassedInVideo = timePassedInVideo.Seconds;
+
+            //Check if loaded skeleton at this point matches the users current data
+            if(SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo)))
+            {
+                points.Text = "GOOD!";
+            }
+            else
+            {
+                points.Text = "BAD!";
+            }
+        }
+
+        /**
+         * Checks if the skeleton data matches within certain
+         * angles to the users
+         */
+        private bool SkeletonMatchesCloselyEnough(JointAngles ja)
+        {
+            if (Convert.ToInt32(first.Joints[JointType.ElbowLeft]) < ja.leftElbow)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        /**
+         * Pause the playback of the skeleton
+         */
+        private void pausePlaybackSkeleton()
+        {
+
+        }
 
         /**
          * Pseudo Heart Rate Simulator
@@ -502,13 +612,14 @@ namespace KinectFitness
                 {
                     initializeTimer();
                     timerInitialized = true;
+                    startPlaybackSkeleton();
                 }                
             }
             else
             {                
                 FitnessPlayer.Pause();
                 videoPlaying = false;
-               
+                pausePlaybackSkeleton();
             }
         }
 

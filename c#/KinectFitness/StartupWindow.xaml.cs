@@ -25,9 +25,8 @@ namespace KinectFitness
 
         private void Button_Play(object sender, RoutedEventArgs e)
         {
-            KinectWindow kw = new KinectWindow();
-            this.NavigationService.Navigate(kw);
-            
+            SelectLevelWindow slw = new SelectLevelWindow();
+            this.NavigationService.Navigate(slw);            
         }
 
         private void Button_Record(object sender, RoutedEventArgs e)

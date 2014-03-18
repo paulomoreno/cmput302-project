@@ -62,6 +62,8 @@ namespace KinectFitness
             jointTime.Start();
             try
             {
+                if (first == null)
+                    return;
                 jointAngles.Add("Time: " + (Convert.ToInt32(jointTime.ElapsedMilliseconds/1000)).ToString());
                 jointAngles.Add("Left Elbow");
                 jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]).ToString());
@@ -79,7 +81,7 @@ namespace KinectFitness
                 jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]).ToString());
                 jointAngles.Add("Right Knee");
                 jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]).ToString());
-                jointAngles.Add("\n");
+                jointAngles.Add("End");
             }
             catch (NullReferenceException)
             {
@@ -124,7 +126,9 @@ namespace KinectFitness
 
             // Do something with the Input
             String input = InputTextBox.Text;
-            System.IO.File.WriteAllLines(@"C:\Users\Brad\302\c#\KinectFitness\" + input + ".txt", jointAngles);
+
+            
+            System.IO.File.WriteAllLines(@"C:\Users\Brad\302\c#\KinectFitness\Recordings\" + input + ".txt", jointAngles);
 
             // Clear InputBox.
             InputTextBox.Text = String.Empty;

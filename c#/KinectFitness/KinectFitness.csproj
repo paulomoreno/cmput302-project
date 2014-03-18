@@ -63,11 +63,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="JointAngles.cs" />
     <Compile Include="KinectWindow.xaml.cs">
       <DependentUpon>KinectWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="RecordWindow.xaml.cs">
       <DependentUpon>RecordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelectLevelWindow.xaml.cs">
+      <DependentUpon>SelectLevelWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="StartupWindow.xaml.cs">
       <DependentUpon>StartupWindow.xaml</DependentUpon>
@@ -89,6 +93,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectLevelWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
