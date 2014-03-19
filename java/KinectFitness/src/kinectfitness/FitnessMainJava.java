@@ -1,11 +1,31 @@
-package com.kinectfitness.main;
+package kinectfitness;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import javax.swing.*;
 
 public class FitnessMainJava {
 
-	public static void main(String[] args) {
-		createInputDialog();
+	public static void main(String[] args) throws URISyntaxException, IOException {
+            //createInputDialog();
+                
+            // getting path to KinectFitness.exe file
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            URL url = classLoader.getResource("");
+            File file = new File(url.toURI());
+            String[] filepathinfo = file.getAbsolutePath().split("\\\\");
+            
+            String exeFilePath = ""+filepathinfo[0];
+            
+            for(int i = 1; i < filepathinfo.length-4; i++)
+            {
+                exeFilePath += "/"+filepathinfo[i];
+            }
+            
+            exeFilePath += "/c#/KinectFitness/bin/Release/KinectFitness.exe";
+            Process process=Runtime.getRuntime().exec(exeFilePath);
 		
 		// TODO Auto-generated method stub
 		// 1. ask them for password --> to branch off to doctor vs patient
@@ -19,6 +39,7 @@ public class FitnessMainJava {
 	private static void createInputDialog()
 	{
 		JFrame dialogWindow = new JFrame("Kinect Fitness");
+                dialogWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
 		

@@ -1,4 +1,4 @@
-package com.kinectfitness.main;
+package kinectfitness;
 
 /*************************************************************************
  *  Compilation:  javac In.java
