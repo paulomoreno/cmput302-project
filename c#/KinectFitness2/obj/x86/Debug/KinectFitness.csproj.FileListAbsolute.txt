@@ -1,0 +1,82 @@
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\bin\Debug\KinectFitness.exe
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\bin\Debug\KinectFitness.pdb
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\KinectWindow.baml
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\MainWindow.baml
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\StartupWindow.baml
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\KinectWindow.g.cs
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\StartupWindow.g.cs
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\App.g.cs
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\KinectFitness_MarkupCompile.cache
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\KinectFitness.g.resources
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\KinectFitness.Properties.Resources.resources
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\KinectFitness.exe
+C:\Users\Brad\AppData\Local\Temporary Projects\KinectFitness\obj\x86\Debug\KinectFitness.pdb
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\KinectFitness.exe
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\KinectFitness.pdb
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\bin\Debug\KinectFitness.exe
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\bin\Debug\KinectFitness.pdb
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\bin\Debug\Coding4Fun.Kinect.Wpf.dll
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\bin\Debug\Microsoft.Samples.Kinect.WpfViewers.dll
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\bin\Debug\Microsoft.Expression.Drawing.dll
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\bin\Debug\Microsoft.Samples.Kinect.WpfViewers.pdb
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\bin\Debug\Coding4Fun.Kinect.Wpf.pdb
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\KinectWindow.baml
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\MainWindow.baml
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\StartupWindow.baml
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\KinectWindow.g.cs
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\StartupWindow.g.cs
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\App.g.cs
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\KinectFitness_MarkupCompile.cache
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\KinectFitness.g.resources
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\KinectFitness.Properties.Resources.resources
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\KinectFitness.csprojResolveAssemblyReference.cache
+C:\Users\Brad\documents\visual studio 2010\Projects\KinectFitness\KinectFitness\obj\x86\Debug\KinectFitness.csproj.GenerateResource.Cache
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.exe
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.pdb
+C:\Users\Brad\302\c#\KinectFitness\bin\Debug\KinectFitness.exe
+C:\Users\Brad\302\c#\KinectFitness\bin\Debug\KinectFitness.pdb
+C:\Users\Brad\302\c#\KinectFitness\bin\Debug\Microsoft.Expression.Drawing.dll
+C:\Users\Brad\302\c#\KinectFitness\bin\Debug\Coding4Fun.Kinect.Wpf.pdb
+C:\Users\Brad\302\c#\KinectFitness\bin\Debug\Microsoft.Samples.Kinect.WpfViewers.pdb
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.csprojResolveAssemblyReference.cache
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectWindow.baml
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\MainWindow.baml
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\StartupWindow.baml
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectWindow.g.cs
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\StartupWindow.g.cs
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\App.g.cs
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness_MarkupCompile.cache
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.g.resources
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.Properties.Resources.resources
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.csproj.GenerateResource.Cache
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\RecordWindow.baml
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\RecordWindow.g.cs
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\SelectLevelWindow.baml
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\SelectLevelWindow.g.cs
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.exe
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.pdb
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectWindow.baml
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\MainWindow.baml
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\RecordWindow.baml
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\SelectLevelWindow.baml
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\StartupWindow.baml
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectWindow.g.cs
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\MainWindow.g.cs
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\RecordWindow.g.cs
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\SelectLevelWindow.g.cs
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\StartupWindow.g.cs
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\App.g.cs
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness_MarkupCompile.cache
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.g.resources
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.Properties.Resources.resources
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.csproj.GenerateResource.Cache
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\bin\Debug\KinectFitness.exe
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\bin\Debug\KinectFitness.pdb
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\bin\Debug\Kinect.Toolbox.dll
+C:\Users\Nancy\Downloads\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.csprojResolveAssemblyReference.cache
