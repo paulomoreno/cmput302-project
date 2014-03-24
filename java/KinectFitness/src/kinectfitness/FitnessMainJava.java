@@ -46,21 +46,27 @@ public class FitnessMainJava {
                 switch (value) {
                     case "patient1":
                         try {
-                            //Patient patient = new Patient();
+                            //Patiegit lnt patient = new Patient();
                             //patient.Patient("192.168.0.197");
-                           // Patient.startPatient(patient);
+                            // Patient.startPatient(patient);
                             FitnessMainJava.startKinectApp();
-                            
+
                             dialogWindow.dispose();
                         } catch (IOException ex) {
                             Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (URISyntaxException ex) {
                             Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (Exception ex) {
-                    Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                            Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         break;
                     case "doctor":
+                        Doctor doctor = new Doctor();
+                        try {
+                            doctor.startDoctor();
+                        } catch (Exception ex) {
+                            Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         break;
                     default:
                         break;
