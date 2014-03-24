@@ -46,9 +46,9 @@ public class FitnessMainJava {
                 switch (value) {
                     case "patient1":
                         try {
-                            //Patiegit lnt patient = new Patient();
-                            //patient.Patient("192.168.0.197");
-                            // Patient.startPatient(patient);
+                            //Patient patient = new Patient();
+                            //patient.Patient("192.168.1.66");
+                            //Patient.startPatient(patient);
                             FitnessMainJava.startKinectApp();
 
                             dialogWindow.dispose();

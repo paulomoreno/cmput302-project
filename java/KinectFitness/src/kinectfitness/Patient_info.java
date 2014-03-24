@@ -7,6 +7,7 @@ package kinectfitness;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
 import java.util.logging.Level;
@@ -17,19 +18,20 @@ import java.util.Timer;
  *
  * @author Marcus
  */
-public class Patient_info extends Thread {    
+public class Patient_info extends Thread {
+
     private String doctorIP;
-    
-    public Patient_info(String doctorIP){
+
+    public Patient_info(String doctorIP) {
         this.doctorIP = doctorIP;
     }
-    
+
     @Override
-    public void run()
-    {
+    public void run() {
 //        Info patient_info = new Info();
 //        int counter = 0;
         Socket socket1;
+        Socket csharpsocket;
         int portNumber = 5020;
         try {
             socket1 = new Socket(doctorIP, portNumber);
@@ -48,7 +50,7 @@ public class Patient_info extends Thread {
 //                System.out.println(patient_info.heart_rate);
 //                oos.writeObject(patient_info);
 //                oos.reset();
-                
+
 //            }
             socket1.close();
         } catch (IOException ex) {
@@ -57,7 +59,6 @@ public class Patient_info extends Thread {
 //            Logger.getLogger(Patient_info.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
 //    public static int randInt(int min, int max) {
 //
 //        // Usually this can be a field rather than a method variable
