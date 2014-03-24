@@ -35,11 +35,12 @@ namespace KinectFitness
             foreach(string exercise in exercises)
             {
                 //Make sure a button is not created for the 'chosenExercise' file
-                if (!exercise.Contains("chosenExercise"))
+                if (!exercise.Contains("chosenExercise") && exercise.EndsWith(".txt"))
                 {
                     System.Windows.Controls.Button newBtn = new Button();
                     x++;
-                    newBtn.Content = "Exercise " + x.ToString();
+                    //newBtn.Content = "Exercise " + x.ToString();
+                    newBtn.Content = exercise;
                     newBtn.Name = "e" + x.ToString();
                     newBtn.Click += new RoutedEventHandler(newBtn_Click);
 
@@ -61,7 +62,7 @@ namespace KinectFitness
                 path = System.IO.Directory.GetParent(path).FullName;
                 path = System.IO.Directory.GetParent(path).FullName;
 
-                //File.Delete(path + "\\Recordings\\chosenExercise.txt");
+                File.Delete(path + "\\Recordings\\chosenExercise.txt");
                 System.IO.File.Copy(exercise, path + "\\Recordings\\chosenExercise.txt");
             }
             catch (IOException)
