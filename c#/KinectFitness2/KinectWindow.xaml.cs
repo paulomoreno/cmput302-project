@@ -202,7 +202,7 @@ namespace KinectFitness
             //Check if loaded skeleton at this point matches the users current data within +- 1 second of the video
             try
             {
-                if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo - 1)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo + 1)))
+                if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassed)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassed - 1)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassed + 1)))
                 {
                     points.Text = "GOOD!";
                 }
