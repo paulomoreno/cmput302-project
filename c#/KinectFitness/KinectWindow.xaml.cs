@@ -166,14 +166,21 @@ namespace KinectFitness
             TimeSpan timePassedInVideo = FitnessPlayer.Position;
             int secondsPassedInVideo = timePassedInVideo.Seconds;
 
-            //Check if loaded skeleton at this point matches the users current data
-            if(SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo)))
+            //Check if loaded skeleton at this point matches the users current data within +- 1 second of the video
+            try
             {
-                points.Text = "GOOD!";
+                if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo - 1)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo + 1)))
+                {
+                    points.Text = "GOOD!";
+                }
+                else
+                {
+                    points.Text = "BAD!";
+                }
             }
-            else
+            catch (ArgumentOutOfRangeException)
             {
-                points.Text = "BAD!";
+                //Do nothing
             }
         }
 
@@ -195,7 +202,7 @@ namespace KinectFitness
             int leftKnee = AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]);
             int rightKnee = AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]);
                 
-            //Check if patient's joint angle is +- 20 degrees of the exercise
+            //Check if patient's joint angle is +- 30 degrees of the exercise
             if (leftElbow < (ja.leftElbow - 30) || leftElbow > (ja.leftElbow + 30))
             {
                 suggestionBlock.Text = "Fix your left elbow!";

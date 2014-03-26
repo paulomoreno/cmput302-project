@@ -197,13 +197,23 @@ namespace KinectFitness
             TimeSpan timePassed = comparisonStopWatch.Elapsed;
             int secondsPassed = timePassed.Seconds;
             Debug.WriteLine(secondsPassed.ToString());
-            if(SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassed)))
+
+
+            //Check if loaded skeleton at this point matches the users current data within +- 1 second of the video
+            try
             {
-                points.Text = "GOOD!";
+                if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo - 1)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo + 1)))
+                {
+                    points.Text = "GOOD!";
+                }
+                else
+                {
+                    points.Text = "BAD!";
+                }
             }
-            else
+            catch (ArgumentOutOfRangeException)
             {
-                points.Text = "BAD!";
+                //Do nothing
             }
         }
 
