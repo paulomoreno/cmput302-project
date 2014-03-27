@@ -42,13 +42,15 @@ namespace KinectFitness
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
         double numberOfPts;
-        Stopwatch stopwatch;
+        int numberOfPtsBar;
+        double totalMovieTime;
         Stopwatch hoverTimer;
         Random r;
         Skeleton first;
         List<string> jointAngles;
         List<JointAngles> loadedSkeleton;
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
+        System.Windows.Threading.DispatcherTimer videoProgressBarTracker;
 
         //Hand Positions
         Rect leftHandPos;
@@ -131,6 +133,7 @@ namespace KinectFitness
             hoverTimer = new Stopwatch();
         }
 
+        /*
         void initializeTimer()
         {
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -144,6 +147,7 @@ namespace KinectFitness
             stopwatch.Start();
             r = new Random();
         }
+        */
 
         /**
          * Starts playing back the skeleton and matching it against the user
@@ -157,11 +161,32 @@ namespace KinectFitness
         }
 
         /**
+         * Starts the timer for the progress bar
+         */
+        private void startVideoProgressBar()
+        {
+            videoProgressBarTracker = new System.Windows.Threading.DispatcherTimer();
+            videoProgressBarTracker.Tick += new EventHandler(updateVideoProgressBar);
+            videoProgressBarTracker.Interval = new TimeSpan(0, 0, 1);
+            videoProgressBarTracker.Start();
+        }
+
+        /**
+         * Updates the video progress bar every second
+         */
+        private void updateVideoProgressBar(object sender, EventArgs e)
+        {            
+            videoProgressBar.Width = (FitnessPlayer.Position.Seconds / totalMovieTime) * 855;
+        }
+
+        /**
          * Checks if the loaded skeleton data matches the users skeleton 
          * periodically every second
          */
         private void matchSkeleton(object sender, EventArgs e)
         {
+            numberOfPtsBar = 0;
+            setPoints();
             //Get amount of seconds passed in video
             TimeSpan timePassedInVideo = FitnessPlayer.Position;
             int secondsPassedInVideo = timePassedInVideo.Seconds;
@@ -169,13 +194,13 @@ namespace KinectFitness
             //Check if loaded skeleton at this point matches the users current data within +- 1 second of the video
             try
             {
-                if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo - 1)) || SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo + 1)))
+                if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo)))
                 {
-                    points.Text = "GOOD!";
+                    
                 }
                 else
                 {
-                    points.Text = "BAD!";
+                    
                 }
             }
             catch (ArgumentOutOfRangeException)
@@ -190,6 +215,7 @@ namespace KinectFitness
          */
         private bool SkeletonMatchesCloselyEnough(JointAngles ja)
         {
+            bool everythingMatches = true;
             if (first == null)
             {
                 return false;
@@ -205,41 +231,75 @@ namespace KinectFitness
             //Check if patient's joint angle is +- 30 degrees of the exercise
             if (leftElbow < (ja.leftElbow - 30) || leftElbow > (ja.leftElbow + 30))
             {
-                suggestionBlock.Text = "Fix your left elbow!";
-                return false;
+                everythingMatches = false;
             }
-            else if (rightElbow < (ja.rightElbow - 30) || rightElbow > (ja.rightElbow + 30))
+            else
             {
-                suggestionBlock.Text = "Fix your right elbow!";
-                return false;
-            }
-            else if (leftHip < (ja.leftHip - 30) || leftHip > (ja.leftHip + 30))
+                numberOfPtsBar += 15;
+                numberOfPts += 50;
+                setPoints();
+            }            
+            if (rightElbow < (ja.rightElbow - 30) || rightElbow > (ja.rightElbow + 30))
             {
-                suggestionBlock.Text = "Fix your left hip!";
-                return false;
+                everythingMatches = false;
             }
-            else if (rightHip < (ja.rightHip - 30) || rightHip > (ja.rightHip + 30))
+            else
             {
-                suggestionBlock.Text = "Fix your right hip!";
-                return false;
+                numberOfPtsBar += 15;
+                numberOfPts += 50;
+                setPoints();
             }
-            else if (rightKnee < (ja.rightKnee - 30) || rightKnee > (ja.rightKnee + 30))
+            if (leftHip < (ja.leftHip - 30) || leftHip > (ja.leftHip + 30))
             {
-                suggestionBlock.Text = "Fix your right knee!";
-                return false;
+                everythingMatches = false;
             }
-            else if (leftKnee < (ja.leftKnee - 30) || leftKnee > (ja.leftKnee + 30))
+            else
             {
-                suggestionBlock.Text = "Fix your left knee!";
-                return false;
+                numberOfPtsBar += 15;
+                numberOfPts += 50;
+                setPoints();
             }
-            else if (rightShoulder < (ja.rightShoulder - 30) || rightShoulder > (ja.rightShoulder + 30))
+            if (rightHip < (ja.rightHip - 30) || rightHip > (ja.rightHip + 30))
             {
-                suggestionBlock.Text = "Fix your right shoulder!";
-                return false;
+                everythingMatches = false;
             }
-            else return true;
-
+            else
+            {
+                numberOfPtsBar += 15;
+                numberOfPts += 50;
+                setPoints();
+            }
+            if (rightKnee < (ja.rightKnee - 30) || rightKnee > (ja.rightKnee + 30))
+            {
+                everythingMatches = false;
+            }
+            else
+            {
+                numberOfPtsBar += 15;
+                numberOfPts += 50;
+                setPoints();
+            }
+            if (leftKnee < (ja.leftKnee - 30) || leftKnee > (ja.leftKnee + 30))
+            {
+                everythingMatches = false;
+            }
+            else
+            {
+                numberOfPtsBar += 15;
+                numberOfPts += 50;
+                setPoints();
+            }
+            if (rightShoulder < (ja.rightShoulder - 30) || rightShoulder > (ja.rightShoulder + 30))
+            {
+                everythingMatches = false;
+            }
+            else
+            {
+                numberOfPtsBar += 15;
+                numberOfPts += 50;
+                setPoints();
+            }
+            return everythingMatches;
         }
         /**
          * Pause the playback of the skeleton
@@ -252,15 +312,19 @@ namespace KinectFitness
         /**
          * Pseudo Heart Rate Simulator
          */
+        /*
         private void heartRate(object sender, EventArgs e)
         {            
             int heartRate = r.Next(50,130);
             heartRateToPoints(heartRate);            
         }
+        */
 
         /**
          * Checks the heart rate and converts it to points
          */
+        //This method has been discontinued for this part of the program
+        /*
         void heartRateToPoints(int heartRate)
         {
             stopwatch.Stop();
@@ -277,13 +341,15 @@ namespace KinectFitness
             stopwatch.Reset();
             stopwatch.Start();
         }
+        */
 
         /**
          * Sets the points to the progress bar and number of points
          */
         void setPoints()
         {            
-            //points.Text = numberOfPts + "Pts.";            
+            points.Text = numberOfPts + "Pts.";
+            pointsBar.Value = numberOfPtsBar;
         }
 
         /**
@@ -292,9 +358,12 @@ namespace KinectFitness
         void initializeUI()
         {
             numberOfPts = 0;
+            numberOfPtsBar = 0;
             points.Text = numberOfPts + "Pts.";
+            pointsBar.Value = numberOfPtsBar;
             videoPlaying = false;
             timerInitialized = false;
+            videoProgressBar.Width = 0;
           
             //Get positions of buttons
             leftHandPos = new Rect();
@@ -308,7 +377,15 @@ namespace KinectFitness
             playIconPos.Size = new Size(playicon.Width, playicon.Height);
 
             //Set video source for video player
-            FitnessPlayer.Source = new Uri("C:\\Users\\Public\\Videos\\Sample Videos\\Wildlife.wmv");
+            FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\Workout2.mp4", UriKind.Relative);
+            //Get Length of Video
+            FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
+        }
+
+        //Find length of video
+        void media_MediaOpened(object sender, System.Windows.RoutedEventArgs e)
+        {
+            totalMovieTime = FitnessPlayer.NaturalDuration.TimeSpan.TotalSeconds;
         }
 
         /**
@@ -659,9 +736,10 @@ namespace KinectFitness
                 videoPlaying = true;
                 if (!timerInitialized)
                 {
-                    initializeTimer();
+                    //initializeTimer();
                     timerInitialized = true;
                     startPlaybackSkeleton();
+                    startVideoProgressBar();
                 }                
             }
             else

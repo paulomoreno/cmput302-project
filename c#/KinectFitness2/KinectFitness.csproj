@@ -202,6 +202,12 @@
     <Resource Include="recordbuttonwindow.png" />
     <Resource Include="stopbuttonwindow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Dependencies\KinectToolbox\Kinect.Toolbox.csproj">
+      <Project>{2C84CE43-CDAB-4541-A55A-7F849E8AC247}</Project>
+      <Name>Kinect.Toolbox</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

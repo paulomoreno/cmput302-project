@@ -1,0 +1,12 @@
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\bin\Debug\Kinect.Toolbox.dll
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\bin\Debug\Kinect.Toolbox.pdb
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\bin\Debug\Microsoft.Kinect.Toolkit.FaceTracking.dll
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\obj\Debug\Kinect.Toolbox.csprojResolveAssemblyReference.cache
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\obj\Debug\Controls\PresenceControl.baml
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\obj\Debug\Controls\MouseImpostor.baml
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\obj\Debug\Controls\PresenceControl.g.cs
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\obj\Debug\Controls\MouseImpostor.g.cs
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\obj\Debug\Kinect.Toolbox_MarkupCompile.cache
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\obj\Debug\Kinect.Toolbox.g.resources
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\obj\Debug\Kinect.Toolbox.dll
+C:\Users\Brad\302\c#\KinectFitness2\Dependencies\KinectToolbox\obj\Debug\Kinect.Toolbox.pdb

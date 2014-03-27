@@ -183,6 +183,10 @@
     <Resource Include="recordbuttonwindow.png" />
     <Resource Include="stopbuttonwindow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="backgroundImage.jpg" />
+    <Content Include="Cardio Tai Box Workout - Crunch Gym Fitness - Class FitSugar.avi" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

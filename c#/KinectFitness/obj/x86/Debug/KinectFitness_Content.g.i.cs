@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("stopbuttonwindow.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cardio%20tai%20box%20workout%20-%20crunch%20gym%20fitness%20-%20class%20fitsugar." +
+    "avi")]
 
 
