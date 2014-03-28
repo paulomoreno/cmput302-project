@@ -5,30 +5,23 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="700" d:DesignWidth="1300"
-	Title="SelectLevelWindow" FontFamily="Verdana">
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="Window.Loaded">
-            <BeginStoryboard>
-                <Storyboard AutoReverse="True" BeginTime="0" >
-                    <DoubleAnimation Storyboard.TargetName="background"
-                                     Storyboard.TargetProperty="Offset"
-                                     From="0.2" To="0.8" Duration="0:0:10"/>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </Page.Triggers>
-    <Border>
-        <Border.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                <GradientStop Color="#FF181E2B" Offset="0"/>
-                <GradientStop Color="#FF60607C" Offset="0.2"  x:Name="background"/>
-                <GradientStop Color="#FF193152" Offset="1"/>
-            </LinearGradientBrush>
-        </Border.Background>
+	Title="SelectLevelWindow" FontFamily="Verdana" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
+
         <Grid>
-            
-            <TextBlock Height="150" HorizontalAlignment="Left" Margin="355,6,0,0" Name="title" Text="SELECT EXERCISE" VerticalAlignment="Top" Width="778" Foreground="White" FontSize="72" />
-            <StackPanel Height="286" HorizontalAlignment="Left" Margin="496,162,0,0" Name="levels" VerticalAlignment="Top" Width="372" />
-        </Grid>
-    </Border>
+        <Grid.Background>
+            <ImageBrush ImageSource="/KinectFitness;component/backgroundImage.jpg"/>
+        </Grid.Background>
+
+        <TextBlock Height="150" HorizontalAlignment="Left" Margin="355,6,0,0" Name="title" Text="SELECT EXERCISE" VerticalAlignment="Top" Width="778" Foreground="White" FontSize="72" />
+            <StackPanel Height="286" HorizontalAlignment="Left" Margin="544,544,0,0" Name="levels" VerticalAlignment="Top" Width="372"></StackPanel>
+            <Image Height="206" HorizontalAlignment="Left" Margin="929,164,0,0" Name="intense" Stretch="Fill" VerticalAlignment="Top" Width="316" Source="/KinectFitness;component/intenseCardioImage.png" Opacity="1" />
+            <Image Name="moderate" Stretch="Fill" Width="316" Source="/KinectFitness;component/moderateCardioImage.png" Margin="517,164,467,328" />
+            <Image Height="206" HorizontalAlignment="Left" Margin="104,164,0,0" Name="warmUp" Stretch="Fill" VerticalAlignment="Top" Width="316" Source="/KinectFitness;component/WarmUpImage.png" />
+        <my:KinectSensorChooser HorizontalAlignment="Left" Margin="12,466,0,0" Name="kinectSensorChooser1" VerticalAlignment="Top" Width="256" Height="234" />
+        <Image Height="56" HorizontalAlignment="Left" Margin="12,12,0,0" Name="leftHand" Stretch="Fill" VerticalAlignment="Top" Width="57" Source="/KinectFitness;component/left%20hand.gif" />
+        <Image Height="56" HorizontalAlignment="Left" Margin="104,12,0,0" Name="rightHand" Stretch="Fill" VerticalAlignment="Top" Width="57" Source="/KinectFitness;component/right%20hand.gif" />
+        <Rectangle Height="15" HorizontalAlignment="Left" Margin="12,67,0,0" Name="leftHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="57" Fill="#FF0BD40B" />
+        <Rectangle Height="15" HorizontalAlignment="Left" Margin="104,67,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="57" Fill="#FF0BD40B" />
+    </Grid>
+
 </Page>

@@ -448,7 +448,7 @@ namespace KinectFitness
                 }
                 
                 //Check if hand has been hovering on target for 1 second or more   
-                if (hoverTimer.ElapsedMilliseconds >= 1000)
+                if (hoverTimer.ElapsedMilliseconds >= 2000)
                 {
                     //Presses the play button
                     btnPlay_Click(sender, new RoutedEventArgs());
@@ -467,7 +467,7 @@ namespace KinectFitness
         private void setHandProgressBar(bool leftHand, long timeElapsed)
         {
             double t = timeElapsed;
-            double w = t / 1000 * 50;
+            double w = t / 2000 * 50;
             if (leftHand)
             {
                 leftHandProgressBar.Width = w;
@@ -560,7 +560,7 @@ namespace KinectFitness
                 Smoothing = 0.3f,
                 Correction = 0.0f,
                 Prediction = 0.0f,
-                JitterRadius = 0.05f,
+                JitterRadius = 1.0f,
                 MaxDeviationRadius = 0.5f
             };
             //sensor.SkeletonStream.Enable(parameters);

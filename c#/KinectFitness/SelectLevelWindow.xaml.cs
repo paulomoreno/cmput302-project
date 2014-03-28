@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.Collections;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Kinect;
+using Coding4Fun.Kinect.Wpf;
+using System.Diagnostics;
 
 namespace KinectFitness
 {
@@ -21,11 +22,205 @@ namespace KinectFitness
     /// </summary>
     public partial class SelectLevelWindow : Page
     {
+        bool closing = false;
+        const int skeletonCount = 6;
+        Skeleton[] allSkeletons = new Skeleton[skeletonCount];
+        KinectSensor ksensor;
+        Skeleton first;
+
+        //Hand Positions
+        Rect leftHandPos;
+        Rect rightHandPos;
+
+
         public SelectLevelWindow()
         {
             InitializeComponent();
-            addExercises();
+            //addExercises();
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
+        }
+
+        void kinectSensorChooser1_KinectSensorChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            KinectSensor old = (KinectSensor)e.OldValue;
+
+            StopKinect(old);
+
+            KinectSensor sensor = (KinectSensor)e.NewValue;
+
+            if (sensor == null)
+            {
+                return;
+            }
+
+            var parameters = new TransformSmoothParameters
+            {
+                Smoothing = 0.3f,
+                Correction = 0.0f,
+                Prediction = 0.0f,
+                JitterRadius = 1.0f,
+                MaxDeviationRadius = 0.5f
+            };
+            //sensor.SkeletonStream.Enable(parameters);
+
+            sensor.SkeletonStream.Enable();
+
+            sensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
+            sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
+            sensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
+
+            try
+            {
+                sensor.Start();
+                ksensor = sensor;
+            }
+            catch (System.IO.IOException)
+            {
+                kinectSensorChooser1.AppConflictOccurred();
+            }
+        }
+
+        void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
+        {
+            if (closing)
+            {
+                return;
+            }
+
+            //Get a skeleton
+            first = GetFirstSkeleton(e);
+
+            if (first == null)
+            {
+                return;
+            }
+
+            GetCameraPoint(first, e);
+            //set scaled position
+            ScalePosition(leftHand, first.Joints[JointType.HandLeft]);
+            ScalePosition(rightHand, first.Joints[JointType.HandRight]);
+            ScalePosition(leftHandProgressBar, first.Joints[JointType.HandLeft]);
+            ScalePosition(rightHandProgressBar, first.Joints[JointType.HandRight]);
+
+
+            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
+            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
+
+
+
+        }
+
+        void GetCameraPoint(Skeleton first, AllFramesReadyEventArgs e)
+        {
+            using (DepthImageFrame depth = e.OpenDepthImageFrame())
+            {
+                if (depth == null ||
+                    kinectSensorChooser1.Kinect == null)
+                {
+                    return;
+                }
+
+                //Map a joint location to a point on the depth map
+                //left hand
+                DepthImagePoint leftDepthPoint =
+                    depth.MapFromSkeletonPoint(first.Joints[JointType.HandLeft].Position);
+                //right hand
+                DepthImagePoint rightDepthPoint =
+                    depth.MapFromSkeletonPoint(first.Joints[JointType.HandRight].Position);
+
+
+
+                //Map a depth point to a point on the color image
+                //left hand
+                ColorImagePoint leftColorPoint =
+                    depth.MapToColorImagePoint(leftDepthPoint.X, leftDepthPoint.Y,
+                    ColorImageFormat.RgbResolution640x480Fps30);
+                //right hand
+                ColorImagePoint rightColorPoint =
+                    depth.MapToColorImagePoint(rightDepthPoint.X, rightDepthPoint.Y,
+                    ColorImageFormat.RgbResolution640x480Fps30);
+
+
+                //Set location
+                CameraPosition(leftHand, leftColorPoint);
+                CameraPosition(rightHand, rightColorPoint);
+                CameraPosition(leftHandProgressBar, leftColorPoint);
+                CameraPosition(rightHandProgressBar, rightColorPoint);
+            }
+        }
+
+
+        Skeleton GetFirstSkeleton(AllFramesReadyEventArgs e)
+        {
+            using (SkeletonFrame skeletonFrameData = e.OpenSkeletonFrame())
+            {
+                if (skeletonFrameData == null)
+                {
+                    return null;
+                }
+
+
+                skeletonFrameData.CopySkeletonDataTo(allSkeletons);
+
+                //get the first tracked skeleton
+                Skeleton first = (from s in allSkeletons
+                                  where s.TrackingState == SkeletonTrackingState.Tracked
+                                  select s).FirstOrDefault();
+
+                return first;
+
+            }
+        }
+
+        private void StopKinect(KinectSensor sensor)
+        {
+            if (sensor != null)
+            {
+                if (sensor.IsRunning)
+                {
+                    //stop sensor 
+                    sensor.Stop();
+
+                    //stop audio if not null
+                    if (sensor.AudioSource != null)
+                    {
+                        sensor.AudioSource.Stop();
+                    }
+                }
+            }
+        }
+
+        private void CameraPosition(FrameworkElement element, ColorImagePoint point)
+        {
+            //Divide by 2 for width and height so point is right in the middle 
+            // instead of in top/left corner
+            Canvas.SetLeft(element, point.X - element.Width / 2);
+            Canvas.SetTop(element, point.Y - element.Height / 2);
+        }
+
+        private void ScalePosition(FrameworkElement element, Joint joint)
+        {
+            //Joint scaledJoint = joint.ScaleTo(1280, 720); 
+
+            Joint scaledJoint = joint.ScaleTo(900, 800, .3f, .3f);
+
+            Canvas.SetLeft(element, scaledJoint.Position.X);
+            Canvas.SetTop(element, scaledJoint.Position.Y);
+
+        }
+
+        private void kinectSkeletonViewer1_Unloaded(object sender, RoutedEventArgs e)
+        {
+            closing = true;
+            StopKinect(kinectSensorChooser1.Kinect);
+        }
+
+
+        /*
         //Add exercises with buttons dynamically
         public void addExercises() 
         {
@@ -84,5 +279,6 @@ namespace KinectFitness
             }            
             return exercises;
         }
+        */
     }
 }
