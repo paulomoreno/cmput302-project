@@ -27,15 +27,23 @@ namespace KinectFitness
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
         Skeleton first;
+        Stopwatch hoverTimer;
 
         //Hand Positions
         Rect leftHandPos;
         Rect rightHandPos;
 
+        //Button Positions
+        Rect warmUp;
+        Rect moderateCardio;
+        Rect intenseCardio;
+
 
         public SelectLevelWindow()
         {
             InitializeComponent();
+            InitializeUI();
+            initializeHoverChecker();
             //addExercises();
         }
 
@@ -43,6 +51,202 @@ namespace KinectFitness
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
+
+        private void InitializeUI()
+        {
+            rightHandProgressBar.Width = 0;
+            leftHandProgressBar.Width = 0;
+
+            //Get positions of buttons and hands
+            leftHandPos = new Rect();
+            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
+            leftHandPos.Size = new Size(leftHand.Width, leftHand.Height);
+            rightHandPos = new Rect();
+            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
+            rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
+            warmUp = new Rect();            
+            warmUp.Location = new Point(Canvas.GetLeft(warmUpImg), Canvas.GetTop(warmUpImg));
+            warmUp.Size = new Size(warmUpImg.Width, warmUpImg.Height);
+            moderateCardio = new Rect();
+            moderateCardio.Location = new Point(Canvas.GetLeft(moderateImg), Canvas.GetTop(moderateImg));
+            moderateCardio.Size = new Size(moderateImg.Width, moderateImg.Height);
+            intenseCardio = new Rect();
+            intenseCardio.Location = new Point(Canvas.GetLeft(intenseImg), Canvas.GetTop(intenseImg));
+            intenseCardio.Size = new Size(intenseImg.Width, intenseImg.Height);
+
+        }
+
+
+        void initializeHoverChecker()
+        {
+            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            //Timer to check for hand positions
+            dispatcherTimer.Tick += new EventHandler(checkHands);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Start();
+
+            hoverTimer = new Stopwatch();
+        }
+
+        /**
+       * Checks to see if hands are hovering over a button
+       */
+        private void checkHands(object sender, EventArgs e)
+        {
+
+            if (leftHandPos.IntersectsWith(warmUp) || rightHandPos.IntersectsWith(warmUp))
+            {
+                hoverTimer.Start();
+                //Highlight the correct image and unhighlight the others
+                hoverImage(warmUpImg, new RoutedEventArgs());
+                leaveImage(intenseImg, new RoutedEventArgs());
+                leaveImage(moderateImg, new RoutedEventArgs());
+
+                //Set progress bar to increase on hands to indicate if hand is hovering on button
+                if (leftHandPos.IntersectsWith(warmUp))
+                {
+                    setHandProgressBar(true, hoverTimer.ElapsedMilliseconds);
+                }
+                else
+                {
+                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+                }
+
+                //Check if hand has been hovering on target for 1 second or more   
+                if (hoverTimer.ElapsedMilliseconds >= 2000)
+                {
+                    hoverTimer.Reset();
+                }
+            }
+            else if (leftHandPos.IntersectsWith(moderateCardio) || rightHandPos.IntersectsWith(moderateCardio))
+            {
+                hoverTimer.Start();
+                //Highlight the correct image and unhighlight the others
+                hoverImage(moderateImg, new RoutedEventArgs());
+                leaveImage(intenseImg, new RoutedEventArgs());
+                leaveImage(warmUpImg, new RoutedEventArgs());
+
+                //Set progress bar to increase on hands to indicate if hand is hovering on button
+                if (leftHandPos.IntersectsWith(moderateCardio))
+                {
+                    setHandProgressBar(true, hoverTimer.ElapsedMilliseconds);
+                }
+                else
+                {
+                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+                }
+
+                //Check if hand has been hovering on target for 1 second or more   
+                if (hoverTimer.ElapsedMilliseconds >= 2000)
+                {
+                    hoverTimer.Reset();
+                }
+            }
+            else if (leftHandPos.IntersectsWith(intenseCardio) || rightHandPos.IntersectsWith(intenseCardio))
+            {
+                hoverTimer.Start();
+                //Highlight the correct image and unhighlight the others
+                hoverImage(intenseImg, new RoutedEventArgs());
+                leaveImage(moderateImg, new RoutedEventArgs());
+                leaveImage(warmUpImg, new RoutedEventArgs());
+
+
+                //Set progress bar to increase on hands to indicate if hand is hovering on button
+                if (leftHandPos.IntersectsWith(intenseCardio))
+                {
+                    setHandProgressBar(true, hoverTimer.ElapsedMilliseconds);
+                }
+                else
+                {
+                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+                }
+
+                //Check if hand has been hovering on target for 1 second or more   
+                if (hoverTimer.ElapsedMilliseconds >= 2000)
+                {
+                    hoverTimer.Reset();
+                }
+            }
+            else  //If hand is not hovering on any button.  Reset timer.
+            {
+                resetHandProgressBars();
+                hoverTimer.Reset();
+                //Unhighlight all images
+                leaveImage(warmUpImg, new RoutedEventArgs());
+                leaveImage(moderateImg, new RoutedEventArgs());
+                leaveImage(intenseImg, new RoutedEventArgs());
+
+            }
+        }
+
+
+        /**
+        * Highlights play when the mouse or hand hovers over them
+        */
+        private void hoverImage(object sender, RoutedEventArgs e)
+        {
+            Image i = (Image)sender;
+
+            if (i.Name.Equals(warmUpImg.Name))
+            {
+                warmUpImgBorder.Opacity = 1;
+            }
+            else if (i.Name.Equals(moderateImg.Name))
+            {
+                moderateImgBorder.Opacity = 1;
+            }
+            else if (i.Name.Equals(intenseImg.Name))
+            {
+                intenseImgBorder.Opacity = 1;
+            }
+
+        }
+
+        /**
+         * Stops highlighting the images when the mouse leaves
+         */
+        private void leaveImage(object sender, RoutedEventArgs e)
+        {
+            Image i = (Image)sender;
+
+            if (i.Name.Equals(warmUpImg.Name))
+            {
+                warmUpImgBorder.Opacity = 0;
+            }
+            else if (i.Name.Equals(moderateImg.Name))
+            {
+                moderateImgBorder.Opacity = 0;
+            }
+            else if (i.Name.Equals(intenseImg.Name))
+            {
+                intenseImgBorder.Opacity = 0;
+            }
+        }
+
+
+        private void setHandProgressBar(bool leftHand, long timeElapsed)
+        {
+            double t = timeElapsed;
+            double w = t / 2000 * 50;
+            if (leftHand)
+            {
+                leftHandProgressBar.Width = w;
+            }
+            else
+            {
+                rightHandProgressBar.Width = w;
+            }
+        }
+
+        /**
+         * Resets the progress bar on the hands
+         */
+        private void resetHandProgressBars()
+        {
+            leftHandProgressBar.Width = 0;
+            rightHandProgressBar.Width = 0;
+        }
+
 
         void kinectSensorChooser1_KinectSensorChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -59,11 +263,11 @@ namespace KinectFitness
 
             var parameters = new TransformSmoothParameters
             {
-                Smoothing = 0.3f,
-                Correction = 0.0f,
-                Prediction = 0.0f,
+                Smoothing = 0.7f,
+                Correction = 0.3f,
+                Prediction = 1.0f,
                 JitterRadius = 1.0f,
-                MaxDeviationRadius = 0.5f
+                MaxDeviationRadius = 1.0f
             };
             //sensor.SkeletonStream.Enable(parameters);
 
@@ -218,6 +422,7 @@ namespace KinectFitness
             closing = true;
             StopKinect(kinectSensorChooser1.Kinect);
         }
+
 
 
         /*
