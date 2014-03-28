@@ -160,6 +160,25 @@ namespace KinectFitness
             skeletonMatcherTimer.Start();
         }
 
+        private void startPointsBarDecliner()
+        {
+            System.Windows.Threading.DispatcherTimer pointsBarDecliner;
+            pointsBarDecliner = new System.Windows.Threading.DispatcherTimer();
+            pointsBarDecliner.Tick += new EventHandler(declinePointsBar);
+            pointsBarDecliner.Interval = new TimeSpan(0, 0, 0, 0, 334);
+            pointsBarDecliner.Start();
+        }
+
+
+        /**
+         * Slowly reduce points bar if player is not getting any points
+         * so player knows if they are not doing well
+         */
+        private void declinePointsBar(object sender, EventArgs e)
+        {
+            numberOfPtsBar -= 3;
+            setPoints();
+        }
         /**
          * Starts the timer for the progress bar
          */
@@ -176,7 +195,7 @@ namespace KinectFitness
          */
         private void updateVideoProgressBar(object sender, EventArgs e)
         {            
-            videoProgressBar.Width = (FitnessPlayer.Position.Seconds / totalMovieTime) * 855;
+            videoProgressBar.Width = (FitnessPlayer.Position.Seconds / totalMovieTime) * 773;
         }
 
         /**
@@ -185,7 +204,10 @@ namespace KinectFitness
          */
         private void matchSkeleton(object sender, EventArgs e)
         {
-            numberOfPtsBar = 0;
+            if (numberOfPtsBar > 100)
+            {
+                numberOfPtsBar = 100;
+            }
             setPoints();
             //Get amount of seconds passed in video
             TimeSpan timePassedInVideo = FitnessPlayer.Position;
@@ -235,7 +257,7 @@ namespace KinectFitness
             }
             else
             {
-                numberOfPtsBar += 15;
+                numberOfPtsBar += 3;
                 numberOfPts += 50;
                 setPoints();
             }            
@@ -245,7 +267,7 @@ namespace KinectFitness
             }
             else
             {
-                numberOfPtsBar += 15;
+                numberOfPtsBar += 3;
                 numberOfPts += 50;
                 setPoints();
             }
@@ -255,7 +277,7 @@ namespace KinectFitness
             }
             else
             {
-                numberOfPtsBar += 15;
+                numberOfPtsBar += 3;
                 numberOfPts += 50;
                 setPoints();
             }
@@ -265,7 +287,7 @@ namespace KinectFitness
             }
             else
             {
-                numberOfPtsBar += 15;
+                numberOfPtsBar += 3;
                 numberOfPts += 50;
                 setPoints();
             }
@@ -275,7 +297,7 @@ namespace KinectFitness
             }
             else
             {
-                numberOfPtsBar += 15;
+                numberOfPtsBar += 3;
                 numberOfPts += 50;
                 setPoints();
             }
@@ -285,7 +307,7 @@ namespace KinectFitness
             }
             else
             {
-                numberOfPtsBar += 15;
+                numberOfPtsBar += 3;
                 numberOfPts += 50;
                 setPoints();
             }
@@ -295,18 +317,11 @@ namespace KinectFitness
             }
             else
             {
-                numberOfPtsBar += 15;
+                numberOfPtsBar += 3;
                 numberOfPts += 50;
                 setPoints();
             }
             return everythingMatches;
-        }
-        /**
-         * Pause the playback of the skeleton
-         */
-        private void pausePlaybackSkeleton()
-        {
-            skeletonMatcherTimer.Stop();
         }
 
         /**
@@ -349,7 +364,30 @@ namespace KinectFitness
         void setPoints()
         {            
             points.Text = numberOfPts + "Pts.";
+
             pointsBar.Value = numberOfPtsBar;
+
+            //Change color of the Points Bar depending on how many points they have
+            if (numberOfPtsBar > 80)
+            {
+                pointsBar.Foreground = Brushes.Green;
+            }
+            else if (numberOfPtsBar > 60)
+            {
+                pointsBar.Foreground = Brushes.GreenYellow;
+            }
+            else if (numberOfPtsBar > 40)
+            {
+                pointsBar.Foreground = Brushes.Yellow;
+            }
+            else if (numberOfPtsBar > 20)
+            {
+                pointsBar.Foreground = Brushes.Orange;
+            }
+            else
+            {
+                pointsBar.Foreground = Brushes.Red;
+            }
         }
 
         /**
@@ -398,6 +436,17 @@ namespace KinectFitness
             {
                 hoverTimer.Start();
                 hoverPlay(playicon, new RoutedEventArgs());
+
+                //Set progress bar to increase on hands to indicate if hand is hovering on button
+                if(leftHandPos.IntersectsWith(playIconPos))
+                {
+                    setHandProgressBar(true, hoverTimer.ElapsedMilliseconds);
+                }
+                else
+                {
+                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+                }
+                
                 //Check if hand has been hovering on target for 1 second or more   
                 if (hoverTimer.ElapsedMilliseconds >= 1000)
                 {
@@ -409,11 +458,34 @@ namespace KinectFitness
             }
             else  //If hand is not hovering on any button.  Reset timer.
             {
+                resetHandProgressBars();
                 hoverTimer.Reset();                
                 leavePlay(playicon, new RoutedEventArgs());
             }                       
         }
 
+        private void setHandProgressBar(bool leftHand, long timeElapsed)
+        {
+            double t = timeElapsed;
+            double w = t / 1000 * 50;
+            if (leftHand)
+            {
+                leftHandProgressBar.Width = w;
+            }
+            else
+            {
+                rightHandProgressBar.Width = w;
+            }
+        }
+
+        /**
+         * Resets the progress bar on the hands
+         */
+        private void resetHandProgressBars()
+        {
+            leftHandProgressBar.Width = 0;
+            rightHandProgressBar.Width = 0;
+        }
 
         /**
          * Highlights play when the mouse or hand hovers over them
@@ -488,7 +560,7 @@ namespace KinectFitness
                 Smoothing = 0.3f,
                 Correction = 0.0f,
                 Prediction = 0.0f,
-                JitterRadius = 1.0f,
+                JitterRadius = 0.05f,
                 MaxDeviationRadius = 0.5f
             };
             //sensor.SkeletonStream.Enable(parameters);
@@ -529,8 +601,13 @@ namespace KinectFitness
             //set scaled position
             ScalePosition(leftHand, first.Joints[JointType.HandLeft]);
             ScalePosition(rightHand, first.Joints[JointType.HandRight]);
+            ScalePosition(leftHandProgressBar, first.Joints[JointType.HandLeft]);
+            ScalePosition(rightHandProgressBar, first.Joints[JointType.HandRight]);
+
+
             leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
             rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
+            
 
             
         }
@@ -611,6 +688,8 @@ namespace KinectFitness
                 //Set location
                 CameraPosition(leftHand, leftColorPoint);
                 CameraPosition(rightHand, rightColorPoint);
+                CameraPosition(leftHandProgressBar, leftColorPoint);
+                CameraPosition(rightHandProgressBar, rightColorPoint);
             }
         }
 
@@ -740,13 +819,13 @@ namespace KinectFitness
                     timerInitialized = true;
                     startPlaybackSkeleton();
                     startVideoProgressBar();
+                    startPointsBarDecliner();
                 }                
             }
             else
             {                
                 FitnessPlayer.Pause();
                 videoPlaying = false;
-                //pausePlaybackSkeleton();
             }
         }
 

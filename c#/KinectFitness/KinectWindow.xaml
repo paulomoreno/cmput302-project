@@ -43,7 +43,10 @@
                 <Image Canvas.Left="1804" Canvas.Top="511" Height="150" Name="heartgauge" Stretch="Fill" Width="200" Source="/KinectFitness;component/heartpressuregauge.gif" Panel.ZIndex="-10" />
                 <TextBlock Canvas.Left="178" Canvas.Top="592" Height="83" Name="suggestionBlock" Text="" Width="676" Foreground="White" FontSize="60" />
                 <ProgressBar Canvas.Left="855" Canvas.Top="437" Height="66" Name="pointsBar" Width="262" Value="0" />
-                <Rectangle Name="videoProgressBar" Stroke="{x:Null}" Panel.ZIndex="5" Fill="White" Canvas.Left="82" Canvas.Top="591" Height="84" Width="725" />
+                <Rectangle Name="videoProgressBar" Stroke="{x:Null}" Panel.ZIndex="5" Fill="White" Canvas.Left="82" Canvas.Top="591" Height="84" Width="773" />
+                <Rectangle Canvas.Left="28" Canvas.Top="6" Margin="0,50,0,0" Name="leftHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="52" Height="12" Fill="#FF07FF1C" />
+                <Rectangle Canvas.Left="104" Canvas.Top="6" Margin="0,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="52" Height="12" Fill="#FF07FF1C" />
+
             </Canvas>
             <my:KinectSkeletonViewer Name="kinectSkeletonViewer1" Height="240" Kinect="{Binding ElementName=kinectSensorChooser1, Path=Kinect}" Unloaded="kinectSkeletonViewer1_Unloaded" Margin="855,198,183,262" />
             <Border BorderBrush="Silver" BorderThickness="1" Height="240" Name="border1" Margin="855,198,183,262">
@@ -55,6 +58,6 @@
                 </Image.RenderTransform>
             </Image>
             <Rectangle Name="userBackground" Stroke="{x:Null}" OpacityMask="{x:Null}" Fill="#FF414141" Panel.ZIndex="-3" Margin="854,2,183,25" Opacity="0.8" />
-        </Grid>
+            </Grid>
     </Border>
 </Page>
