@@ -30,13 +30,13 @@ namespace KinectFitness
         Stopwatch hoverTimer;
 
         //Hand Positions
-        Rect leftHandPos;
         Rect rightHandPos;
 
         //Button Positions
         Rect warmUp;
         Rect moderateCardio;
         Rect intenseCardio;
+        Rect backButton;
 
 
         public SelectLevelWindow()
@@ -55,12 +55,9 @@ namespace KinectFitness
         private void InitializeUI()
         {
             rightHandProgressBar.Width = 0;
-            leftHandProgressBar.Width = 0;
+
 
             //Get positions of buttons and hands
-            leftHandPos = new Rect();
-            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
-            leftHandPos.Size = new Size(leftHand.Width, leftHand.Height);
             rightHandPos = new Rect();
             rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
             rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
@@ -73,6 +70,9 @@ namespace KinectFitness
             intenseCardio = new Rect();
             intenseCardio.Location = new Point(Canvas.GetLeft(intenseImg), Canvas.GetTop(intenseImg));
             intenseCardio.Size = new Size(intenseImg.Width, intenseImg.Height);
+            backButton = new Rect();
+            backButton.Location = new Point(Canvas.GetLeft(backButtonImg), Canvas.GetTop(backButtonImg));
+            backButton.Size = new Size(backButtonImg.Width, backButtonImg.Height);
 
         }
 
@@ -82,7 +82,7 @@ namespace KinectFitness
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             //Timer to check for hand positions
             dispatcherTimer.Tick += new EventHandler(checkHands);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
             dispatcherTimer.Start();
 
             hoverTimer = new Stopwatch();
@@ -93,89 +93,137 @@ namespace KinectFitness
        */
         private void checkHands(object sender, EventArgs e)
         {
-
-            if (leftHandPos.IntersectsWith(warmUp) || rightHandPos.IntersectsWith(warmUp))
+            try
             {
-                hoverTimer.Start();
-                //Highlight the correct image and unhighlight the others
-                hoverImage(warmUpImg, new RoutedEventArgs());
-                leaveImage(intenseImg, new RoutedEventArgs());
-                leaveImage(moderateImg, new RoutedEventArgs());
 
-                //Set progress bar to increase on hands to indicate if hand is hovering on button
-                if (leftHandPos.IntersectsWith(warmUp))
+                if (rightHandPos.IntersectsWith(warmUp))
                 {
-                    setHandProgressBar(true, hoverTimer.ElapsedMilliseconds);
-                }
-                else
-                {
-                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
-                }
+                    hoverTimer.Start();
+                    //Highlight the correct image and unhighlight the others
+                    hoverImage(warmUpImg, new RoutedEventArgs());
+                    leaveImage(intenseImg, new RoutedEventArgs());
+                    leaveImage(moderateImg, new RoutedEventArgs());
 
-                //Check if hand has been hovering on target for 1 second or more   
-                if (hoverTimer.ElapsedMilliseconds >= 2000)
+                    //Set progress bar to increase on hands to indicate if hand is hovering on button
+
+                        setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+                    
+
+                    //Check if hand has been hovering on target for 2 seconds or more   
+                    if (hoverTimer.ElapsedMilliseconds >= 2000)
+                    {
+                        //Tells the Kinect Window which file to load
+                        SetFile(warmUpImg);
+                        KinectWindow kw = new KinectWindow();
+                        this.NavigationService.Navigate(kw);
+                        hoverTimer.Reset();
+                    }
+                }
+                else if (rightHandPos.IntersectsWith(moderateCardio))
                 {
+                    hoverTimer.Start();
+                    //Highlight the correct image and unhighlight the others
+                    hoverImage(moderateImg, new RoutedEventArgs());
+                    leaveImage(intenseImg, new RoutedEventArgs());
+                    leaveImage(warmUpImg, new RoutedEventArgs());
+
+                    //Set progress bar to increase on hands to indicate if hand is hovering on button
+
+                        setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+                    
+
+                    //Check if hand has been hovering on target for 2 seconds or more   
+                    if (hoverTimer.ElapsedMilliseconds >= 2000)
+                    {
+                        //Tells the Kinect Window which file to load
+                        SetFile(moderateImg);
+                        KinectWindow kw = new KinectWindow();
+                        this.NavigationService.Navigate(kw);
+                        hoverTimer.Reset();
+                    }
+                }
+                else if (rightHandPos.IntersectsWith(intenseCardio))
+                {
+                    hoverTimer.Start();
+                    //Highlight the correct image and unhighlight the others
+                    hoverImage(intenseImg, new RoutedEventArgs());
+                    leaveImage(moderateImg, new RoutedEventArgs());
+                    leaveImage(warmUpImg, new RoutedEventArgs());
+
+
+                    //Set progress bar to increase on hands to indicate if hand is hovering on button
+                        setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+                   
+
+                    //Check if hand has been hovering on target for 2 seconds or more   
+                    if (hoverTimer.ElapsedMilliseconds >= 2000)
+                    {
+                        //Tells the Kinect Window which file to load
+                        SetFile(intenseImg);
+                        KinectWindow kw = new KinectWindow();
+                        this.NavigationService.Navigate(kw);
+                        hoverTimer.Reset();
+                    }
+                }
+                else if (rightHandPos.IntersectsWith(backButton))
+                {
+                    hoverTimer.Start();
+                    //Highlight the correct image and unhighlight the others
+                    hoverImage(backButtonImg, new RoutedEventArgs());
+                    leaveImage(moderateImg, new RoutedEventArgs());
+                    leaveImage(warmUpImg, new RoutedEventArgs());
+                    leaveImage(intenseImg, new RoutedEventArgs());
+
+
+                    //Set progress bar to increase on hands to indicate if hand is hovering on button
+
+                        setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+                    
+
+                    //Check if hand has been hovering on target for 2 seconds or more   
+                    if (hoverTimer.ElapsedMilliseconds >= 2000)
+                    {
+                        StartupWindow sw = new StartupWindow();
+                        this.NavigationService.Navigate(sw);
+                        hoverTimer.Reset();
+                    }
+                }
+                else  //If hand is not hovering on any button.  Reset timer.
+                {
+                    resetHandProgressBars();
                     hoverTimer.Reset();
+                    //Unhighlight all images
+                    leaveImage(warmUpImg, new RoutedEventArgs());
+                    leaveImage(moderateImg, new RoutedEventArgs());
+                    leaveImage(intenseImg, new RoutedEventArgs());
+                    leaveImage(backButtonImg, new RoutedEventArgs());
+
                 }
             }
-            else if (leftHandPos.IntersectsWith(moderateCardio) || rightHandPos.IntersectsWith(moderateCardio))
+            catch (NullReferenceException)
             {
-                hoverTimer.Start();
-                //Highlight the correct image and unhighlight the others
-                hoverImage(moderateImg, new RoutedEventArgs());
-                leaveImage(intenseImg, new RoutedEventArgs());
-                leaveImage(warmUpImg, new RoutedEventArgs());
-
-                //Set progress bar to increase on hands to indicate if hand is hovering on button
-                if (leftHandPos.IntersectsWith(moderateCardio))
-                {
-                    setHandProgressBar(true, hoverTimer.ElapsedMilliseconds);
-                }
-                else
-                {
-                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
-                }
-
-                //Check if hand has been hovering on target for 1 second or more   
-                if (hoverTimer.ElapsedMilliseconds >= 2000)
-                {
-                    hoverTimer.Reset();
-                }
+                //Do Nothing
             }
-            else if (leftHandPos.IntersectsWith(intenseCardio) || rightHandPos.IntersectsWith(intenseCardio))
+        }
+
+        private void SetFile(Image exercise)
+        {
+            List<string> video = new List<string>();
+
+            if (exercise.Name == warmUpImg.Name)
             {
-                hoverTimer.Start();
-                //Highlight the correct image and unhighlight the others
-                hoverImage(intenseImg, new RoutedEventArgs());
-                leaveImage(moderateImg, new RoutedEventArgs());
-                leaveImage(warmUpImg, new RoutedEventArgs());
-
-
-                //Set progress bar to increase on hands to indicate if hand is hovering on button
-                if (leftHandPos.IntersectsWith(intenseCardio))
-                {
-                    setHandProgressBar(true, hoverTimer.ElapsedMilliseconds);
-                }
-                else
-                {
-                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
-                }
-
-                //Check if hand has been hovering on target for 1 second or more   
-                if (hoverTimer.ElapsedMilliseconds >= 2000)
-                {
-                    hoverTimer.Reset();
-                }
+                video.Add(warmUpImg.Name);                
+                System.IO.File.WriteAllLines(@"C:\Users\Brad\302\c#\KinectFitness\FitnessVideos\video.txt", video);
             }
-            else  //If hand is not hovering on any button.  Reset timer.
+            else if (exercise.Name == moderateImg.Name)
             {
-                resetHandProgressBars();
-                hoverTimer.Reset();
-                //Unhighlight all images
-                leaveImage(warmUpImg, new RoutedEventArgs());
-                leaveImage(moderateImg, new RoutedEventArgs());
-                leaveImage(intenseImg, new RoutedEventArgs());
-
+                video.Add(moderateImg.Name);
+                System.IO.File.WriteAllLines(@"C:\Users\Brad\302\c#\KinectFitness\FitnessVideos\video.txt", video);
+            }
+            else if (exercise.Name == intenseImg.Name)
+            {
+                video.Add(intenseImg.Name);
+                System.IO.File.WriteAllLines(@"C:\Users\Brad\302\c#\KinectFitness\FitnessVideos\video.txt", video);
             }
         }
 
@@ -199,6 +247,11 @@ namespace KinectFitness
             {
                 intenseImgBorder.Opacity = 1;
             }
+            else if (i.Name.Equals(backButtonImg.Name))
+            {
+                backButtonImg.Opacity = 0;
+                backButtonHoverImg.Opacity = 1;
+            }
 
         }
 
@@ -221,6 +274,11 @@ namespace KinectFitness
             {
                 intenseImgBorder.Opacity = 0;
             }
+            else if (i.Name.Equals(backButtonImg.Name))
+            {
+                backButtonHoverImg.Opacity = 0;
+                backButtonImg.Opacity = 1;
+            }
         }
 
 
@@ -228,14 +286,9 @@ namespace KinectFitness
         {
             double t = timeElapsed;
             double w = t / 2000 * 50;
-            if (leftHand)
-            {
-                leftHandProgressBar.Width = w;
-            }
-            else
-            {
+
                 rightHandProgressBar.Width = w;
-            }
+            
         }
 
         /**
@@ -243,7 +296,7 @@ namespace KinectFitness
          */
         private void resetHandProgressBars()
         {
-            leftHandProgressBar.Width = 0;
+
             rightHandProgressBar.Width = 0;
         }
 
@@ -305,13 +358,12 @@ namespace KinectFitness
 
             GetCameraPoint(first, e);
             //set scaled position
-            ScalePosition(leftHand, first.Joints[JointType.HandLeft]);
+
             ScalePosition(rightHand, first.Joints[JointType.HandRight]);
-            ScalePosition(leftHandProgressBar, first.Joints[JointType.HandLeft]);
+
             ScalePosition(rightHandProgressBar, first.Joints[JointType.HandRight]);
 
 
-            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
             rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
 
 
@@ -350,9 +402,7 @@ namespace KinectFitness
 
 
                 //Set location
-                CameraPosition(leftHand, leftColorPoint);
                 CameraPosition(rightHand, rightColorPoint);
-                CameraPosition(leftHandProgressBar, leftColorPoint);
                 CameraPosition(rightHandProgressBar, rightColorPoint);
             }
         }

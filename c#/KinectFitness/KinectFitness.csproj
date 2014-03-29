@@ -195,6 +195,12 @@
   <ItemGroup>
     <Resource Include="WarmUpImage.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="backbutton.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="backbuttonhover.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

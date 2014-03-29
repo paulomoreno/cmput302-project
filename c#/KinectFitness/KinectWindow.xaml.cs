@@ -52,12 +52,12 @@ namespace KinectFitness
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
         System.Windows.Threading.DispatcherTimer videoProgressBarTracker;
 
-        //Hand Positions
-        Rect leftHandPos;
+        //Hand Position
         Rect rightHandPos;
 
         //Button Positions
         Rect playIconPos;
+        Rect backButton;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -127,7 +127,7 @@ namespace KinectFitness
             System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             //Timer to check for hand positions
             dispatcherTimer.Tick += new EventHandler(checkHands);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
             dispatcherTimer.Start();
 
             hoverTimer = new Stopwatch();
@@ -404,15 +404,15 @@ namespace KinectFitness
             videoProgressBar.Width = 0;
           
             //Get positions of buttons
-            leftHandPos = new Rect();
-            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
-            leftHandPos.Size = new Size(leftHand.Width, leftHand.Height);
             rightHandPos = new Rect();
             rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
             rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
             playIconPos = new Rect();
             playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
             playIconPos.Size = new Size(playicon.Width, playicon.Height);
+            backButton = new Rect();
+            backButton.Location = new Point(Grid.GetRow(backButtonImg), Grid.GetColumn(backButtonImg));
+            backButton.Size = new Size(backButtonImg.Width, backButtonImg.Height);
 
             //Set video source for video player
             FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\Workout2.mp4", UriKind.Relative);
@@ -432,20 +432,13 @@ namespace KinectFitness
         private void checkHands(object sender, EventArgs e)
         {
             
-            if (leftHandPos.IntersectsWith(playIconPos) || rightHandPos.IntersectsWith(playIconPos))
+            if (rightHandPos.IntersectsWith(playIconPos))
             {
                 hoverTimer.Start();
-                hoverPlay(playicon, new RoutedEventArgs());
+                hoverButton(playicon, new RoutedEventArgs());
 
-                //Set progress bar to increase on hands to indicate if hand is hovering on button
-                if(leftHandPos.IntersectsWith(playIconPos))
-                {
-                    setHandProgressBar(true, hoverTimer.ElapsedMilliseconds);
-                }
-                else
-                {
-                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
-                }
+                //Set progress bar to increase on hands to indicate if hand is hovering on button                
+                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);                
                 
                 //Check if hand has been hovering on target for 1 second or more   
                 if (hoverTimer.ElapsedMilliseconds >= 2000)
@@ -456,11 +449,36 @@ namespace KinectFitness
                     hoverTimer.Reset();
                 }
             }
+            else if (rightHandPos.IntersectsWith(backButton))
+            {
+                hoverTimer.Start();
+                hoverButton(backButtonImg, new RoutedEventArgs());
+
+                //Set progress bar to increase on hands to indicate if hand is hovering on button
+                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+
+                //Check if hand has been hovering on target for 1 second or more   
+                if (hoverTimer.ElapsedMilliseconds >= 2000)
+                {
+                    try
+                    {
+                        SelectLevelWindow sw = new SelectLevelWindow();
+                        this.NavigationService.Navigate(sw);
+                        //Resets hoverTimer
+                        hoverTimer.Reset();
+                    }
+                    catch (NullReferenceException)
+                    {
+                        //Do Nothing
+                    }
+                }
+            }
             else  //If hand is not hovering on any button.  Reset timer.
             {
                 resetHandProgressBars();
                 hoverTimer.Reset();                
-                leavePlay(playicon, new RoutedEventArgs());
+                leaveButton(playicon, new RoutedEventArgs());
+                leaveButton(backButtonImg, new RoutedEventArgs());
             }                       
         }
 
@@ -468,14 +486,9 @@ namespace KinectFitness
         {
             double t = timeElapsed;
             double w = t / 2000 * 50;
-            if (leftHand)
-            {
-                leftHandProgressBar.Width = w;
-            }
-            else
-            {
+
                 rightHandProgressBar.Width = w;
-            }
+            
         }
 
         /**
@@ -483,14 +496,13 @@ namespace KinectFitness
          */
         private void resetHandProgressBars()
         {
-            leftHandProgressBar.Width = 0;
             rightHandProgressBar.Width = 0;
         }
 
         /**
          * Highlights play when the mouse or hand hovers over them
          */
-        private void hoverPlay(object sender, RoutedEventArgs e)
+        private void hoverButton(object sender, RoutedEventArgs e)
         {
             Image i = (Image)sender;
 
@@ -511,13 +523,18 @@ namespace KinectFitness
                     hoverpauseicon.Opacity = 1;
                 }
             }
+            else if (i.Name.Equals(backButtonImg.Name))
+            {
+                backButtonImg.Opacity = 0;
+                backButtonHoverImg.Opacity = 1;
+            }
             
         }
 
         /**
          * Stops highlighting the images when the mouse leaves
          */
-        private void leavePlay(object sender, RoutedEventArgs e)
+        private void leaveButton(object sender, RoutedEventArgs e)
         {
             Image i = (Image)sender;
 
@@ -538,6 +555,11 @@ namespace KinectFitness
                     hoverpauseicon.Opacity = 0;
                 }
             }
+            else if (i.Name.Equals(backButtonImg.Name))
+            {
+                backButtonImg.Opacity = 1;
+                backButtonHoverImg.Opacity = 0;
+            }
         }
 
 
@@ -557,11 +579,11 @@ namespace KinectFitness
 
             var parameters = new TransformSmoothParameters
             {
-                Smoothing = 0.3f,
-                Correction = 0.0f,
-                Prediction = 0.0f,
+                Smoothing = 0.7f,
+                Correction = 0.3f,
+                Prediction = 1.0f,
                 JitterRadius = 1.0f,
-                MaxDeviationRadius = 0.5f
+                MaxDeviationRadius = 1.0f
             };
             //sensor.SkeletonStream.Enable(parameters);
 
@@ -599,13 +621,13 @@ namespace KinectFitness
 
             GetCameraPoint(first, e);
             //set scaled position
-            ScalePosition(leftHand, first.Joints[JointType.HandLeft]);
+
             ScalePosition(rightHand, first.Joints[JointType.HandRight]);
-            ScalePosition(leftHandProgressBar, first.Joints[JointType.HandLeft]);
+
             ScalePosition(rightHandProgressBar, first.Joints[JointType.HandRight]);
 
 
-            leftHandPos.Location = new Point(Canvas.GetLeft(leftHand), Canvas.GetTop(leftHand));
+
             rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
             
 
@@ -686,9 +708,7 @@ namespace KinectFitness
 
 
                 //Set location
-                CameraPosition(leftHand, leftColorPoint);
                 CameraPosition(rightHand, rightColorPoint);
-                CameraPosition(leftHandProgressBar, leftColorPoint);
                 CameraPosition(rightHandProgressBar, rightColorPoint);
             }
         }
