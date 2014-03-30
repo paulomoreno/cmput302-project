@@ -252,8 +252,8 @@ namespace KinectFitness
             int leftKnee = AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]);
             int rightKnee = AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]);
                 
-            //Check if patient's joint angle is +- 30 degrees of the exercise
-            if (leftElbow < (ja.leftElbow - 30) || leftElbow > (ja.leftElbow + 30))
+            //Check if patient's joint angle is +- 20 degrees of the exercise
+            if (leftElbow < (ja.leftElbow - 20) || leftElbow > (ja.leftElbow + 20))
             {
                 everythingMatches = false;
             }
@@ -263,7 +263,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }            
-            if (rightElbow < (ja.rightElbow - 30) || rightElbow > (ja.rightElbow + 30))
+            if (rightElbow < (ja.rightElbow - 20) || rightElbow > (ja.rightElbow + 20))
             {
                 everythingMatches = false;
             }
@@ -273,7 +273,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (leftHip < (ja.leftHip - 30) || leftHip > (ja.leftHip + 30))
+            if (leftHip < (ja.leftHip - 20) || leftHip > (ja.leftHip + 20))
             {
                 everythingMatches = false;
             }
@@ -283,7 +283,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (rightHip < (ja.rightHip - 30) || rightHip > (ja.rightHip + 30))
+            if (rightHip < (ja.rightHip - 20) || rightHip > (ja.rightHip + 20))
             {
                 everythingMatches = false;
             }
@@ -293,7 +293,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (rightKnee < (ja.rightKnee - 30) || rightKnee > (ja.rightKnee + 30))
+            if (rightKnee < (ja.rightKnee - 20) || rightKnee > (ja.rightKnee + 20))
             {
                 everythingMatches = false;
             }
@@ -303,7 +303,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (leftKnee < (ja.leftKnee - 30) || leftKnee > (ja.leftKnee + 30))
+            if (leftKnee < (ja.leftKnee - 20) || leftKnee > (ja.leftKnee + 20))
             {
                 everythingMatches = false;
             }
@@ -313,7 +313,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (rightShoulder < (ja.rightShoulder - 30) || rightShoulder > (ja.rightShoulder + 30))
+            if (rightShoulder < (ja.rightShoulder - 20) || rightShoulder > (ja.rightShoulder + 20))
             {
                 everythingMatches = false;
             }
@@ -325,41 +325,6 @@ namespace KinectFitness
             }
             return everythingMatches;
         }
-
-        //These methods have been discontinued for this part of the program
-        /**
-         * Pseudo Heart Rate Simulator
-         */
-        /*
-        private void heartRate(object sender, EventArgs e)
-        {            
-            int heartRate = r.Next(50,130);
-            heartRateToPoints(heartRate);            
-        }
-        */
-
-        /**
-         * Checks the heart rate and converts it to points
-         */
-
-        /*
-        void heartRateToPoints(int heartRate)
-        {
-            stopwatch.Stop();
-            long elapsed = stopwatch.ElapsedMilliseconds;
-            if (heartRate > 90 && heartRate < 110)
-            {
-                numberOfPts += elapsed;
-                setPoints();
-            }
-
-            var heartarrowangle = heartarrow.RenderTransform as RotateTransform;
-            heartarrowangle.Angle = heartRate*3;                  
-            
-            stopwatch.Reset();
-            stopwatch.Start();
-        }
-        */
 
         /**
          * Sets the points to the progress bar and number of points
@@ -437,11 +402,11 @@ namespace KinectFitness
                 }
                 else if (line.Contains("moderate"))
                 {
-                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\Moderate5Min\\moderateVideo.mp4", UriKind.Relative);
+                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("intense"))
                 {
-                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\IntenseUp5Min\\intenseVideo.mp4", UriKind.Relative);
+                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
                 }
             }
 
@@ -471,7 +436,7 @@ namespace KinectFitness
                 //Set progress bar to increase on hands to indicate if hand is hovering on button                
                     setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);                
                 
-                //Check if hand has been hovering on target for 1 second or more   
+                //Check if hand has been hovering on target for 2 seconds or more   
                 if (hoverTimer.ElapsedMilliseconds >= 2000)
                 {
                     //Presses the play button
@@ -635,9 +600,7 @@ namespace KinectFitness
                 JitterRadius = 1.0f,
                 MaxDeviationRadius = 1.0f
             };
-            //sensor.SkeletonStream.Enable(parameters);
-
-            sensor.SkeletonStream.Enable();
+            sensor.SkeletonStream.Enable(parameters);
 
             sensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
             sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
@@ -731,13 +694,14 @@ namespace KinectFitness
             using (DepthImageFrame depth = e.OpenDepthImageFrame())
             {
                 if (depth == null ||
-                    kinectSensorChooser1.Kinect == null)
+                    kinectSensorChooser1.Kinect == null || !kinectSensorChooser1.Kinect.IsRunning)
                 {
                     return;
                 }
                 
                 //Map a joint location to a point on the depth map
                 //left hand
+                
                 DepthImagePoint leftDepthPoint =
                     depth.MapFromSkeletonPoint(first.Joints[JointType.HandLeft].Position);
                 //right hand
@@ -869,6 +833,7 @@ namespace KinectFitness
 
         private void kinectSkeletonViewer1_Unloaded(object sender, RoutedEventArgs e)
         {
+            
             closing = true;
             StopKinect(kinectSensorChooser1.Kinect); 
         }

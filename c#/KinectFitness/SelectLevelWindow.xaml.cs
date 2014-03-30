@@ -389,7 +389,7 @@ namespace KinectFitness
             using (DepthImageFrame depth = e.OpenDepthImageFrame())
             {
                 if (depth == null ||
-                    kinectSensorChooser1.Kinect == null)
+                    kinectSensorChooser1.Kinect == null  || !kinectSensorChooser1.Kinect.IsRunning)
                 {
                     return;
                 }
@@ -472,8 +472,6 @@ namespace KinectFitness
 
         private void ScalePosition(FrameworkElement element, Joint joint)
         {
-            //Joint scaledJoint = joint.ScaleTo(1280, 720); 
-
             Joint scaledJoint = joint.ScaleTo(900, 800, .3f, .3f);
 
             Canvas.SetLeft(element, scaledJoint.Position.X);
