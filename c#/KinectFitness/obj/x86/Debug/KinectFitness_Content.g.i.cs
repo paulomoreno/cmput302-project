@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("backbuttonhover.gif")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("warmupvideo.mp4")]
 
 

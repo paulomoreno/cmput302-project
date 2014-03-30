@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 
 namespace KinectFitness
 {
-    public partial class StartupWindow : Page
+    public partial class StartupWindow : Window
     {
         public StartupWindow()
         {
@@ -26,13 +26,17 @@ namespace KinectFitness
         private void Button_Play(object sender, RoutedEventArgs e)
         {
             SelectLevelWindow slw = new SelectLevelWindow();
-            this.NavigationService.Navigate(slw);            
+            this.Close();
+            slw.Show();
+            //this.NavigationService.Navigate(slw);            
         }
 
         private void Button_Record(object sender, RoutedEventArgs e)
         {
             RecordWindow rw = new RecordWindow();
-            this.NavigationService.Navigate(rw);
+            this.Close();
+            rw.Show();
+            //this.NavigationService.Navigate(rw);
         }
 
         private void Button_Options(object sender, RoutedEventArgs e)

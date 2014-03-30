@@ -20,7 +20,7 @@ namespace KinectFitness
     /// <summary>
     /// Interaction logic for RecordWindow.xaml
     /// </summary>
-    public partial class RecordWindow : Page
+    public partial class RecordWindow : Window
     {
         public RecordWindow()
         {
