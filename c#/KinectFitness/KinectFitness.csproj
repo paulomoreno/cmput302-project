@@ -202,6 +202,9 @@
     <Resource Include="backbuttonhover.gif" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="bigplaybutton.png" />
+    <Resource Include="bigplaybutton.gif" />
+    <Resource Include="bigplaybuttonhover.png" />
     <Content Include="warmUpVideo.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

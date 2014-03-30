@@ -34,7 +34,6 @@ namespace KinectFitness
             InitializeComponent();
             initializeUI();
             initializeHoverChecker();
-            loadExercise();
             this.WindowState = System.Windows.WindowState.Maximized;
         }
         
@@ -62,20 +61,21 @@ namespace KinectFitness
         //Button Positions
         Rect playIconPos;
         Rect backButton;
+        Rect bigPlayIcon;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);          
         }
 
-        private void loadExercise()
+        private void loadExercise(String exercise)
         {
             string line;
             JointAngles ja = new JointAngles();
             loadedSkeleton = new List<JointAngles>();
             // Read the file and display it line by line.
             System.IO.StreamReader file =
-               new System.IO.StreamReader("..\\..\\Recordings\\chosenExercise.txt");
+               new System.IO.StreamReader("..\\..\\" + exercise);
             while ((line = file.ReadLine()) != null)
             {
                 if(line.Contains("Left Shoulder"))
@@ -123,6 +123,10 @@ namespace KinectFitness
             Console.ReadLine();
         }
 
+        /**
+         * Initializes the timer to check 20 times / second
+         * if the hand is hovering over a button
+         */
         void initializeHoverChecker()
         {
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -134,21 +138,6 @@ namespace KinectFitness
             hoverTimer = new Stopwatch();
         }
 
-        /*
-        void initializeTimer()
-        {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            
-            //Timer for Pseudo Heart Rate
-            dispatcherTimer.Tick += new EventHandler(heartRate);
-            dispatcherTimer.Interval = new TimeSpan(0,0,1);
-            dispatcherTimer.Start();
-
-            stopwatch = new Stopwatch();
-            stopwatch.Start();
-            r = new Random();
-        }
-        */
 
         /**
          * Starts playing back the skeleton and matching it against the user
@@ -177,7 +166,7 @@ namespace KinectFitness
          */
         private void declinePointsBar(object sender, EventArgs e)
         {
-            numberOfPtsBar -= 3;
+            numberOfPtsBar -= 5;
             setPoints();
         }
         /**
@@ -212,19 +201,18 @@ namespace KinectFitness
             setPoints();
             //Get amount of seconds passed in video
             TimeSpan timePassedInVideo = FitnessPlayer.Position;
-            int secondsPassedInVideo = timePassedInVideo.Milliseconds / 100;
-            debugger.Text = secondsPassedInVideo.ToString();
-
+            int secondsPassedInVideo = Convert.ToInt16(timePassedInVideo.TotalMilliseconds / 100);
+            //debugger.Text = secondsPassedInVideo.ToString();
             //Check if loaded skeleton at this point matches the users current data within +- 1 second of the video
             try
             {
                 if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo)))
                 {
-                    
+                    //debugger.Text = "Success";
                 }
                 else
                 {
-                    
+                    //debugger.Text = "Failure";
                 }
             }
             catch (ArgumentOutOfRangeException)
@@ -235,11 +223,12 @@ namespace KinectFitness
 
         /**
          * Checks if the skeleton data matches within certain
-         * angles to the users
+         * angles to the users.  If 80% of the skeleton matches 
+         * within 20 degrees, then this returns true.
          */
         private bool SkeletonMatchesCloselyEnough(JointAngles ja)
         {
-            bool everythingMatches = true;
+            int numberOfMatches = 0;
             if (first == null)
             {
                 return false;
@@ -247,6 +236,7 @@ namespace KinectFitness
             int leftElbow = AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]);
             int rightElbow = AngleBetweenJoints(first.Joints[JointType.HandRight], first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight]);
             int rightShoulder = AngleBetweenJoints(first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight], first.Joints[JointType.ShoulderCenter]);          
+            int leftShoulder = AngleBetweenJoints(first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft], first.Joints[JointType.ShoulderCenter]);
             int leftHip = AngleBetweenJoints(first.Joints[JointType.ShoulderLeft], first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft]);
             int rightHip = AngleBetweenJoints(first.Joints[JointType.ShoulderRight], first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight]); 
             int leftKnee = AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]);
@@ -255,75 +245,99 @@ namespace KinectFitness
             //Check if patient's joint angle is +- 20 degrees of the exercise
             if (leftElbow < (ja.leftElbow - 20) || leftElbow > (ja.leftElbow + 20))
             {
-                everythingMatches = false;
+
             }
             else
             {
-                numberOfPtsBar += 3;
+                //Number of matches goes up 1
+                numberOfMatches += 1;
+                //Points are added to the progress bar
+                numberOfPtsBar += 2;
+                //Points are added 
                 numberOfPts += 5;
                 setPoints();
             }            
             if (rightElbow < (ja.rightElbow - 20) || rightElbow > (ja.rightElbow + 20))
             {
-                everythingMatches = false;
             }
             else
             {
-                numberOfPtsBar += 3;
+                numberOfMatches += 1;
+                numberOfPtsBar += 2;
                 numberOfPts += 5;
                 setPoints();
             }
             if (leftHip < (ja.leftHip - 20) || leftHip > (ja.leftHip + 20))
             {
-                everythingMatches = false;
             }
             else
             {
-                numberOfPtsBar += 3;
+                numberOfMatches += 1;
+                numberOfPtsBar += 2;
                 numberOfPts += 5;
                 setPoints();
             }
             if (rightHip < (ja.rightHip - 20) || rightHip > (ja.rightHip + 20))
             {
-                everythingMatches = false;
             }
             else
             {
-                numberOfPtsBar += 3;
+                numberOfMatches += 1;
+                numberOfPtsBar += 2;
                 numberOfPts += 5;
                 setPoints();
             }
             if (rightKnee < (ja.rightKnee - 20) || rightKnee > (ja.rightKnee + 20))
             {
-                everythingMatches = false;
             }
             else
             {
-                numberOfPtsBar += 3;
+                numberOfMatches += 1;
+                numberOfPtsBar += 2;
                 numberOfPts += 5;
                 setPoints();
             }
             if (leftKnee < (ja.leftKnee - 20) || leftKnee > (ja.leftKnee + 20))
             {
-                everythingMatches = false;
             }
             else
             {
-                numberOfPtsBar += 3;
+                numberOfMatches += 1;
+                numberOfPtsBar += 2;
                 numberOfPts += 5;
                 setPoints();
             }
             if (rightShoulder < (ja.rightShoulder - 20) || rightShoulder > (ja.rightShoulder + 20))
             {
-                everythingMatches = false;
             }
             else
             {
-                numberOfPtsBar += 3;
+                numberOfMatches += 1;
+                numberOfPtsBar += 2;
                 numberOfPts += 5;
                 setPoints();
             }
-            return everythingMatches;
+            if (leftShoulder < (ja.leftShoulder - 20) || leftShoulder > (ja.leftShoulder + 20))
+            {
+
+            }
+            else
+            {
+                numberOfMatches += 1;
+                numberOfPtsBar += 2;
+                numberOfPts += 5;
+                setPoints();
+            }
+            debugger.Text = "Elbow:" + ja.leftElbow.ToString() + "\nShoulder:" + ja.leftShoulder + "\nHip:" + ja.leftHip.ToString() + "\nKnee:" + ja.leftKnee.ToString() + "\n#Correct:" + numberOfMatches;
+            
+            if (numberOfMatches >= 6)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /**
@@ -381,6 +395,9 @@ namespace KinectFitness
             backButton = new Rect();
             backButton.Location = new Point(Grid.GetRow(backButtonImg), Grid.GetColumn(backButtonImg));
             backButton.Size = new Size(backButtonImg.Width, backButtonImg.Height);
+            bigPlayIcon = new Rect();
+            bigPlayIcon.Location = new Point(Canvas.GetLeft(bigPlayIconImg), Canvas.GetTop(bigPlayIconImg));
+            bigPlayIcon.Size = new Size(bigPlayIconImg.Width, bigPlayIconImg.Height);
 
             //Set video source for video player
             LoadVideo();
@@ -398,14 +415,17 @@ namespace KinectFitness
             {
                 if (line.Contains("warmUp"))
                 {
+                    loadExercise("FitnessVideos\\WarmUp5Min\\exercise.txt");
                     FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("moderate"))
                 {
+                    loadExercise("FitnessVideos\\ModerateCardio5Min\\exercise.txt");
                     FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("intense"))
                 {
+                    loadExercise("FitnessVideos\\IntenseCardio5Min\\exercise.txt");
                     FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
                 }
             }
@@ -463,12 +483,36 @@ namespace KinectFitness
 
                 }
             }
+            else if (rightHandPos.IntersectsWith(bigPlayIcon)  && !videoPlaying)
+            {
+                hoverTimer.Start();
+                hoverButton(bigPlayIconImg, new RoutedEventArgs());
+
+                //Set progress bar to increase on hands to indicate if hand is hovering on button
+                setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+
+                //Check if hand has been hovering on target for 1 second or more   
+                if (hoverTimer.ElapsedMilliseconds >= 2000)
+                {
+                    //Presses the play button
+                    btnPlay_Click(sender, new RoutedEventArgs());
+                    
+                    //Remove Big Play Icon after it is clicked once 
+                    bigPlayIcon.Size = new Size(0,0);
+                    bigPlayIconImg.Height = 0;
+                    bigPlayIconHoverImg.Height = 0;
+
+                    //Resets hoverTimer
+                    hoverTimer.Reset();
+                }
+            }
             else  //If hand is not hovering on any button.  Reset timer.
             {
                 resetHandProgressBars();
                 hoverTimer.Reset();                
                 leaveButton(playicon, new RoutedEventArgs());
                 leaveButton(backButtonImg, new RoutedEventArgs());
+                leaveButton(bigPlayIconImg, new RoutedEventArgs());
             }                       
         }
 
@@ -543,6 +587,11 @@ namespace KinectFitness
                 backButtonImg.Opacity = 0;
                 backButtonHoverImg.Opacity = 1;
             }
+            else if (i.Name.Equals(bigPlayIconImg.Name))
+            {
+                bigPlayIconHoverImg.Opacity = 1;
+                bigPlayIconImg.Opacity = 0;
+            }
             
         }
 
@@ -574,6 +623,11 @@ namespace KinectFitness
             {
                 backButtonImg.Opacity = 1;
                 backButtonHoverImg.Opacity = 0;
+            }
+            else if (i.Name.Equals(bigPlayIconImg.Name))
+            {
+                bigPlayIconHoverImg.Opacity = 0;
+                bigPlayIconImg.Opacity = 1;
             }
         }
 
@@ -812,7 +866,7 @@ namespace KinectFitness
         private void motorDown_Click(object sender, RoutedEventArgs e)
         {
             try
-            {
+            {                
                 int x = ksensor.ElevationAngle;
                 ksensor.ElevationAngle -= 5;
             }

@@ -51,9 +51,9 @@ namespace KinectFitness
             jointAngles = new List<string>();
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             jointTime = new Stopwatch();
-            //Timer to record joint angles every 1 second
+            //Timer to record joint angles every tenth of a second
             dispatcherTimer.Tick += new EventHandler(recordSkeletonData);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             dispatcherTimer.Start();
         }
         //Records skeleton data
@@ -64,7 +64,7 @@ namespace KinectFitness
             {
                 if (first == null)
                     return;
-                jointAngles.Add("Time: " + (Convert.ToInt32(jointTime.ElapsedMilliseconds/1000)).ToString());
+                jointAngles.Add("Time: " + (Convert.ToInt32(jointTime.ElapsedMilliseconds/100)).ToString());
                 jointAngles.Add("Left Elbow");
                 jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]).ToString());
                 jointAngles.Add("Left Shoulder");
@@ -155,15 +155,13 @@ namespace KinectFitness
 
             var parameters = new TransformSmoothParameters
             {
-                Smoothing = 0.3f,
-                Correction = 0.0f,
-                Prediction = 0.0f,
+                Smoothing = 0.7f,
+                Correction = 0.3f,
+                Prediction = 1.0f,
                 JitterRadius = 1.0f,
-                MaxDeviationRadius = 0.5f
+                MaxDeviationRadius = 1.0f
             };
-            //sensor.SkeletonStream.Enable(parameters);
-
-            sensor.SkeletonStream.Enable();
+            sensor.SkeletonStream.Enable(parameters);
 
             sensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
             sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
