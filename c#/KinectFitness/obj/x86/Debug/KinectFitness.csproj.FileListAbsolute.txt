@@ -59,3 +59,4 @@ C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\RecordWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\RecordWindow.g.cs
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\SelectLevelWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\SelectLevelWindow.g.cs
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness_Content.g.cs

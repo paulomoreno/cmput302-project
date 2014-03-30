@@ -22,7 +22,9 @@ namespace KinectFitness
         public MainWindow()
         {
             InitializeComponent();
-            loginFrame.Source = new Uri("StartupWindow.xaml", UriKind.RelativeOrAbsolute);
+            StartupWindow sw = new StartupWindow();
+            this.Close();
+            sw.Show();
         }
     }
 }

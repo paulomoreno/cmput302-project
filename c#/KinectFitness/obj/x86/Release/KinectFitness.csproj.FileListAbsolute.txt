@@ -42,3 +42,4 @@ C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\RecordWindow.g.cs
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.csprojResolveAssemblyReference.cache
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\SelectLevelWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\SelectLevelWindow.g.cs
+C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness_Content.g.cs

@@ -27,12 +27,15 @@ namespace KinectFitness
 
    
 
-    public partial class KinectWindow : Page
+    public partial class KinectWindow : Window
     {
         public KinectWindow()
         {
             InitializeComponent();
-            
+            initializeUI();
+            initializeHoverChecker();
+            loadExercise();
+            this.WindowState = System.Windows.WindowState.Maximized;
         }
         
         bool closing = false;
@@ -51,6 +54,7 @@ namespace KinectFitness
         List<JointAngles> loadedSkeleton;
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
         System.Windows.Threading.DispatcherTimer videoProgressBarTracker;
+        System.Windows.Threading.DispatcherTimer dispatcherTimer;
 
         //Hand Position
         Rect rightHandPos;
@@ -61,10 +65,7 @@ namespace KinectFitness
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
-            initializeUI();
-            initializeHoverChecker();
-            loadExercise();
+            kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);          
         }
 
         private void loadExercise()
@@ -124,7 +125,7 @@ namespace KinectFitness
 
         void initializeHoverChecker()
         {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             //Timer to check for hand positions
             dispatcherTimer.Tick += new EventHandler(checkHands);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
@@ -156,7 +157,7 @@ namespace KinectFitness
         {
             skeletonMatcherTimer = new System.Windows.Threading.DispatcherTimer();
             skeletonMatcherTimer.Tick += new EventHandler(matchSkeleton);
-            skeletonMatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            skeletonMatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             skeletonMatcherTimer.Start();
         }
 
@@ -165,7 +166,7 @@ namespace KinectFitness
             System.Windows.Threading.DispatcherTimer pointsBarDecliner;
             pointsBarDecliner = new System.Windows.Threading.DispatcherTimer();
             pointsBarDecliner.Tick += new EventHandler(declinePointsBar);
-            pointsBarDecliner.Interval = new TimeSpan(0, 0, 0, 0, 334);
+            pointsBarDecliner.Interval = new TimeSpan(0, 0, 0, 0, 34);
             pointsBarDecliner.Start();
         }
 
@@ -200,7 +201,7 @@ namespace KinectFitness
 
         /**
          * Checks if the loaded skeleton data matches the users skeleton 
-         * periodically every second
+         * periodically ten times every second
          */
         private void matchSkeleton(object sender, EventArgs e)
         {
@@ -211,7 +212,8 @@ namespace KinectFitness
             setPoints();
             //Get amount of seconds passed in video
             TimeSpan timePassedInVideo = FitnessPlayer.Position;
-            int secondsPassedInVideo = timePassedInVideo.Seconds;
+            int secondsPassedInVideo = timePassedInVideo.Milliseconds / 100;
+            debugger.Text = secondsPassedInVideo.ToString();
 
             //Check if loaded skeleton at this point matches the users current data within +- 1 second of the video
             try
@@ -258,7 +260,7 @@ namespace KinectFitness
             else
             {
                 numberOfPtsBar += 3;
-                numberOfPts += 50;
+                numberOfPts += 5;
                 setPoints();
             }            
             if (rightElbow < (ja.rightElbow - 30) || rightElbow > (ja.rightElbow + 30))
@@ -268,7 +270,7 @@ namespace KinectFitness
             else
             {
                 numberOfPtsBar += 3;
-                numberOfPts += 50;
+                numberOfPts += 5;
                 setPoints();
             }
             if (leftHip < (ja.leftHip - 30) || leftHip > (ja.leftHip + 30))
@@ -278,7 +280,7 @@ namespace KinectFitness
             else
             {
                 numberOfPtsBar += 3;
-                numberOfPts += 50;
+                numberOfPts += 5;
                 setPoints();
             }
             if (rightHip < (ja.rightHip - 30) || rightHip > (ja.rightHip + 30))
@@ -288,7 +290,7 @@ namespace KinectFitness
             else
             {
                 numberOfPtsBar += 3;
-                numberOfPts += 50;
+                numberOfPts += 5;
                 setPoints();
             }
             if (rightKnee < (ja.rightKnee - 30) || rightKnee > (ja.rightKnee + 30))
@@ -298,7 +300,7 @@ namespace KinectFitness
             else
             {
                 numberOfPtsBar += 3;
-                numberOfPts += 50;
+                numberOfPts += 5;
                 setPoints();
             }
             if (leftKnee < (ja.leftKnee - 30) || leftKnee > (ja.leftKnee + 30))
@@ -308,7 +310,7 @@ namespace KinectFitness
             else
             {
                 numberOfPtsBar += 3;
-                numberOfPts += 50;
+                numberOfPts += 5;
                 setPoints();
             }
             if (rightShoulder < (ja.rightShoulder - 30) || rightShoulder > (ja.rightShoulder + 30))
@@ -318,12 +320,13 @@ namespace KinectFitness
             else
             {
                 numberOfPtsBar += 3;
-                numberOfPts += 50;
+                numberOfPts += 5;
                 setPoints();
             }
             return everythingMatches;
         }
 
+        //These methods have been discontinued for this part of the program
         /**
          * Pseudo Heart Rate Simulator
          */
@@ -338,7 +341,7 @@ namespace KinectFitness
         /**
          * Checks the heart rate and converts it to points
          */
-        //This method has been discontinued for this part of the program
+
         /*
         void heartRateToPoints(int heartRate)
         {
@@ -415,9 +418,37 @@ namespace KinectFitness
             backButton.Size = new Size(backButtonImg.Width, backButtonImg.Height);
 
             //Set video source for video player
-            FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\Workout2.mp4", UriKind.Relative);
+            LoadVideo();
             //Get Length of Video
             FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
+        }
+
+        private void LoadVideo()
+        {
+            string line;
+            // Read the file and display it line by line.
+            System.IO.StreamReader file =
+               new System.IO.StreamReader("..\\..\\FitnessVideos\\video.txt");
+            while ((line = file.ReadLine()) != null)
+            {
+                if (line.Contains("warmUp"))
+                {
+                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
+                }
+                else if (line.Contains("moderate"))
+                {
+                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\Moderate5Min\\moderateVideo.mp4", UriKind.Relative);
+                }
+                else if (line.Contains("intense"))
+                {
+                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\IntenseUp5Min\\intenseVideo.mp4", UriKind.Relative);
+                }
+            }
+
+            file.Close();
+
+            // Suspend the screen.
+            Console.ReadLine();
         }
 
         //Find length of video
@@ -460,17 +491,11 @@ namespace KinectFitness
                 //Check if hand has been hovering on target for 1 second or more   
                 if (hoverTimer.ElapsedMilliseconds >= 2000)
                 {
-                    try
-                    {
-                        SelectLevelWindow sw = new SelectLevelWindow();
-                        this.NavigationService.Navigate(sw);
+                        leavePage();
                         //Resets hoverTimer
                         hoverTimer.Reset();
-                    }
-                    catch (NullReferenceException)
-                    {
-                        //Do Nothing
-                    }
+                    
+
                 }
             }
             else  //If hand is not hovering on any button.  Reset timer.
@@ -480,6 +505,31 @@ namespace KinectFitness
                 leaveButton(playicon, new RoutedEventArgs());
                 leaveButton(backButtonImg, new RoutedEventArgs());
             }                       
+        }
+
+        /**
+         * Go back to the Select Level Page
+         */
+        private void leavePage()
+        {
+            if (videoPlaying)
+            {
+                FitnessPlayer.Close();              
+            }
+            if (skeletonMatcherTimer != null)
+            {
+                skeletonMatcherTimer.Stop();
+            }
+            if (videoProgressBarTracker != null)
+            {
+                videoProgressBarTracker.Stop();
+            }
+            closing = true;           
+            dispatcherTimer.Stop();
+            StopKinect(kinectSensorChooser1.Kinect);
+            SelectLevelWindow sw = new SelectLevelWindow();
+            this.Close();
+            sw.Show();
         }
 
         private void setHandProgressBar(bool leftHand, long timeElapsed)
@@ -848,9 +898,5 @@ namespace KinectFitness
                 videoPlaying = false;
             }
         }
-
-
-
-
     }
 }

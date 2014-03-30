@@ -20,7 +20,7 @@ namespace KinectFitness
     /// <summary>
     /// Interaction logic for SelectLevelWindow.xaml
     /// </summary>
-    public partial class SelectLevelWindow : Page
+    public partial class SelectLevelWindow : Window
     {
         bool closing = false;
         const int skeletonCount = 6;
@@ -28,6 +28,7 @@ namespace KinectFitness
         KinectSensor ksensor;
         Skeleton first;
         Stopwatch hoverTimer;
+        System.Windows.Threading.DispatcherTimer dispatcherTimer;
 
         //Hand Positions
         Rect rightHandPos;
@@ -44,6 +45,7 @@ namespace KinectFitness
             InitializeComponent();
             InitializeUI();
             initializeHoverChecker();
+            this.WindowState = System.Windows.WindowState.Maximized;
             //addExercises();
         }
 
@@ -79,7 +81,7 @@ namespace KinectFitness
 
         void initializeHoverChecker()
         {
-            System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             //Timer to check for hand positions
             dispatcherTimer.Tick += new EventHandler(checkHands);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
@@ -114,8 +116,11 @@ namespace KinectFitness
                     {
                         //Tells the Kinect Window which file to load
                         SetFile(warmUpImg);
+                        StopKinect(kinectSensorChooser1.Kinect);
+                        dispatcherTimer.Stop();
                         KinectWindow kw = new KinectWindow();
-                        this.NavigationService.Navigate(kw);
+                        this.Close();
+                        kw.Show();
                         hoverTimer.Reset();
                     }
                 }
@@ -137,9 +142,15 @@ namespace KinectFitness
                     {
                         //Tells the Kinect Window which file to load
                         SetFile(moderateImg);
+                        StopKinect(kinectSensorChooser1.Kinect);
+                        dispatcherTimer.Stop();
                         KinectWindow kw = new KinectWindow();
-                        this.NavigationService.Navigate(kw);
-                        hoverTimer.Reset();
+                        this.Close();
+                        kw.Show();
+                        
+                        //this.NavigationService.Navigate(kw);
+                        this.Content = null;
+                        hoverTimer.Reset();                        
                     }
                 }
                 else if (rightHandPos.IntersectsWith(intenseCardio))
@@ -160,8 +171,11 @@ namespace KinectFitness
                     {
                         //Tells the Kinect Window which file to load
                         SetFile(intenseImg);
+                        StopKinect(kinectSensorChooser1.Kinect);
+                        dispatcherTimer.Stop();
                         KinectWindow kw = new KinectWindow();
-                        this.NavigationService.Navigate(kw);
+                        this.Close();
+                        kw.Show();
                         hoverTimer.Reset();
                     }
                 }
@@ -183,8 +197,11 @@ namespace KinectFitness
                     //Check if hand has been hovering on target for 2 seconds or more   
                     if (hoverTimer.ElapsedMilliseconds >= 2000)
                     {
-                        StartupWindow sw = new StartupWindow();
-                        this.NavigationService.Navigate(sw);
+                        StopKinect(kinectSensorChooser1.Kinect);
+                        dispatcherTimer.Stop();
+                        StartupWindow sw = new StartupWindow();                        
+                        sw.Show();
+                        this.Close();
                         hoverTimer.Reset();
                     }
                 }
@@ -360,10 +377,7 @@ namespace KinectFitness
             //set scaled position
 
             ScalePosition(rightHand, first.Joints[JointType.HandRight]);
-
             ScalePosition(rightHandProgressBar, first.Joints[JointType.HandRight]);
-
-
             rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
 
 
