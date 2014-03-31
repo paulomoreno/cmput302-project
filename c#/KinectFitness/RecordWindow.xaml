@@ -11,7 +11,8 @@
         <Image Height="150" HorizontalAlignment="Left" Margin="570,550,0,0" Name="recordButton" Stretch="Fill" VerticalAlignment="Top" Width="150" Source="/KinectFitness;component/recordbuttonwindow.png" Mouse.MouseUp="Record_Button" Panel.ZIndex="1" />
         <Image Height="150" HorizontalAlignment="Left" Margin="570,550,0,0" Name="stopButton" Stretch="Fill" VerticalAlignment="Top" Width="150" Source="/KinectFitness;component/stopbuttonwindow.png" />
         <Grid x:Name="SaveFileAs" Visibility="Collapsed">
-            <Grid Background="Black" Opacity="0.5"/>
+            <Grid Background="Black" Opacity="0.5">
+                </Grid>
             <Border
             MinWidth="250"
             Background="Orange" 

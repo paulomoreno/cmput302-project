@@ -337,8 +337,16 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            debugger.Text = "Left Elbow:" + patientData.Last().leftElbow + "\nLeft Shoulder:" + patientData.Last().leftShoulder + "\nLeft Hip:" + patientData.Last().leftHip + "\nKnee:" + patientData.Last().leftKnee;
+            //debugger.Text = "Left Elbow:" + patientData.Last().leftElbow + "\nLeft Shoulder:" + patientData.Last().leftShoulder + "\nLeft Hip:" + patientData.Last().leftHip + "\nKnee:" + patientData.Last().leftKnee;
             
+            //Check for Pause Gesture
+            if ((leftShoulder < 100) && (rightShoulder < 100) && (leftElbow > 155) && (rightElbow > 155)
+                && (leftHip > 155) && (rightHip > 155) && (leftKnee > 155) && (rightKnee > 155))
+            {
+                btnPlay_Click(new object(), new RoutedEventArgs());
+            }
+
+
             if (numberOfMatches >= 6)
             {
                 return true;
@@ -459,15 +467,18 @@ namespace KinectFitness
 
         /**
         * Checks to see if hands are hovering over a button
+         * And if they are hovering on a button for 2 seconds
+         * take the appropriate action
         */
         private void checkHands(object sender, EventArgs e)
         {
-            
+            //Check if hand intersects with the play button
             if (rightHandPos.IntersectsWith(playIconPos))
             {
+                //Timer to check how long hand is hovering on button
                 hoverTimer.Start();
+                //Method to change icon's look as it is being hovered over
                 hoverButton(playicon, new RoutedEventArgs());
-
                 //Set progress bar to increase on hands to indicate if hand is hovering on button                
                     setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);                
                 
@@ -476,6 +487,10 @@ namespace KinectFitness
                 {
                     //Presses the play button
                     btnPlay_Click(sender, new RoutedEventArgs());
+
+                    //Removes the big play button
+                    removeBigPlayButton();
+
                     //Resets hoverTimer
                     hoverTimer.Reset();
                 }
@@ -511,9 +526,7 @@ namespace KinectFitness
                     btnPlay_Click(sender, new RoutedEventArgs());
                     
                     //Remove Big Play Icon after it is clicked once 
-                    bigPlayIcon.Size = new Size(0,0);
-                    bigPlayIconImg.Height = 0;
-                    bigPlayIconHoverImg.Height = 0;
+                    removeBigPlayButton();
 
                     //Resets hoverTimer
                     hoverTimer.Reset();
@@ -544,6 +557,16 @@ namespace KinectFitness
                 leaveButton(bigPlayIconImg, new RoutedEventArgs());
                 leaveButton(doneButtonImg, new RoutedEventArgs());
             }                       
+        }
+
+        /**
+         * Removes the big play button
+         */
+        private void removeBigPlayButton()
+        {
+                    bigPlayIcon.Size = new Size(0,0);
+                    bigPlayIconImg.Height = 0;
+                    bigPlayIconHoverImg.Height = 0;
         }
 
         /**
@@ -934,12 +957,16 @@ namespace KinectFitness
             {               
                 FitnessPlayer.Play();                
                 videoPlaying = true;
+                stopHoverChecker();
                 if (!timerInitialized)
-                {
-                    //initializeTimer();
+                { 
+
                     timerInitialized = true;
+                    //Start playing back the recorded skeleton
                     startPlaybackSkeleton();
+                    //Start the video progress bar
                     startVideoProgressBar();
+                    //Start the declining points bar
                     startPointsBarDecliner();
                 }
                 //Check if the Skeleton Matcher is running
@@ -950,11 +977,43 @@ namespace KinectFitness
                 }
             }
             else
-            {                
+            {
+                //Pause the Fitness Player
                 FitnessPlayer.Pause();
                 videoPlaying = false;
+
+                //Video is paused, so allow user to use hand
+                //to click buttons again
+                startHoverChecker();
+
+                //Stop matching the skeleton since video is not playing
                 skeletonMatcherTimer.Stop();
             }
+        }
+
+        /**
+         * Stops the hover checker
+         */
+        private void stopHoverChecker()
+        {
+            //Stop the hover checker
+            dispatcherTimer.Stop();
+            //Hides the hand and the progress bar
+            Canvas.SetZIndex(rightHand, -5);
+            Canvas.SetZIndex(rightHandProgressBar, -5);
+        }
+
+        /**
+         * Starts the hover checker
+         */
+        private void startHoverChecker()
+        {
+            //Starts the hover checker again
+            dispatcherTimer.Start();
+
+            //Makes the hand and progress bar visible again
+            Canvas.SetZIndex(rightHand, 9);
+            Canvas.SetZIndex(rightHandProgressBar, 9);
         }
 
         /**
