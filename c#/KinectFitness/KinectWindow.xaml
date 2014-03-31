@@ -15,10 +15,10 @@
             <ImageBrush ImageSource="/KinectFitness;component/backgroundImage.jpg"/>
         </Grid.Background>
          <Canvas Margin="102,0,0,0" Grid.ColumnSpan="2">
-            <MediaElement Height="499" MediaEnded="videoEnd" HorizontalAlignment="Left" Name="FitnessPlayer" VerticalAlignment="Top" Width="750" UnloadedBehavior="Manual" LoadedBehavior="Manual" OpacityMask="{x:Null}" Panel.ZIndex="1" IsMuted="False" Grid.ColumnSpan="2" Canvas.Left="100" Canvas.Top="90" />
+            <MediaElement Height="499"  MediaEnded="videoEnd" HorizontalAlignment="Left" Name="FitnessPlayer" VerticalAlignment="Top" Width="750" UnloadedBehavior="Manual" LoadedBehavior="Manual" OpacityMask="{x:Null}" Panel.ZIndex="1" IsMuted="False" Grid.ColumnSpan="2" Canvas.Left="100" Canvas.Top="90" />
 
             <Image Canvas.Left="850" Canvas.Top="0" Height="198" Name="Doctor" Stretch="Fill" Width="260" Source="/KinectFitness;component/no-avatar.jpg" />
-                <Image Canvas.Left="204" Canvas.Top="6" Height="50" Name="rightHand" Stretch="Fill" Width="56" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="3"  />
+                <Image Canvas.Left="204" Canvas.Top="6" Height="50" Name="rightHand" Stretch="Fill" Width="56" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="10"  />
             <Button Canvas.Left="1128" Canvas.Top="32" Content="Camera Up" Height="24" Name="btnUp" Click="motorUp_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
             <Button Canvas.Left="1128" Canvas.Top="98" Content="Camera Down" Height="24" Name="btnDown" Click="motorDown_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
                 <TextBlock Canvas.Left="856" Canvas.Top="509" Height="80" Name="points" Text="0 Pts." Width="261" Foreground="White" FontSize="64" FontFamily="Corbel" />
@@ -32,7 +32,7 @@
                 <TextBlock Canvas.Left="278" Canvas.Top="592" Height="83" Name="suggestionBlock" Text="" Width="572" Foreground="White" FontSize="60" />
                 <ProgressBar Canvas.Left="848" Canvas.Top="426" Height="66" Name="pointsBar" Width="262" Value="0" />
                 <Rectangle Name="videoProgressBar" Stroke="{x:Null}" Panel.ZIndex="5" Fill="White" Canvas.Left="182" Canvas.Top="591" Height="84" Width="668" />
-                <Rectangle Canvas.Left="204" Canvas.Top="6" Margin="0,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="52" Height="12" Fill="#FF07FF1C" Panel.ZIndex="5" />
+                <Rectangle Canvas.Left="204" Canvas.Top="6" Margin="0,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="52" Height="12" Fill="#FF07FF1C" Panel.ZIndex="10" />
             <Rectangle Name="userBackground" Stroke="{x:Null}" OpacityMask="{x:Null}" Fill="#FF414141" Panel.ZIndex="-3" Margin="854,2,183,25" Opacity="0.8" Canvas.Left="-4" Canvas.Top="-2" Height="674" Width="268" />
                 <my:KinectSkeletonViewer Width="263" Height="204" Name="kinectSkeletonViewer1" Kinect="{Binding ElementName=kinectSensorChooser1, Path=Kinect}" Unloaded="kinectSkeletonViewer1_Unloaded" Canvas.Left="850" Canvas.Top="216" DataContext="{Binding}" Background="{x:Null}" ShowBones="True" ShowCenter="True" ShowJoints="True" />
             <Image Height="100" Name="backButtonHoverImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbuttonhover.gif" Opacity="0" Canvas.Left="1" Canvas.Top="12" />
@@ -45,6 +45,8 @@
             <Rectangle Height="666" Name="statsBackground" Stroke="Black" Width="1358" Panel.ZIndex="-5" Canvas.Left="-106" Canvas.Top="-2" Fill="Black" Opacity="0" />
             <TextBlock Canvas.Left="100" Canvas.Top="106" Height="462" Text="TextBlock" Width="368" Panel.ZIndex="-5" Foreground="White" Background="#FF217EE8" FontSize="40" Name="statsBox" Opacity="0" />
             <TextBox Canvas.Left="356" Canvas.Top="0" Height="110" Name="statsTitle" Width="494" Panel.ZIndex="-5" Background="{x:Null}" Foreground="White" Text="Statistics" FontSize="72" BorderBrush="{x:Null}" Opacity="0"/>
+            <Image Canvas.Left="650" Canvas.Top="478" Height="90" Name="doneButtonImg" Stretch="Fill" Width="200" Panel.ZIndex="-5" Source="/KinectFitness;component/donebutton.gif" Opacity="0" />
+            <Image Canvas.Left="650" Canvas.Top="478" Height="90" Name="doneButtonHoverImg" Stretch="Fill" Width="200" Source="/KinectFitness;component/donebuttonhover.gif" Panel.ZIndex="-5" Opacity="0" />
         </Canvas>
     </Grid>
 </Window>

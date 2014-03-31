@@ -63,6 +63,7 @@ namespace KinectFitness
         Rect playIconPos;
         Rect backButton;
         Rect bigPlayIcon;
+        Rect doneButton;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -186,7 +187,7 @@ namespace KinectFitness
          */
         private void updateVideoProgressBar(object sender, EventArgs e)
         {            
-            videoProgressBar.Width = (FitnessPlayer.Position.Seconds / totalMovieTime) * 773;
+            videoProgressBar.Width = (FitnessPlayer.Position.TotalSeconds / totalMovieTime) * 668;
         }
 
         /**
@@ -218,7 +219,7 @@ namespace KinectFitness
             }
             catch (ArgumentOutOfRangeException)
             {
-                //Do nothing
+                debugger.Text = "done";
             }
         }
 
@@ -244,8 +245,8 @@ namespace KinectFitness
             int leftKnee = AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]);
             int rightKnee = AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]);
                 
-            //Check if patient's joint angle is +- 20 degrees of the exercise
-            if (leftElbow < (ja.leftElbow - 20) || leftElbow > (ja.leftElbow + 20))
+            //Check if patient's joint angle is within 20 degrees of the exercise
+            if (leftElbow < (ja.leftElbow - 10) || leftElbow > (ja.leftElbow + 10))
             {
                 patientData.Last().leftElbow = 0;
             }
@@ -259,7 +260,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }            
-            if (rightElbow < (ja.rightElbow - 20) || rightElbow > (ja.rightElbow + 20))
+            if (rightElbow < (ja.rightElbow - 10) || rightElbow > (ja.rightElbow + 10))
             {
                 patientData.Last().rightElbow = 0;
             }
@@ -270,7 +271,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (leftHip < (ja.leftHip - 20) || leftHip > (ja.leftHip + 20))
+            if (leftHip < (ja.leftHip - 10) || leftHip > (ja.leftHip + 10))
             {
                 patientData.Last().leftHip = 0;
             }
@@ -281,7 +282,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (rightHip < (ja.rightHip - 20) || rightHip > (ja.rightHip + 20))
+            if (rightHip < (ja.rightHip - 10) || rightHip > (ja.rightHip + 10))
             {
                 patientData.Last().rightHip = 0;
             }
@@ -292,7 +293,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (rightKnee < (ja.rightKnee - 20) || rightKnee > (ja.rightKnee + 20))
+            if (rightKnee < (ja.rightKnee - 10) || rightKnee > (ja.rightKnee + 10))
             {
                 patientData.Last().rightKnee = 0;
             }
@@ -303,7 +304,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (leftKnee < (ja.leftKnee - 20) || leftKnee > (ja.leftKnee + 20))
+            if (leftKnee < (ja.leftKnee - 10) || leftKnee > (ja.leftKnee + 10))
             {
                 patientData.Last().leftKnee = 0;
             }
@@ -314,7 +315,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (rightShoulder < (ja.rightShoulder - 20) || rightShoulder > (ja.rightShoulder + 20))
+            if (rightShoulder < (ja.rightShoulder - 10) || rightShoulder > (ja.rightShoulder + 10))
             {
                 patientData.Last().rightShoulder = 0;
             }
@@ -325,7 +326,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (leftShoulder < (ja.leftShoulder - 20) || leftShoulder > (ja.leftShoulder + 20))
+            if (leftShoulder < (ja.leftShoulder - 10) || leftShoulder > (ja.leftShoulder + 10))
             {
                 patientData.Last().leftShoulder = 0;
             }
@@ -407,6 +408,8 @@ namespace KinectFitness
             bigPlayIcon = new Rect();
             bigPlayIcon.Location = new Point(Canvas.GetLeft(bigPlayIconImg), Canvas.GetTop(bigPlayIconImg));
             bigPlayIcon.Size = new Size(bigPlayIconImg.Width, bigPlayIconImg.Height);
+            doneButton = new Rect();
+            doneButton.Location = new Point(-900, -900);
 
             //Set video source for video player
             LoadVideo();
@@ -516,6 +519,22 @@ namespace KinectFitness
                     hoverTimer.Reset();
                 }
             }
+            else if (rightHandPos.IntersectsWith(doneButton))
+            {
+                hoverTimer.Start();
+                hoverButton(doneButtonImg, new RoutedEventArgs());
+
+                //Set progress bar to increase on hands to indicate if hand is hovering on button
+                setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+
+                //Check if hand has been hovering on target for 1 second or more   
+                if (hoverTimer.ElapsedMilliseconds >= 2000)
+                {
+                    goHome();
+                    //Resets hoverTimer
+                    hoverTimer.Reset();
+                }
+            }
             else  //If hand is not hovering on any button.  Reset timer.
             {
                 resetHandProgressBars();
@@ -523,6 +542,7 @@ namespace KinectFitness
                 leaveButton(playicon, new RoutedEventArgs());
                 leaveButton(backButtonImg, new RoutedEventArgs());
                 leaveButton(bigPlayIconImg, new RoutedEventArgs());
+                leaveButton(doneButtonImg, new RoutedEventArgs());
             }                       
         }
 
@@ -603,6 +623,11 @@ namespace KinectFitness
                 bigPlayIconHoverImg.Opacity = 1;
                 bigPlayIconImg.Opacity = 0;
             }
+            else if (i.Name.Equals(doneButtonImg.Name))
+            {
+                doneButtonImg.Opacity = 0;
+                doneButtonHoverImg.Opacity = 1;
+            }
             
         }
 
@@ -640,9 +665,12 @@ namespace KinectFitness
                 bigPlayIconHoverImg.Opacity = 0;
                 bigPlayIconImg.Opacity = 1;
             }
+            else if (i.Name.Equals(doneButtonImg.Name))
+            {
+                doneButtonHoverImg.Opacity = 0;
+                doneButtonImg.Opacity = 1;
+            }
         }
-
-
 
         void kinectSensorChooser1_KinectSensorChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -701,15 +729,8 @@ namespace KinectFitness
             //set scaled position
 
             ScalePosition(rightHand, first.Joints[JointType.HandRight]);
-
             ScalePosition(rightHandProgressBar, first.Joints[JointType.HandRight]);
-
-
-
-            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
-            
-
-            
+            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));            
         }
 
         //Returns the angle between the joints
@@ -936,18 +957,124 @@ namespace KinectFitness
             }
         }
 
+        /**
+         * Go back to the home screen
+         */
+        private void goHome()
+        {
+            if (videoPlaying)
+            {
+                FitnessPlayer.Stop();
+                FitnessPlayer.Close();     
+            }
+            if (skeletonMatcherTimer != null)
+            {
+                skeletonMatcherTimer.Stop();
+            }
+            if (videoProgressBarTracker != null)
+            {
+                videoProgressBarTracker.Stop();
+            }
+            closing = true;           
+            dispatcherTimer.Stop();
+            StopKinect(kinectSensorChooser1.Kinect);
+            StartupWindow sw = new StartupWindow();
+            this.Close();
+            sw.Show();        
+        }
+
+        /**
+         * Fires when the video ends
+         */
         private void videoEnd(object sender, RoutedEventArgs e)
         {
+            //Create Done Button and remove other buttons
+            createStatsView();
+            //Compile the stats for the patient
+            compileStats();
+            //Display the stats
             showStats();
         }
+
+        /**
+         * Creates and removes appropriate buttons
+         * to help display the statistics 
+         * at the end of the patients exercise
+         */
+        private void createStatsView()
+        {
+            doneButton.Size = new Size(doneButtonImg.Width, doneButtonImg.Height);
+            doneButton.Location = new Point(Canvas.GetLeft(doneButtonImg), Canvas.GetTop(doneButtonImg));
+            playIconPos.Size = new Size(0, 0);
+            backButton.Size = new Size(0, 0);
+            bigPlayIcon.Size = new Size(0, 0);
+        }
+
+        /**
+         * Compile the patients stats on how they did 
+         * with the exercise
+         */
+        private void compileStats()
+        {
+            double leftElbow = 0;
+            double rightElbow = 0;
+            double leftShoulder = 0;
+            double rightShoulder = 0;
+            double leftHip = 0;
+            double rightHip = 0;
+            double leftKnee = 0;
+            double rightKnee = 0;
+
+            //Get Number of corrrect comparisons for each joint
+            for (int i = 0; i < patientData.Count(); i++)
+            {
+                leftElbow += patientData.ElementAt(i).leftElbow;
+                rightElbow += patientData.ElementAt(i).rightElbow;
+                leftShoulder += patientData.ElementAt(i).leftShoulder;
+                rightShoulder += patientData.ElementAt(i).rightShoulder;
+                leftHip += patientData.ElementAt(i).leftHip;
+                rightHip += patientData.ElementAt(i).rightHip;
+                leftKnee += patientData.ElementAt(i).leftKnee;
+                rightKnee += patientData.ElementAt(i).rightKnee;
+            }            
+
+            //Get Percentage of correct comparisons for each joint
+            double totalComparisons = patientData.Count();
+            int leftElbowStat = Convert.ToInt16(Math.Round((leftElbow / totalComparisons * 100), 0));
+            int rightElbowStat = Convert.ToInt16(Math.Round((rightElbow / totalComparisons * 100), 0));
+            int leftShoulderStat = Convert.ToInt16(Math.Round((leftShoulder / totalComparisons * 100), 0));
+            int rightShoulderStat = Convert.ToInt16(Math.Round((rightShoulder / totalComparisons * 100), 0));
+            int leftHipStat = Convert.ToInt16(Math.Round((leftHip / totalComparisons * 100), 0));
+            int rightHipStat = Convert.ToInt16(Math.Round((rightHip / totalComparisons * 100), 0));
+            int leftKneeStat = Convert.ToInt16(Math.Round((leftKnee / totalComparisons * 100), 0));
+            int rightKneeStat = Convert.ToInt16(Math.Round((rightKnee / totalComparisons * 100), 0));
+            
+            // Put this into the Stats box at the end of the video
+            statsBox.Text = "Left Elbow: " + leftElbowStat +
+                "%\nRight Elbow: " + rightElbowStat +
+                "%\nLeft Shoulder: " + leftShoulderStat +
+                "%\nRight Shoulder: " + rightShoulderStat +
+                "%\nLeft Hip: " + leftHipStat +
+                "%\nRight Hip: " + rightHipStat +
+                "%\nLeft Knee: " + leftKneeStat +
+                "%\nRight Knee: " + rightKneeStat + "%";
+        }
+
+        /**
+         * Show the patients stats
+         */
         private void showStats()
         {
             statsBackground.Opacity = 1;
             statsBox.Opacity = 1;
             statsTitle.Opacity = 1;
+            doneButtonImg.Opacity = 1;
+            doneButtonHoverImg.Opacity = 0;
             Canvas.SetZIndex(statsBackground, 9);
             Canvas.SetZIndex(statsBox, 9);
             Canvas.SetZIndex(statsTitle, 9);
+            Canvas.SetZIndex(doneButtonImg, 9);
+            Canvas.SetZIndex(doneButtonHoverImg, 9);
         }
     }
 }
