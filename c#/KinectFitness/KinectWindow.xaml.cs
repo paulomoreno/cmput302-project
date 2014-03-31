@@ -51,6 +51,7 @@ namespace KinectFitness
         Skeleton first;
         List<string> jointAngles;
         List<JointAngles> loadedSkeleton;
+        List<JointAngles> patientData;
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
         System.Windows.Threading.DispatcherTimer videoProgressBarTracker;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
@@ -134,7 +135,7 @@ namespace KinectFitness
             dispatcherTimer.Tick += new EventHandler(checkHands);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
             dispatcherTimer.Start();
-
+            
             hoverTimer = new Stopwatch();
         }
 
@@ -206,7 +207,7 @@ namespace KinectFitness
             //Check if loaded skeleton at this point matches the users current data within +- 1 second of the video
             try
             {
-                if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo)))
+                if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo), secondsPassedInVideo))
                 {
                     //debugger.Text = "Success";
                 }
@@ -226,8 +227,9 @@ namespace KinectFitness
          * angles to the users.  If 80% of the skeleton matches 
          * within 20 degrees, then this returns true.
          */
-        private bool SkeletonMatchesCloselyEnough(JointAngles ja)
+        private bool SkeletonMatchesCloselyEnough(JointAngles ja, int secondsPassed)
         {
+            patientData.Add(new JointAngles(1,1,1,1,1,1,1,1));
             int numberOfMatches = 0;
             if (first == null)
             {
@@ -245,7 +247,7 @@ namespace KinectFitness
             //Check if patient's joint angle is +- 20 degrees of the exercise
             if (leftElbow < (ja.leftElbow - 20) || leftElbow > (ja.leftElbow + 20))
             {
-
+                patientData.Last().leftElbow = 0;
             }
             else
             {
@@ -259,6 +261,7 @@ namespace KinectFitness
             }            
             if (rightElbow < (ja.rightElbow - 20) || rightElbow > (ja.rightElbow + 20))
             {
+                patientData.Last().rightElbow = 0;
             }
             else
             {
@@ -269,6 +272,7 @@ namespace KinectFitness
             }
             if (leftHip < (ja.leftHip - 20) || leftHip > (ja.leftHip + 20))
             {
+                patientData.Last().leftHip = 0;
             }
             else
             {
@@ -279,6 +283,7 @@ namespace KinectFitness
             }
             if (rightHip < (ja.rightHip - 20) || rightHip > (ja.rightHip + 20))
             {
+                patientData.Last().rightHip = 0;
             }
             else
             {
@@ -289,6 +294,7 @@ namespace KinectFitness
             }
             if (rightKnee < (ja.rightKnee - 20) || rightKnee > (ja.rightKnee + 20))
             {
+                patientData.Last().rightKnee = 0;
             }
             else
             {
@@ -299,6 +305,7 @@ namespace KinectFitness
             }
             if (leftKnee < (ja.leftKnee - 20) || leftKnee > (ja.leftKnee + 20))
             {
+                patientData.Last().leftKnee = 0;
             }
             else
             {
@@ -309,6 +316,7 @@ namespace KinectFitness
             }
             if (rightShoulder < (ja.rightShoulder - 20) || rightShoulder > (ja.rightShoulder + 20))
             {
+                patientData.Last().rightShoulder = 0;
             }
             else
             {
@@ -319,7 +327,7 @@ namespace KinectFitness
             }
             if (leftShoulder < (ja.leftShoulder - 20) || leftShoulder > (ja.leftShoulder + 20))
             {
-
+                patientData.Last().leftShoulder = 0;
             }
             else
             {
@@ -328,7 +336,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            debugger.Text = "Elbow:" + ja.leftElbow.ToString() + "\nShoulder:" + ja.leftShoulder + "\nHip:" + ja.leftHip.ToString() + "\nKnee:" + ja.leftKnee.ToString() + "\n#Correct:" + numberOfMatches;
+            debugger.Text = "Left Elbow:" + patientData.Last().leftElbow + "\nLeft Shoulder:" + patientData.Last().leftShoulder + "\nLeft Hip:" + patientData.Last().leftHip + "\nKnee:" + patientData.Last().leftKnee;
             
             if (numberOfMatches >= 6)
             {
@@ -384,6 +392,7 @@ namespace KinectFitness
             videoPlaying = false;
             timerInitialized = false;
             videoProgressBar.Width = 0;
+            patientData = new List<JointAngles>();
           
             //Get positions of buttons
             rightHandPos = new Rect();
@@ -440,7 +449,10 @@ namespace KinectFitness
         void media_MediaOpened(object sender, System.Windows.RoutedEventArgs e)
         {
             totalMovieTime = FitnessPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+            debugger2.Text = totalMovieTime.ToString();
         }
+
+        
 
         /**
         * Checks to see if hands are hovering over a button
@@ -479,8 +491,6 @@ namespace KinectFitness
                         leavePage();
                         //Resets hoverTimer
                         hoverTimer.Reset();
-                    
-
                 }
             }
             else if (rightHandPos.IntersectsWith(bigPlayIcon)  && !videoPlaying)
@@ -523,7 +533,8 @@ namespace KinectFitness
         {
             if (videoPlaying)
             {
-                FitnessPlayer.Close();              
+                FitnessPlayer.Stop();
+                FitnessPlayer.Close();     
             }
             if (skeletonMatcherTimer != null)
             {
@@ -909,13 +920,34 @@ namespace KinectFitness
                     startPlaybackSkeleton();
                     startVideoProgressBar();
                     startPointsBarDecliner();
-                }                
+                }
+                //Check if the Skeleton Matcher is running
+                //If not, start it back again
+                if (!skeletonMatcherTimer.IsEnabled)
+                {
+                    skeletonMatcherTimer.Start();
+                }
             }
             else
             {                
                 FitnessPlayer.Pause();
                 videoPlaying = false;
+                skeletonMatcherTimer.Stop();
             }
+        }
+
+        private void videoEnd(object sender, RoutedEventArgs e)
+        {
+            showStats();
+        }
+        private void showStats()
+        {
+            statsBackground.Opacity = 1;
+            statsBox.Opacity = 1;
+            statsTitle.Opacity = 1;
+            Canvas.SetZIndex(statsBackground, 9);
+            Canvas.SetZIndex(statsBox, 9);
+            Canvas.SetZIndex(statsTitle, 9);
         }
     }
 }

@@ -221,7 +221,7 @@ namespace KinectFitness
             {
                 //Do Nothing
             }
-        }
+        } 
 
         private void SetFile(Image exercise)
         {
@@ -485,67 +485,34 @@ namespace KinectFitness
             StopKinect(kinectSensorChooser1.Kinect);
         }
 
-
-
-        /*
-        //Add exercises with buttons dynamically
-        public void addExercises() 
+        private void intenseWorkout(object sender, MouseButtonEventArgs e)
         {
-            int x = 0;
-            List<string> exercises;
-            exercises = getFiles();
-            foreach(string exercise in exercises)
-            {
-                //Make sure a button is not created for the 'chosenExercise' file
-                if (!exercise.Contains("chosenExercise"))
-                {
-                    System.Windows.Controls.Button newBtn = new Button();
-                    x++;
-                    newBtn.Content = exercise;
-                    newBtn.Name = "e" + x.ToString();
-                    newBtn.Click += new RoutedEventHandler(newBtn_Click);
-
-                    levels.Children.Add(newBtn);
-                }
-            }
-        }
-
-        //Copy the exercise file chosen by user to the "chosenExercise.txt" file 
-        //and navigate to Kinect Exercise Window
-        private void newBtn_Click(object sender, RoutedEventArgs e)
-        {
-            String exercise = (sender as Button).Content.ToString();
-            try
-            {
-                File.Delete("..\\..\\Recordings\\chosenExercise.txt");
-                System.IO.File.Copy(exercise, "..\\..\\Recordings\\chosenExercise.txt");
-            }
-            catch (IOException)
-            {
-                MessageBox.Show("Error in loading exercise");
-            }
+            SetFile(intenseImg);
+            StopKinect(kinectSensorChooser1.Kinect);
+            dispatcherTimer.Stop();
             KinectWindow kw = new KinectWindow();
-            this.NavigationService.Navigate(kw);
-            
+            this.Close();
+            kw.Show();
         }
 
-        private List<string> getFiles()
+        private void moderateWorkout(object sender, MouseButtonEventArgs e)
         {
-            List<string> exercises = new List<string>();
-            try
-            {
-                string[] fileEntries = Directory.GetFiles("..\\..\\Recordings");
-                foreach (string fileName in fileEntries)
-                {
-                    exercises.Add(fileName);
-                }
-            }
-            catch(DirectoryNotFoundException)
-            {
-                MessageBox.Show("Error Finding Exercises");
-            }            
-            return exercises;
+            SetFile(moderateImg);
+            StopKinect(kinectSensorChooser1.Kinect);
+            dispatcherTimer.Stop();
+            KinectWindow kw = new KinectWindow();
+            this.Close();
+            kw.Show();
         }
-        */
+
+        private void warmUpWorkout(object sender, MouseButtonEventArgs e)
+        {
+            SetFile(warmUpImg);
+            StopKinect(kinectSensorChooser1.Kinect);
+            dispatcherTimer.Stop();
+            KinectWindow kw = new KinectWindow();
+            this.Close();
+            kw.Show();
+        }
     }
 }

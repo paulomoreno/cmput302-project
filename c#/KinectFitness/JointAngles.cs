@@ -17,7 +17,7 @@ namespace KinectFitness
         public int rightHip;
         public int rightKnee;
 
-        /*public JointAngles(int leftShoulder, int leftElbow, int leftHip, int leftKnee,
+        public JointAngles(int leftShoulder, int leftElbow, int leftHip, int leftKnee,
             int rightShoulder, int rightElbow, int rightHip, int rightKnee)
         {
             this.leftShoulder = leftShoulder;
@@ -28,7 +28,7 @@ namespace KinectFitness
             this.rightElbow = rightElbow;
             this.rightHip = rightHip;
             this.rightKnee = rightKnee;
-        }*/
+        }
 
         public JointAngles(){ }
 

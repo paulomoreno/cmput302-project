@@ -15,7 +15,7 @@
             <ImageBrush ImageSource="/KinectFitness;component/backgroundImage.jpg"/>
         </Grid.Background>
          <Canvas Margin="102,0,0,0" Grid.ColumnSpan="2">
-            <MediaElement Height="499" HorizontalAlignment="Left" Name="FitnessPlayer" VerticalAlignment="Top" Width="750" UnloadedBehavior="Manual" LoadedBehavior="Manual" OpacityMask="{x:Null}" Panel.ZIndex="1" IsMuted="False" Grid.ColumnSpan="2" Canvas.Left="100" Canvas.Top="90" />
+            <MediaElement Height="499" MediaEnded="videoEnd" HorizontalAlignment="Left" Name="FitnessPlayer" VerticalAlignment="Top" Width="750" UnloadedBehavior="Manual" LoadedBehavior="Manual" OpacityMask="{x:Null}" Panel.ZIndex="1" IsMuted="False" Grid.ColumnSpan="2" Canvas.Left="100" Canvas.Top="90" />
 
             <Image Canvas.Left="850" Canvas.Top="0" Height="198" Name="Doctor" Stretch="Fill" Width="260" Source="/KinectFitness;component/no-avatar.jpg" />
                 <Image Canvas.Left="204" Canvas.Top="6" Height="50" Name="rightHand" Stretch="Fill" Width="56" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="3"  />
@@ -38,9 +38,13 @@
             <Image Height="100" Name="backButtonHoverImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbuttonhover.gif" Opacity="0" Canvas.Left="1" Canvas.Top="12" />
             <Image Height="100" Name="backButtonImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbutton.gif" Canvas.Left="1" Canvas.Top="12" />
             <my:KinectSensorChooser Name="kinectSensorChooser1" Width="256" Height="204" Canvas.Left="856" Canvas.Top="220" />
-            <TextBox Canvas.Left="972" Canvas.Top="454" Height="216" Name="debugger" Width="274" Text="asdf" FontSize="28" />
+            <TextBox Canvas.Left="875" Canvas.Top="445" Height="225" Name="debugger" Width="372" Text="asdf" FontSize="28" />
             <Image Canvas.Left="378" Canvas.Top="216" Height="204" Name="bigPlayIconHoverImg" Stretch="Fill" Width="204" Source="/KinectFitness;component/bigplaybutton.png" Opacity="0" Panel.ZIndex="1" />
             <Image Canvas.Left="390" Canvas.Top="228" Height="184" Name="bigPlayIconImg" Stretch="Fill" Width="184" Source="/KinectFitness;component/bigplaybuttonhover.png" Panel.ZIndex="1" />
+            <TextBox Canvas.Left="1" Canvas.Top="426" Height="86" Name="debugger2" Width="100" />
+            <Rectangle Height="666" Name="statsBackground" Stroke="Black" Width="1358" Panel.ZIndex="-5" Canvas.Left="-106" Canvas.Top="-2" Fill="Black" Opacity="0" />
+            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="462" Text="TextBlock" Width="368" Panel.ZIndex="-5" Foreground="White" Background="#FF217EE8" FontSize="40" Name="statsBox" Opacity="0" />
+            <TextBox Canvas.Left="356" Canvas.Top="0" Height="110" Name="statsTitle" Width="494" Panel.ZIndex="-5" Background="{x:Null}" Foreground="White" Text="Statistics" FontSize="72" BorderBrush="{x:Null}" Opacity="0"/>
         </Canvas>
-         </Grid>
+    </Grid>
 </Window>
