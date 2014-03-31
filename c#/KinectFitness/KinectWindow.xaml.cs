@@ -80,35 +80,35 @@ namespace KinectFitness
                new System.IO.StreamReader("..\\..\\" + exercise);
             while ((line = file.ReadLine()) != null)
             {
-                if(line.Contains("Left Shoulder"))
+                if(line.Contains("LSA"))
                 {
                     ja.leftShoulder = Convert.ToInt32(file.ReadLine());
                 }
-                else if (line.Contains("Right Shoulder"))
+                else if (line.Contains("RSA"))
                 {
                     ja.rightShoulder = Convert.ToInt32(file.ReadLine());
                 }
-                else if (line.Contains("Left Elbow"))
+                else if (line.Contains("LEA"))
                 {
                     ja.leftElbow = Convert.ToInt32(file.ReadLine());
                 }
-                else if (line.Contains("Left Hip"))
+                else if (line.Contains("LHA"))
                 {
                     ja.leftHip = Convert.ToInt32(file.ReadLine());
                 }
-                else if (line.Contains("Left Knee"))
+                else if (line.Contains("LKA"))
                 {
                     ja.leftKnee = Convert.ToInt32(file.ReadLine());
                 }
-                else if (line.Contains("Right Elbow"))
+                else if (line.Contains("REA"))
                 {
                     ja.rightElbow = Convert.ToInt32(file.ReadLine());
                 }
-                else if (line.Contains("Right Hip"))
+                else if (line.Contains("RHA"))
                 {
                     ja.rightHip = Convert.ToInt32(file.ReadLine());
                 }
-                else if (line.Contains("Right Knee"))
+                else if (line.Contains("RKA"))
                 {
                     ja.rightKnee = Convert.ToInt32(file.ReadLine());
                 }
