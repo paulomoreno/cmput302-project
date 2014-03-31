@@ -1,0 +1,1368 @@
+Time: 44
+Left Elbow
+131
+Left Shoulder
+138
+Right Elbow
+142
+Right Shoulder
+157
+Left Hip
+160
+Right Hip
+163
+Left Knee
+179
+Right Knee
+170
+End
+Time: 44
+Left Elbow
+131
+Left Shoulder
+138
+Right Elbow
+142
+Right Shoulder
+157
+Left Hip
+160
+Right Hip
+163
+Left Knee
+179
+Right Knee
+170
+End
+Time: 46
+Left Elbow
+132
+Left Shoulder
+137
+Right Elbow
+144
+Right Shoulder
+156
+Left Hip
+159
+Right Hip
+163
+Left Knee
+169
+Right Knee
+171
+End
+Time: 46
+Left Elbow
+132
+Left Shoulder
+137
+Right Elbow
+144
+Right Shoulder
+156
+Left Hip
+159
+Right Hip
+163
+Left Knee
+169
+Right Knee
+171
+End
+Time: 47
+Left Elbow
+134
+Left Shoulder
+135
+Right Elbow
+147
+Right Shoulder
+155
+Left Hip
+157
+Right Hip
+163
+Left Knee
+170
+Right Knee
+171
+End
+Time: 48
+Left Elbow
+135
+Left Shoulder
+134
+Right Elbow
+149
+Right Shoulder
+152
+Left Hip
+156
+Right Hip
+163
+Left Knee
+172
+Right Knee
+172
+End
+Time: 49
+Left Elbow
+138
+Left Shoulder
+133
+Right Elbow
+151
+Right Shoulder
+148
+Left Hip
+156
+Right Hip
+162
+Left Knee
+175
+Right Knee
+172
+End
+Time: 50
+Left Elbow
+144
+Left Shoulder
+133
+Right Elbow
+151
+Right Shoulder
+144
+Left Hip
+157
+Right Hip
+160
+Left Knee
+178
+Right Knee
+174
+End
+Time: 51
+Left Elbow
+148
+Left Shoulder
+133
+Right Elbow
+151
+Right Shoulder
+142
+Left Hip
+158
+Right Hip
+159
+Left Knee
+179
+Right Knee
+175
+End
+Time: 52
+Left Elbow
+151
+Left Shoulder
+133
+Right Elbow
+150
+Right Shoulder
+140
+Left Hip
+159
+Right Hip
+158
+Left Knee
+177
+Right Knee
+175
+End
+Time: 53
+Left Elbow
+153
+Left Shoulder
+133
+Right Elbow
+150
+Right Shoulder
+139
+Left Hip
+160
+Right Hip
+158
+Left Knee
+174
+Right Knee
+176
+End
+Time: 54
+Left Elbow
+154
+Left Shoulder
+133
+Right Elbow
+150
+Right Shoulder
+139
+Left Hip
+160
+Right Hip
+158
+Left Knee
+173
+Right Knee
+177
+End
+Time: 56
+Left Elbow
+154
+Left Shoulder
+134
+Right Elbow
+149
+Right Shoulder
+139
+Left Hip
+160
+Right Hip
+158
+Left Knee
+171
+Right Knee
+178
+End
+Time: 56
+Left Elbow
+154
+Left Shoulder
+134
+Right Elbow
+149
+Right Shoulder
+139
+Left Hip
+160
+Right Hip
+158
+Left Knee
+171
+Right Knee
+178
+End
+Time: 57
+Left Elbow
+155
+Left Shoulder
+134
+Right Elbow
+149
+Right Shoulder
+138
+Left Hip
+161
+Right Hip
+159
+Left Knee
+170
+Right Knee
+178
+End
+Time: 58
+Left Elbow
+154
+Left Shoulder
+134
+Right Elbow
+149
+Right Shoulder
+138
+Left Hip
+161
+Right Hip
+159
+Left Knee
+169
+Right Knee
+179
+End
+Time: 59
+Left Elbow
+154
+Left Shoulder
+134
+Right Elbow
+148
+Right Shoulder
+138
+Left Hip
+161
+Right Hip
+159
+Left Knee
+168
+Right Knee
+179
+End
+Time: 60
+Left Elbow
+153
+Left Shoulder
+134
+Right Elbow
+144
+Right Shoulder
+139
+Left Hip
+161
+Right Hip
+159
+Left Knee
+168
+Right Knee
+179
+End
+Time: 61
+Left Elbow
+152
+Left Shoulder
+134
+Right Elbow
+128
+Right Shoulder
+139
+Left Hip
+161
+Right Hip
+159
+Left Knee
+167
+Right Knee
+179
+End
+Time: 62
+Left Elbow
+151
+Left Shoulder
+134
+Right Elbow
+95
+Right Shoulder
+140
+Left Hip
+161
+Right Hip
+160
+Left Knee
+167
+Right Knee
+179
+End
+Time: 63
+Left Elbow
+147
+Left Shoulder
+134
+Right Elbow
+71
+Right Shoulder
+142
+Left Hip
+161
+Right Hip
+160
+Left Knee
+167
+Right Knee
+179
+End
+Time: 64
+Left Elbow
+125
+Left Shoulder
+134
+Right Elbow
+60
+Right Shoulder
+145
+Left Hip
+161
+Right Hip
+160
+Left Knee
+167
+Right Knee
+179
+End
+Time: 65
+Left Elbow
+87
+Left Shoulder
+134
+Right Elbow
+68
+Right Shoulder
+146
+Left Hip
+161
+Right Hip
+160
+Left Knee
+167
+Right Knee
+179
+End
+Time: 66
+Left Elbow
+53
+Left Shoulder
+135
+Right Elbow
+98
+Right Shoulder
+147
+Left Hip
+161
+Right Hip
+160
+Left Knee
+168
+Right Knee
+179
+End
+Time: 68
+Left Elbow
+44
+Left Shoulder
+136
+Right Elbow
+111
+Right Shoulder
+148
+Left Hip
+161
+Right Hip
+160
+Left Knee
+168
+Right Knee
+178
+End
+Time: 68
+Left Elbow
+44
+Left Shoulder
+136
+Right Elbow
+111
+Right Shoulder
+148
+Left Hip
+161
+Right Hip
+160
+Left Knee
+168
+Right Knee
+178
+End
+Time: 69
+Left Elbow
+48
+Left Shoulder
+137
+Right Elbow
+112
+Right Shoulder
+149
+Left Hip
+161
+Right Hip
+160
+Left Knee
+168
+Right Knee
+178
+End
+Time: 70
+Left Elbow
+72
+Left Shoulder
+138
+Right Elbow
+91
+Right Shoulder
+150
+Left Hip
+161
+Right Hip
+160
+Left Knee
+168
+Right Knee
+178
+End
+Time: 71
+Left Elbow
+92
+Left Shoulder
+139
+Right Elbow
+69
+Right Shoulder
+151
+Left Hip
+161
+Right Hip
+160
+Left Knee
+168
+Right Knee
+178
+End
+Time: 72
+Left Elbow
+98
+Left Shoulder
+141
+Right Elbow
+62
+Right Shoulder
+152
+Left Hip
+161
+Right Hip
+160
+Left Knee
+168
+Right Knee
+178
+End
+Time: 73
+Left Elbow
+86
+Left Shoulder
+143
+Right Elbow
+73
+Right Shoulder
+153
+Left Hip
+161
+Right Hip
+160
+Left Knee
+168
+Right Knee
+178
+End
+Time: 74
+Left Elbow
+83
+Left Shoulder
+144
+Right Elbow
+74
+Right Shoulder
+153
+Left Hip
+161
+Right Hip
+160
+Left Knee
+168
+Right Knee
+178
+End
+Time: 75
+Left Elbow
+88
+Left Shoulder
+145
+Right Elbow
+72
+Right Shoulder
+153
+Left Hip
+161
+Right Hip
+160
+Left Knee
+169
+Right Knee
+178
+End
+Time: 76
+Left Elbow
+91
+Left Shoulder
+145
+Right Elbow
+72
+Right Shoulder
+152
+Left Hip
+161
+Right Hip
+161
+Left Knee
+169
+Right Knee
+177
+End
+Time: 77
+Left Elbow
+89
+Left Shoulder
+143
+Right Elbow
+78
+Right Shoulder
+149
+Left Hip
+161
+Right Hip
+160
+Left Knee
+169
+Right Knee
+177
+End
+Time: 78
+Left Elbow
+95
+Left Shoulder
+137
+Right Elbow
+79
+Right Shoulder
+144
+Left Hip
+162
+Right Hip
+160
+Left Knee
+169
+Right Knee
+177
+End
+Time: 80
+Left Elbow
+99
+Left Shoulder
+132
+Right Elbow
+80
+Right Shoulder
+140
+Left Hip
+163
+Right Hip
+160
+Left Knee
+170
+Right Knee
+177
+End
+Time: 80
+Left Elbow
+99
+Left Shoulder
+132
+Right Elbow
+80
+Right Shoulder
+140
+Left Hip
+163
+Right Hip
+160
+Left Knee
+170
+Right Knee
+177
+End
+Time: 81
+Left Elbow
+96
+Left Shoulder
+128
+Right Elbow
+93
+Right Shoulder
+135
+Left Hip
+164
+Right Hip
+160
+Left Knee
+170
+Right Knee
+177
+End
+Time: 82
+Left Elbow
+88
+Left Shoulder
+129
+Right Elbow
+120
+Right Shoulder
+135
+Left Hip
+164
+Right Hip
+160
+Left Knee
+171
+Right Knee
+177
+End
+Time: 83
+Left Elbow
+87
+Left Shoulder
+136
+Right Elbow
+137
+Right Shoulder
+139
+Left Hip
+164
+Right Hip
+160
+Left Knee
+171
+Right Knee
+178
+End
+Time: 84
+Left Elbow
+100
+Left Shoulder
+151
+Right Elbow
+140
+Right Shoulder
+150
+Left Hip
+164
+Right Hip
+160
+Left Knee
+172
+Right Knee
+178
+End
+Time: 85
+Left Elbow
+108
+Left Shoulder
+157
+Right Elbow
+145
+Right Shoulder
+160
+Left Hip
+164
+Right Hip
+160
+Left Knee
+172
+Right Knee
+178
+End
+Time: 86
+Left Elbow
+110
+Left Shoulder
+158
+Right Elbow
+146
+Right Shoulder
+167
+Left Hip
+163
+Right Hip
+161
+Left Knee
+172
+Right Knee
+178
+End
+Time: 87
+Left Elbow
+93
+Left Shoulder
+161
+Right Elbow
+112
+Right Shoulder
+173
+Left Hip
+162
+Right Hip
+161
+Left Knee
+172
+Right Knee
+178
+End
+Time: 88
+Left Elbow
+83
+Left Shoulder
+167
+Right Elbow
+60
+Right Shoulder
+174
+Left Hip
+162
+Right Hip
+161
+Left Knee
+173
+Right Knee
+178
+End
+Time: 89
+Left Elbow
+90
+Left Shoulder
+175
+Right Elbow
+40
+Right Shoulder
+172
+Left Hip
+161
+Right Hip
+161
+Left Knee
+173
+Right Knee
+179
+End
+Time: 90
+Left Elbow
+97
+Left Shoulder
+172
+Right Elbow
+40
+Right Shoulder
+167
+Left Hip
+161
+Right Hip
+161
+Left Knee
+173
+Right Knee
+179
+End
+Time: 92
+Left Elbow
+89
+Left Shoulder
+162
+Right Elbow
+69
+Right Shoulder
+162
+Left Hip
+161
+Right Hip
+161
+Left Knee
+173
+Right Knee
+179
+End
+Time: 92
+Left Elbow
+89
+Left Shoulder
+162
+Right Elbow
+69
+Right Shoulder
+162
+Left Hip
+161
+Right Hip
+161
+Left Knee
+173
+Right Knee
+179
+End
+Time: 93
+Left Elbow
+71
+Left Shoulder
+152
+Right Elbow
+107
+Right Shoulder
+154
+Left Hip
+161
+Right Hip
+161
+Left Knee
+173
+Right Knee
+178
+End
+Time: 94
+Left Elbow
+90
+Left Shoulder
+147
+Right Elbow
+110
+Right Shoulder
+149
+Left Hip
+161
+Right Hip
+161
+Left Knee
+174
+Right Knee
+178
+End
+Time: 95
+Left Elbow
+118
+Left Shoulder
+145
+Right Elbow
+85
+Right Shoulder
+145
+Left Hip
+161
+Right Hip
+162
+Left Knee
+174
+Right Knee
+178
+End
+Time: 96
+Left Elbow
+111
+Left Shoulder
+143
+Right Elbow
+88
+Right Shoulder
+144
+Left Hip
+161
+Right Hip
+162
+Left Knee
+174
+Right Knee
+178
+End
+Time: 97
+Left Elbow
+77
+Left Shoulder
+143
+Right Elbow
+117
+Right Shoulder
+144
+Left Hip
+162
+Right Hip
+162
+Left Knee
+174
+Right Knee
+178
+End
+Time: 98
+Left Elbow
+60
+Left Shoulder
+142
+Right Elbow
+143
+Right Shoulder
+145
+Left Hip
+162
+Right Hip
+161
+Left Knee
+174
+Right Knee
+178
+End
+Time: 99
+Left Elbow
+66
+Left Shoulder
+139
+Right Elbow
+149
+Right Shoulder
+148
+Left Hip
+162
+Right Hip
+160
+Left Knee
+174
+Right Knee
+175
+End
+Time: 100
+Left Elbow
+112
+Left Shoulder
+137
+Right Elbow
+131
+Right Shoulder
+150
+Left Hip
+163
+Right Hip
+159
+Left Knee
+173
+Right Knee
+175
+End
+Time: 101
+Left Elbow
+136
+Left Shoulder
+138
+Right Elbow
+104
+Right Shoulder
+152
+Left Hip
+163
+Right Hip
+157
+Left Knee
+173
+Right Knee
+177
+End
+Time: 103
+Left Elbow
+143
+Left Shoulder
+139
+Right Elbow
+76
+Right Shoulder
+156
+Left Hip
+165
+Right Hip
+157
+Left Knee
+177
+Right Knee
+177
+End
+Time: 103
+Left Elbow
+143
+Left Shoulder
+139
+Right Elbow
+76
+Right Shoulder
+156
+Left Hip
+165
+Right Hip
+157
+Left Knee
+177
+Right Knee
+177
+End
+Time: 104
+Left Elbow
+141
+Left Shoulder
+139
+Right Elbow
+72
+Right Shoulder
+158
+Left Hip
+166
+Right Hip
+158
+Left Knee
+178
+Right Knee
+175
+End
+Time: 105
+Left Elbow
+137
+Left Shoulder
+138
+Right Elbow
+102
+Right Shoulder
+160
+Left Hip
+166
+Right Hip
+159
+Left Knee
+174
+Right Knee
+174
+End
+Time: 106
+Left Elbow
+134
+Left Shoulder
+138
+Right Elbow
+121
+Right Shoulder
+157
+Left Hip
+166
+Right Hip
+160
+Left Knee
+165
+Right Knee
+174
+End
+Time: 107
+Left Elbow
+133
+Left Shoulder
+137
+Right Elbow
+132
+Right Shoulder
+151
+Left Hip
+164
+Right Hip
+163
+Left Knee
+156
+Right Knee
+174
+End
+Time: 108
+Left Elbow
+136
+Left Shoulder
+135
+Right Elbow
+146
+Right Shoulder
+148
+Left Hip
+160
+Right Hip
+168
+Left Knee
+156
+Right Knee
+175
+End
+Time: 109
+Left Elbow
+142
+Left Shoulder
+128
+Right Elbow
+151
+Right Shoulder
+132
+Left Hip
+159
+Right Hip
+170
+Left Knee
+160
+Right Knee
+175
+End
+Time: 110
+Left Elbow
+143
+Left Shoulder
+129
+Right Elbow
+146
+Right Shoulder
+121
+Left Hip
+152
+Right Hip
+171
+Left Knee
+160
+Right Knee
+158
+End
+Time: 111
+Left Elbow
+149
+Left Shoulder
+112
+Right Elbow
+140
+Right Shoulder
+116
+Left Hip
+146
+Right Hip
+167
+Left Knee
+163
+Right Knee
+140
+End
+Time: 112
+Left Elbow
+159
+Left Shoulder
+72
+Right Elbow
+139
+Right Shoulder
+93
+Left Hip
+136
+Right Hip
+164
+Left Knee
+167
+Right Knee
+146
+End
+Time: 113
+Left Elbow
+122
+Left Shoulder
+115
+Right Elbow
+119
+Right Shoulder
+136
+Left Hip
+129
+Right Hip
+155
+Left Knee
+169
+Right Knee
+173
+End
+Time: 114
+Left Elbow
+82
+Left Shoulder
+121
+Right Elbow
+109
+Right Shoulder
+159
+Left Hip
+119
+Right Hip
+126
+Left Knee
+166
+Right Knee
+175
+End
+Time: 116
+Left Elbow
+87
+Left Shoulder
+94
+Right Elbow
+109
+Right Shoulder
+92
+Left Hip
+137
+Right Hip
+111
+Left Knee
+159
+Right Knee
+169
+End
+Time: 116
+Left Elbow
+87
+Left Shoulder
+94
+Right Elbow
+109
+Right Shoulder
+92
+Left Hip
+137
+Right Hip
+111
+Left Knee
+159
+Right Knee
+169
+End
+Time: 117
+Left Elbow
+84
+Left Shoulder
+90
+Right Elbow
+86
+Right Shoulder
+121
+Left Hip
+145
+Right Hip
+95
+Left Knee
+155
+Right Knee
+164
+End
+Time: 118
+Left Elbow
+123
+Left Shoulder
+0
+Right Elbow
+98
+Right Shoulder
+0
+Left Hip
+0
+Right Hip
+0
+Left Knee
+0
+Right Knee
+0
+End

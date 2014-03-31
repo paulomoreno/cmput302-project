@@ -38,7 +38,8 @@ namespace KinectFitness
         Stopwatch jointTime;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
         bool recording = false;
-
+        int currentTime = 1;
+        int previousTime = 0;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -55,16 +56,17 @@ namespace KinectFitness
             dispatcherTimer.Tick += new EventHandler(recordSkeletonData);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
             dispatcherTimer.Start();
+            jointTime.Start();
         }
         //Records skeleton data
         private void recordSkeletonData(object sender, EventArgs e)
-        {            
-            jointTime.Start();
+        {
+            currentTime = Convert.ToInt16(jointTime.ElapsedMilliseconds / 100);
             try
             {
                 if (first == null)
                     return;
-                jointAngles.Add("Time: " + (Convert.ToInt32(jointTime.ElapsedMilliseconds/100)).ToString());
+                jointAngles.Add("Time: " + currentTime.ToString());
                 jointAngles.Add("Left Elbow");
                 jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]).ToString());
                 jointAngles.Add("Left Shoulder");
@@ -82,6 +84,29 @@ namespace KinectFitness
                 jointAngles.Add("Right Knee");
                 jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]).ToString());
                 jointAngles.Add("End");
+
+                if (currentTime != (previousTime + 1))
+                {
+                    jointAngles.Add("Time: " + currentTime.ToString());
+                    jointAngles.Add("Left Elbow");
+                    jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]).ToString());
+                    jointAngles.Add("Left Shoulder");
+                    jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft], first.Joints[JointType.ShoulderCenter]).ToString());
+                    jointAngles.Add("Right Elbow");
+                    jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandRight], first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight]).ToString());
+                    jointAngles.Add("Right Shoulder");
+                    jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight], first.Joints[JointType.ShoulderCenter]).ToString());
+                    jointAngles.Add("Left Hip");
+                    jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ShoulderLeft], first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft]).ToString());
+                    jointAngles.Add("Right Hip");
+                    jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ShoulderRight], first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight]).ToString());
+                    jointAngles.Add("Left Knee");
+                    jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]).ToString());
+                    jointAngles.Add("Right Knee");
+                    jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]).ToString());
+                    jointAngles.Add("End");
+                }
+                previousTime = currentTime;
             }
             catch (NullReferenceException)
             {
