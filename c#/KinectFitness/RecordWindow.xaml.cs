@@ -118,32 +118,59 @@ namespace KinectFitness
                 jointAngles.Add("RKV");
                 jointAngles.Add(SpeedOfJoint(first.Joints[JointType.KneeRight], KR));
 
+                //Mark the end of a frame
                 jointAngles.Add("End");
 
                 if (currentTime != (previousTime + 1))
                 {
                     jointAngles.Add("Time: " + currentTime.ToString());
-                    jointAngles.Add("Left Elbow");
+                    //Add Angles
+                    jointAngles.Add("LEA");
                     jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]).ToString());
-                    jointAngles.Add("Left Shoulder");
+                    jointAngles.Add("LSA");
                     jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft], first.Joints[JointType.ShoulderCenter]).ToString());
-                    jointAngles.Add("Right Elbow");
+                    jointAngles.Add("REA");
                     jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandRight], first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight]).ToString());
-                    jointAngles.Add("Right Shoulder");
+                    jointAngles.Add("RSA");
                     jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight], first.Joints[JointType.ShoulderCenter]).ToString());
-                    jointAngles.Add("Left Hip");
+                    jointAngles.Add("LHA");
                     jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ShoulderLeft], first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft]).ToString());
-                    jointAngles.Add("Right Hip");
+                    jointAngles.Add("RHA");
                     jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.ShoulderRight], first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight]).ToString());
-                    jointAngles.Add("Left Knee");
+                    jointAngles.Add("LKA");
                     jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]).ToString());
-                    jointAngles.Add("Right Knee");
+                    jointAngles.Add("RKA");
                     jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]).ToString());
+
+                    //Add Speeds
+                    jointAngles.Add("LHV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.HandLeft], HL));
+                    jointAngles.Add("RHV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.HandRight], HR));
+                    jointAngles.Add("LSV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.ShoulderLeft], SL));
+                    jointAngles.Add("RSV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.ShoulderRight], SR));
+                    jointAngles.Add("LHipV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.HipLeft], HipL));
+                    jointAngles.Add("RHipV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.HipRight], HipR));
+                    jointAngles.Add("LFV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.FootLeft], FL));
+                    jointAngles.Add("RFV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.FootRight], FR));
+                    jointAngles.Add("LKV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.KneeLeft], KL));
+                    jointAngles.Add("RKV");
+                    jointAngles.Add(SpeedOfJoint(first.Joints[JointType.KneeRight], KR));
+
+                    //Mark the end of a frame
                     jointAngles.Add("End");
                 }
 
                 previousTime = currentTime;
 
+                //Save joint positions from this frame to calculate speed for next frame
                 HL = first.Joints[JointType.HandLeft];
                 HR = first.Joints[JointType.HandRight];
                 SL = first.Joints[JointType.ShoulderLeft];

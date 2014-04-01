@@ -50,7 +50,9 @@ namespace KinectFitness
         Random r;
         Skeleton first;
         List<string> jointAngles;
-        List<JointAngles> loadedSkeleton;
+        List<Joint> previousFrameJoints;
+        List<JointAngles> loadedSkeletonAngles;
+        List<JointSpeeds> loadedSkeletonSpeeds;
         List<JointAngles> patientData;
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
         System.Windows.Threading.DispatcherTimer videoProgressBarTracker;
@@ -74,7 +76,9 @@ namespace KinectFitness
         {
             string line;
             JointAngles ja = new JointAngles();
-            loadedSkeleton = new List<JointAngles>();
+            JointSpeeds js = new JointSpeeds();
+            loadedSkeletonAngles = new List<JointAngles>();
+            loadedSkeletonSpeeds = new List<JointSpeeds>();
             // Read the file and display it line by line.
             System.IO.StreamReader file =
                new System.IO.StreamReader("..\\..\\" + exercise);
@@ -112,10 +116,52 @@ namespace KinectFitness
                 {
                     ja.rightKnee = Convert.ToInt32(file.ReadLine());
                 }
+                else if (line.Contains("LHV"))
+                {
+                    js.leftHand = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("LSV"))
+                {
+                    js.leftShoulder = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("LHipV"))
+                {
+                    js.leftHip = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("LKV"))
+                {
+                    js.leftKnee = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("LFV"))
+                {
+                    js.leftFoot = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("RHV"))
+                {
+                    js.rightHand = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("RSV"))
+                {
+                    js.rightShoulder = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("RHipV"))
+                {
+                    js.rightHip = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("RKV"))
+                {
+                    js.rightKnee = Convert.ToInt32(file.ReadLine());
+                }
+                else if (line.Contains("RFV"))
+                {
+                    js.rightFoot = Convert.ToInt32(file.ReadLine());
+                }
                 else if (line.Contains("End"))
                 {
-                    loadedSkeleton.Add(ja);
+                    loadedSkeletonAngles.Add(ja);
+                    loadedSkeletonSpeeds.Add(js);
                     ja = new JointAngles();
+                    js = new JointSpeeds();
                 }
             }
 
@@ -208,13 +254,23 @@ namespace KinectFitness
             //Check if loaded skeleton at this point matches the users current data within +- 1 second of the video
             try
             {
-                if (SkeletonMatchesCloselyEnough(loadedSkeleton.ElementAt(secondsPassedInVideo), secondsPassedInVideo))
+
+                //Check Angles
+                if (MatchSkeletonAngles(loadedSkeletonAngles.ElementAt(secondsPassedInVideo)))
                 {
                     //debugger.Text = "Success";
                 }
                 else
                 {
                     //debugger.Text = "Failure";
+                }
+                //Check Speeds
+                if (MatchSkeletonSpeeds(loadedSkeletonSpeeds.ElementAt(secondsPassedInVideo)))
+                {
+
+                }
+                else
+                {
                 }
             }
             catch (ArgumentOutOfRangeException)
@@ -228,7 +284,7 @@ namespace KinectFitness
          * angles to the users.  If 80% of the skeleton matches 
          * within 20 degrees, then this returns true.
          */
-        private bool SkeletonMatchesCloselyEnough(JointAngles ja, int secondsPassed)
+        private bool MatchSkeletonAngles(JointAngles ja)
         {
             patientData.Add(new JointAngles(1,1,1,1,1,1,1,1));
             int numberOfMatches = 0;
@@ -245,13 +301,13 @@ namespace KinectFitness
             int leftKnee = AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]);
             int rightKnee = AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]);
                 
-            //Check if patient's joint angle is within 20 degrees of the exercise
-            if (leftElbow < (ja.leftElbow - 10) || leftElbow > (ja.leftElbow + 10))
+            //Check if patient's joint angle is within +- 20 degrees of the exercise
+            if (leftElbow < (ja.leftElbow - 20) || leftElbow > (ja.leftElbow + 20))
             {
                 patientData.Last().leftElbow = 0;
             }
             else
-            {
+            {                
                 //Number of matches goes up 1
                 numberOfMatches += 1;
                 //Points are added to the progress bar
@@ -260,7 +316,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }            
-            if (rightElbow < (ja.rightElbow - 10) || rightElbow > (ja.rightElbow + 10))
+            if (rightElbow < (ja.rightElbow - 20) || rightElbow > (ja.rightElbow + 20))
             {
                 patientData.Last().rightElbow = 0;
             }
@@ -271,7 +327,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (leftHip < (ja.leftHip - 10) || leftHip > (ja.leftHip + 10))
+            if (leftHip < (ja.leftHip - 20) || leftHip > (ja.leftHip + 20))
             {
                 patientData.Last().leftHip = 0;
             }
@@ -282,7 +338,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (rightHip < (ja.rightHip - 10) || rightHip > (ja.rightHip + 10))
+            if (rightHip < (ja.rightHip - 20) || rightHip > (ja.rightHip + 20))
             {
                 patientData.Last().rightHip = 0;
             }
@@ -293,7 +349,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (rightKnee < (ja.rightKnee - 10) || rightKnee > (ja.rightKnee + 10))
+            if (rightKnee < (ja.rightKnee - 20) || rightKnee > (ja.rightKnee + 20))
             {
                 patientData.Last().rightKnee = 0;
             }
@@ -304,7 +360,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (leftKnee < (ja.leftKnee - 10) || leftKnee > (ja.leftKnee + 10))
+            if (leftKnee < (ja.leftKnee - 20) || leftKnee > (ja.leftKnee + 20))
             {
                 patientData.Last().leftKnee = 0;
             }
@@ -315,7 +371,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (rightShoulder < (ja.rightShoulder - 10) || rightShoulder > (ja.rightShoulder + 10))
+            if (rightShoulder < (ja.rightShoulder - 20) || rightShoulder > (ja.rightShoulder + 20))
             {
                 patientData.Last().rightShoulder = 0;
             }
@@ -326,7 +382,7 @@ namespace KinectFitness
                 numberOfPts += 5;
                 setPoints();
             }
-            if (leftShoulder < (ja.leftShoulder - 10) || leftShoulder > (ja.leftShoulder + 10))
+            if (leftShoulder < (ja.leftShoulder - 20) || leftShoulder > (ja.leftShoulder + 20))
             {
                 patientData.Last().leftShoulder = 0;
             }
@@ -355,6 +411,117 @@ namespace KinectFitness
             {
                 return false;
             }
+        }
+
+        /**
+         * Returns true if the speeds of the patients
+         * match the recorded skeleton data suffieciently well
+         */
+        private bool MatchSkeletonSpeeds(JointSpeeds js)
+        {
+            int leftHand = SpeedOfJoint(first.Joints[JointType.HandLeft], previousFrameJoints.ElementAt(0));
+            int rightHand = SpeedOfJoint(first.Joints[JointType.HandRight], previousFrameJoints.ElementAt(1));
+            int leftShoulder = SpeedOfJoint(first.Joints[JointType.HandLeft], previousFrameJoints.ElementAt(2));
+            int rightShoulder = SpeedOfJoint(first.Joints[JointType.HandRight], previousFrameJoints.ElementAt(3));
+            int leftHip = SpeedOfJoint(first.Joints[JointType.HandLeft], previousFrameJoints.ElementAt(4));
+            int rightHip = SpeedOfJoint(first.Joints[JointType.HandRight], previousFrameJoints.ElementAt(5));
+            int leftKnee = SpeedOfJoint(first.Joints[JointType.HandLeft], previousFrameJoints.ElementAt(6));
+            int rightKnee = SpeedOfJoint(first.Joints[JointType.HandRight], previousFrameJoints.ElementAt(7));
+            int leftFoot = SpeedOfJoint(first.Joints[JointType.HandLeft], previousFrameJoints.ElementAt(8));
+            int rightFoot = SpeedOfJoint(first.Joints[JointType.HandRight], previousFrameJoints.ElementAt(9));
+
+            if (leftHand < (js.leftHand + 3) && leftHand > (js.leftHand - 3))
+            {
+                debugger.Text = leftHand.ToString();
+            }
+            else
+            {
+                debugger.Text = "Bad Speed";
+            }
+            if (rightHand < (js.rightHand + 3) && rightHand > (js.rightHand - 3))
+            {
+
+            }
+            else
+            {
+
+            }
+            if (leftShoulder < (js.leftShoulder + 3) && leftShoulder> (js.leftShoulder - 3))
+            {
+
+            }
+            else
+            {
+
+            }
+            if (rightShoulder < (js.rightShoulder + 3) && rightShoulder > (js.rightShoulder - 3))
+            {
+
+            }
+            else
+            {
+
+            }
+            if (leftHip < (js.leftHip + 3) && leftHip > (js.leftHip - 3))
+            {
+
+            }
+            else
+            {
+
+            }
+            if (rightHip < (js.rightHip + 3) && rightHip > (js.rightHip - 3))
+            {
+
+            }
+            else
+            {
+
+            }
+            if (leftKnee < (js.leftKnee + 3) && leftKnee > (js.leftKnee - 3))
+            {
+
+            }
+            else
+            {
+
+            }
+            if (rightKnee < (js.rightKnee + 3) && rightKnee > (js.rightKnee - 3))
+            {
+
+            }
+            else
+            {
+
+            }
+            if (leftFoot < (js.leftFoot + 3) && leftFoot > (js.leftFoot - 3))
+            {
+
+            }
+            else
+            {
+
+            }
+            if (rightFoot < (js.rightFoot + 3) && rightFoot > (js.rightFoot - 3))
+            {
+
+            }
+            else
+            {
+
+            }
+
+            previousFrameJoints[0] = first.Joints[JointType.HandLeft];
+            previousFrameJoints[1] = first.Joints[JointType.HandRight];
+            previousFrameJoints[2] = first.Joints[JointType.ShoulderLeft];
+            previousFrameJoints[3] = first.Joints[JointType.ShoulderRight];
+            previousFrameJoints[4] = first.Joints[JointType.HipLeft];
+            previousFrameJoints[5] = first.Joints[JointType.HipRight];
+            previousFrameJoints[6] = first.Joints[JointType.KneeLeft];
+            previousFrameJoints[7] = first.Joints[JointType.KneeRight];
+            previousFrameJoints[8] = first.Joints[JointType.FootLeft];
+            previousFrameJoints[9] = first.Joints[JointType.FootRight];
+            return true;
         }
 
         /**
@@ -402,6 +569,8 @@ namespace KinectFitness
             timerInitialized = false;
             videoProgressBar.Width = 0;
             patientData = new List<JointAngles>();
+            previousFrameJoints = new List<Joint>();
+            initializePreviousFrameJoints();
           
             //Get positions of buttons
             rightHandPos = new Rect();
@@ -425,6 +594,49 @@ namespace KinectFitness
             FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
         }
 
+        private void initializePreviousFrameJoints()
+        {
+            SkeletonPoint sp = new SkeletonPoint();
+            sp.X = 0;
+            sp.Y = 0;
+            sp.Z = 0;
+
+            Joint leftFoot = new Joint();
+            leftFoot.Position = sp;
+            Joint rightFoot = new Joint();
+            rightFoot.Position = sp;
+            Joint leftShoulder = new Joint();
+            leftShoulder.Position = sp;
+            Joint rightShoulder = new Joint();
+            rightShoulder.Position = sp;
+            Joint leftHand = new Joint();
+            leftHand.Position = sp;
+            Joint rightHand = new Joint();
+            rightHand.Position = sp;
+            Joint leftKnee = new Joint();
+            leftKnee.Position = sp;
+            Joint rightKnee = new Joint();
+            rightKnee.Position = sp;
+            Joint leftHip = new Joint();
+            leftHip.Position = sp;
+            Joint rightHip = new Joint();
+            rightHip.Position = sp;            
+            
+            previousFrameJoints.Add(leftHand);
+            previousFrameJoints.Add(rightHand);
+            previousFrameJoints.Add(leftShoulder);
+            previousFrameJoints.Add(rightShoulder);
+            previousFrameJoints.Add(leftHip);
+            previousFrameJoints.Add(rightHip);
+            previousFrameJoints.Add(leftKnee);
+            previousFrameJoints.Add(rightKnee);
+            previousFrameJoints.Add(leftFoot);
+            previousFrameJoints.Add(rightFoot);
+        }
+
+        /*
+         *Loads the exercise video 
+         */
         private void LoadVideo()
         {
             string line;
@@ -790,6 +1002,21 @@ namespace KinectFitness
 
         }
 
+        /**
+         * Returns the speed of the joint
+         */
+        private int SpeedOfJoint(Joint second, Joint first)
+        {
+            double dx, dy, dz, speed;
+            dx = second.Position.X - first.Position.X;
+            dy = second.Position.Y - first.Position.Y;
+            dz = second.Position.Z - first.Position.Z;
+
+            speed = Math.Sqrt((dx * dx) + (dy * dy) + (dz * dz)) * 100;
+            int speedRounded = Convert.ToInt32(speed);
+            return speedRounded;
+        }
+
 
         private static double vectorNorm(double x, double y, double z)
         {
@@ -999,8 +1226,8 @@ namespace KinectFitness
             //Stop the hover checker
             dispatcherTimer.Stop();
             //Hides the hand and the progress bar
-            Canvas.SetZIndex(rightHand, -5);
-            Canvas.SetZIndex(rightHandProgressBar, -5);
+            rightHand.Opacity = 0;
+            rightHandProgressBar.Opacity = 0;
         }
 
         /**
@@ -1012,8 +1239,8 @@ namespace KinectFitness
             dispatcherTimer.Start();
 
             //Makes the hand and progress bar visible again
-            Canvas.SetZIndex(rightHand, 9);
-            Canvas.SetZIndex(rightHandProgressBar, 9);
+            rightHand.Opacity = 1;
+            rightHandProgressBar.Opacity = 1;
         }
 
         /**
