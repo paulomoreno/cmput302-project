@@ -43,10 +43,11 @@
             <Image Canvas.Left="390" Canvas.Top="228" Height="184" Name="bigPlayIconImg" Stretch="Fill" Width="184" Source="/KinectFitness;component/bigplaybuttonhover.png" Panel.ZIndex="1" />
             <TextBox Canvas.Left="1" Canvas.Top="426" Height="86" Name="debugger2" Width="100" />
             <Rectangle Height="666" Name="statsBackground" Stroke="Black" Width="1358" Panel.ZIndex="-5" Canvas.Left="-106" Canvas.Top="-2" Fill="Black" Opacity="0" />
-            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="462" Text="TextBlock" Width="368" Panel.ZIndex="-5" Foreground="White" Background="#FF217EE8" FontSize="40" Name="statsBox" Opacity="0" />
+            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="462" Width="368" Panel.ZIndex="-5" Foreground="White" Background="#FF217EE8" FontSize="40" Name="angleStatsBox" Opacity="0" />
+            <TextBlock Canvas.Left="500" Canvas.Top="106" Height="538" Width="368" Panel.ZIndex="-5" Foreground="White" Background="#FF217EE8" FontSize="40" Name="speedStatsBox" Opacity="0" />
             <TextBox Canvas.Left="356" Canvas.Top="0" Height="110" Name="statsTitle" Width="494" Panel.ZIndex="-5" Background="{x:Null}" Foreground="White" Text="Statistics" FontSize="72" BorderBrush="{x:Null}" Opacity="0"/>
-            <Image Canvas.Left="650" Canvas.Top="478" Height="90" Name="doneButtonImg" Stretch="Fill" Width="200" Panel.ZIndex="-5" Source="/KinectFitness;component/donebutton.gif" Opacity="0" />
-            <Image Canvas.Left="650" Canvas.Top="478" Height="90" Name="doneButtonHoverImg" Stretch="Fill" Width="200" Source="/KinectFitness;component/donebuttonhover.gif" Panel.ZIndex="-5" Opacity="0" />
+            <Image Canvas.Left="910" Canvas.Top="554" Height="90" Name="doneButtonImg" Stretch="Fill" Width="200" Panel.ZIndex="-5" Source="/KinectFitness;component/donebutton.gif" Opacity="0" />
+            <Image Canvas.Left="910" Canvas.Top="554" Height="90" Name="doneButtonHoverImg" Stretch="Fill" Width="200" Source="/KinectFitness;component/donebuttonhover.gif" Panel.ZIndex="-5" Opacity="0" />
         </Canvas>
     </Grid>
 </Window>
