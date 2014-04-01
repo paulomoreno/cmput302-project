@@ -754,9 +754,7 @@ namespace KinectFitness
                 {
                     //Presses the play button
                     btnPlay_Click(sender, new RoutedEventArgs());
-                    
-                    //Remove Big Play Icon after it is clicked once 
-                    removeBigPlayButton();
+                   
 
                     //Resets hoverTimer
                     hoverTimer.Reset();
@@ -1203,6 +1201,7 @@ namespace KinectFitness
                 FitnessPlayer.Play();                
                 videoPlaying = true;
                 stopHoverChecker();
+                
                 if (!timerInitialized)
                 { 
 
@@ -1213,6 +1212,8 @@ namespace KinectFitness
                     startVideoProgressBar();
                     //Start the declining points bar
                     startPointsBarDecliner();
+                    //Remove Big Play Button
+                    removeBigPlayButton();
                 }
                 //Check if the Skeleton Matcher is running
                 //If not, start it back again
@@ -1436,6 +1437,12 @@ namespace KinectFitness
             Canvas.SetZIndex(statsTitle, 9);
             Canvas.SetZIndex(doneButtonImg, 9);
             Canvas.SetZIndex(doneButtonHoverImg, 9);
+        }
+
+
+        private void backButton_Click(object sender, MouseButtonEventArgs e)
+        {
+            leavePage();
         }
     }
 }

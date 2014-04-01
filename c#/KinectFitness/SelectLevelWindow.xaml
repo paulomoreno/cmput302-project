@@ -26,7 +26,7 @@
             <Image Height="56" HorizontalAlignment="Left" Canvas.Left="204" Canvas.Top="6" Name="rightHand" Stretch="Fill" VerticalAlignment="Top" Width="57" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="5"/>
             <Rectangle Height="15" HorizontalAlignment="Left" Margin="0,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="57" Fill="#FF0BD40B"  Panel.ZIndex="5" />
             <Image Canvas.Left="32" Canvas.Top="12" Height="100" Name="backButtonImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbutton.gif" />
-            <Image Canvas.Left="32" Canvas.Top="12" Height="100" Name="backButtonHoverImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbuttonhover.gif" Opacity="0" />
+            <Image Canvas.Left="32" Canvas.Top="12" Height="100" Name="backButtonHoverImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbuttonhover.gif" Opacity="0" Mouse.MouseUp="backButtonPressed"/>
         </Canvas>
     </Grid>
 

@@ -514,5 +514,14 @@ namespace KinectFitness
             this.Close();
             kw.Show();
         }
+
+        private void backButtonPressed(object sender, MouseButtonEventArgs e)
+        {
+            StopKinect(kinectSensorChooser1.Kinect);
+            dispatcherTimer.Stop();
+            StartupWindow sw = new StartupWindow();
+            this.Close();
+            sw.Show();
+        }
     }
 }
