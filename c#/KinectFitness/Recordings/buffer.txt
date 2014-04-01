@@ -1,4104 +1,5966 @@
-Time: 21
-Left Elbow
-159
-Left Shoulder
-144
-Right Elbow
-148
-Right Shoulder
-136
-Left Hip
-157
-Right Hip
+Time: 18
+LEA
+172
+LSA
+135
+REA
+145
+RSA
+151
+LHA
+160
+RHA
+160
+LKA
+162
+RKA
+174
+LHV
+215
+RHV
+183
+LSV
+206
+RSV
+202
+LHipV
+198
+RHipV
+197
+LFV
+211
+RFV
+188
+LKV
+207
+RKV
+189
+End
+Time: 18
+LEA
+172
+LSA
+135
+REA
+145
+RSA
+151
+LHA
+160
+RHA
+160
+LKA
+162
+RKA
+174
+LHV
+215
+RHV
+183
+LSV
+206
+RSV
+202
+LHipV
+198
+RHipV
+197
+LFV
+211
+RFV
+188
+LKV
+207
+RKV
+189
+End
+Time: 19
+LEA
+171
+LSA
+135
+REA
+143
+RSA
+151
+LHA
+160
+RHA
 161
-Left Knee
-140
-Right Knee
+LKA
+162
+RKA
+174
+LHV
+2
+RHV
+1
+LSV
+1
+RSV
+1
+LHipV
+1
+RHipV
+1
+LFV
+0
+RFV
+5
+LKV
+0
+RKV
+2
+End
+Time: 20
+LEA
+170
+LSA
+135
+REA
+143
+RSA
+151
+LHA
+161
+RHA
+165
+LKA
+166
+RKA
 173
+LHV
+4
+RHV
+1
+LSV
+2
+RSV
+2
+LHipV
+2
+RHipV
+2
+LFV
+3
+RFV
+9
+LKV
+1
+RKV
+6
 End
 Time: 22
-Left Elbow
-158
-Left Shoulder
-143
-Right Elbow
-148
-Right Shoulder
-136
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-174
+LEA
+167
+LSA
+134
+REA
+151
+RSA
+151
+LHA
+163
+RHA
+168
+LKA
+173
+RKA
+171
+LHV
+7
+RHV
+14
+LSV
+5
+RSV
+4
+LHipV
+5
+RHipV
+4
+LFV
+5
+RFV
+11
+LKV
+2
+RKV
+10
+End
+Time: 22
+LEA
+167
+LSA
+134
+REA
+151
+RSA
+151
+LHA
+163
+RHA
+168
+LKA
+173
+RKA
+171
+LHV
+7
+RHV
+14
+LSV
+5
+RSV
+4
+LHipV
+5
+RHipV
+4
+LFV
+5
+RFV
+11
+LKV
+2
+RKV
+10
+End
+Time: 23
+LEA
+165
+LSA
+133
+REA
+155
+RSA
+149
+LHA
+164
+RHA
+168
+LKA
+178
+RKA
+168
+LHV
+5
+RHV
+21
+LSV
+5
+RSV
+4
+LHipV
+4
+RHipV
+4
+LFV
+3
+RFV
+6
+LKV
+2
+RKV
+7
 End
 Time: 24
-Left Elbow
-157
-Left Shoulder
-143
-Right Elbow
-148
-Right Shoulder
-135
-Left Hip
-157
-Right Hip
-159
-Left Knee
-165
-Right Knee
-175
+LEA
+163
+LSA
+132
+REA
+152
+RSA
+146
+LHA
+164
+RHA
+168
+LKA
+179
+RKA
+166
+LHV
+5
+RHV
+17
+LSV
+5
+RSV
+4
+LHipV
+4
+RHipV
+4
+LFV
+2
+RFV
+4
+LKV
+2
+RKV
+5
 End
 Time: 25
-Left Elbow
-156
-Left Shoulder
+LEA
+163
+LSA
+131
+REA
+152
+RSA
 143
-Right Elbow
-147
-Right Shoulder
-133
-Left Hip
-155
-Right Hip
-160
-Left Knee
-162
-Right Knee
-174
+LHA
+164
+RHA
+168
+LKA
+179
+RKA
+165
+LHV
+4
+RHV
+10
+LSV
+4
+RSV
+4
+LHipV
+3
+RHipV
+4
+LFV
+2
+RFV
+3
+LKV
+2
+RKV
+4
 End
 Time: 26
-Left Elbow
-152
-Left Shoulder
-142
-Right Elbow
-146
-Right Shoulder
-132
-Left Hip
-154
-Right Hip
-163
-Left Knee
-163
-Right Knee
-173
+LEA
+164
+LSA
+130
+REA
+153
+RSA
+141
+LHA
+164
+RHA
+168
+LKA
+179
+RKA
+165
+LHV
+3
+RHV
+9
+LSV
+4
+RSV
+5
+LHipV
+3
+RHipV
+4
+LFV
+3
+RFV
+3
+LKV
+3
+RKV
+3
 End
 Time: 27
-Left Elbow
-149
-Left Shoulder
-141
-Right Elbow
-146
-Right Shoulder
-132
-Left Hip
-155
-Right Hip
+LEA
 164
-Left Knee
-168
-Right Knee
-171
+LSA
+130
+REA
+153
+RSA
+141
+LHA
+164
+RHA
+167
+LKA
+178
+RKA
+165
+LHV
+2
+RHV
+4
+LSV
+2
+RSV
+3
+LHipV
+2
+RHipV
+2
+LFV
+2
+RFV
+1
+LKV
+2
+RKV
+2
 End
 Time: 28
-Left Elbow
-148
-Left Shoulder
-140
-Right Elbow
-147
-Right Shoulder
-133
-Left Hip
-156
-Right Hip
+LEA
 165
-Left Knee
-173
-Right Knee
-170
+LSA
+130
+REA
+153
+RSA
+140
+LHA
+163
+RHA
+167
+LKA
+176
+RKA
+164
+LHV
+1
+RHV
+3
+LSV
+2
+RSV
+2
+LHipV
+1
+RHipV
+2
+LFV
+1
+RFV
+1
+LKV
+2
+RKV
+1
 End
 Time: 29
-Left Elbow
-148
-Left Shoulder
-139
-Right Elbow
-147
-Right Shoulder
-134
-Left Hip
-158
-Right Hip
+LEA
 165
-Left Knee
-176
-Right Knee
-169
+LSA
+130
+REA
+154
+RSA
+140
+LHA
+163
+RHA
+167
+LKA
+175
+RKA
+164
+LHV
+1
+RHV
+2
+LSV
+1
+RSV
+2
+LHipV
+1
+RHipV
+1
+LFV
+1
+RFV
+0
+LKV
+2
+RKV
+1
 End
 Time: 30
-Left Elbow
-149
-Left Shoulder
-138
-Right Elbow
-148
-Right Shoulder
-134
-Left Hip
-160
-Right Hip
+LEA
 165
-Left Knee
-177
-Right Knee
-168
+LSA
+131
+REA
+158
+RSA
+139
+LHA
+163
+RHA
+166
+LKA
+174
+RKA
+163
+LHV
+1
+RHV
+7
+LSV
+1
+RSV
+2
+LHipV
+1
+RHipV
+1
+LFV
+1
+RFV
+0
+LKV
+2
+RKV
+1
 End
 Time: 31
-Left Elbow
-149
-Left Shoulder
-138
-Right Elbow
-149
-Right Shoulder
-135
-Left Hip
-160
-Right Hip
-165
-Left Knee
-177
-Right Knee
-167
+LEA
+163
+LSA
+132
+REA
+153
+RSA
+139
+LHA
+163
+RHA
+166
+LKA
+173
+RKA
+163
+LHV
+6
+RHV
+14
+LSV
+1
+RSV
+1
+LHipV
+1
+RHipV
+1
+LFV
+1
+RFV
+0
+LKV
+1
+RKV
+0
 End
 Time: 32
-Left Elbow
-150
-Left Shoulder
-138
-Right Elbow
-149
-Right Shoulder
-134
-Left Hip
+LEA
 160
-Right Hip
-165
-Left Knee
-177
-Right Knee
-167
+LSA
+135
+REA
+143
+RSA
+140
+LHA
+163
+RHA
+166
+LKA
+173
+RKA
+162
+LHV
+8
+RHV
+14
+LSV
+1
+RSV
+1
+LHipV
+0
+RHipV
+0
+LFV
+1
+RFV
+1
+LKV
+1
+RKV
+0
 End
 Time: 33
-Left Elbow
-150
-Left Shoulder
-138
-Right Elbow
-150
-Right Shoulder
-134
-Left Hip
-161
-Right Hip
-165
-Left Knee
-177
-Right Knee
-167
-End
-Time: 34
-Left Elbow
-151
-Left Shoulder
+LEA
+157
+LSA
 137
-Right Elbow
-150
-Right Shoulder
-133
-Left Hip
-161
-Right Hip
-166
-Left Knee
-178
-Right Knee
+REA
+137
+RSA
+142
+LHA
+163
+RHA
+165
+LKA
+172
+RKA
+162
+LHV
+9
+RHV
+13
+LSV
+1
+RSV
+1
+LHipV
+0
+RHipV
+0
+LFV
+1
+RFV
+1
+LKV
+1
+RKV
+0
+End
+Time: 35
+LEA
+155
+LSA
+139
+REA
+138
+RSA
+143
+LHA
+162
+RHA
+164
+LKA
 171
+RKA
+161
+LHV
+5
+RHV
+6
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+1
+LKV
+0
+RKV
+0
+End
+Time: 35
+LEA
+155
+LSA
+139
+REA
+138
+RSA
+143
+LHA
+162
+RHA
+164
+LKA
+171
+RKA
+161
+LHV
+5
+RHV
+6
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+1
+LKV
+0
+RKV
+0
 End
 Time: 36
-Left Elbow
-151
-Left Shoulder
-137
-Right Elbow
-151
-Right Shoulder
-132
-Left Hip
+LEA
+154
+LSA
+139
+REA
+139
+RSA
+143
+LHA
+162
+RHA
+164
+LKA
+171
+RKA
 161
-Right Hip
-166
-Left Knee
-178
-Right Knee
-175
+LHV
+4
+RHV
+4
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 37
-Left Elbow
-151
-Left Shoulder
-137
-Right Elbow
-152
-Right Shoulder
-131
-Left Hip
+LEA
+154
+LSA
+139
+REA
+142
+RSA
+143
+LHA
+162
+RHA
+163
+LKA
+170
+RKA
 161
-Right Hip
-167
-Left Knee
-176
-Right Knee
-179
+LHV
+4
+RHV
+3
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+1
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 38
-Left Elbow
-151
-Left Shoulder
-138
-Right Elbow
-152
-Right Shoulder
-131
-Left Hip
+LEA
+153
+LSA
+139
+REA
+144
+RSA
+143
+LHA
 161
-Right Hip
-166
-Left Knee
-175
-Right Knee
-179
+RHA
+162
+LKA
+170
+RKA
+161
+LHV
+3
+RHV
+2
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 39
-Left Elbow
-151
-Left Shoulder
-138
-Right Elbow
+LEA
 153
-Right Shoulder
-132
-Left Hip
-160
-Right Hip
-166
-Left Knee
-174
-Right Knee
-178
+LSA
+138
+REA
+146
+RSA
+143
+LHA
+161
+RHA
+162
+LKA
+170
+RKA
+161
+LHV
+3
+RHV
+2
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 40
-Left Elbow
-151
-Left Shoulder
+LEA
+152
+LSA
 138
-Right Elbow
-153
-Right Shoulder
-133
-Left Hip
-160
-Right Hip
-166
-Left Knee
-173
-Right Knee
-178
+REA
+148
+RSA
+143
+LHA
+161
+RHA
+162
+LKA
+169
+RKA
+161
+LHV
+2
+RHV
+2
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 41
-Left Elbow
+LEA
+152
+LSA
+137
+REA
 150
-Left Shoulder
-139
-Right Elbow
-153
-Right Shoulder
-135
-Left Hip
+RSA
+143
+LHA
 160
-Right Hip
-166
-Left Knee
-172
-Right Knee
-178
+RHA
+161
+LKA
+169
+RKA
+161
+LHV
+2
+RHV
+2
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 42
-Left Elbow
-150
-Left Shoulder
-139
-Right Elbow
-153
-Right Shoulder
+LEA
+152
+LSA
 136
-Left Hip
+REA
+151
+RSA
+142
+LHA
+160
+RHA
 161
-Right Hip
-166
-Left Knee
-172
-Right Knee
-178
-End
-Time: 43
-Left Elbow
-150
-Left Shoulder
-139
-Right Elbow
-153
-Right Shoulder
-137
-Left Hip
+LKA
+169
+RKA
 161
-Right Hip
-165
-Left Knee
-171
-Right Knee
-177
+LHV
+2
+RHV
+2
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 44
-Left Elbow
-150
-Left Shoulder
-140
-Right Elbow
+LEA
 153
-Right Shoulder
-138
-Left Hip
+LSA
+136
+REA
+152
+RSA
+142
+LHA
 160
-Right Hip
-165
-Left Knee
-171
-Right Knee
-176
+RHA
+161
+LKA
+169
+RKA
+161
+LHV
+1
+RHV
+1
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 44
+LEA
+153
+LSA
+136
+REA
+152
+RSA
+142
+LHA
+160
+RHA
+161
+LKA
+169
+RKA
+161
+LHV
+1
+RHV
+1
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 45
-Left Elbow
-150
-Left Shoulder
-140
-Right Elbow
+LEA
 153
-Right Shoulder
-139
-Left Hip
-160
-Right Hip
-165
-Left Knee
-170
-Right Knee
-175
+LSA
+136
+REA
+152
+RSA
+142
+LHA
+159
+RHA
+161
+LKA
+168
+RKA
+161
+LHV
+1
+RHV
+1
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 46
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
+LEA
+153
+LSA
+135
+REA
+153
+RSA
+142
+LHA
+159
+RHA
+161
+LKA
+168
+RKA
+161
+LHV
+1
+RHV
+1
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 47
+LEA
 154
-Right Shoulder
-139
-Left Hip
+LSA
+135
+REA
+153
+RSA
+142
+LHA
+159
+RHA
 160
-Right Hip
-165
-Left Knee
-170
-Right Knee
-174
+LKA
+168
+RKA
+162
+LHV
+1
+RHV
+1
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 48
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
+LEA
 154
-Right Shoulder
-139
-Left Hip
+LSA
+135
+REA
+154
+RSA
+142
+LHA
+159
+RHA
 160
-Right Hip
-165
-Left Knee
-169
-Right Knee
-173
+LKA
+168
+RKA
+162
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 49
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
+LEA
+155
+LSA
+135
+REA
 154
-Right Shoulder
-139
-Left Hip
+RSA
+142
+LHA
+159
+RHA
 160
-Right Hip
-164
-Left Knee
-169
-Right Knee
-173
+LKA
+168
+RKA
+162
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 50
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
+LEA
+155
+LSA
+135
+REA
 154
-Right Shoulder
-139
-Left Hip
+RSA
+142
+LHA
 159
-Right Hip
-164
-Left Knee
+RHA
+160
+LKA
 169
-Right Knee
-172
+RKA
+162
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 51
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
+LEA
+156
+LSA
+135
+REA
 154
-Right Shoulder
-139
-Left Hip
+RSA
+143
+LHA
 159
-Right Hip
-164
-Left Knee
+RHA
+160
+LKA
 169
-Right Knee
-171
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 52
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-154
-Right Shoulder
-139
-Left Hip
+LEA
+156
+LSA
+135
+REA
+155
+RSA
+143
+LHA
 159
-Right Hip
-164
-Left Knee
+RHA
+160
+LKA
 169
-Right Knee
-171
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 53
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-154
-Right Shoulder
-138
-Left Hip
+LEA
+156
+LSA
+135
+REA
+155
+RSA
+143
+LHA
 159
-Right Hip
-164
-Left Knee
+RHA
+160
+LKA
 169
-Right Knee
-171
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 54
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-154
-Right Shoulder
-138
-Left Hip
-158
-Right Hip
-163
-Left Knee
-169
-Right Knee
-170
-End
-Time: 55
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
+LEA
+157
+LSA
+135
+REA
 155
-Right Shoulder
-138
-Left Hip
-158
-Right Hip
-163
-Left Knee
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
 169
-Right Knee
-170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 56
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
+LEA
+157
+LSA
+135
+REA
 155
-Right Shoulder
-137
-Left Hip
-158
-Right Hip
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
+169
+RKA
 163
-Left Knee
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+1
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 56
+LEA
+157
+LSA
+135
+REA
+155
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
 169
-Right Knee
-169
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+1
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 57
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-137
-Left Hip
+LEA
 157
-Right Hip
-162
-Left Knee
-169
-Right Knee
-169
+LSA
+135
+REA
+155
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 58
+LEA
+157
+LSA
+135
+REA
+155
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 59
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-137
-Left Hip
+LEA
 157
-Right Hip
-162
-Left Knee
-169
-Right Knee
-169
+LSA
+135
+REA
+155
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 60
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-137
-Left Hip
-157
-Right Hip
-162
-Left Knee
-169
-Right Knee
-168
+LEA
+158
+LSA
+135
+REA
+156
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 61
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-137
-Left Hip
-157
-Right Hip
-161
-Left Knee
-169
-Right Knee
-168
+LEA
+158
+LSA
+135
+REA
+156
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 62
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
-157
-Right Hip
-161
-Left Knee
-169
-Right Knee
-168
+LEA
+158
+LSA
+135
+REA
+156
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 63
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
+LEA
+158
+LSA
 136
-Left Hip
-157
-Right Hip
-161
-Left Knee
-169
-Right Knee
-168
+REA
+156
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 64
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
+LEA
+158
+LSA
 136
-Left Hip
-157
-Right Hip
-161
-Left Knee
-169
-Right Knee
-168
+REA
+156
+RSA
+143
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 65
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
+LEA
 157
-Right Hip
-161
-Left Knee
-169
-Right Knee
-167
+LSA
+136
+REA
+156
+RSA
+142
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 66
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
+LEA
 157
-Right Hip
-161
-Left Knee
-169
-Right Knee
-167
-End
-Time: 67
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
+LSA
 136
-Left Hip
-157
-Right Hip
-161
-Left Knee
-169
-Right Knee
-167
+REA
+156
+RSA
+142
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 68
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
+LEA
 157
-Right Hip
-161
-Left Knee
-169
-Right Knee
-167
+LSA
+136
+REA
+156
+RSA
+142
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 68
+LEA
+157
+LSA
+136
+REA
+156
+RSA
+142
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 69
+LEA
+157
+LSA
+136
+REA
+157
+RSA
+142
+LHA
+159
+RHA
+160
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 70
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
+LEA
 157
-Right Hip
+LSA
+136
+REA
+157
+RSA
+142
+LHA
+159
+RHA
 160
-Left Knee
-169
-Right Knee
-167
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 71
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
+LEA
 157
-Right Hip
-160
-Left Knee
-169
-Right Knee
-167
+LSA
+136
+REA
+157
+RSA
+142
+LHA
+159
+RHA
+161
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 72
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
+LEA
 157
-Right Hip
-160
-Left Knee
-169
-Right Knee
-167
+LSA
+136
+REA
+157
+RSA
+142
+LHA
+159
+RHA
+161
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 73
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
+LEA
 157
-Right Hip
-160
-Left Knee
-169
-Right Knee
-167
+LSA
+136
+REA
+157
+RSA
+141
+LHA
+159
+RHA
+161
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 74
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
+LEA
 157
-Right Hip
+LSA
+136
+REA
+157
+RSA
+141
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 75
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
+LEA
+158
+LSA
 136
-Left Hip
+REA
 157
-Right Hip
+RSA
+141
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 76
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
+LEA
+158
+LSA
 136
-Left Hip
+REA
 157
-Right Hip
+RSA
+141
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 77
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
+LEA
+158
+LSA
 136
-Left Hip
-157
-Right Hip
+REA
+158
+RSA
+141
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 78
-Left Elbow
-151
-Left Shoulder
-140
-Right Elbow
-155
-Right Shoulder
+LEA
+158
+LSA
 136
-Left Hip
-157
-Right Hip
-160
-Left Knee
-169
-Right Knee
-167
-End
-Time: 79
-Left Elbow
-151
-Left Shoulder
+REA
+158
+RSA
 140
-Right Elbow
-155
-Right Shoulder
-136
-Left Hip
-157
-Right Hip
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+163
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 80
-Left Elbow
-151
-Left Shoulder
-139
-Right Elbow
-155
-Right Shoulder
-135
-Left Hip
-157
-Right Hip
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 80
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 81
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 82
-Left Elbow
-151
-Left Shoulder
-139
-Right Elbow
-156
-Right Shoulder
-135
-Left Hip
-157
-Right Hip
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 83
-Left Elbow
-151
-Left Shoulder
-139
-Right Elbow
-156
-Right Shoulder
-135
-Left Hip
-157
-Right Hip
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 84
-Left Elbow
-151
-Left Shoulder
-139
-Right Elbow
-156
-Right Shoulder
-135
-Left Hip
-157
-Right Hip
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 85
-Left Elbow
-152
-Left Shoulder
-138
-Right Elbow
-156
-Right Shoulder
-135
-Left Hip
-157
-Right Hip
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 86
-Left Elbow
-152
-Left Shoulder
-138
-Right Elbow
-156
-Right Shoulder
-135
-Left Hip
-157
-Right Hip
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 87
-Left Elbow
-152
-Left Shoulder
-138
-Right Elbow
-156
-Right Shoulder
-134
-Left Hip
-157
-Right Hip
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 88
-Left Elbow
-152
-Left Shoulder
-138
-Right Elbow
-156
-Right Shoulder
-134
-Left Hip
-157
-Right Hip
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+140
+LHA
 160
-Left Knee
-169
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 89
-Left Elbow
-153
-Left Shoulder
-137
-Right Elbow
-157
-Right Shoulder
-134
-Left Hip
-157
-Right Hip
+LEA
+158
+LSA
+136
+REA
+158
+RSA
+139
+LHA
 160
-Left Knee
+RHA
+161
+LKA
 170
-Right Knee
-167
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 90
-Left Elbow
-153
-Left Shoulder
-137
-Right Elbow
-157
-Right Shoulder
-134
-Left Hip
+LEA
 158
-Right Hip
-160
-Left Knee
-172
-Right Knee
-167
-End
-Time: 91
-Left Elbow
-154
-Left Shoulder
+LSA
 136
-Right Elbow
-157
-Right Shoulder
-133
-Left Hip
-159
-Right Hip
+REA
+158
+RSA
+139
+LHA
 160
-Left Knee
-176
-Right Knee
-167
+RHA
+161
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 92
-Left Elbow
-155
-Left Shoulder
-136
-Right Elbow
+LEA
 158
-Right Shoulder
-133
-Left Hip
+LSA
+136
+REA
+159
+RSA
+139
+LHA
 160
-Right Hip
+RHA
 161
-Left Knee
-176
-Right Knee
-167
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 92
+LEA
+158
+LSA
+136
+REA
+159
+RSA
+139
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 93
+LEA
+158
+LSA
+136
+REA
+159
+RSA
+139
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 94
-Left Elbow
-155
-Left Shoulder
-135
-Right Elbow
-157
-Right Shoulder
-133
-Left Hip
+LEA
+158
+LSA
+136
+REA
+159
+RSA
+139
+LHA
 160
-Right Hip
+RHA
 161
-Left Knee
-176
-Right Knee
-167
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 95
-Left Elbow
-155
-Left Shoulder
-135
-Right Elbow
-157
-Right Shoulder
-133
-Left Hip
+LEA
+158
+LSA
+136
+REA
 159
-Right Hip
-162
-Left Knee
-177
-Right Knee
-169
+RSA
+139
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 96
-Left Elbow
-154
-Left Shoulder
-134
-Right Elbow
-156
-Right Shoulder
-132
-Left Hip
+LEA
+158
+LSA
+136
+REA
 159
-Right Hip
+RSA
+139
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
 164
-Left Knee
-177
-Right Knee
-174
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+1
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 97
-Left Elbow
-154
-Left Shoulder
-133
-Right Elbow
-155
-Right Shoulder
-132
-Left Hip
+LEA
+158
+LSA
+136
+REA
 159
-Right Hip
-166
-Left Knee
-178
-Right Knee
-178
+RSA
+139
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 98
-Left Elbow
-154
-Left Shoulder
-133
-Right Elbow
-155
-Right Shoulder
-132
-Left Hip
+LEA
+158
+LSA
+136
+REA
 159
-Right Hip
-167
-Left Knee
-178
-Right Knee
-178
+RSA
+139
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 99
-Left Elbow
-153
-Left Shoulder
-133
-Right Elbow
-154
-Right Shoulder
-132
-Left Hip
+LEA
+158
+LSA
+136
+REA
+159
+RSA
+139
+LHA
 160
-Right Hip
-167
-Left Knee
-177
-Right Knee
-177
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 100
-Left Elbow
-153
-Left Shoulder
-133
-Right Elbow
-154
-Right Shoulder
-132
-Left Hip
+LEA
+158
+LSA
+136
+REA
+159
+RSA
+139
+LHA
 160
-Right Hip
-167
-Left Knee
-177
-Right Knee
-177
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 101
-Left Elbow
-153
-Left Shoulder
-133
-Right Elbow
-153
-Right Shoulder
-132
-Left Hip
+LEA
+158
+LSA
+136
+REA
+159
+RSA
+139
+LHA
+160
+RHA
 161
-Right Hip
-167
-Left Knee
-176
-Right Knee
-177
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 102
-Left Elbow
-152
-Left Shoulder
-133
-Right Elbow
-152
-Right Shoulder
-132
-Left Hip
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+139
+LHA
+160
+RHA
 161
-Right Hip
-167
-Left Knee
-175
-Right Knee
-177
-End
-Time: 103
-Left Elbow
-152
-Left Shoulder
-133
-Right Elbow
-151
-Right Shoulder
-132
-Left Hip
-161
-Right Hip
-166
-Left Knee
-174
-Right Knee
-177
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 104
-Left Elbow
-152
-Left Shoulder
-133
-Right Elbow
-151
-Right Shoulder
-132
-Left Hip
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+139
+LHA
+160
+RHA
 161
-Right Hip
-166
-Left Knee
-173
-Right Knee
-176
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 104
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+139
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 105
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+139
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 106
-Left Elbow
-151
-Left Shoulder
-133
-Right Elbow
-150
-Right Shoulder
-133
-Left Hip
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
 161
-Right Hip
-166
-Left Knee
-172
-Right Knee
-175
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 107
-Left Elbow
-151
-Left Shoulder
-134
-Right Elbow
-150
-Right Shoulder
-133
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
-165
-Left Knee
-172
-Right Knee
-174
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 108
-Left Elbow
-151
-Left Shoulder
-134
-Right Elbow
-150
-Right Shoulder
-133
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
-165
-Left Knee
-172
-Right Knee
-173
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 109
-Left Elbow
-151
-Left Shoulder
-134
-Right Elbow
-150
-Right Shoulder
-134
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
 164
-Left Knee
-171
-Right Knee
-172
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 110
-Left Elbow
-151
-Left Shoulder
-134
-Right Elbow
-151
-Right Shoulder
-134
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
 164
-Left Knee
-171
-Right Knee
-171
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 111
-Left Elbow
-152
-Left Shoulder
-134
-Right Elbow
-151
-Right Shoulder
-134
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
-164
-Left Knee
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
 170
-Right Knee
-169
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 112
-Left Elbow
-152
-Left Shoulder
-135
-Right Elbow
-151
-Right Shoulder
-134
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
-163
-Left Knee
-169
-Right Knee
-168
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 113
-Left Elbow
-152
-Left Shoulder
-135
-Right Elbow
-152
-Right Shoulder
-134
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
 164
-Left Knee
-168
-Right Knee
-168
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 114
-Left Elbow
-152
-Left Shoulder
-135
-Right Elbow
-152
-Right Shoulder
-134
-Left Hip
-160
-Right Hip
-164
-Left Knee
-167
-Right Knee
-169
-End
-Time: 115
-Left Elbow
-152
-Left Shoulder
+LEA
+158
+LSA
 136
-Right Elbow
-153
-Right Shoulder
-133
-Left Hip
+REA
 160
-Right Hip
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
 164
-Left Knee
-167
-Right Knee
-168
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 116
-Left Elbow
-153
-Left Shoulder
+LEA
+158
+LSA
 136
-Right Elbow
-154
-Right Shoulder
-133
-Left Hip
+REA
 160
-Right Hip
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
 164
-Left Knee
-167
-Right Knee
-168
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 116
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 117
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 118
-Left Elbow
-153
-Left Shoulder
-137
-Right Elbow
-155
-Right Shoulder
-134
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
-165
-Left Knee
-168
-Right Knee
-168
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+164
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 119
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-156
-Right Shoulder
-134
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
 165
-Left Knee
-169
-Right Knee
-168
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 120
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-157
-Right Shoulder
-135
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
-165
-Left Knee
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
 170
-Right Knee
-168
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 121
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
+LEA
 158
-Right Shoulder
-135
-Left Hip
+LSA
+136
+REA
 160
-Right Hip
-165
-Left Knee
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
 170
-Right Knee
-168
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 122
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-159
-Right Shoulder
-135
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
-164
-Left Knee
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
 170
-Right Knee
-168
+RKA
+166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 123
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-159
-Right Shoulder
-135
-Left Hip
+LEA
+158
+LSA
+136
+REA
 160
-Right Hip
-164
-Left Knee
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
 170
-Right Knee
-167
+RKA
+166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 124
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-135
-Left Hip
-159
-Right Hip
-164
-Left Knee
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
 170
-Right Knee
-167
+RKA
+166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 125
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-134
-Left Hip
-159
-Right Hip
-163
-Left Knee
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
 170
-Right Knee
-167
+RKA
+166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 126
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-157
-Right Shoulder
-134
-Left Hip
-159
-Right Hip
-163
-Left Knee
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
 170
-Right Knee
-167
-End
-Time: 127
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-157
-Right Shoulder
-134
-Left Hip
-159
-Right Hip
-163
-Left Knee
-169
-Right Knee
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 128
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-134
-Left Hip
-158
-Right Hip
-162
-Left Knee
-169
-Right Knee
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 128
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 129
+LEA
+158
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 130
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-134
-Left Hip
-158
-Right Hip
-162
-Left Knee
-169
-Right Knee
-166
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 131
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-134
-Left Hip
-158
-Right Hip
-162
-Left Knee
-169
-Right Knee
-166
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
+161
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 132
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-134
-Left Hip
-158
-Right Hip
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
 162
-Left Knee
-169
-Right Knee
-166
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 133
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-133
-Left Hip
-158
-Right Hip
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
 162
-Left Knee
-169
-Right Knee
-166
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 134
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-133
-Left Hip
-158
-Right Hip
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
 162
-Left Knee
-169
-Right Knee
-166
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 135
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-158
-Right Hip
+LEA
+159
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
 162
-Left Knee
-169
-Right Knee
-166
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 136
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
+160
+RSA
+138
+LHA
+160
+RHA
 162
-Left Knee
-169
-Right Knee
-166
+LKA
+170
+RKA
+165
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 137
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
-End
-Time: 138
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
-161
-Left Knee
-169
-Right Knee
-166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 139
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 139
+LEA
+159
+LSA
+136
+REA
+161
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
+166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 140
+LEA
+159
+LSA
+136
+REA
+161
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
+166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 141
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 142
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 143
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 144
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 145
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 146
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-133
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 147
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 148
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 149
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
+LSA
+136
+REA
 161
-Left Knee
-169
-Right Knee
-166
-End
-Time: 150
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-161
-Left Knee
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
 170
-Right Knee
+RKA
 166
+LHV
+0
+RHV
+0
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
 End
 Time: 151
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
+LSA
+135
+REA
+161
+RSA
+137
+LHA
 160
-Left Knee
+RHA
+162
+LKA
 170
-Right Knee
+RKA
 166
+LHV
+1
+RHV
+1
+LSV
+1
+RSV
+1
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 151
+LEA
+158
+LSA
+135
+REA
+161
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
+166
+LHV
+1
+RHV
+1
+LSV
+1
+RSV
+1
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+0
+LKV
+0
+RKV
+0
+End
+Time: 152
+LEA
+158
+LSA
+135
+REA
+161
+RSA
+137
+LHA
+160
+RHA
+162
+LKA
+170
+RKA
+167
+LHV
+1
+RHV
+1
+LSV
+1
+RSV
+1
+LHipV
+0
+RHipV
+0
+LFV
+0
+RFV
+1
+LKV
+0
+RKV
+0
 End
 Time: 153
-Left Elbow
-153
-Left Shoulder
-139
-Right Elbow
+LEA
 158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
+LSA
+135
+REA
+161
+RSA
+137
+LHA
+161
+RHA
+162
+LKA
+171
+RKA
+167
+LHV
+1
+RHV
+1
+LSV
+1
+RSV
+2
+LHipV
+1
+RHipV
+1
+LFV
+1
+RFV
+0
+LKV
+1
+RKV
+1
 End
 Time: 154
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
+LEA
 158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
+LSA
+134
+REA
 160
-Left Knee
-170
-Right Knee
-166
+RSA
+137
+LHA
+163
+RHA
+163
+LKA
+175
+RKA
+167
+LHV
+1
+RHV
+1
+LSV
+2
+RSV
+2
+LHipV
+1
+RHipV
+2
+LFV
+3
+RFV
+1
+LKV
+4
+RKV
+1
 End
 Time: 155
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
+LEA
+159
+LSA
+133
+REA
 160
-Left Knee
-170
-Right Knee
-166
+RSA
+137
+LHA
+165
+RHA
+163
+LKA
+176
+RKA
+167
+LHV
+2
+RHV
+2
+LSV
+2
+RSV
+3
+LHipV
+2
+RHipV
+2
+LFV
+12
+RFV
+1
+LKV
+8
+RKV
+2
 End
 Time: 156
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
+LEA
+159
+LSA
 132
-Left Hip
-157
-Right Hip
+REA
 160
-Left Knee
-170
-Right Knee
-166
+RSA
+138
+LHA
+163
+RHA
+163
+LKA
+175
+RKA
+167
+LHV
+3
+RHV
+3
+LSV
+3
+RSV
+4
+LHipV
+3
+RHipV
+4
+LFV
+11
+RFV
+1
+LKV
+10
+RKV
+2
 End
 Time: 157
-Left Elbow
-153
-Left Shoulder
+LEA
+159
+LSA
+131
+REA
+159
+RSA
 138
-Right Elbow
+LHA
 158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
+RHA
+162
+LKA
+179
+RKA
+167
+LHV
+4
+RHV
+5
+LSV
+5
+RSV
+6
+LHipV
+4
+RHipV
+5
+LFV
+17
+RFV
+1
+LKV
+9
+RKV
+3
 End
 Time: 158
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
+LEA
 158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
+LSA
+131
+REA
+159
+RSA
+140
+LHA
+154
+RHA
+162
+LKA
+175
+RKA
+168
+LHV
+8
+RHV
+9
+LSV
+10
+RSV
+11
+LHipV
+9
+RHipV
+9
+LFV
+19
+RFV
+3
+LKV
+12
+RKV
+7
 End
 Time: 159
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
+LEA
 157
-Right Hip
+LSA
+132
+REA
+157
+RSA
+143
+LHA
+155
+RHA
 160
-Left Knee
+LKA
+172
+RKA
 170
-Right Knee
-166
+LHV
+8
+RHV
+10
+LSV
+12
+RSV
+11
+LHipV
+11
+RHipV
+11
+LFV
+11
+RFV
+5
+LKV
+10
+RKV
+9
 End
 Time: 160
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
+LEA
+159
+LSA
 132
-Left Hip
-157
-Right Hip
+REA
+156
+RSA
+143
+LHA
+159
+RHA
 160
-Left Knee
+LKA
 170
-Right Knee
-166
+RKA
+173
+LHV
+11
+RHV
+14
+LSV
+14
+RSV
+12
+LHipV
+14
+RHipV
+13
+LFV
+8
+RFV
+11
+LKV
+10
+RKV
+15
 End
 Time: 161
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
+LEA
 157
-Right Hip
-160
-Left Knee
-170
-Right Knee
+LSA
+128
+REA
+150
+RSA
+137
+LHA
 166
-End
-Time: 162
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
+RHA
+167
+LKA
+163
+RKA
 157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
+LHV
+22
+RHV
+25
+LSV
+18
+RSV
+16
+LHipV
+19
+RHipV
+18
+LFV
+8
+RFV
+33
+LKV
+11
+RKV
+30
 End
 Time: 163
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
+LEA
+150
+LSA
+123
+REA
+144
+RSA
+125
+LHA
+165
+RHA
+162
+LKA
+159
+RKA
+144
+LHV
+21
+RHV
+20
+LSV
+11
+RSV
+11
+LHipV
+13
+RHipV
+12
+LFV
+4
+RFV
+26
+LKV
+7
+RKV
+24
+End
+Time: 163
+LEA
+150
+LSA
+123
+REA
+144
+RSA
+125
+LHA
+165
+RHA
+162
+LKA
+159
+RKA
+144
+LHV
+21
+RHV
+20
+LSV
+11
+RSV
+11
+LHipV
+13
+RHipV
+12
+LFV
+4
+RFV
+26
+LKV
+7
+RKV
+24
+End
+Time: 164
+LEA
+142
+LSA
+116
+REA
+136
+RSA
+117
+LHA
 160
-Left Knee
-170
-Right Knee
-166
+RHA
+152
+LKA
+158
+RKA
+133
+LHV
+20
+RHV
+19
+LSV
+10
+RSV
+12
+LHipV
+11
+RHipV
+11
+LFV
+3
+RFV
+24
+LKV
+7
+RKV
+21
 End
 Time: 165
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
+LEA
+136
+LSA
+108
+REA
+135
+RSA
+112
+LHA
+155
+RHA
+144
+LKA
 157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
+RKA
+118
+LHV
+16
+RHV
+15
+LSV
+10
+RSV
+13
+LHipV
+11
+RHipV
+11
+LFV
+4
+RFV
+16
+LKV
+6
+RKV
+16
 End
 Time: 166
-Left Elbow
+LEA
+128
+LSA
+107
+REA
+141
+RSA
+85
+LHA
 153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
+RHA
+141
+LKA
+155
+RKA
+127
+LHV
+13
+RHV
+15
+LSV
+11
+RSV
+10
+LHipV
+10
+RHipV
+11
+LFV
+6
+RFV
+17
+LKV
+7
+RKV
+13
 End
 Time: 167
-Left Elbow
+LEA
+114
+LSA
+73
+REA
+118
+RSA
+61
+LHA
 153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
+RHA
+144
+LKA
+141
+RKA
+125
+LHV
+12
+RHV
+13
+LSV
+17
+RSV
+23
+LHipV
+16
+RHipV
+21
+LFV
+31
+RFV
+15
+LKV
+19
+RKV
+16
 End
 Time: 168
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 169
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 170
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 171
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 172
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 173
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 174
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 175
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
+LEA
+84
+LSA
+70
+REA
+109
+RSA
+37
+LHA
+30
+RHA
+37
+LKA
+88
+RKA
+106
+LHV
+7
+RHV
+18
+LSV
+20
+RSV
+20
+LHipV
+104
+RHipV
+97
+LFV
+18
+RFV
+8
+LKV
+23
+RKV
+9
 End
 Time: 177
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
+LEA
+159
+LSA
+134
+REA
+143
+RSA
+133
+LHA
+104
+RHA
+139
+LKA
 170
-Right Knee
-166
+RKA
+153
+LHV
+301
+RHV
+317
+LSV
+286
+RSV
+303
+LHipV
+384
+RHipV
+385
+LFV
+303
+RFV
+328
+LKV
+307
+RKV
+330
+End
+Time: 177
+LEA
+159
+LSA
+134
+REA
+143
+RSA
+133
+LHA
+104
+RHA
+139
+LKA
+170
+RKA
+153
+LHV
+301
+RHV
+317
+LSV
+286
+RSV
+303
+LHipV
+384
+RHipV
+385
+LFV
+303
+RFV
+328
+LKV
+307
+RKV
+330
 End
 Time: 178
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 179
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 180
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
+LEA
+152
+LSA
+133
+REA
+147
+RSA
+129
+LHA
+104
+RHA
+121
+LKA
+165
+RKA
+171
+LHV
+4
+RHV
+2
+LSV
+0
+RSV
+0
+LHipV
+0
+RHipV
+0
+LFV
+11
+RFV
+9
+LKV
+14
+RKV
+8
 End
 Time: 181
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
+LEA
+45
+LSA
 166
-End
-Time: 182
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 183
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 184
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 185
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 186
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 187
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 189
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 190
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 191
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 192
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 193
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 194
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 195
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 196
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 197
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 198
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 199
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 201
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 202
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 203
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 204
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 205
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 206
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 207
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-159
-Right Shoulder
-132
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 208
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-159
-Right Shoulder
-131
-Left Hip
-157
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 209
-Left Elbow
-153
-Left Shoulder
-138
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-157
-Right Hip
-161
-Left Knee
-170
-Right Knee
-166
-End
-Time: 210
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-157
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 211
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-157
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 213
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-157
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 214
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-157
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 215
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 216
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 217
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 218
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 219
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 220
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 221
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 222
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 224
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 225
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 226
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 227
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 228
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 229
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 230
-Left Elbow
-154
-Left Shoulder
-137
-Right Elbow
-158
-Right Shoulder
-131
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 231
-Left Elbow
-151
-Left Shoulder
-139
-Right Elbow
-155
-Right Shoulder
-134
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 232
-Left Elbow
-138
-Left Shoulder
-146
-Right Elbow
-140
-Right Shoulder
-143
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 233
-Left Elbow
-128
-Left Shoulder
-161
-Right Elbow
-138
-Right Shoulder
-161
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 234
-Left Elbow
-135
-Left Shoulder
-169
-Right Elbow
-146
-Right Shoulder
-168
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 235
-Left Elbow
-142
-Left Shoulder
-158
-Right Elbow
-152
-Right Shoulder
-157
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 237
-Left Elbow
-146
-Left Shoulder
-149
-Right Elbow
-156
-Right Shoulder
-150
-Left Hip
-158
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 238
-Left Elbow
-148
-Left Shoulder
-142
-Right Elbow
-159
-Right Shoulder
-144
-Left Hip
-159
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 239
-Left Elbow
-148
-Left Shoulder
-139
-Right Elbow
-161
-Right Shoulder
-142
-Left Hip
-159
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 240
-Left Elbow
-147
-Left Shoulder
-138
-Right Elbow
-164
-Right Shoulder
-140
-Left Hip
-159
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 241
-Left Elbow
-146
-Left Shoulder
-137
-Right Elbow
-171
-Right Shoulder
-139
-Left Hip
-159
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 242
-Left Elbow
-145
-Left Shoulder
-136
-Right Elbow
-173
-Right Shoulder
-139
-Left Hip
-159
-Right Hip
-161
-Left Knee
-170
-Right Knee
-165
-End
-Time: 243
-Left Elbow
-145
-Left Shoulder
-137
-Right Elbow
-172
-Right Shoulder
-139
-Left Hip
-159
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 244
-Left Elbow
-146
-Left Shoulder
-137
-Right Elbow
-170
-Right Shoulder
-140
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 245
-Left Elbow
-146
-Left Shoulder
-138
-Right Elbow
-169
-Right Shoulder
-141
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 246
-Left Elbow
-147
-Left Shoulder
-139
-Right Elbow
-168
-Right Shoulder
-142
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 248
-Left Elbow
-148
-Left Shoulder
-140
-Right Elbow
-167
-Right Shoulder
-142
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 249
-Left Elbow
-148
-Left Shoulder
-141
-Right Elbow
-167
-Right Shoulder
-143
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 250
-Left Elbow
-149
-Left Shoulder
-142
-Right Elbow
-168
-Right Shoulder
-144
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 251
-Left Elbow
-150
-Left Shoulder
-142
-Right Elbow
-168
-Right Shoulder
-145
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 252
-Left Elbow
-150
-Left Shoulder
-143
-Right Elbow
-169
-Right Shoulder
-145
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 253
-Left Elbow
-151
-Left Shoulder
-144
-Right Elbow
-169
-Right Shoulder
-146
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 254
-Left Elbow
-152
-Left Shoulder
-146
-Right Elbow
-169
-Right Shoulder
-147
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 255
-Left Elbow
-148
-Left Shoulder
-157
-Right Elbow
-159
-Right Shoulder
-157
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 256
-Left Elbow
-136
-Left Shoulder
-174
-Right Elbow
-149
-Right Shoulder
-175
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-165
-End
-Time: 257
-Left Elbow
-141
-Left Shoulder
-158
-Right Elbow
-150
-Right Shoulder
-151
-Left Hip
-160
-Right Hip
-160
-Left Knee
-170
-Right Knee
-166
-End
-Time: 258
-Left Elbow
-148
-Left Shoulder
-143
-Right Elbow
-156
-Right Shoulder
-132
-Left Hip
-160
-Right Hip
-164
-Left Knee
-171
-Right Knee
-174
-End
-Time: 260
-Left Elbow
-152
-Left Shoulder
-137
-Right Elbow
-157
-Right Shoulder
-126
-Left Hip
-161
-Right Hip
-168
-Left Knee
-172
-Right Knee
-176
-End
-Time: 261
-Left Elbow
-156
-Left Shoulder
-134
-Right Elbow
-157
-Right Shoulder
-124
-Left Hip
-161
-Right Hip
-165
-Left Knee
-173
-Right Knee
-169
-End
-Time: 262
-Left Elbow
-157
-Left Shoulder
-134
-Right Elbow
-157
-Right Shoulder
-124
-Left Hip
-161
-Right Hip
-157
-Left Knee
-176
-Right Knee
-168
-End
-Time: 263
-Left Elbow
-152
-Left Shoulder
-137
-Right Elbow
-155
-Right Shoulder
-130
-Left Hip
-161
-Right Hip
-148
-Left Knee
-173
-Right Knee
-172
-End
-Time: 264
-Left Elbow
-147
-Left Shoulder
-139
-Right Elbow
-153
-Right Shoulder
-136
-Left Hip
-161
-Right Hip
-141
-Left Knee
-167
-Right Knee
-171
-End
-Time: 265
-Left Elbow
-144
-Left Shoulder
-138
-Right Elbow
-151
-Right Shoulder
-143
-Left Hip
-164
-Right Hip
-136
-Left Knee
-157
-Right Knee
-166
-End
-Time: 266
-Left Elbow
-140
-Left Shoulder
-125
-Right Elbow
-170
-Right Shoulder
-128
-Left Hip
-159
-Right Hip
-133
-Left Knee
-120
-Right Knee
-158
-End
-Time: 267
-Left Elbow
-133
-Left Shoulder
-111
-Right Elbow
-162
-Right Shoulder
-110
-Left Hip
-135
-Right Hip
-131
-Left Knee
-89
-Right Knee
-147
-End
-Time: 268
-Left Elbow
-97
-Left Shoulder
-137
-Right Elbow
-167
-Right Shoulder
+REA
 88
-Left Hip
-112
-Right Hip
-139
-Left Knee
+RSA
 75
-Right Knee
-145
+LHA
+47
+RHA
+58
+LKA
+19
+RKA
+28
+LHV
+34
+RHV
+4
+LSV
+3
+RSV
+9
+LHipV
+6
+RHipV
+11
+LFV
+41
+RFV
+54
+LKV
+24
+RKV
+37
 End
-Time: 269
-Left Elbow
-59
-Left Shoulder
-144
-Right Elbow
-146
-Right Shoulder
-90
-Left Hip
-100
-Right Hip
-152
-Left Knee
+Time: 181
+LEA
+45
+LSA
+166
+REA
 88
-Right Knee
-147
+RSA
+75
+LHA
+47
+RHA
+58
+LKA
+19
+RKA
+28
+LHV
+34
+RHV
+4
+LSV
+3
+RSV
+9
+LHipV
+6
+RHipV
+11
+LFV
+41
+RFV
+54
+LKV
+24
+RKV
+37
 End

@@ -438,8 +438,7 @@ namespace KinectFitness
             int rightFoot = SpeedOfJoint(first.Joints[JointType.FootRight], previousFrameJoints.ElementAt(9));
 
             if ((leftHand >= 5 && js.leftHand >= 5) || (leftHand < 5 && js.leftHand < 5))
-            {
-                //debugger.Text = leftHand.ToString();
+            {                
             }
             else
             {
@@ -456,8 +455,7 @@ namespace KinectFitness
                 patientSpeedData.Last().rightHand = 0;
             }
             if ((leftShoulder >= 5 && js.leftShoulder >= 5) || (leftShoulder <= 5 && js.leftShoulder <= 5))
-            {
-                //debugger.Text += "\n" + leftShoulder.ToString();
+            {                
             }
             else
             {
@@ -466,7 +464,6 @@ namespace KinectFitness
             }
             if ((rightShoulder >= 5 && js.rightShoulder >= 5) || (rightShoulder <= 5 && js.rightShoulder <= 5))
             {
-
             }
             else
             {
@@ -474,8 +471,7 @@ namespace KinectFitness
                 patientSpeedData.Last().rightShoulder = 0;
             }
             if ((leftHip >= 5 && js.leftHip >= 5) || (leftHip <= 5 && js.leftHip <= 5))
-            {
-                //debugger.Text += "\n" + leftHip.ToString();
+            {                
             }
             else
             {
@@ -492,8 +488,7 @@ namespace KinectFitness
                 patientSpeedData.Last().rightHip = 0;
             }
             if ((leftKnee >= 5 && js.leftKnee >= 5) || (leftKnee <= 5 && js.leftKnee <= 5))
-            {
-                //debugger.Text += "\n" + leftKnee.ToString();
+            {                
             }
             else
             {
@@ -510,8 +505,7 @@ namespace KinectFitness
                 patientSpeedData.Last().rightKnee = 0;
             }
             if ((leftFoot >= 5 && js.leftFoot >= 5) || (leftFoot <= 5 && js.leftFoot <= 5))
-            {
-                debugger.Text = "\n" + leftFoot.ToString();
+            {               
             }
             else
             {
@@ -528,6 +522,9 @@ namespace KinectFitness
                 patientSpeedData.Last().rightFoot = 0;
             }
 
+            debugger.Text = "LH: " + js.leftHand.ToString() + "\nLS: " + js.leftShoulder.ToString()
+                + "\nLHip: " + js.leftHip.ToString() + "\nLK: " + js.leftKnee.ToString() +
+                "\nLF: " + js.leftFoot.ToString();
             previousFrameJoints[0] = first.Joints[JointType.HandLeft];
             previousFrameJoints[1] = first.Joints[JointType.HandRight];
             previousFrameJoints[2] = first.Joints[JointType.ShoulderLeft];
