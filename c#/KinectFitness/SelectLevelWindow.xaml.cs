@@ -233,17 +233,17 @@ namespace KinectFitness
             if (exercise.Name == warmUpImg.Name)
             {
                 video.Add(warmUpImg.Name);                
-                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
             }
             else if (exercise.Name == moderateImg.Name)
             {
                 video.Add(moderateImg.Name);
-                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
             }
             else if (exercise.Name == intenseImg.Name)
             {
                 video.Add(intenseImg.Name);
-                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
             }
         }
 

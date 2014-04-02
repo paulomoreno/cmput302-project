@@ -245,7 +245,7 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
             
-            System.IO.File.WriteAllLines(path + "\\Recordings\\" + input + ".txt", jointAngles);
+            System.IO.File.WriteAllLines(path + "\\KinectFitness\\Recordings\\" + input + ".txt", jointAngles);
 
             // Clear InputBox.
             InputTextBox.Text = String.Empty;
