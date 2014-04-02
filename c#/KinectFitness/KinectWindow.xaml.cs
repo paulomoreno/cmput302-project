@@ -905,10 +905,8 @@ namespace KinectFitness
         private void leavePage(object sender, RoutedEventArgs e)
         {
             if (videoPlaying)
-            {                
-                FitnessPlayer.Stop();
-                FitnessPlayer.Source = null;
-                FitnessPlayer.Close();     
+            {           
+                FitnessPlayer.Stop(); 
             }
             if (skeletonMatcherTimer != null)
             {
