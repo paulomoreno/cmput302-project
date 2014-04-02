@@ -137,6 +137,7 @@ namespace KinectFitness
             myCommands.setFunction("back", leavePage);
         }
          */
+         
 
         private void loadExercise(String exercise)
         {
@@ -748,24 +749,32 @@ namespace KinectFitness
         {
             string line;
             // Read the file and display it line by line.
+
+            String path = System.AppDomain.CurrentDomain.BaseDirectory;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+
+
             System.IO.StreamReader file =
-               new System.IO.StreamReader("..\\..\\FitnessVideos\\video.txt");
+               new System.IO.StreamReader(path + "\\KinectFitness\\FitnessVideos\\video.txt");
             while ((line = file.ReadLine()) != null)
             {
                 if (line.Contains("warmUp"))
                 {
                     loadExercise("FitnessVideos\\WarmUp5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
+                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("moderate"))
                 {
                     loadExercise("FitnessVideos\\ModerateCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
+                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("intense"))
                 {
                     loadExercise("FitnessVideos\\IntenseCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
+                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
                 }
             }
             file.Close();
