@@ -34,7 +34,7 @@ namespace KinectFitness
             InitializeComponent();
             initializeUI();
             initializeHoverChecker();
-            InitializeAudioCommands();
+            //InitializeAudioCommands();
             this.WindowState = System.Windows.WindowState.Maximized;
         }
         
@@ -50,6 +50,7 @@ namespace KinectFitness
         int numberOfPtsBar;
         double totalMovieTime;
         Stopwatch hoverTimer;
+        Stopwatch standingStillTimer;
         Random r;
         Skeleton first;
 
@@ -61,7 +62,7 @@ namespace KinectFitness
         List<JointSpeeds> patientSpeedData;
 
         //Audio Command Listener
-        AudioCommands myCommands;
+        //AudioCommands myCommands;
 
         //Timers for matching skeleton and tracking video progress
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
@@ -83,6 +84,51 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);          
         }
 
+        /**
+         * Initializes the UI
+         */
+        void initializeUI()
+        {
+            numberOfPts = 0;
+            numberOfPtsBar = 0;
+            points.Text = numberOfPts + "Pts.";
+            pointsBar.Value = numberOfPtsBar;
+            videoPlaying = false;
+            timerInitialized = false;
+            //Set the Video Progress Bar Width to Zero 
+            videoProgressBar.Width = 0;
+            //Data to record and display after
+            patientAnglesData = new List<JointAngles>();
+            patientSpeedData = new List<JointSpeeds>();
+            //Data for getting speed of joints
+            previousFrameJoints = new List<Joint>();
+            initializePreviousFrameJoints();
+            //Stopwatch to check if patient is actually exercising
+            standingStillTimer = new Stopwatch();
+
+            //Get positions of buttons
+            rightHandPos = new Rect();
+            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
+            rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
+            playIconPos = new Rect();
+            playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
+            playIconPos.Size = new Size(playicon.Width, playicon.Height);
+            backButton = new Rect();
+            backButton.Location = new Point(Grid.GetRow(backButtonImg), Grid.GetColumn(backButtonImg));
+            backButton.Size = new Size(backButtonImg.Width, backButtonImg.Height);
+            bigPlayIcon = new Rect();
+            bigPlayIcon.Location = new Point(Canvas.GetLeft(bigPlayIconImg), Canvas.GetTop(bigPlayIconImg));
+            bigPlayIcon.Size = new Size(bigPlayIconImg.Width, bigPlayIconImg.Height);
+            doneButton = new Rect();
+            doneButton.Location = new Point(-900, -900);
+
+            //Set video source for video player
+            LoadVideo();
+            //Get Length of Video
+            FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
+        }
+
+        /*
         private void InitializeAudioCommands()
         {
             myCommands = new AudioCommands(false, 0.5, "play", "pause", "back");//instantiate an AudioCommands object with the possible commands
@@ -90,6 +136,7 @@ namespace KinectFitness
             myCommands.setFunction("pause", btnPlay_Click);
             myCommands.setFunction("back", leavePage);
         }
+         */
 
         private void loadExercise(String exercise)
         {
@@ -435,7 +482,7 @@ namespace KinectFitness
 
         /**
          * Returns true if the speeds of the patients
-         * match the recorded skeleton data suffieciently well
+         * match the recorded skeleton data sufficiently well
          */
         private bool MatchSkeletonSpeeds(JointSpeeds js)
         {
@@ -454,6 +501,30 @@ namespace KinectFitness
             int rightKnee = SpeedOfJoint(first.Joints[JointType.KneeRight], previousFrameJoints.ElementAt(7));
             int leftFoot = SpeedOfJoint(first.Joints[JointType.FootLeft], previousFrameJoints.ElementAt(8));
             int rightFoot = SpeedOfJoint(first.Joints[JointType.FootRight], previousFrameJoints.ElementAt(9));
+
+            //Check to see if participant is standing still
+            //If they are standing still for more than 10 seconds, start penalizing them
+            if (leftHand < 5 && rightHand < 5 && leftFoot < 5 && rightFoot < 5 && leftHip < 5 && rightHip < 5)
+            {
+                //Start the timer if it has not started
+                if (!standingStillTimer.IsRunning)
+                {
+                    standingStillTimer.Start();
+                }
+                //If the person has been standing still for 10 seconds or more
+                //Give them 0 points for this frame
+                if (standingStillTimer.ElapsedMilliseconds > 10000)
+                {
+                    debugger.Text = "Standing Still!";
+                    patientSpeedData[patientSpeedData.Count - 1] = new JointSpeeds(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+                }
+            }
+                //If patient is moving at least a little
+            else
+            {
+                debugger.Text = "Moving!";
+                standingStillTimer.Reset();
+            }
 
             if ((leftHand >= 5 && js.leftHand >= 5) || (leftHand < 5 && js.leftHand < 5) || ((leftHand > js.leftHand - 3) && (leftHand < js.leftHand + 3)) )
             {                
@@ -507,16 +578,13 @@ namespace KinectFitness
             }
             if ((leftHip >= 5 && js.leftHip >= 5) || (leftHip <= 5 && js.leftHip <= 5) || ((leftHip > js.leftHip - 3) && (leftHip < js.leftHip + 3)))
             {
-                debugger.Foreground = Brushes.Green;
             }
             else if (leftHip >= 5)
             {
-                debugger.Foreground = Brushes.Green;
                 patientSpeedData.Last().leftHip = 0.5;
             }
             else
             {
-                debugger.Foreground =Brushes.Red;
                 //Give patient a 0 score for this frame for left hip speed
                 patientSpeedData.Last().leftHip = 0;
             }
@@ -585,8 +653,6 @@ namespace KinectFitness
                 //Give patient a 0 score for this frame for right foot speed
                 patientSpeedData.Last().rightFoot = 0;
             }
-            debugger.Text = "Computer LF: " + js.leftFoot.ToString() + "\nMy LF: " + leftFoot
-                + "\n\nComputerLHip: " + js.leftHip.ToString() + "\nMy LHip: " + leftHip;
 
             previousFrameJoints[0] = first.Joints[JointType.HandLeft];
             previousFrameJoints[1] = first.Joints[JointType.HandRight];
@@ -633,47 +699,7 @@ namespace KinectFitness
             }
         }
 
-        /**
-         * Initializes the UI
-         */
-        void initializeUI()
-        {
-            numberOfPts = 0;
-            numberOfPtsBar = 0;
-            points.Text = numberOfPts + "Pts.";
-            pointsBar.Value = numberOfPtsBar;
-            videoPlaying = false;
-            timerInitialized = false;
-            //Set the Video Progress Bar Width to Zero 
-            videoProgressBar.Width = 0;
-            //Data to record and display after
-            patientAnglesData = new List<JointAngles>();
-            patientSpeedData = new List<JointSpeeds>();
-            //Data for getting speed of joints
-            previousFrameJoints = new List<Joint>();
-            initializePreviousFrameJoints();
-          
-            //Get positions of buttons
-            rightHandPos = new Rect();
-            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
-            rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
-            playIconPos = new Rect();
-            playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
-            playIconPos.Size = new Size(playicon.Width, playicon.Height);
-            backButton = new Rect();
-            backButton.Location = new Point(Grid.GetRow(backButtonImg), Grid.GetColumn(backButtonImg));
-            backButton.Size = new Size(backButtonImg.Width, backButtonImg.Height);
-            bigPlayIcon = new Rect();
-            bigPlayIcon.Location = new Point(Canvas.GetLeft(bigPlayIconImg), Canvas.GetTop(bigPlayIconImg));
-            bigPlayIcon.Size = new Size(bigPlayIconImg.Width, bigPlayIconImg.Height);
-            doneButton = new Rect();
-            doneButton.Location = new Point(-900, -900);
-
-            //Set video source for video player
-            LoadVideo();
-            //Get Length of Video
-            FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
-        }
+        
 
         private void initializePreviousFrameJoints()
         {
@@ -742,7 +768,6 @@ namespace KinectFitness
                     FitnessPlayer.Source = new Uri("..\\..\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
                 }
             }
-
             file.Close();
 
             // Suspend the screen.
@@ -799,8 +824,6 @@ namespace KinectFitness
                 if (hoverTimer.ElapsedMilliseconds >= 2000)
                 {
                         leavePage(new object(), new RoutedEventArgs());
-                        //Resets hoverTimer
-                        hoverTimer.Reset();
                 }
             }
             else if (rightHandPos.IntersectsWith(bigPlayIcon)  && !videoPlaying)
@@ -815,8 +838,7 @@ namespace KinectFitness
                 if (hoverTimer.ElapsedMilliseconds >= 2000)
                 {
                     //Presses the play button
-                    btnPlay_Click(sender, new RoutedEventArgs());
-                   
+                    btnPlay_Click(sender, new RoutedEventArgs());                 
 
                     //Resets hoverTimer
                     hoverTimer.Reset();
@@ -881,10 +903,11 @@ namespace KinectFitness
             closing = true;           
             dispatcherTimer.Stop();
             StopKinect(kinectSensorChooser1.Kinect);
-            myCommands.StopSpeechRecognition();
-            SelectLevelWindow sw = new SelectLevelWindow();
-            this.Close();
+            //myCommands.StopSpeechRecognition();
+            SelectLevelWindow sw = new SelectLevelWindow();            
             sw.Show();
+            hoverTimer.Reset();
+            this.Close();
         }
 
         private void setHandProgressBar(bool leftHand, long timeElapsed)
@@ -1248,8 +1271,7 @@ namespace KinectFitness
 
 
         private void kinectSkeletonViewer1_Unloaded(object sender, RoutedEventArgs e)
-        {
-            
+        {            
             closing = true;
             StopKinect(kinectSensorChooser1.Kinect); 
         }
@@ -1348,6 +1370,7 @@ namespace KinectFitness
             closing = true;           
             dispatcherTimer.Stop();
             StopKinect(kinectSensorChooser1.Kinect);
+            //myCommands.StopSpeechRecognition();
             StartupWindow sw = new StartupWindow();
             this.Close();
             sw.Show();        
@@ -1509,5 +1532,6 @@ namespace KinectFitness
         {
             leavePage(new object(), new RoutedEventArgs());
         }
+
     }
 }

@@ -157,5 +157,14 @@ namespace KinectFitness
             this.cmnFuncts = null;
         }
 
+        public static void StopSpeechRecognition(AudioCommands commands)
+        {
+            commands.RecThread.Abort();
+            commands.RecThread = null;
+            commands.recognizer.UnloadAllGrammars();
+            commands.recognizer.Dispose();
+            commands.cmnFuncts = null;
+        }
+
     }
 }

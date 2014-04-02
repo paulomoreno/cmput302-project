@@ -29,6 +29,7 @@ namespace KinectFitness
         Skeleton first;
         Stopwatch hoverTimer;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        //AudioCommands myCommands;
 
         //Hand Positions
         Rect rightHandPos;
@@ -45,7 +46,7 @@ namespace KinectFitness
             InitializeComponent();
             InitializeUI();
             InitializeHoverChecker();
-            InitializeAudioCommands();
+            //InitializeAudioCommands();
             this.WindowState = System.Windows.WindowState.Maximized;
             //addExercises();
         }
@@ -55,15 +56,17 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
 
-
+        /*
         private void InitializeAudioCommands()
         {
-            AudioCommands myCommands = new AudioCommands(true, 0.5, "warmUp", "moderate", "intense", "back");//instantiate an AudioCommands object with the possible commands
+            myCommands = new AudioCommands(true, 0.5, "warmUp", "moderate", "intense", "back");//instantiate an AudioCommands object with the possible commands
             myCommands.setFunction("warmUp", warmUpWorkout);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
             myCommands.setFunction("moderate", moderateWorkout);
             myCommands.setFunction("intense", intenseWorkout);
             myCommands.setFunction("back", backButtonPressed);
         }
+         */
+
         private void InitializeUI()
         {
             rightHandProgressBar.Width = 0;
@@ -479,45 +482,45 @@ namespace KinectFitness
             StopKinect(kinectSensorChooser1.Kinect);
         }
 
-        private void intenseWorkout(object sender, RoutedEventArgs e)
+        private void closeWindow()
         {
-            SetFile(intenseImg);
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
-            KinectWindow kw = new KinectWindow();
+            //myCommands.StopSpeechRecognition();
+            hoverTimer.Reset();
             this.Close();
+        }
+
+        private void intenseWorkout(object sender, RoutedEventArgs e)
+        {
+            SetFile(intenseImg);            
+            KinectWindow kw = new KinectWindow();            
             kw.Show();
+            closeWindow();
         }
 
         private void moderateWorkout(object sender,RoutedEventArgs e)
         {
             SetFile(moderateImg);
-            StopKinect(kinectSensorChooser1.Kinect);
-            dispatcherTimer.Stop();
+            
             KinectWindow kw = new KinectWindow();
-            this.Close();
             kw.Show();
+            closeWindow();
         }
 
         private void warmUpWorkout(object sender,RoutedEventArgs e)
         {
             SetFile(warmUpImg);
-            StopKinect(kinectSensorChooser1.Kinect);
-            dispatcherTimer.Stop();
             KinectWindow kw = new KinectWindow();
-            this.Close();
             kw.Show();
-            hoverTimer.Reset();
-
+            closeWindow();
         }
 
         private void backButtonPressed(object sender, RoutedEventArgs e)
         {
-            StopKinect(kinectSensorChooser1.Kinect);
-            dispatcherTimer.Stop();
             StartupWindow sw = new StartupWindow();
-            this.Close();
             sw.Show();
+            closeWindow();           
         }
     }
 }

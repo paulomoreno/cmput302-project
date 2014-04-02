@@ -25,6 +25,7 @@ namespace KinectFitness
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
         Skeleton first;
+        //AudioCommands myCommands;
 
         //Buttons
         Rect playButton;
@@ -43,7 +44,7 @@ namespace KinectFitness
             InitializeComponent();
             InitializeUI();
             InitializeHoverChecker();
-            InitializeAudioCommands();
+            //InitializeAudioCommands();
             var navWindow = Window.GetWindow(this) as NavigationWindow;
             if (navWindow != null) navWindow.ShowsNavigationUI = false;
             this.WindowState = System.Windows.WindowState.Maximized;
@@ -54,13 +55,15 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
 
+        /*
         private void InitializeAudioCommands()
         {
-            AudioCommands myCommands = new AudioCommands(true, 0.3, "quit", "play", "record");//instantiate an AudioCommands object with the possible commands
+            myCommands = new AudioCommands(true, 0.3, "quit", "play", "record");//instantiate an AudioCommands object with the possible commands
             myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
             myCommands.setFunction("record", Button_Record);
             myCommands.setFunction("quit", QuitApplication);
         }
+         */
 
         private void InitializeUI()
         {
@@ -117,12 +120,7 @@ namespace KinectFitness
                     //Check if hand has been hovering on target for 2 seconds or more   
                     if (hoverTimer.ElapsedMilliseconds >= 2000)
                     {
-                        //Tells the Kinect Window which file to load
-                        StopKinect(kinectSensorChooser1.Kinect);
-                        dispatcherTimer.Stop();
-                        SelectLevelWindow sw = new SelectLevelWindow();
-                        this.Close();
-                        sw.Show();
+                        Button_Play(new object(), new RoutedEventArgs());
                         hoverTimer.Reset();
                     }
                 }
@@ -140,11 +138,7 @@ namespace KinectFitness
                     //Check if hand has been hovering on target for 2 seconds or more   
                     if (hoverTimer.ElapsedMilliseconds >= 2000)
                     {
-                        StopKinect(kinectSensorChooser1.Kinect);
-                        dispatcherTimer.Stop();
-                        RecordWindow rw = new RecordWindow();
-                        this.Close();
-                        rw.Show();
+                        Button_Record(new object(), new RoutedEventArgs());
 
                         //this.NavigationService.Navigate(kw);
                         this.Content = null;
@@ -156,9 +150,6 @@ namespace KinectFitness
                     hoverTimer.Start();
                     //Highlight the correct image and unhighlight the others
                     hoverImage(quitButtonImg, new RoutedEventArgs());
-
-
-
                     //Set progress bar to increase on hands to indicate if hand is hovering on button
                     setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
 
@@ -166,11 +157,7 @@ namespace KinectFitness
                     //Check if hand has been hovering on target for 2 seconds or more   
                     if (hoverTimer.ElapsedMilliseconds >= 2000)
                     {
-                        //Tells the Kinect Window which file to load
                         QuitApplication(new object(), new RoutedEventArgs());
-                        
-
-
                     }
                 }
                 else if (rightHandPos.IntersectsWith(optionsButton))
@@ -211,6 +198,7 @@ namespace KinectFitness
         {
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
+            //myCommands.StopSpeechRecognition();
             Application.Current.Shutdown();
         }
         private void Button_Play(object sender, RoutedEventArgs e)
@@ -218,6 +206,7 @@ namespace KinectFitness
             closing = true; 
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
+            //myCommands.StopSpeechRecognition();
             SelectLevelWindow slw = new SelectLevelWindow();
             this.Close();
             slw.Show();
@@ -229,6 +218,7 @@ namespace KinectFitness
             closing = true; 
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
+            //myCommands.StopSpeechRecognition();
             RecordWindow rw = new RecordWindow();
             this.Close();
             rw.Show();
