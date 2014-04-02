@@ -34,12 +34,15 @@ namespace KinectFitness
             InitializeComponent();
             initializeUI();
             initializeHoverChecker();
+            InitializeAudioCommands();
             this.WindowState = System.Windows.WindowState.Maximized;
         }
         
         bool closing = false;
         bool videoPlaying;
         bool timerInitialized;
+        
+        //Kinect Variables
         const int skeletonCount = 6;
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
@@ -49,15 +52,22 @@ namespace KinectFitness
         Stopwatch hoverTimer;
         Random r;
         Skeleton first;
-        List<string> jointAngles;
+
+        //Lists for data collection
         List<Joint> previousFrameJoints;
         List<JointAngles> loadedSkeletonAngles;
         List<JointSpeeds> loadedSkeletonSpeeds;
         List<JointAngles> patientAnglesData;
         List<JointSpeeds> patientSpeedData;
+
+        //Audio Command Listener
+        AudioCommands myCommands;
+
+        //Timers for matching skeleton and tracking video progress
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
         System.Windows.Threading.DispatcherTimer videoProgressBarTracker;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        System.Windows.Threading.DispatcherTimer accuracyChecker;
 
         //Hand Position
         Rect rightHandPos;
@@ -71,6 +81,14 @@ namespace KinectFitness
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);          
+        }
+
+        private void InitializeAudioCommands()
+        {
+            myCommands = new AudioCommands(false, 0.5, "play", "pause", "back");//instantiate an AudioCommands object with the possible commands
+            myCommands.setFunction("play", btnPlay_Click);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
+            myCommands.setFunction("pause", btnPlay_Click);
+            myCommands.setFunction("back", leavePage);
         }
 
         private void loadExercise(String exercise)
@@ -437,94 +455,139 @@ namespace KinectFitness
             int leftFoot = SpeedOfJoint(first.Joints[JointType.FootLeft], previousFrameJoints.ElementAt(8));
             int rightFoot = SpeedOfJoint(first.Joints[JointType.FootRight], previousFrameJoints.ElementAt(9));
 
-            if ((leftHand >= 5 && js.leftHand >= 5) || (leftHand < 5 && js.leftHand < 5))
+            if ((leftHand >= 5 && js.leftHand >= 5) || (leftHand < 5 && js.leftHand < 5) || ((leftHand > js.leftHand - 3) && (leftHand < js.leftHand + 3)) )
             {                
+            }
+            else if (leftHand >= 5)
+            {
+                //Half Points for effort
+                patientSpeedData.Last().leftHand = 0.5;
             }
             else
             {
                 //Give patient a 0 score for this frame for left hand speed
                 patientSpeedData.Last().leftHand = 0;
             }
-            if ((rightHand >= 5 && js.rightHand >= 5) || (rightHand <= 5 && js.rightHand <= 5))
+            if ((rightHand >= 5 && js.rightHand >= 5) || (rightHand <= 5 && js.rightHand <= 5) || ((rightHand > js.rightHand - 3) && (rightHand < js.rightHand + 3)) )
             {
 
+            }
+            else if (rightHand >= 5)
+            {
+                patientSpeedData.Last().rightHand = 0.5;
             }
             else
             {
                 //Give patient a 0 score for this frame for right hand speed
                 patientSpeedData.Last().rightHand = 0;
             }
-            if ((leftShoulder >= 5 && js.leftShoulder >= 5) || (leftShoulder <= 5 && js.leftShoulder <= 5))
+            if ((leftShoulder >= 5 && js.leftShoulder >= 5) || (leftShoulder <= 5 && js.leftShoulder <= 5) || ((leftShoulder > js.leftShoulder - 3) && (leftShoulder < js.leftShoulder + 3)) )
             {                
+            }
+            else if (leftShoulder >= 5)
+            {
+                patientSpeedData.Last().leftShoulder = 0.5;
             }
             else
             {
                 //Give patient a 0 score for this frame for left shoulder speed
                 patientSpeedData.Last().leftShoulder = 0;
             }
-            if ((rightShoulder >= 5 && js.rightShoulder >= 5) || (rightShoulder <= 5 && js.rightShoulder <= 5))
+            if ((rightShoulder >= 5 && js.rightShoulder >= 5) || (rightShoulder <= 5 && js.rightShoulder <= 5) || ((rightShoulder > js.rightShoulder - 3) && (rightShoulder < js.rightShoulder + 3)))
             {
+            }
+            else if (rightShoulder >= 5)
+            {
+                patientSpeedData.Last().rightShoulder = 0.5;
             }
             else
             {
                 //Give patient a 0 score for this frame for right shoulder speed
                 patientSpeedData.Last().rightShoulder = 0;
             }
-            if ((leftHip >= 5 && js.leftHip >= 5) || (leftHip <= 5 && js.leftHip <= 5))
-            {                
+            if ((leftHip >= 5 && js.leftHip >= 5) || (leftHip <= 5 && js.leftHip <= 5) || ((leftHip > js.leftHip - 3) && (leftHip < js.leftHip + 3)))
+            {
+                debugger.Foreground = Brushes.Green;
+            }
+            else if (leftHip >= 5)
+            {
+                debugger.Foreground = Brushes.Green;
+                patientSpeedData.Last().leftHip = 0.5;
             }
             else
             {
+                debugger.Foreground =Brushes.Red;
                 //Give patient a 0 score for this frame for left hip speed
                 patientSpeedData.Last().leftHip = 0;
             }
-            if ((rightHip >= 5 && js.rightHip >= 5) || (rightHip <= 5 && js.rightHip <= 5))
+            if ((rightHip >= 5 && js.rightHip >= 5) || (rightHip <= 5 && js.rightHip <= 5) || ((rightHip > js.rightHip - 3) && (rightHip < js.rightHip + 3)))
             {
-
+                
+            }
+            else if (rightHip >= 5)
+            {
+                patientSpeedData.Last().rightHip = 0.5;
             }
             else
             {
                 //Give patient a 0 score for this frame for right hip speed
                 patientSpeedData.Last().rightHip = 0;
             }
-            if ((leftKnee >= 5 && js.leftKnee >= 5) || (leftKnee <= 5 && js.leftKnee <= 5))
+            if ((leftKnee >= 5 && js.leftKnee >= 5) || (leftKnee <= 5 && js.leftKnee <= 5) || ((leftKnee > js.leftKnee - 3) && (leftKnee < js.leftKnee + 3)))
             {                
+            }
+            else if (leftKnee >= 5)
+            {
+                patientSpeedData.Last().leftKnee = 0.5;
             }
             else
             {
                 //Give patient a 0 score for this frame for left Knee speed
                 patientSpeedData.Last().leftKnee = 0;
             }
-            if ((rightKnee >= 5 && js.rightKnee >= 5) || (rightKnee <= 5 && js.rightKnee <= 5))
+            if ((rightKnee >= 5 && js.rightKnee >= 5) || (rightKnee <= 5 && js.rightKnee <= 5) || ((rightKnee > js.rightKnee - 3) && (rightKnee < js.rightKnee + 3)))
             {
 
+            }
+            else if (rightKnee >= 5)
+            {
+                patientSpeedData.Last().rightKnee = 0.5;
             }
             else
             {
                 //Give patient a 0 score for this frame for right Knee speed
                 patientSpeedData.Last().rightKnee = 0;
             }
-            if ((leftFoot >= 5 && js.leftFoot >= 5) || (leftFoot <= 5 && js.leftFoot <= 5))
-            {               
+            if ((leftFoot >= 5 && js.leftFoot >= 5) || (leftFoot <= 5 && js.leftFoot <= 5) || ((leftFoot > js.leftFoot - 3) && (leftFoot < js.leftFoot + 3)))
+            {
+                //debugger.Foreground = Brushes.Green;
+            }
+            else if (leftFoot >= 5)
+            {
+                patientSpeedData.Last().leftFoot = 0.5;
             }
             else
             {
                 //Give patient a 0 score for this frame for leftFoot speed
                 patientSpeedData.Last().leftFoot = 0;
+                //debugger.Foreground = Brushes.Red;
             }
-            if ((rightFoot >= 5 && js.rightFoot >= 5) || (rightFoot <= 5 && js.rightFoot <= 5))
+            if ((rightFoot >= 5 && js.rightFoot >= 5) || (rightFoot <= 5 && js.rightFoot <= 5) || ((rightFoot > js.rightFoot - 3) && (rightFoot < js.rightFoot + 3)))
             {
 
+            }
+            else if (rightFoot >= 5)
+            {
+                patientSpeedData.Last().rightFoot = 0.5;
             }
             else
             {
                 //Give patient a 0 score for this frame for right foot speed
                 patientSpeedData.Last().rightFoot = 0;
             }
+            debugger.Text = "Computer LF: " + js.leftFoot.ToString() + "\nMy LF: " + leftFoot
+                + "\n\nComputerLHip: " + js.leftHip.ToString() + "\nMy LHip: " + leftHip;
 
-            debugger.Text = "LH: " + js.leftHand.ToString() + "\nLS: " + js.leftShoulder.ToString()
-                + "\nLHip: " + js.leftHip.ToString() + "\nLK: " + js.leftKnee.ToString() +
-                "\nLF: " + js.leftFoot.ToString();
             previousFrameJoints[0] = first.Joints[JointType.HandLeft];
             previousFrameJoints[1] = first.Joints[JointType.HandRight];
             previousFrameJoints[2] = first.Joints[JointType.ShoulderLeft];
@@ -690,7 +753,6 @@ namespace KinectFitness
         void media_MediaOpened(object sender, System.Windows.RoutedEventArgs e)
         {
             totalMovieTime = FitnessPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-            debugger2.Text = totalMovieTime.ToString();
         }
 
         
@@ -736,7 +798,7 @@ namespace KinectFitness
                 //Check if hand has been hovering on target for 1 second or more   
                 if (hoverTimer.ElapsedMilliseconds >= 2000)
                 {
-                        leavePage();
+                        leavePage(new object(), new RoutedEventArgs());
                         //Resets hoverTimer
                         hoverTimer.Reset();
                 }
@@ -800,11 +862,12 @@ namespace KinectFitness
         /**
          * Go back to the Select Level Page
          */
-        private void leavePage()
+        private void leavePage(object sender, RoutedEventArgs e)
         {
             if (videoPlaying)
-            {
+            {                
                 FitnessPlayer.Stop();
+                FitnessPlayer.Source = null;
                 FitnessPlayer.Close();     
             }
             if (skeletonMatcherTimer != null)
@@ -818,6 +881,7 @@ namespace KinectFitness
             closing = true;           
             dispatcherTimer.Stop();
             StopKinect(kinectSensorChooser1.Kinect);
+            myCommands.StopSpeechRecognition();
             SelectLevelWindow sw = new SelectLevelWindow();
             this.Close();
             sw.Show();
@@ -1270,6 +1334,7 @@ namespace KinectFitness
             if (videoPlaying)
             {
                 FitnessPlayer.Stop();
+                FitnessPlayer.Source = null;
                 FitnessPlayer.Close();     
             }
             if (skeletonMatcherTimer != null)
@@ -1442,7 +1507,7 @@ namespace KinectFitness
 
         private void backButton_Click(object sender, MouseButtonEventArgs e)
         {
-            leavePage();
+            leavePage(new object(), new RoutedEventArgs());
         }
     }
 }

@@ -8,14 +8,14 @@ namespace KinectFitness
 
     class JointAngles
     {
-        public int leftShoulder;
-        public int leftElbow;
-        public int leftHip;
-        public int leftKnee;
-        public int rightShoulder;
-        public int rightElbow;
-        public int rightHip;
-        public int rightKnee;
+        public double leftShoulder;
+        public double leftElbow;
+        public double leftHip;
+        public double leftKnee;
+        public double rightShoulder;
+        public double rightElbow;
+        public double rightHip;
+        public double rightKnee;
 
         public JointAngles(int leftShoulder, int leftElbow, int leftHip, int leftKnee,
             int rightShoulder, int rightElbow, int rightHip, int rightKnee)

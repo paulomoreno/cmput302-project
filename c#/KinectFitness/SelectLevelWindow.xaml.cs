@@ -44,7 +44,8 @@ namespace KinectFitness
         {
             InitializeComponent();
             InitializeUI();
-            initializeHoverChecker();
+            InitializeHoverChecker();
+            InitializeAudioCommands();
             this.WindowState = System.Windows.WindowState.Maximized;
             //addExercises();
         }
@@ -54,6 +55,15 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
 
+
+        private void InitializeAudioCommands()
+        {
+            AudioCommands myCommands = new AudioCommands(true, 0.5, "warmUp", "moderate", "intense", "back");//instantiate an AudioCommands object with the possible commands
+            myCommands.setFunction("warmUp", warmUpWorkout);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
+            myCommands.setFunction("moderate", moderateWorkout);
+            myCommands.setFunction("intense", intenseWorkout);
+            myCommands.setFunction("back", backButtonPressed);
+        }
         private void InitializeUI()
         {
             rightHandProgressBar.Width = 0;
@@ -79,7 +89,7 @@ namespace KinectFitness
         }
 
 
-        void initializeHoverChecker()
+        void InitializeHoverChecker()
         {
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             //Timer to check for hand positions
@@ -115,13 +125,7 @@ namespace KinectFitness
                     if (hoverTimer.ElapsedMilliseconds >= 2000)
                     {
                         //Tells the Kinect Window which file to load
-                        SetFile(warmUpImg);
-                        StopKinect(kinectSensorChooser1.Kinect);
-                        dispatcherTimer.Stop();
-                        KinectWindow kw = new KinectWindow();
-                        this.Close();
-                        kw.Show();
-                        hoverTimer.Reset();
+                        warmUpWorkout(new object(), new RoutedEventArgs());
                     }
                 }
                 else if (rightHandPos.IntersectsWith(moderateCardio))
@@ -141,12 +145,7 @@ namespace KinectFitness
                     if (hoverTimer.ElapsedMilliseconds >= 2000)
                     {
                         //Tells the Kinect Window which file to load
-                        SetFile(moderateImg);
-                        StopKinect(kinectSensorChooser1.Kinect);
-                        dispatcherTimer.Stop();
-                        KinectWindow kw = new KinectWindow();
-                        this.Close();
-                        kw.Show();
+                        moderateWorkout(new object(), new RoutedEventArgs());
                         
                         //this.NavigationService.Navigate(kw);
                         this.Content = null;
@@ -170,13 +169,8 @@ namespace KinectFitness
                     if (hoverTimer.ElapsedMilliseconds >= 2000)
                     {
                         //Tells the Kinect Window which file to load
-                        SetFile(intenseImg);
-                        StopKinect(kinectSensorChooser1.Kinect);
-                        dispatcherTimer.Stop();
-                        KinectWindow kw = new KinectWindow();
-                        this.Close();
-                        kw.Show();
-                        hoverTimer.Reset();
+                        intenseWorkout(new object(), new RoutedEventArgs());
+
                     }
                 }
                 else if (rightHandPos.IntersectsWith(backButton))
@@ -485,7 +479,7 @@ namespace KinectFitness
             StopKinect(kinectSensorChooser1.Kinect);
         }
 
-        private void intenseWorkout(object sender, MouseButtonEventArgs e)
+        private void intenseWorkout(object sender, RoutedEventArgs e)
         {
             SetFile(intenseImg);
             StopKinect(kinectSensorChooser1.Kinect);
@@ -495,7 +489,7 @@ namespace KinectFitness
             kw.Show();
         }
 
-        private void moderateWorkout(object sender, MouseButtonEventArgs e)
+        private void moderateWorkout(object sender,RoutedEventArgs e)
         {
             SetFile(moderateImg);
             StopKinect(kinectSensorChooser1.Kinect);
@@ -505,7 +499,7 @@ namespace KinectFitness
             kw.Show();
         }
 
-        private void warmUpWorkout(object sender, MouseButtonEventArgs e)
+        private void warmUpWorkout(object sender,RoutedEventArgs e)
         {
             SetFile(warmUpImg);
             StopKinect(kinectSensorChooser1.Kinect);
@@ -513,9 +507,11 @@ namespace KinectFitness
             KinectWindow kw = new KinectWindow();
             this.Close();
             kw.Show();
+            hoverTimer.Reset();
+
         }
 
-        private void backButtonPressed(object sender, MouseButtonEventArgs e)
+        private void backButtonPressed(object sender, RoutedEventArgs e)
         {
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();

@@ -7,16 +7,16 @@ namespace KinectFitness
 {
     class JointSpeeds
     {
-        public int leftShoulder;
-        public int leftHand;
-        public int leftHip;
-        public int leftFoot;
-        public int leftKnee;
-        public int rightShoulder;
-        public int rightHand;
-        public int rightHip;
-        public int rightKnee;
-        public int rightFoot;
+        public double leftShoulder;
+        public double leftHand;
+        public double leftHip;
+        public double leftFoot;
+        public double leftKnee;
+        public double rightShoulder;
+        public double rightHand;
+        public double rightHip;
+        public double rightKnee;
+        public double rightFoot;
 
         public JointSpeeds(int leftShoulder, int leftElbow, int leftHip, int leftKnee, int leftFoot,
             int rightShoulder, int rightElbow, int rightHip, int rightKnee, int rightFoot)
