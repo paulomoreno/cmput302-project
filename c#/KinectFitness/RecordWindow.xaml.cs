@@ -239,8 +239,13 @@ namespace KinectFitness
             // Do something with the Input
             String input = InputTextBox.Text;
 
+            String path = System.AppDomain.CurrentDomain.BaseDirectory;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
             
-            System.IO.File.WriteAllLines(@"C:\Users\Brad\302\c#\KinectFitness\Recordings\" + input + ".txt", jointAngles);
+            System.IO.File.WriteAllLines(path + "\\Recordings\\" + input + ".txt", jointAngles);
 
             // Clear InputBox.
             InputTextBox.Text = String.Empty;
