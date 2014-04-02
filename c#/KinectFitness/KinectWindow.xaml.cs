@@ -141,14 +141,22 @@ namespace KinectFitness
 
         private void loadExercise(String exercise)
         {
+
             string line;
+
+            String path = System.AppDomain.CurrentDomain.BaseDirectory;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+
             JointAngles ja = new JointAngles();
             JointSpeeds js = new JointSpeeds();
             loadedSkeletonAngles = new List<JointAngles>();
             loadedSkeletonSpeeds = new List<JointSpeeds>();
             // Read the file and display it line by line.
             System.IO.StreamReader file =
-               new System.IO.StreamReader("..\\..\\" + exercise);
+               new System.IO.StreamReader(path + exercise);
             while ((line = file.ReadLine()) != null)
             {
                 if(line.Contains("LSA"))
@@ -763,17 +771,17 @@ namespace KinectFitness
             {
                 if (line.Contains("warmUp"))
                 {
-                    loadExercise("FitnessVideos\\WarmUp5Min\\exercise.txt");
+                    loadExercise("\\KinectFitness\\FitnessVideos\\WarmUp5Min\\exercise.txt");
                     FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("moderate"))
                 {
-                    loadExercise("FitnessVideos\\ModerateCardio5Min\\exercise.txt");
+                    loadExercise("\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\exercise.txt");
                     FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("intense"))
                 {
-                    loadExercise("FitnessVideos\\IntenseCardio5Min\\exercise.txt");
+                    loadExercise("\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\exercise.txt");
                     FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
                 }
             }
@@ -786,6 +794,7 @@ namespace KinectFitness
         //Find length of video
         void media_MediaOpened(object sender, System.Windows.RoutedEventArgs e)
         {
+            debugger.Text = "Video Opened";
             totalMovieTime = FitnessPlayer.NaturalDuration.TimeSpan.TotalSeconds;
         }
 
