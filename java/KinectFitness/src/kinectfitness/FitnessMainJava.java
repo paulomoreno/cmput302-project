@@ -1,5 +1,6 @@
 package kinectfitness;
 
+import com.sun.jna.NativeLibrary;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,6 +14,8 @@ import javax.swing.*;
 public class FitnessMainJava {
 
     public static void main(String[] args) throws URISyntaxException, IOException {
+        NativeLibrary.addSearchPath("libvlc", "./");
+        NativeLibrary.addSearchPath("libvlccore", "libvlccore");
         createInputDialog();
 
 
@@ -61,12 +64,11 @@ public class FitnessMainJava {
                         }
                         break;
                     case "doctor":
-                        Doctor doctor = new Doctor();
-                        try {
-                            doctor.startDoctor();
-                        } catch (Exception ex) {
-                            Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        DoctorViewFrame window = new DoctorViewFrame();            
+                        
+                        window.sendInfo(182, 2);
+                        window.sendInfo(150, 2);
+                        
                         break;
                     default:
                         break;

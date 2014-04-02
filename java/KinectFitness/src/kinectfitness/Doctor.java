@@ -24,9 +24,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
@@ -37,8 +35,16 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import com.sun.jna.NativeLibrary;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.border.Border;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
 /**
@@ -73,21 +79,78 @@ import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
  *   :input-slave=alsa://hw:0,0
  * </pre>
  */
+class ChangeModeAction extends AbstractAction {
+
+    private int current_mode;
+    private final int index;
+    private final DoctorViewFrame window;
+    private final JButton btn_change_mode;
+    private final ImageIcon contract_icon;
+    private final ImageIcon expand_icon;
+
+    public ChangeModeAction(int current_mode, DoctorViewFrame window, int index, JButton btn_change_mode, ImageIcon expand_icon, ImageIcon contract_icon) {
+        super();
+
+        this.current_mode = current_mode;
+        this.window = window;
+        this.index = index;
+        this.btn_change_mode = btn_change_mode;
+        this.expand_icon = expand_icon;
+        this.contract_icon = contract_icon;
+    }
+
+    public void setCurrentMode(int new_current_mode) {
+        this.current_mode = new_current_mode;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        if (this.current_mode == Doctor.ALL_PATIENTS) {
+            this.setCurrentMode(Doctor.ONE_PATIENT);
+
+            this.window.changeLayoutToOne(this.index);
+            this.btn_change_mode.setIcon(contract_icon);
+
+        } else if (this.current_mode == Doctor.ONE_PATIENT) {
+            this.setCurrentMode(Doctor.ALL_PATIENTS);
+
+            this.window.changeLayoutToAll();
+            this.btn_change_mode.setIcon(expand_icon);
+
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
+
 public class Doctor extends VlcjTest {
 
+    private int age = 40;
+    private int maximum;
+    private int max_target;
+    private int min_target;
+    private float max_target_percentage = 0.85f;
+    private float min_target_percentage = 0.5f;
+
+    public static final int ALL_PATIENTS = 0;
+    public static final int ONE_PATIENT = 1;
+
     private String remoteIP;
-    
+    private final String localPort;
+    private final int localInfoPort;
+    private final int index;
+    private final DoctorViewFrame window;
+
     private final MediaPlayerFactory mediaPlayerFactoryOut;
     private final MediaPlayerFactory mediaPlayerFactoryIn;
     private final HeadlessMediaPlayer localMediaPlayer;
     private final EmbeddedMediaPlayer remoteMediaPlayer;
 
-    private final JFrame frame;
+    //private final JInternalFrame frame;
     private final JPanel contentPane;
     private final Canvas remoteCanvas;
 
     private final JLabel lbl_connection_status;
-    
+
     private final CanvasVideoSurface remoteVideoSurface;
 
     private final JPanel pnl_info;
@@ -98,61 +161,83 @@ public class Doctor extends VlcjTest {
     private final JLabel lbl_heart_rate;
     private final JLabel lbl_blood_pressure;
 
-    private final Color bkg_color = Color.white;
+    private final JPanel pnl_bottom;
 
-    public void startDoctor() throws Exception {
+    private final JPanel pnl_btn;
+    private final JButton btn_change_mode;
+
+    private Color bkg_color = Color.WHITE; //new Color(150, 180, 255);
+    private Color text_color = Color.BLACK;
+
+    public Doctor startDoctor() throws Exception {
         NativeLibrary.addSearchPath("libvlc", "./");
-        //NativeLibrary.addSearchPath("libvlc", "libvlc");
-        //NativeLibrary.addSearchPath("libvlccore", "./");
+        NativeLibrary.addSearchPath("libvlccore", "libvlccore");
         setLookAndFeel();
+
+        final Doctor doc = new Doctor(localPort, localInfoPort, index, window);
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
                 try {
-                    new Doctor().start();
+                    doc.start();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
+
+        return doc;
     }
 
-    public Doctor() {
-        String[] VLC_ARGS = {"--vout","dummy","--aout","dummy",};
+    public JPanel getContent() {
+        return this.contentPane;
+    }
+
+    public Doctor(String port, int infoPort, int index, DoctorViewFrame window) {
+        this.localPort = port;
+        this.localInfoPort = infoPort;
+        this.index = index;
+        this.window = window;
+        this.calculateRates();
+
+        String[] VLC_ARGS = {"--vout", "dummy", "--aout", "dummy",};
         mediaPlayerFactoryOut = new MediaPlayerFactory(VLC_ARGS);
         mediaPlayerFactoryIn = new MediaPlayerFactory();
         localMediaPlayer = mediaPlayerFactoryOut.newHeadlessMediaPlayer();
         remoteMediaPlayer = mediaPlayerFactoryIn.newEmbeddedMediaPlayer();
 
-        contentPane = new JPanel();
+        contentPane = new RoundedCornerPanel();
         contentPane.setBackground(bkg_color);
         contentPane.setLayout(new BorderLayout(0, 0));
 
         remoteCanvas = new Canvas();
         remoteCanvas.setBackground(Color.BLACK);
         remoteCanvas.setSize(640, 360);
-        
+
         lbl_connection_status = new JLabel();
-        lbl_connection_status.setFont(new java.awt.Font("Helvetica", 1, 16) );
-        lbl_connection_status.setText(" Waiting for connection...");
-        
+        lbl_connection_status.setFont(new java.awt.Font("Helvetica", 1, 14));
+        lbl_connection_status.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
+        lbl_connection_status.setText(" Patient " + Integer.toString(this.index+1) + ": Waiting for connection on port " + localInfoPort);
+
         remoteVideoSurface = mediaPlayerFactoryIn.newVideoSurface(remoteCanvas);
         remoteMediaPlayer.setVideoSurface(remoteVideoSurface);
 
         contentPane.add(lbl_connection_status, BorderLayout.PAGE_START);
         contentPane.add(remoteCanvas, BorderLayout.CENTER);
 
-        frame = new JFrame("Doctor View");
-        frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
-        frame.setContentPane(contentPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-
+        //frame = new JInternalFrame("Doctor View");
+        //frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
+        //frame.setContentPane(contentPane);
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.pack();
         pnl_info = new JPanel();
         pnl_info.setBackground(bkg_color);
         pnl_info.setBorder(new EmptyBorder(16, 16, 16, 16));
-        pnl_info.setLayout(new GridLayout(12, 1));
+        pnl_info.setLayout(new GridLayout(6, 2));
+
+        pnl_bottom = new JPanel();
+        pnl_bottom.setLayout(new BorderLayout(0, 0));
 
         lbl_hr_title = new javax.swing.JLabel();
         lbl_bp_title = new javax.swing.JLabel();
@@ -170,11 +255,11 @@ public class Doctor extends VlcjTest {
         lbl_o2_title.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lbl_o2_title.setText("O2");
 
-        lbl_heart_rate.setText("120 / bpm");
+        lbl_heart_rate.setText("Not available");
 
-        lbl_blood_pressure.setText("120 / 80");
+        lbl_blood_pressure.setText("Not available");
 
-        lbl_o2.setText("76%");
+        lbl_o2.setText("Not available");
 
         pnl_info.add(lbl_hr_title);
         pnl_info.add(lbl_heart_rate);
@@ -183,65 +268,151 @@ public class Doctor extends VlcjTest {
         pnl_info.add(lbl_o2_title);
         pnl_info.add(lbl_o2);
 
-        contentPane.add(pnl_info, BorderLayout.LINE_END);
+        pnl_btn = new JPanel();
+
+        btn_change_mode = new JButton();
+        ImageIcon expand_icon = new ImageIcon("expand.png");
+        ImageIcon contract_icon = new ImageIcon("contract.png");
+
+        Image img = expand_icon.getImage();
+        Image newimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        expand_icon = new ImageIcon(newimg);
+
+        img = contract_icon.getImage();
+        newimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        contract_icon = new ImageIcon(newimg);
+
+        ChangeModeAction btn_action = new ChangeModeAction(Doctor.ALL_PATIENTS, window, index, btn_change_mode, expand_icon, contract_icon);
+        btn_change_mode.setAction(btn_action);
+        btn_change_mode.setIcon(expand_icon);
+        btn_change_mode.setSize(30, 30);
+        btn_change_mode.setOpaque(false);
+        btn_change_mode.setContentAreaFilled(false);
+        btn_change_mode.setBorderPainted(false);
+
+        pnl_btn.add(btn_change_mode);
+        pnl_btn.setBackground(bkg_color);
+
+        pnl_bottom.add(pnl_info, BorderLayout.CENTER);
+        pnl_bottom.add(pnl_btn, BorderLayout.EAST);
+
+        pnl_bottom.setOpaque(false);
+        pnl_info.setOpaque(false);
+        pnl_btn.setOpaque(false);
+        
+        contentPane.add(pnl_bottom, BorderLayout.SOUTH);
     }
 
     public void updateInfo(Info patientInfo) {
         this.lbl_heart_rate.setText(patientInfo.heart_rate + " bpm");
         //this.lbl_blood_pressure.setText(patientInfo.blood_pressure[0] + "/" + patientInfo.blood_pressure[1]);
         this.lbl_o2.setText(patientInfo.O2 + "%");
+
+        //If not normal, send messages and change the background to red
+        if (Integer.parseInt(patientInfo.heart_rate) > this.max_target) {
+            String high_low = "high";
+            String type = "heartrate";
+
+            this.updateColor(Color.RED, Color.WHITE);
+
+            JOptionPane.showMessageDialog(null,
+                    "Patient " + Integer.toString(this.index + 1) + "'s " + type + " is " + high_low + "!",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+        } else if (Integer.parseInt(patientInfo.heart_rate) < this.min_target) {
+            String high_low = "low";
+            String type = "heartrate";
+
+            this.updateColor(Color.RED, Color.WHITE);
+
+            JOptionPane.showMessageDialog(null,
+                    "Patient " + Integer.toString(this.index + 1) + "'s " + type + " is " + high_low + "!",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);            //If normal, make sure background is white
+        } else if (this.bkg_color != Color.WHITE) {
+            this.updateColor(Color.WHITE, Color.BLACK);
+
+        }
     }
-    
-    public void updateStatus(String status){
-        this.lbl_connection_status.setText(status);
+
+    public void calculateRates() {
+        this.maximum = 220 - this.age;
+        this.max_target = (int) (this.maximum * this.max_target_percentage);
+        this.min_target = (int) (this.maximum * this.min_target_percentage);
     }
-    
-    private void start() throws InterruptedException {
+
+    private void updateColor(Color bkg_color, Color text_color) {
+
+        this.bkg_color = bkg_color;
+        this.text_color = text_color;
+
+        this.pnl_bottom.setBackground(bkg_color);
+        this.pnl_info.setBackground(bkg_color);
+        this.pnl_btn.setBackground(bkg_color);
+        this.contentPane.setBackground(bkg_color);
+
+        lbl_hr_title.setForeground(text_color);
+        lbl_bp_title.setForeground(text_color);
+        lbl_o2_title.setForeground(text_color);
+        lbl_blood_pressure.setForeground(text_color);
+        lbl_heart_rate.setForeground(text_color);
+        lbl_o2.setForeground(text_color);
+        lbl_connection_status.setForeground(text_color);
+
+        this.contentPane.validate();
+        this.contentPane.repaint();
+    }
+
+    public void updateStatus(String status) {
+        this.lbl_connection_status.setText(" Patient " + Integer.toString(this.index+1) + ": " + status);
+    }
+
+    public void start() throws InterruptedException {
         //this.remoteIP = "142.244.215.246:5555";
         //send();//send video
-        frame.setVisible(true);
-                
-        Doctor_info pi = new Doctor_info(this);
-        pi.start();//get information from patient
-               
+
+        //frame.setVisible(true);
+        Doctor_info di = new Doctor_info(this);
+        System.out.println("LLLocal info port: " + localInfoPort);
+        di.setLocalPort(this.localInfoPort);
+        di.start();//get information from patient
+
     }
-    
-    public void startStreaming(String remoteIP){       
+
+    public void startStreaming(String remoteIP) {
         //System.out.println("IP = " + remoteIP);
         this.remoteIP = remoteIP + ":5555";
-         
+
         send();
         receive();//receive video
     }
-    
+
     private void send() {
         String mrl = !RuntimeUtil.isWindows() ? "v4l2:///dev/video0" : "dshow://";
-        if(mrl.length() > 0) {
+        if (mrl.length() > 0) {
             String streamTo = this.remoteIP;
-            
+
             String[] parts = streamTo.split(":");
-            if(parts.length == 2) {
+            if (parts.length == 2) {
                 String host = parts[0];
                 int port = Integer.parseInt(parts[1]);
-                
+
                 String[] localOptions = {formatRtpStream(host, port), ":no-sout-rtp-sap", ":no-sout-standard-sap", ":sout-all", ":sout-keep",};
-                
+
                 localMediaPlayer.playMedia(mrl, localOptions);
+            } else {
+                //JOptionPane.showMessageDialog(frame, "You must specify host:port to stream to.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            else {
-                JOptionPane.showMessageDialog(frame, "You must specify host:port to stream to.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-        else {
-            JOptionPane.showMessageDialog(frame, "You must specify source media, e.g. v4l2:///dev/video0 on Linux or dshow:// on Windows.", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            //JOptionPane.showMessageDialog(frame, "You must specify source media, e.g. v4l2:///dev/video0 on Linux or dshow:// on Windows.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void receive() {
-        String streamFrom = "230.0.0.1:5555";
-        remoteMediaPlayer.playMedia("rtp://@" + streamFrom,":sout-mux-caching=100", ":live-caching=100",":network-caching=100", ":clock-jitter=0");
+        String streamFrom = "230.0.0.1:" + this.localPort;
+        remoteMediaPlayer.playMedia("rtp://@" + streamFrom, ":sout-mux-caching=100", ":live-caching=100", ":network-caching=100", ":clock-jitter=0");
     }
-    
+
     private static String formatRtpStream(String serverAddress, int serverPort) {
         StringBuilder sb = new StringBuilder(60);
         sb.append(":sout=#transcode{vcodec=mp2v,vb=512,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=display,dst=rtp{dst=");

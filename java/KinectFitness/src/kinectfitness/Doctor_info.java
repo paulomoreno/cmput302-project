@@ -20,10 +20,15 @@ import javax.swing.JPanel;
 class Doctor_info extends Thread {
     Doctor doctor;
     boolean foundIP = false;
+    int localPort = 5020;
     String remoteIP = "";
     
     public boolean foundIP(){
         return this.foundIP;
+    }
+    
+    public void setLocalPort(int port){
+        this.localPort = port;
     }
     
     public String getRemoteIP(){
@@ -42,8 +47,9 @@ class Doctor_info extends Thread {
         ServerSocket servSocket;
         Socket fromClientSocket;
 
-        int cTosPortNumber = 5020;
+        int cTosPortNumber = this.localPort;
         try {
+            System.out.println("Info Port: " + cTosPortNumber);
             servSocket = new ServerSocket(cTosPortNumber);
             fromClientSocket = servSocket.accept();
             ObjectInputStream ois = new ObjectInputStream(fromClientSocket.getInputStream()); 
@@ -54,7 +60,7 @@ class Doctor_info extends Thread {
                     remoteIP = fromClientSocket.getRemoteSocketAddress().toString().replaceAll("(/|(:[0-9]+))", "");
                     //System.out.println("PI: " + remoteIP);
                     doctor.startStreaming(remoteIP);
-                    doctor.updateStatus(" Connected to: " + remoteIP);
+                    doctor.updateStatus("Connected to: " + remoteIP);
                 }
                 doctor.updateInfo(patient_info);
             }
