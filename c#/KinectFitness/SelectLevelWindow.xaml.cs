@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Diagnostics;
+using System.Threading;
 
 namespace KinectFitness
 {
@@ -40,15 +41,127 @@ namespace KinectFitness
         Rect intenseCardio;
         Rect backButton;
 
+        //Controller variables
+        private Controller control;
+        private Thread newThread;
+
+        int buttons;
+
+        private AudioCommands myCommands;
 
         public SelectLevelWindow()
         {
+            control = new Controller();
+
             InitializeComponent();
             InitializeUI();
-            InitializeHoverChecker();
-            //InitializeAudioCommands();
+            InitializeAudioCommands();
+
+            if (control.isConnected() == true)
+            {
+                Console.WriteLine("control null");
+                InitializeHoverChecker(0);
+                buttons = 0; // 0 == play; 1 == options; 2 == record; 3 == quit 
+                int result = 10;
+
+                warmUpImgBorder.Opacity = 1;
+
+                newThread = new Thread(() =>
+                {
+                    control.updateStates();
+                    while (true && control != null)
+                    {
+                        Application.Current.Dispatcher.Invoke((Action)(() =>
+                        {
+                            result = control.getPOV();
+                            updateHighlights(result);
+                            checkButtonPressed(buttons, control.getButton(0), control.getButton(1));
+                            // Console.WriteLine(control.getButton());
+
+                        }));
+
+                    }
+                    
+
+                });
+                newThread.Start();
+            }
+            else InitializeHoverChecker(1);
+
             this.WindowState = System.Windows.WindowState.Maximized;
+
+            
+
             //addExercises();
+        }
+
+        private void checkButtonPressed(int buttons, bool button, bool button_2)
+        {             //Console.WriteLine("Hey, I'm here!");
+            if (button_2 == true) 
+            {
+                backButtonPressed(new object(), new RoutedEventArgs());
+            }
+            
+            if (button == true)
+            {
+                //Console.WriteLine("HEy, I'm here as well!: " + button_number);
+                switch (buttons)
+                {
+                    case 0:  
+                        warmUpWorkout(new object(), new RoutedEventArgs());
+                        break;
+
+                    case 1:
+                        moderateWorkout(new object(), new RoutedEventArgs());
+                        break;
+
+                    case 2:
+                        intenseWorkout(new object(), new RoutedEventArgs());
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        }
+
+        //0 == warm up, 1 == moderate, 2 == last one
+        private void updateHighlights(int result) 
+        {
+            if (buttons == 0) 
+            {
+                if (result == 9000) {
+                    warmUpImgBorder.Opacity = 0;
+                    moderateImgBorder.Opacity = 1;
+                    buttons = 1;
+                    Thread.Sleep(250);
+                }
+            }
+            else if (buttons == 1) {
+                if (result == 9000) {
+                    moderateImgBorder.Opacity = 0;
+                    intenseImgBorder.Opacity = 1;
+                    buttons = 2;
+                    Thread.Sleep(250);
+                }
+                else if (result == 27000) 
+                {
+                    moderateImgBorder.Opacity = 0;
+                    warmUpImgBorder.Opacity = 1;
+                    buttons = 0;
+                    Thread.Sleep(250);
+                }
+            }
+            else if (buttons == 2)
+            {
+                if (result == 27000) {
+                    intenseImgBorder.Opacity = 0;
+                    moderateImgBorder.Opacity = 1;
+                    buttons = 1;
+                    Thread.Sleep(250);
+                }
+            }
+            
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -56,16 +169,14 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
 
-        /*
         private void InitializeAudioCommands()
         {
-            myCommands = new AudioCommands(true, 0.5, "warmUp", "moderate", "intense", "back");//instantiate an AudioCommands object with the possible commands
+            myCommands = new AudioCommands(0.82, "warmUp", "moderate", "intense", "back");//instantiate an AudioCommands object with the possible commands
             myCommands.setFunction("warmUp", warmUpWorkout);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
             myCommands.setFunction("moderate", moderateWorkout);
             myCommands.setFunction("intense", intenseWorkout);
             myCommands.setFunction("back", backButtonPressed);
         }
-         */
 
         private void InitializeUI()
         {
@@ -91,17 +202,24 @@ namespace KinectFitness
 
         }
 
-
-        void InitializeHoverChecker()
+        void InitializeHoverChecker(int control)
         {
+
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             //Timer to check for hand positions
-            dispatcherTimer.Tick += new EventHandler(checkHands);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+
+            if (control == 1)
+            {
+                dispatcherTimer.Tick += new EventHandler(checkHands);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            }
+
+
             dispatcherTimer.Start();
 
             hoverTimer = new Stopwatch();
         }
+
 
         /**
        * Checks to see if hands are hovering over a button
@@ -342,7 +460,9 @@ namespace KinectFitness
                 JitterRadius = 1.0f,
                 MaxDeviationRadius = 1.0f
             };
-            sensor.SkeletonStream.Enable(parameters);
+            //sensor.SkeletonStream.Enable(parameters);
+
+            sensor.SkeletonStream.Enable();
 
             sensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
             sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
@@ -441,9 +561,9 @@ namespace KinectFitness
                                   select s).FirstOrDefault();
 
                 return first;
-
             }
         }
+
 
         private void StopKinect(KinectSensor sensor)
         {
@@ -487,7 +607,8 @@ namespace KinectFitness
         }
 
         private void closeWindow()
-        {            
+        {
+            StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
             //myCommands.StopSpeechRecognition();
             hoverTimer.Reset();
@@ -496,8 +617,6 @@ namespace KinectFitness
 
         private void intenseWorkout(object sender, RoutedEventArgs e)
         {
-            StopKinect(kinectSensorChooser1.Kinect);
-            closing = true;
             SetFile(intenseImg);            
             KinectWindow kw = new KinectWindow();            
             kw.Show();
@@ -506,9 +625,8 @@ namespace KinectFitness
 
         private void moderateWorkout(object sender,RoutedEventArgs e)
         {
-            StopKinect(kinectSensorChooser1.Kinect);
-            closing = true;
-            SetFile(moderateImg);            
+            SetFile(moderateImg);
+            
             KinectWindow kw = new KinectWindow();
             kw.Show();
             closeWindow();
@@ -516,8 +634,6 @@ namespace KinectFitness
 
         private void warmUpWorkout(object sender,RoutedEventArgs e)
         {
-            StopKinect(kinectSensorChooser1.Kinect);
-            closing = true;
             SetFile(warmUpImg);
             KinectWindow kw = new KinectWindow();
             kw.Show();
@@ -526,11 +642,21 @@ namespace KinectFitness
 
         private void backButtonPressed(object sender, RoutedEventArgs e)
         {
-            StopKinect(kinectSensorChooser1.Kinect);
-            closing = true;
             StartupWindow sw = new StartupWindow();
             sw.Show();
             closeWindow();           
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                newThread.Abort();
+                control.ReleaseDevice();
+            }
+            catch (Exception ex) { }
+            AudioCommands.StopSpeechRecognition(myCommands);
+            myCommands = null;
         }
     }
 }

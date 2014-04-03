@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Diagnostics;
+using System.Threading;
 
 
 
@@ -25,23 +26,15 @@ namespace KinectFitness
     /// 
 
 
-   
+
 
     public partial class KinectWindow : Window
     {
-        public KinectWindow()
-        {
-            InitializeComponent();
-            initializeUI();
-            initializeHoverChecker();
-            //InitializeAudioCommands();
-            this.WindowState = System.Windows.WindowState.Maximized;
-        }
-        
+
         bool closing = false;
         bool videoPlaying;
         bool timerInitialized;
-        
+
         //Kinect Variables
         const int skeletonCount = 6;
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
@@ -79,6 +72,70 @@ namespace KinectFitness
         Rect bigPlayIcon;
         Rect doneButton;
 
+        //Controller variables
+        private Controller control;
+        private Thread newThread;
+
+
+        //Audio Command Listener
+        private AudioCommands myCommands;
+        
+
+        public KinectWindow()
+        {
+            control = new Controller();
+
+            InitializeComponent();
+            InitializeAudioCommands();
+            initializeUI();
+
+            if (control.isConnected() == true)
+            {
+                Console.WriteLine("control null");
+                InitializeHoverChecker(0);
+                int buttons = 0;
+
+                newThread = new Thread(() =>
+                {
+                    control.updateStates();
+                    while (true && control != null)
+                    {
+                        Application.Current.Dispatcher.Invoke((Action)(() =>
+                        {
+
+                            checkButtonPressed(buttons, control.getButton(0), control.getButton(1));
+                            // Console.WriteLine(control.getButton());
+
+                        }));
+
+                    }
+
+                });
+                newThread.Start();
+            }
+            else InitializeHoverChecker(1);
+
+            this.WindowState = System.Windows.WindowState.Maximized;
+            
+        }
+
+        private void checkButtonPressed(int buttons, bool button, bool button_2)
+        {             //Console.WriteLine("Hey, I'm here!");
+            if (button_2 == true)
+            {
+                leavePage(new object(), new RoutedEventArgs());
+            }
+            else if (button == true) {
+                btnPlay_Click(new object(), new RoutedEventArgs());
+                Thread.Sleep(150);
+            }
+
+
+        }
+
+
+
+   
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);          
@@ -128,15 +185,13 @@ namespace KinectFitness
             FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
         }
 
-        /*
         private void InitializeAudioCommands()
         {
-            myCommands = new AudioCommands(false, 0.5, "play", "pause", "back");//instantiate an AudioCommands object with the possible commands
-            myCommands.setFunction("play", btnPlay_Click);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
-            myCommands.setFunction("pause", btnPlay_Click);
+            myCommands = new AudioCommands(0.82, "play", "pause", "back");//instantiate an AudioCommands object with the possible commands
+            myCommands.setFunction("play", btnPlay_Play);
+            myCommands.setFunction("pause", btnPlay_Pause);
             myCommands.setFunction("back", leavePage);
         }
-         */
          
 
         private void loadExercise(String exercise)
@@ -250,17 +305,24 @@ namespace KinectFitness
          * Initializes the timer to check 20 times / second
          * if the hand is hovering over a button
          */
-        void initializeHoverChecker()
+
+        void InitializeHoverChecker(int control)
         {
+
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             //Timer to check for hand positions
-            dispatcherTimer.Tick += new EventHandler(checkHands);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+
+            if (control == 1)
+            {
+                dispatcherTimer.Tick += new EventHandler(checkHands);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            }
+
+
             dispatcherTimer.Start();
-            
+
             hoverTimer = new Stopwatch();
         }
-
 
         /**
          * Starts playing back the skeleton and matching it against the user
@@ -916,14 +978,14 @@ namespace KinectFitness
             {
                 videoProgressBarTracker.Stop();
             }
-            closing = true;
+            closing = true;           
+            dispatcherTimer.Stop();
             StopKinect(kinectSensorChooser1.Kinect);
-            dispatcherTimer.Stop();            
             //myCommands.StopSpeechRecognition();
-            SelectLevelWindow sw = new SelectLevelWindow();
-            this.Close();
+            SelectLevelWindow sw = new SelectLevelWindow();            
             sw.Show();
-            hoverTimer.Reset();            
+            hoverTimer.Reset();
+            this.Close();
         }
 
         private void setHandProgressBar(bool leftHand, long timeElapsed)
@@ -1296,48 +1358,68 @@ namespace KinectFitness
         /*
          * Media Player Stuff
          */
+     
+        private void btnPlay_Play(object sender, RoutedEventArgs e)
+        {
+            if (!videoPlaying)
+                VideoNotPlaying();
+        }
+
+        private void btnPlay_Pause(object sender, RoutedEventArgs e)
+        {
+            if (videoPlaying)
+                VideoPlaying();
+        }
         private void btnPlay_Click(object sender, RoutedEventArgs e)
         {
             if (!videoPlaying)
-            {               
-                FitnessPlayer.Play();                
-                videoPlaying = true;
-                stopHoverChecker();
-                
-                if (!timerInitialized)
-                { 
+                VideoNotPlaying();
 
-                    timerInitialized = true;
-                    //Start playing back the recorded skeleton
-                    startPlaybackSkeleton();
-                    //Start the video progress bar
-                    startVideoProgressBar();
-                    //Start the declining points bar
-                    startPointsBarDecliner();
-                    //Remove Big Play Button
-                    removeBigPlayButton();
-                }
-                //Check if the Skeleton Matcher is running
-                //If not, start it back again
-                if (!skeletonMatcherTimer.IsEnabled)
-                {
-                    skeletonMatcherTimer.Start();
-                }
-            }
             else
+                VideoPlaying();
+        }
+
+        private void VideoNotPlaying()
+        {
+            FitnessPlayer.Play();
+            videoPlaying = true;
+            stopHoverChecker();
+
+            if (!timerInitialized)
             {
-                //Pause the Fitness Player
-                FitnessPlayer.Pause();
-                videoPlaying = false;
 
-                //Video is paused, so allow user to use hand
-                //to click buttons again
-                startHoverChecker();
-
-                //Stop matching the skeleton since video is not playing
-                skeletonMatcherTimer.Stop();
+                timerInitialized = true;
+                //Start playing back the recorded skeleton
+                startPlaybackSkeleton();
+                //Start the video progress bar
+                startVideoProgressBar();
+                //Start the declining points bar
+                startPointsBarDecliner();
+                //Remove Big Play Button
+                removeBigPlayButton();
+            }
+            //Check if the Skeleton Matcher is running
+            //If not, start it back again
+            if (!skeletonMatcherTimer.IsEnabled)
+            {
+                skeletonMatcherTimer.Start();
             }
         }
+
+        private void VideoPlaying()
+        {
+            //Pause the Fitness Player
+            FitnessPlayer.Pause();
+            videoPlaying = false;
+
+            //Video is paused, so allow user to use hand
+            //to click buttons again
+            startHoverChecker();
+
+            //Stop matching the skeleton since video is not playing
+            skeletonMatcherTimer.Stop();
+        }
+
 
         /**
          * Stops the hover checker
@@ -1547,6 +1629,18 @@ namespace KinectFitness
         private void backButton_Click(object sender, MouseButtonEventArgs e)
         {
             leavePage(new object(), new RoutedEventArgs());
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                newThread.Abort();
+                control.ReleaseDevice();
+            }
+            catch (Exception ex) { }
+            AudioCommands.StopSpeechRecognition(myCommands);
+            myCommands = null;
         }
 
     }

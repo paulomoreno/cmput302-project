@@ -4,8 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="700" d:DesignWidth="1300"
-	Title="SelectLevelWindow" FontFamily="Verdana" Loaded="Page_Loaded"  xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
+      d:DesignHeight="700" d:DesignWidth="1300" 
+	Title="SelectLevelWindow" FontFamily="Verdana" Loaded="Page_Loaded"   xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" Closing="Window_Closing" >
 
         <Grid>
         <Grid.Background>

@@ -39,7 +39,54 @@ C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.csproj.Generate
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.pdb
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\RecordWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\RecordWindow.g.cs
-C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.csprojResolveAssemblyReference.cache
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\SelectLevelWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\SelectLevelWindow.g.cs
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness_Content.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.exe
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.pdb
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\bin\Release\KinectFitness.exe
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\bin\Release\KinectFitness.pdb
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\bin\Release\Microsoft.Samples.Kinect.WpfViewers.dll
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\bin\Release\Microsoft.Samples.Kinect.WpfViewers.pdb
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.csprojResolveAssemblyReference.cache
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectWindow.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\MainWindow.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\RecordWindow.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\SelectLevelWindow.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\StartupWindow.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectWindow.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\MainWindow.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\RecordWindow.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\SelectLevelWindow.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\StartupWindow.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\App.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness_Content.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness_MarkupCompile.cache
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.g.resources
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.Properties.Resources.resources
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.csproj.GenerateResource.Cache
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.exe
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.pdb
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.csprojResolveAssemblyReference.cache
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectWindow.baml
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\MainWindow.baml
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\RecordWindow.baml
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\SelectLevelWindow.baml
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\StartupWindow.baml
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectWindow.g.cs
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\MainWindow.g.cs
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\RecordWindow.g.cs
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\SelectLevelWindow.g.cs
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\StartupWindow.g.cs
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\App.g.cs
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness_Content.g.cs
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness_MarkupCompile.cache
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.g.resources
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.Properties.Resources.resources
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.csproj.GenerateResource.Cache
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\bin\Release\KinectFitness.exe
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\bin\Release\KinectFitness.pdb
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\bin\Release\Microsoft.Samples.Kinect.WpfViewers.dll
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\bin\Release\SlimDX.dll
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\bin\Release\Microsoft.Samples.Kinect.WpfViewers.pdb
+C:\Users\Brad\302\c#\KinectFitness\bin\Release\SlimDX.dll

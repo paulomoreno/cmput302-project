@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Diagnostics;
+using System.Threading;
 
 namespace KinectFitness
 {
@@ -38,16 +39,161 @@ namespace KinectFitness
         Stopwatch hoverTimer;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
 
+        //Controller variables
+        private Controller control;
+        private Thread newThread;
+        private AudioCommands myCommands;
+        int buttons;
+
 
         public StartupWindow()
         {
+            control = new Controller();
+           
             InitializeComponent();
             InitializeUI();
-            InitializeHoverChecker();
-            //InitializeAudioCommands();
+            InitializeAudioCommands();
+
+            if (control.isConnected() == true)
+            {
+                Console.WriteLine("control null");
+                InitializeHoverChecker(0);
+                int result = 10;
+
+                buttons = 0; // 0 == play; 1 == options; 2 == record; 3 == quit 
+                playborder.Opacity = 1;
+
+                newThread = new Thread(() =>
+                {
+                    control.updateStates();
+                    while (true && control != null)
+                    {
+                        Application.Current.Dispatcher.Invoke((Action)(() =>
+                        {
+
+                            result = control.getPOV();
+                            updateHighlights(result);
+                            checkButtonPressed(buttons, control.getButton(0), control.getButton(1));
+                            // Console.WriteLine(control.getButton());
+
+                        }));
+
+                    }
+
+                });
+
+                newThread.Start(); 
+            }
+            else InitializeHoverChecker(1);
+            
+           
+
             var navWindow = Window.GetWindow(this) as NavigationWindow;
             if (navWindow != null) navWindow.ShowsNavigationUI = false;
             this.WindowState = System.Windows.WindowState.Maximized;
+
+            
+        }
+
+        // 0 == play; 1 == options; 2 == record; 3 == quit 
+        private void updateHighlights(int result) {
+           //button play
+            if (buttons == 0) {
+                if (result == 0) {
+                    playborder.Opacity = 0;
+                    optionsborder.Opacity = 1;
+                    buttons = 1;
+                }
+                else if (result == 9000) 
+                {
+                    playborder.Opacity = 0;
+                    quitborder.Opacity = 1;
+                    buttons = 3;
+                }
+            }
+
+            //button options
+            if (buttons == 1)
+            {
+                if (result == 18000)
+                {
+                    playborder.Opacity = 1;
+                    optionsborder.Opacity = 0;
+                    buttons = 0;
+                }
+                else if (result == 9000)
+                {
+                    optionsborder.Opacity = 0;
+                    recordborder.Opacity = 1;
+                    buttons = 2;
+                }
+            }
+
+            //button record
+            if (buttons == 2)
+            {
+                if (result == 27000)
+                {
+                    recordborder.Opacity = 0;
+                    optionsborder.Opacity = 1;
+                    buttons = 1;
+                }
+                else if (result == 18000)
+                {
+                    recordborder.Opacity = 0;
+                    quitborder.Opacity = 1;
+                    buttons = 3;
+                }
+            }
+
+            //button quit
+            if (buttons == 3)
+            {
+                if (result == 0)
+                {
+                    quitborder.Opacity = 0;
+                    recordborder.Opacity = 1;
+                    buttons = 2;
+                }
+                else if (result == 27000)
+                {
+                    quitborder.Opacity = 0;
+                    playborder.Opacity = 1;
+                    buttons = 0;
+                }
+            }     
+        }
+
+        private void checkButtonPressed(int button_number, bool button, bool button_2) 
+        {
+            if (button_2 == true) { 
+            
+            }
+            //Console.WriteLine("Hey, I'm here!");
+            if(button == true){
+                //Console.WriteLine("HEy, I'm here as well!: " + button_number);
+                switch (button_number)
+                { 
+                    
+                    case 0:
+                        Button_Play(new object(), new RoutedEventArgs());
+                        break;
+
+                    case 1:
+                        Button_Options(new object(), new RoutedEventArgs());
+                        break;
+
+                    case 2:
+                        Button_Record(new object(), new RoutedEventArgs());
+                        break;
+                    case 3:
+                        QuitApplication(new object(), new RoutedEventArgs());
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -55,15 +201,13 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
 
-        /*
         private void InitializeAudioCommands()
         {
-            myCommands = new AudioCommands(true, 0.3, "quit", "play", "record");//instantiate an AudioCommands object with the possible commands
+            myCommands = new AudioCommands(0.82, "quit", "play", "record");//instantiate an AudioCommands object with the possible commands
             myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
             myCommands.setFunction("record", Button_Record);
             myCommands.setFunction("quit", QuitApplication);
         }
-         */
 
         private void InitializeUI()
         {
@@ -87,12 +231,19 @@ namespace KinectFitness
             optionsButton.Size = new Size(optionsButtonImg.Width, optionsButtonImg.Height);
         }
 
-        void InitializeHoverChecker()
+        void InitializeHoverChecker(int control)
         {
+
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             //Timer to check for hand positions
-            dispatcherTimer.Tick += new EventHandler(checkHands);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+
+            if (control == 1)
+            {
+                dispatcherTimer.Tick += new EventHandler(checkHands);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            }
+          
+          
             dispatcherTimer.Start();
 
             hoverTimer = new Stopwatch();
@@ -199,7 +350,16 @@ namespace KinectFitness
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
             //myCommands.StopSpeechRecognition();
-            Application.Current.Shutdown();
+            this.Close();
+
+            try
+            {
+                newThread.Abort();
+                control.ReleaseDevice();
+            }
+            catch (Exception ex) { }
+
+            Process.GetCurrentProcess().Kill();
         }
         private void Button_Play(object sender, RoutedEventArgs e)
         {
@@ -208,6 +368,8 @@ namespace KinectFitness
             dispatcherTimer.Stop();
             //myCommands.StopSpeechRecognition();
             SelectLevelWindow slw = new SelectLevelWindow();
+            //newThread.Abort();
+            //control.ReleaseDevice();
             this.Close();
             slw.Show();
             //this.NavigationService.Navigate(slw);            
@@ -457,6 +619,18 @@ namespace KinectFitness
         {
             closing = true;
             StopKinect(kinectSensorChooser1.Kinect);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try { 
+                newThread.Abort(); 
+                control.ReleaseDevice(); 
+            } 
+            catch (Exception ex) { }
+            
+            AudioCommands.StopSpeechRecognition(myCommands);
+            myCommands = null;
         }
 
 

@@ -9,18 +9,24 @@ using System.Threading;
 /*How to use by examples
  Example 1
  AudioCommands myCommands = new AudioCommands("quit", "options", "tutorial", "play", "record");//instantiate an AudioCommands object with the possible commands
- myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
+ myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function with 2 parameters: object and RoutedEventArgs, respectively
  myCommands.setFunction("record", Button_Record);
  myCommands.setFunction("options", Button_Options);
 
-In this example, after one of the words is recognized, the AudioCommands stops recognizing speeches. It is set to recognize only once.
  Example 2
- AudioCommands myCommands = new AudioCommands(false, 0.8, "quit", "options", "tutorial", "play", "record");//instantiate an AudioCommands object with the possible commands
- myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
+ AudioCommands myCommands = new AudioCommands(0.8, "quit", "options", "tutorial", "play", "record");//instantiate an AudioCommands object with the possible commands
+ myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function with 2 parameters: object and RoutedEventArgs, respectively
  myCommands.setFunction("record", Button_Record);
  myCommands.setFunction("options", Button_Options);
-Like the example above, but the speech recognizer will keep listening to commands indefinitely(false parameter, the default is true). The 0.8 is a number that varies between 0 and 1. The higher, more precise is the speech recognition. The default is 0.9(values higher than this makes it difficult to recognize valid commands)
- 
+
+
+In both examples, the speech recognizer will keep listening to commands indefinitely. The 0.8 in Example 2 is a number called "confidence" that varies between 0 and 1. The higher, more precise is the speech recognition. The default is 0.9(values higher than this makes it difficult to recognize valid commands)
+To force the speech recognizer to stop listening,you must use the static function StopSpeechRecognition, which takes as the only parameter an AudioCommands object.
+Example: AudioCommands.StopSpeechRecognition(myAudioCommandsObject);
+
+You can also use the methods public void setConfidence(double confidence)
+and public double getConfidence()
+to set the confidence and get the current confidence, respectively(though you will probably never use because you can set it on the constructor, as shown in example 2
 */
 
 namespace KinectFitness
@@ -30,7 +36,6 @@ namespace KinectFitness
         private SpeechRecognitionEngine recognizer;//Speech Recognition
         private double confidence;//varies between 0 and 1. The higher, more precise is the speech recognition. The default is 0.9(values higher than this makes it difficult to recognize valid commands)
         private Thread RecThread;//the thread that will run speech recognition
-        private Boolean RecognizeOnce;//flag that indicates if it should recognize only once ore not
 
         private struct cmnFunct//struct that stores the command and the function associated with it
         {
@@ -41,13 +46,12 @@ namespace KinectFitness
         private cmnFunct[] cmnFuncts;//array of commands and associated functions
 
         public AudioCommands(params string[] commands)
-            : this(true, 0.9, commands)
+            : this(0.9, commands)
         {
         }
 
-        public AudioCommands(Boolean RecognizeOnce, double confidence, params string[] commands)
+        public AudioCommands(double confidence, params string[] commands)
         {
-            this.RecognizeOnce = RecognizeOnce;
             this.confidence = confidence;
             // Create a new SpeechRecognitionEngine instance.
             this.recognizer = new SpeechRecognitionEngine();
@@ -88,13 +92,10 @@ namespace KinectFitness
         public void setFunction(string command, Action<object, RoutedEventArgs> func)
         {
             int i = 0;
-            while (i < cmnFuncts.Count() && cmnFuncts[i].command != command )
+            while (cmnFuncts[i].command != command)
                 ++i;
 
-            if (i < cmnFuncts.Count())
-            {
-                cmnFuncts[i].myfunc = func;
-            }
+            cmnFuncts[i].myfunc = func;
 
         }
 
@@ -123,11 +124,6 @@ namespace KinectFitness
                     cmnFuncts[i].myfunc.Invoke(sender, new RoutedEventArgs());//execute function associated with command
                 }));
 
-                if (this.RecognizeOnce == true)//if it's supposed to recognize only once
-                {
-                    StopSpeechRecognition();//stop recognition
-                }
-
             }
         }
 
@@ -146,15 +142,6 @@ namespace KinectFitness
                     Console.WriteLine(ex.Message);
                 }
             }
-        }
-
-        public void StopSpeechRecognition()
-        {
-            this.RecThread.Abort();
-            this.RecThread = null;
-            this.recognizer.UnloadAllGrammars();
-            this.recognizer.Dispose();
-            this.cmnFuncts = null;
         }
 
         public static void StopSpeechRecognition(AudioCommands commands)

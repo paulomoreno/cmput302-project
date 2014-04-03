@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\
 KinectFitness
 none
 false
 TRACE
-C:\Users\Brad\302\c#\KinectFitness\App.xaml
+C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\App.xaml
 5-167060286
 1-2147425260
-11-2074362567
-151540827107
+141271412890
+171827676920
 KinectWindow.xaml;MainWindow.xaml;RecordWindow.xaml;SelectLevelWindow.xaml;StartupWindow.xaml;
 
 False

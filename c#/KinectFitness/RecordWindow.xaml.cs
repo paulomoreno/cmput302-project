@@ -25,6 +25,7 @@ namespace KinectFitness
         public RecordWindow()
         {
             InitializeComponent();
+            InitializeAudioCommands();
             stopButton.Opacity = 0;
             recording = false;
         }
@@ -51,11 +52,22 @@ namespace KinectFitness
         Joint FL = new Joint();
         Joint FR = new Joint();
 
+        private AudioCommands myCommands;
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);     
+            kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
-        
+
+        private void InitializeAudioCommands()
+        {
+            myCommands = new AudioCommands(0.82, "cancel", "save", "start", "stop");//instantiate an AudioCommands object with the possible commands
+            myCommands.setFunction("cancel", CancelButton_Click);
+            myCommands.setFunction("start", RecordButtonStart);
+            myCommands.setFunction("stop", RecordButtonStop);
+            myCommands.setFunction("save", SaveButton_Click);
+        }
+
         //Initializes recorder
         void initializeRecorder()
         {
@@ -77,7 +89,7 @@ namespace KinectFitness
                 if (first == null)
                     return;
                 jointAngles.Add("Time: " + currentTime.ToString());
-                
+
                 //Add Angles
                 jointAngles.Add("LEA");
                 jointAngles.Add(AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]).ToString());
@@ -196,7 +208,7 @@ namespace KinectFitness
             dy = second.Position.Y - first.Position.Y;
             dz = second.Position.Z - first.Position.Z;
 
-            speed = Math.Sqrt( (dx * dx) + (dy * dy) + (dz * dz)) * 100;
+            speed = Math.Sqrt((dx * dx) + (dy * dy) + (dz * dz)) * 100;
             int speedRounded = Convert.ToInt32(speed);
             return speedRounded.ToString();
         }
@@ -205,31 +217,48 @@ namespace KinectFitness
         private void stopRecordSkeletonData()
         {
             jointTime.Reset();
-            dispatcherTimer.Stop();            
+            dispatcherTimer.Stop();
         }
 
+        void RecordButtonStart(object sender, RoutedEventArgs e)
+        {
+            if (!recording)
+                NotRecording();
+        }
+
+        void RecordButtonStop(object sender, RoutedEventArgs e)
+        {
+            if (recording)
+                Recording();
+        }
 
         void Record_Button(object sender, RoutedEventArgs e)
         {
             if (!recording)
-            {
-                recordButton.Opacity = 0;
-                stopButton.Opacity = 1;
-                initializeRecorder();
-                recording = true;
-            }
+                NotRecording();
+
             else
-            {
-                recordButton.Opacity = 1;
-                stopButton.Opacity = 0;
-                // WriteAllLines creates a file, writes a collection of strings to the file, 
-                // and then closes the file.
-                stopRecordSkeletonData();
-                recording = false;
-                SaveFileAs.Visibility = System.Windows.Visibility.Visible;
-            }
+                Recording();
         }
 
+        private void NotRecording()
+        {
+            recordButton.Opacity = 0;
+            stopButton.Opacity = 1;
+            initializeRecorder();
+            recording = true;
+        }
+
+        private void Recording()
+        {
+            recordButton.Opacity = 1;
+            stopButton.Opacity = 0;
+            // WriteAllLines creates a file, writes a collection of strings to the file, 
+            // and then closes the file.
+            stopRecordSkeletonData();
+            recording = false;
+            SaveFileAs.Visibility = System.Windows.Visibility.Visible;
+        }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -244,7 +273,7 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
-            
+
             System.IO.File.WriteAllLines(path + "\\KinectFitness\\Recordings\\" + input + ".txt", jointAngles);
 
             // Clear InputBox.
@@ -259,7 +288,7 @@ namespace KinectFitness
             // Clear InputBox.
             InputTextBox.Text = String.Empty;
         }
-        
+
         void kinectSensorChooser1_KinectSensorChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             KinectSensor old = (KinectSensor)e.OldValue;
@@ -314,7 +343,7 @@ namespace KinectFitness
 
 
         }
-        
+
         //Returns the angle between the joints
         public static int AngleBetweenJoints(Joint j1, Joint j2, Joint j3)
         {
@@ -356,7 +385,7 @@ namespace KinectFitness
             return Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2) + Math.Pow(z, 2));
 
         }
-        
+
         void GetCameraPoint(Skeleton first, AllFramesReadyEventArgs e)
         {
             using (DepthImageFrame depth = e.OpenDepthImageFrame())
@@ -497,6 +526,12 @@ namespace KinectFitness
         {
             closing = true;
             StopKinect(kinectSensorChooser1.Kinect);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            AudioCommands.StopSpeechRecognition(myCommands);
+            myCommands = null;
         }
     }
 }
