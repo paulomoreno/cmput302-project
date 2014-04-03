@@ -916,14 +916,14 @@ namespace KinectFitness
             {
                 videoProgressBarTracker.Stop();
             }
-            closing = true;           
-            dispatcherTimer.Stop();
+            closing = true;
             StopKinect(kinectSensorChooser1.Kinect);
+            dispatcherTimer.Stop();            
             //myCommands.StopSpeechRecognition();
-            SelectLevelWindow sw = new SelectLevelWindow();            
-            sw.Show();
-            hoverTimer.Reset();
+            SelectLevelWindow sw = new SelectLevelWindow();
             this.Close();
+            sw.Show();
+            hoverTimer.Reset();            
         }
 
         private void setHandProgressBar(bool leftHand, long timeElapsed)

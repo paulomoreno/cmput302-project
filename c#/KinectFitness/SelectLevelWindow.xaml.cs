@@ -342,9 +342,7 @@ namespace KinectFitness
                 JitterRadius = 1.0f,
                 MaxDeviationRadius = 1.0f
             };
-            //sensor.SkeletonStream.Enable(parameters);
-
-            sensor.SkeletonStream.Enable();
+            sensor.SkeletonStream.Enable(parameters);
 
             sensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
             sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
@@ -489,8 +487,7 @@ namespace KinectFitness
         }
 
         private void closeWindow()
-        {
-            StopKinect(kinectSensorChooser1.Kinect);
+        {            
             dispatcherTimer.Stop();
             //myCommands.StopSpeechRecognition();
             hoverTimer.Reset();
@@ -499,6 +496,8 @@ namespace KinectFitness
 
         private void intenseWorkout(object sender, RoutedEventArgs e)
         {
+            StopKinect(kinectSensorChooser1.Kinect);
+            closing = true;
             SetFile(intenseImg);            
             KinectWindow kw = new KinectWindow();            
             kw.Show();
@@ -507,8 +506,9 @@ namespace KinectFitness
 
         private void moderateWorkout(object sender,RoutedEventArgs e)
         {
-            SetFile(moderateImg);
-            
+            StopKinect(kinectSensorChooser1.Kinect);
+            closing = true;
+            SetFile(moderateImg);            
             KinectWindow kw = new KinectWindow();
             kw.Show();
             closeWindow();
@@ -516,6 +516,8 @@ namespace KinectFitness
 
         private void warmUpWorkout(object sender,RoutedEventArgs e)
         {
+            StopKinect(kinectSensorChooser1.Kinect);
+            closing = true;
             SetFile(warmUpImg);
             KinectWindow kw = new KinectWindow();
             kw.Show();
@@ -524,6 +526,8 @@ namespace KinectFitness
 
         private void backButtonPressed(object sender, RoutedEventArgs e)
         {
+            StopKinect(kinectSensorChooser1.Kinect);
+            closing = true;
             StartupWindow sw = new StartupWindow();
             sw.Show();
             closeWindow();           
