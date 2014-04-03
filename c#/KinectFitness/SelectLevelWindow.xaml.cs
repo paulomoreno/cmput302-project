@@ -490,25 +490,30 @@ namespace KinectFitness
 
         private void closeWindow()
         {
-            StopKinect(kinectSensorChooser1.Kinect);
-            dispatcherTimer.Stop();
             //myCommands.StopSpeechRecognition();
             hoverTimer.Reset();
             this.Close();
         }
 
+        private void stopProcesses()
+        {
+            StopKinect(kinectSensorChooser1.Kinect);
+            dispatcherTimer.Stop();
+        }
+
         private void intenseWorkout(object sender, RoutedEventArgs e)
         {
-            SetFile(intenseImg);            
+            stopProcesses();
+            SetFile(intenseImg);                  
             KinectWindow kw = new KinectWindow();            
             kw.Show();
-            closeWindow();
+            closeWindow();      
         }
 
         private void moderateWorkout(object sender,RoutedEventArgs e)
         {
-            SetFile(moderateImg);
-            
+            stopProcesses();
+            SetFile(moderateImg);            
             KinectWindow kw = new KinectWindow();
             kw.Show();
             closeWindow();
@@ -516,7 +521,8 @@ namespace KinectFitness
 
         private void warmUpWorkout(object sender,RoutedEventArgs e)
         {
-            SetFile(warmUpImg);
+            stopProcesses();
+            SetFile(warmUpImg);            
             KinectWindow kw = new KinectWindow();
             kw.Show();
             closeWindow();
@@ -524,9 +530,10 @@ namespace KinectFitness
 
         private void backButtonPressed(object sender, RoutedEventArgs e)
         {
+            stopProcesses();
             StartupWindow sw = new StartupWindow();
             sw.Show();
-            closeWindow();           
+            closeWindow();
         }
     }
 }

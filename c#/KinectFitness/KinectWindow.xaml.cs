@@ -916,13 +916,13 @@ namespace KinectFitness
             {
                 videoProgressBarTracker.Stop();
             }
-            closing = true;           
-            dispatcherTimer.Stop();
+            closing = true;
             StopKinect(kinectSensorChooser1.Kinect);
+            dispatcherTimer.Stop();
+            hoverTimer.Reset();
             //myCommands.StopSpeechRecognition();
             SelectLevelWindow sw = new SelectLevelWindow();            
-            sw.Show();
-            hoverTimer.Reset();
+            sw.Show();            
             this.Close();
         }
 
