@@ -65,7 +65,8 @@ namespace KinectFitness
             myCommands.setFunction("intense", intenseWorkout);
             myCommands.setFunction("back", backButtonPressed);
         }
-         */
+        */
+        
 
         private void InitializeUI()
         {
@@ -151,7 +152,7 @@ namespace KinectFitness
                         moderateWorkout(new object(), new RoutedEventArgs());
                         
                         //this.NavigationService.Navigate(kw);
-                        this.Content = null;
+                        //this.Content = null;
                         hoverTimer.Reset();                        
                     }
                 }
@@ -342,9 +343,7 @@ namespace KinectFitness
                 JitterRadius = 1.0f,
                 MaxDeviationRadius = 1.0f
             };
-            //sensor.SkeletonStream.Enable(parameters);
-
-            sensor.SkeletonStream.Enable();
+            sensor.SkeletonStream.Enable(parameters);
 
             sensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
             sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
@@ -356,7 +355,7 @@ namespace KinectFitness
                 ksensor = sensor;
             }
             catch (System.IO.IOException)
-            {
+            {                
                 kinectSensorChooser1.AppConflictOccurred();
             }
         }
@@ -375,6 +374,7 @@ namespace KinectFitness
             {
                 return;
             }
+
 
             GetCameraPoint(first, e);
             //set scaled position
@@ -489,16 +489,17 @@ namespace KinectFitness
         }
 
         private void closeWindow()
-        {
-            //myCommands.StopSpeechRecognition();
-            hoverTimer.Reset();
+        {            
             this.Close();
         }
 
         private void stopProcesses()
         {
-            StopKinect(kinectSensorChooser1.Kinect);
+            closing = true;
+            StopKinect(kinectSensorChooser1.Kinect);            
             dispatcherTimer.Stop();
+            //myCommands.StopSpeechRecognition();
+            hoverTimer.Reset();
         }
 
         private void intenseWorkout(object sender, RoutedEventArgs e)

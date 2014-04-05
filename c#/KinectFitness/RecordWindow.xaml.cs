@@ -196,8 +196,14 @@ namespace KinectFitness
             dy = second.Position.Y - first.Position.Y;
             dz = second.Position.Z - first.Position.Z;
 
+            int i;
+            if (dx < 0)
+                i = -1;
+            else
+                i = 1;
+
             speed = Math.Sqrt( (dx * dx) + (dy * dy) + (dz * dz)) * 100;
-            int speedRounded = Convert.ToInt32(speed);
+            int speedRounded = i * Convert.ToInt32(speed);
             return speedRounded.ToString();
         }
 

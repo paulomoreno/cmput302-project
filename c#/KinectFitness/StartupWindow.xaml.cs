@@ -62,8 +62,12 @@ namespace KinectFitness
             myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
             myCommands.setFunction("record", Button_Record);
             myCommands.setFunction("quit", QuitApplication);
-        }
-         */
+        }*/
+        
+        
+        
+         
+         
 
         private void InitializeUI()
         {
@@ -141,7 +145,7 @@ namespace KinectFitness
                         Button_Record(new object(), new RoutedEventArgs());
 
                         //this.NavigationService.Navigate(kw);
-                        this.Content = null;
+                        //this.Content = null;
                         hoverTimer.Reset();
                     }
                 }
@@ -158,6 +162,7 @@ namespace KinectFitness
                     if (hoverTimer.ElapsedMilliseconds >= 2000)
                     {
                         QuitApplication(new object(), new RoutedEventArgs());
+                        hoverTimer.Reset();
                     }
                 }
                 else if (rightHandPos.IntersectsWith(optionsButton))
@@ -206,6 +211,7 @@ namespace KinectFitness
             closing = true; 
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
+            hoverTimer.Reset();
             //myCommands.StopSpeechRecognition();
             SelectLevelWindow slw = new SelectLevelWindow();
             this.Close();
@@ -218,6 +224,7 @@ namespace KinectFitness
             closing = true; 
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
+            hoverTimer.Reset();
             //myCommands.StopSpeechRecognition();
             RecordWindow rw = new RecordWindow();
             this.Close();
