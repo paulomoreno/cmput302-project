@@ -26,7 +26,6 @@ namespace KinectFitness
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
         Skeleton first;
-        //AudioCommands myCommands;
 
         //Buttons
         Rect playButton;
@@ -40,20 +39,20 @@ namespace KinectFitness
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
 
         //Controller variables
-        //private Controller control;
-        //private Thread newThread;
-        //private AudioCommands myCommands;
+        private Controller control;
+        private Thread newThread;
+        private AudioCommands myCommands;
         int buttons;
 
 
         public StartupWindow()
         {
-            //control = new Controller();
+            control = new Controller();
            
             InitializeComponent();
             InitializeUI();
-            //InitializeAudioCommands();
-            /*
+            InitializeAudioCommands();
+            
             if (control.isConnected() == true)
             {
                 Console.WriteLine("control null");
@@ -84,7 +83,7 @@ namespace KinectFitness
 
                 newThread.Start(); 
             }
-            else */InitializeHoverChecker(1);
+            else InitializeHoverChecker(1);
             
            
 
@@ -201,14 +200,14 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
 
-        /*
+        
         private void InitializeAudioCommands()
         {
             myCommands = new AudioCommands(0.82, "quit", "play", "record");//instantiate an AudioCommands object with the possible commands
             myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
             myCommands.setFunction("record", Button_Record);
             myCommands.setFunction("quit", QuitApplication);
-        }*/
+        }
 
         private void InitializeUI()
         {
@@ -350,7 +349,6 @@ namespace KinectFitness
         {
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
-            //myCommands.StopSpeechRecognition();
             this.Close();
 
             try
@@ -367,10 +365,9 @@ namespace KinectFitness
             closing = true; 
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
-            //myCommands.StopSpeechRecognition();
             SelectLevelWindow slw = new SelectLevelWindow();
-            //newThread.Abort();
-            //control.ReleaseDevice();
+            newThread.Abort();
+            control.ReleaseDevice();
             this.Close();
             slw.Show();
             //this.NavigationService.Navigate(slw);            
@@ -381,7 +378,6 @@ namespace KinectFitness
             closing = true; 
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
-            //myCommands.StopSpeechRecognition();
             RecordWindow rw = new RecordWindow();
             this.Close();
             rw.Show();
@@ -625,13 +621,13 @@ namespace KinectFitness
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try { 
-                //newThread.Abort(); 
-                //control.ReleaseDevice(); 
+                newThread.Abort(); 
+                control.ReleaseDevice(); 
             } 
             catch (Exception ex) { }
             
-            //AudioCommands.StopSpeechRecognition(myCommands);
-            //myCommands = null;
+            AudioCommands.StopSpeechRecognition(myCommands);
+            myCommands = null;
         }
 
 

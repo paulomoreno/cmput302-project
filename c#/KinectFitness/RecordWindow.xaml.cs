@@ -25,6 +25,7 @@ namespace KinectFitness
         public RecordWindow()
         {
             InitializeComponent();
+            InitializeAudioCommands();
             stopButton.Opacity = 0;
             recording = false;
         }
@@ -50,11 +51,52 @@ namespace KinectFitness
         Joint HipR = new Joint();
         Joint FL = new Joint();
         Joint FR = new Joint();
+        private AudioCommands myCommands;
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
+
+        private void InitializeAudioCommands()
+        {
+             myCommands = new AudioCommands(0.5, "cancel", "save", "start", "stop");//instantiate an AudioCommands object with the possible commands
+             myCommands.setFunction("cancel", CancelButton_Click);
+             myCommands.setFunction("start", RecordButtonStart);
+             myCommands.setFunction("stop", RecordButtonStop);
+             myCommands.setFunction("save", SaveButton_Click);
+         }
+
+        void RecordButtonStart(object sender, RoutedEventArgs e)
+         {
+             if (!recording)
+                 NotRecording();
+         }
+ 
+         void RecordButtonStop(object sender, RoutedEventArgs e)
+         {
+             if (recording)
+                 Recording();
+         }
+
+        private void NotRecording()
+         {
+             recordButton.Opacity = 0;
+             stopButton.Opacity = 1;
+             initializeRecorder();
+             recording = true;
+         }
+ 
+         private void Recording()
+         {
+             recordButton.Opacity = 1;
+             stopButton.Opacity = 0;
+             // WriteAllLines creates a file, writes a collection of strings to the file, 
+             // and then closes the file.
+             stopRecordSkeletonData();
+             recording = false;
+             SaveFileAs.Visibility = System.Windows.Visibility.Visible;
+         }
 
         //Initializes recorder
         void initializeRecorder()
@@ -68,6 +110,8 @@ namespace KinectFitness
             dispatcherTimer.Start();
             jointTime.Start();
         }
+
+
         //Records skeleton data
         private void recordSkeletonData(object sender, EventArgs e)
         {
@@ -507,8 +551,8 @@ namespace KinectFitness
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
          {
-             //AudioCommands.StopSpeechRecognition(myCommands);
-             //myCommands = null;
+             AudioCommands.StopSpeechRecognition(myCommands);
+             myCommands = null;
          }
     }
 }

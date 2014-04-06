@@ -30,7 +30,7 @@ namespace KinectFitness
         Skeleton first;
         Stopwatch hoverTimer;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
-        //AudioCommands myCommands;
+
 
         //Hand Positions
         Rect rightHandPos;
@@ -42,21 +42,21 @@ namespace KinectFitness
         Rect backButton;
 
         //Controller variables
-        //private Controller control;
-        //private Thread newThread;
+        private Controller control;
+        private Thread newThread;
 
         int buttons;
 
-        //private AudioCommands myCommands;
+        private AudioCommands myCommands;
         
         public SelectLevelWindow()
         {
-            //control = new Controller();
+            control = new Controller();
 
             InitializeComponent();
             InitializeUI();
-            //InitializeAudioCommands();
-            /*
+            InitializeAudioCommands();
+            
             if (control.isConnected() == true)
             {
                 Console.WriteLine("control null");
@@ -86,7 +86,7 @@ namespace KinectFitness
                 });
                 newThread.Start();
             }
-            else*/ InitializeHoverChecker(1);
+            else InitializeHoverChecker(1);
 
             this.WindowState = System.Windows.WindowState.Maximized;
 
@@ -169,7 +169,7 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
 
-        /*
+        
         private void InitializeAudioCommands()
         {
             myCommands = new AudioCommands(0.82, "warmUp", "moderate", "intense", "back");//instantiate an AudioCommands object with the possible commands
@@ -177,7 +177,7 @@ namespace KinectFitness
             myCommands.setFunction("moderate", moderateWorkout);
             myCommands.setFunction("intense", intenseWorkout);
             myCommands.setFunction("back", backButtonPressed);
-        }*/
+        }
 
         private void InitializeUI()
         {
@@ -611,7 +611,6 @@ namespace KinectFitness
         {
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
-            //myCommands.StopSpeechRecognition();
             hoverTimer.Reset();
             this.Close();
         }
@@ -652,12 +651,12 @@ namespace KinectFitness
         {
             try
             {
-                //newThread.Abort();
-                //control.ReleaseDevice();
+                newThread.Abort();
+                control.ReleaseDevice();
             }
             catch (Exception ex) { }
-            //AudioCommands.StopSpeechRecognition(myCommands);
-            //myCommands = null;
+            AudioCommands.StopSpeechRecognition(myCommands);
+            myCommands = null;
         }
     }
 }

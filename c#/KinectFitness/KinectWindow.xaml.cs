@@ -54,8 +54,6 @@ namespace KinectFitness
         List<JointAngles> patientAnglesData;
         List<JointSpeeds> patientSpeedData;
 
-        //Audio Command Listener
-        //AudioCommands myCommands;
 
         //Timers for matching skeleton and tracking video progress
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
@@ -74,22 +72,22 @@ namespace KinectFitness
         Rect doneButton;
 
         //Controller variables
-        //private Controller control;
-        //private Thread newThread;
+        private Controller control;
+        private Thread newThread;
 
 
         //Audio Command Listener
-        //private AudioCommands myCommands;
+        private AudioCommands myCommands;
         
 
         public KinectWindow()
         {
-            //control = new Controller();
+            control = new Controller();
 
             InitializeComponent();
-            //InitializeAudioCommands();
+            InitializeAudioCommands();
             initializeUI();
-            /*
+            
             if (control.isConnected() == true)
             {
                 Console.WriteLine("control null");
@@ -114,7 +112,7 @@ namespace KinectFitness
                 });
                 newThread.Start();
             }
-            else*/ InitializeHoverChecker(1);
+            else InitializeHoverChecker(1);
 
             this.WindowState = System.Windows.WindowState.Maximized;
             
@@ -186,14 +184,14 @@ namespace KinectFitness
             FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
         }
 
-        /*
+        
         private void InitializeAudioCommands()
         {
             myCommands = new AudioCommands(0.82, "play", "pause", "back");//instantiate an AudioCommands object with the possible commands
             myCommands.setFunction("play", btnPlay_Play);
             myCommands.setFunction("pause", btnPlay_Pause);
             myCommands.setFunction("back", leavePage);
-        }*/
+        }
          
 
         private void loadExercise(String exercise)
@@ -996,7 +994,6 @@ namespace KinectFitness
             closing = true;           
             dispatcherTimer.Stop();
             StopKinect(kinectSensorChooser1.Kinect);
-            //myCommands.StopSpeechRecognition();
             SelectLevelWindow sw = new SelectLevelWindow();            
             sw.Show();
             hoverTimer.Reset();
@@ -1567,7 +1564,6 @@ namespace KinectFitness
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
             
-            //myCommands.StopSpeechRecognition();
             StartupWindow sw = new StartupWindow();
             this.Close();
             sw.Show();        
@@ -1731,12 +1727,12 @@ namespace KinectFitness
         {
             try
             {
-                //newThread.Abort();
-                //control.ReleaseDevice();
+                newThread.Abort();
+                control.ReleaseDevice();
             }
             catch (Exception ex) { }
-            //AudioCommands.StopSpeechRecognition(myCommands);
-            //myCommands = null;
+            AudioCommands.StopSpeechRecognition(myCommands);
+            myCommands = null;
         }
 
     }
