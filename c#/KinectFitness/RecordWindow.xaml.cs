@@ -504,5 +504,11 @@ namespace KinectFitness
             closing = true;
             StopKinect(kinectSensorChooser1.Kinect);
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+         {
+             //AudioCommands.StopSpeechRecognition(myCommands);
+             //myCommands = null;
+         }
     }
 }

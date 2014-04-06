@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" Title="Kinect Window"  Loaded="Page_Loaded" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" d:DesignHeight="700" d:DesignWidth="1374" Background="Black" SizeToContent="WidthAndHeight">
+      mc:Ignorable="d" Title="Kinect Window"  Loaded="Page_Loaded" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" d:DesignHeight="700" d:DesignWidth="1374" Background="Black" SizeToContent="WidthAndHeight" Closing="Window_Closing">
 
 
     <Grid Height="700" Width="1500">
@@ -21,7 +21,7 @@
             <Image Canvas.Left="204" Canvas.Top="6" Height="50" Name="rightHand" Stretch="Fill" Width="56" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="10"  />
             <Button Canvas.Left="1128" Canvas.Top="32" Content="Camera Up" Height="24" Name="btnUp" Click="motorUp_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
             <Button Canvas.Left="1128" Canvas.Top="98" Content="Camera Down" Height="24" Name="btnDown" Click="motorDown_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
-            <TextBlock Canvas.Left="856" Canvas.Top="509" Height="80" Name="points" Text="0 Pts." Width="261" Foreground="Black" FontSize="64" FontFamily="Corbel" />
+            <TextBlock Canvas.Left="856" Canvas.Top="509" Height="80" Name="points" Text="0 Pts." Width="261" Foreground="White" FontSize="64" FontFamily="Corbel" />
             <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="playicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/playicon.png"  Mouse.MouseEnter="hoverButton" Mouse.MouseLeave="leaveButton" Mouse.MouseUp="btnPlay_Click" Panel.ZIndex="1" />
             <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="hoverplayicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/hoverplayicon.png" Opacity="0" />
             <Rectangle Canvas.Left="100" Canvas.Top="0" Height="675" Name="mediaBackground" Stroke="{x:Null}" Width="750" OpacityMask="{x:Null}" Fill="#FF414141" Panel.ZIndex="-3" />
@@ -37,7 +37,7 @@
             <Image Height="100" Name="backButtonHoverImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbuttonhover.gif" Opacity="0" Canvas.Left="1" Canvas.Top="12" />
             <Image Height="100" Name="backButtonImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbutton.gif" Canvas.Left="1" Canvas.Top="12" Mouse.MouseUp="backButton_Click" />
             <my:KinectSensorChooser Name="kinectSensorChooser1" Width="256" Height="204" Canvas.Left="856" Canvas.Top="220" />
-            <TextBox Canvas.Left="874" Canvas.Top="509" Height="172" Name="debugger" Width="372" Text="asdf" FontSize="48" />
+            <TextBox Canvas.Left="874" Canvas.Top="588" Height="92" Name="debugger" Width="372" Text="asdf" FontSize="48" />
             <Image Canvas.Left="378" Canvas.Top="216" Height="204" Name="bigPlayIconHoverImg" Stretch="Fill" Width="204" Source="/KinectFitness;component/bigplaybutton.png" Opacity="0" Panel.ZIndex="1" />
             <Image Canvas.Left="390" Canvas.Top="228" Height="184" Name="bigPlayIconImg" Stretch="Fill" Width="184" Source="/KinectFitness;component/bigplaybuttonhover.png" Panel.ZIndex="1" Mouse.MouseUp="btnPlay_Click" />
             <Rectangle Height="666" Name="statsBackground" Stroke="Black" Width="1358" Panel.ZIndex="-5" Canvas.Left="-106" Canvas.Top="-2" Fill="Black" Opacity="0" />
