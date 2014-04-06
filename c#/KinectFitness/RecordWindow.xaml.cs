@@ -25,7 +25,6 @@ namespace KinectFitness
         public RecordWindow()
         {
             InitializeComponent();
-            InitializeAudioCommands();
             stopButton.Opacity = 0;
             recording = false;
         }
@@ -52,20 +51,9 @@ namespace KinectFitness
         Joint FL = new Joint();
         Joint FR = new Joint();
 
-        private AudioCommands myCommands;
-
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
-        }
-
-        private void InitializeAudioCommands()
-        {
-            myCommands = new AudioCommands(0.82, "cancel", "save", "start", "stop");//instantiate an AudioCommands object with the possible commands
-            myCommands.setFunction("cancel", CancelButton_Click);
-            myCommands.setFunction("start", RecordButtonStart);
-            myCommands.setFunction("stop", RecordButtonStop);
-            myCommands.setFunction("save", SaveButton_Click);
         }
 
         //Initializes recorder
@@ -208,8 +196,14 @@ namespace KinectFitness
             dy = second.Position.Y - first.Position.Y;
             dz = second.Position.Z - first.Position.Z;
 
+            int i;
+            if (dx < 0)
+                i = -1;
+            else
+                i = 1;
+
             speed = Math.Sqrt((dx * dx) + (dy * dy) + (dz * dz)) * 100;
-            int speedRounded = Convert.ToInt32(speed);
+            int speedRounded = i * Convert.ToInt32(speed);
             return speedRounded.ToString();
         }
 
@@ -220,45 +214,28 @@ namespace KinectFitness
             dispatcherTimer.Stop();
         }
 
-        void RecordButtonStart(object sender, RoutedEventArgs e)
-        {
-            if (!recording)
-                NotRecording();
-        }
-
-        void RecordButtonStop(object sender, RoutedEventArgs e)
-        {
-            if (recording)
-                Recording();
-        }
 
         void Record_Button(object sender, RoutedEventArgs e)
         {
             if (!recording)
-                NotRecording();
-
+            {
+                recordButton.Opacity = 0;
+                stopButton.Opacity = 1;
+                initializeRecorder();
+                recording = true;
+            }
             else
-                Recording();
+            {
+                recordButton.Opacity = 1;
+                stopButton.Opacity = 0;
+                // WriteAllLines creates a file, writes a collection of strings to the file, 
+                // and then closes the file.
+                stopRecordSkeletonData();
+                recording = false;
+                SaveFileAs.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
-        private void NotRecording()
-        {
-            recordButton.Opacity = 0;
-            stopButton.Opacity = 1;
-            initializeRecorder();
-            recording = true;
-        }
-
-        private void Recording()
-        {
-            recordButton.Opacity = 1;
-            stopButton.Opacity = 0;
-            // WriteAllLines creates a file, writes a collection of strings to the file, 
-            // and then closes the file.
-            stopRecordSkeletonData();
-            recording = false;
-            SaveFileAs.Visibility = System.Windows.Visibility.Visible;
-        }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
@@ -526,12 +503,6 @@ namespace KinectFitness
         {
             closing = true;
             StopKinect(kinectSensorChooser1.Kinect);
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            AudioCommands.StopSpeechRecognition(myCommands);
-            myCommands = null;
         }
     }
 }
