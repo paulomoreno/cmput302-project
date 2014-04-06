@@ -1484,6 +1484,7 @@ namespace KinectFitness
             FitnessPlayer.Play();
             videoPlaying = true;
             stopHoverChecker();
+            startAccuracyChecker();
 
             if (!timerInitialized)
             {
@@ -1516,6 +1517,8 @@ namespace KinectFitness
 
             //Stop matching the skeleton since video is not playing
             skeletonMatcherTimer.Stop();
+
+            stopAccuracyChecker();
         }
 
 
