@@ -33,7 +33,7 @@
             <Rectangle Name="videoProgressBar" Stroke="{x:Null}" Panel.ZIndex="5" Fill="White" Canvas.Left="182" Canvas.Top="591" Height="84" Width="668" />
             <Rectangle Canvas.Left="204" Canvas.Top="6" Margin="0,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="52" Height="12" Fill="#FF07FF1C" Panel.ZIndex="10" />
             <Rectangle Name="userBackground" Stroke="{x:Null}" OpacityMask="{x:Null}" Fill="#FF414141" Panel.ZIndex="-3" Margin="854,2,183,25" Opacity="0.8" Canvas.Left="-4" Canvas.Top="-2" Height="674" Width="268" />
-            <my:KinectSkeletonViewer Width="263" Height="204" Name="kinectSkeletonViewer1" Kinect="{Binding ElementName=kinectSensorChooser1, Path=Kinect}" Unloaded="kinectSkeletonViewer1_Unloaded" Canvas.Left="850" Canvas.Top="216" DataContext="{Binding}" Background="{x:Null}" ShowBones="True" ShowCenter="True" ShowJoints="True" />
+            <my:KinectDepthViewer Width="263" Height="204" Canvas.Left="850" Canvas.Top="216" Name="kinectDepthViewer1" Kinect="{Binding ElementName=kinectSensorChooser1, Path=Kinect}" Unloaded="kinectSkeletonViewer1_Unloaded"/>
             <Image Height="100" Name="backButtonHoverImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbuttonhover.gif" Opacity="0" Canvas.Left="1" Canvas.Top="12" />
             <Image Height="100" Name="backButtonImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbutton.gif" Canvas.Left="1" Canvas.Top="12" Mouse.MouseUp="backButton_Click" />
             <my:KinectSensorChooser Name="kinectSensorChooser1" Width="256" Height="204" Canvas.Left="856" Canvas.Top="220" />
