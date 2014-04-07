@@ -150,7 +150,6 @@ namespace KinectFitness
             numberOfPts = 0;
             numberOfPtsBar = 0;
             points.Text = numberOfPts + "Pts.";
-            pointsBar.Value = numberOfPtsBar;
             videoPlaying = false;
             timerInitialized = false;
             //Set the Video Progress Bar Width to Zero 
@@ -353,14 +352,23 @@ namespace KinectFitness
          */
         private void checkAccuracy(object sender, EventArgs e)
         {
-            //Get angle and speed accuracy for last 100 frames
+            //Get angle and speed accuracy for last 70 frames
             double anglePrecision = angleAccuracy(70);
             double speedPrecision = speedAccuracy(70);
+
+            //Used to tell if patient is moving too fast
+            //or too slow on average
+            JointSpeeds speedComparisons = speedComparisonsAccuracy(70);
+            
+
             //debugger.Text = "Speed: " + speedPrecision.ToString();
             //debugger.Text = "Angle: " + anglePrecision.ToString();
             if (suggestionBox.Width <= 0)
             {
-                startAnimation(anglePrecision, speedPrecision);
+                //Get a suggestions based on all of the data
+                getSuggestion(anglePrecision, speedPrecision, speedComparisons);
+                //Start Animation to show suggestion
+                startAnimation();
             }
             else
             {
@@ -586,8 +594,14 @@ namespace KinectFitness
 
             //Check to see if patient is standing still
             checkIfStandingStill(leftHand,rightHand,leftFoot,rightFoot,leftHip,rightHip);
-            
 
+            //Checks skeleton and compares it to see if it is going 
+            //too fast or slow or just right
+            getComparisons(leftHand, rightHand, leftShoulder, rightShoulder, leftHip, rightHip, 
+                leftKnee, rightKnee, leftFoot, rightFoot, js);
+
+
+            //Checks skeleton to see if it is within the appropriate error window
             if ((leftHand > js.leftHand - 5) && (leftHand < js.leftHand + 5))
             {
                 //Give user full marks (1/1) for this frame for matching 
@@ -708,6 +722,27 @@ namespace KinectFitness
         }
 
         /**
+         * Gets the comparison of speeds between skeletons 
+         * so that user can get feedback to know if they are 
+         * going too fast or slow
+         */
+        private void getComparisons(int leftHand, int rightHand, int leftShoulder, int rightShoulder,
+            int leftHip, int rightHip, int leftKnee, int rightKnee, int leftFoot, int rightFoot, JointSpeeds js)
+        {
+            //Get differences in absolute values of joint speeds
+            patientSpeedData.Last().leftHandComparison = Math.Abs(leftHand) - Math.Abs(js.leftHand);
+            patientSpeedData.Last().rightHandComparison = Math.Abs(rightHand) - Math.Abs(js.rightHand);
+            patientSpeedData.Last().leftShoulderComparison = Math.Abs(leftShoulder) - Math.Abs(js.leftShoulder);
+            patientSpeedData.Last().rightShoulderComparison = Math.Abs(rightShoulder) - Math.Abs(js.rightShoulder);
+            patientSpeedData.Last().leftHipComparison = Math.Abs(leftHip) - Math.Abs(js.leftHip);
+            patientSpeedData.Last().rightHipComparison = Math.Abs(rightHip) - Math.Abs(js.rightHip);
+            patientSpeedData.Last().leftKneeComparison = Math.Abs(leftKnee) - Math.Abs(js.leftKnee);
+            patientSpeedData.Last().rightKneeComparison = Math.Abs(rightKnee) - Math.Abs(js.rightKnee);
+            patientSpeedData.Last().leftFootComparison = Math.Abs(leftFoot) - Math.Abs(js.leftFoot);
+            patientSpeedData.Last().rightFootComparison = Math.Abs(rightFoot) - Math.Abs(js.rightFoot);            
+        }
+
+        /**
          * Check to see if patient is standing still
          */
         private void checkIfStandingStill(int leftHand, int rightHand, int leftFoot, int rightFoot,
@@ -744,31 +779,7 @@ namespace KinectFitness
          */
         void setPoints()
         {            
-            points.Text = numberOfPts + "Pts.";
-
-            pointsBar.Value = numberOfPtsBar;
-
-            //Change color of the Points Bar depending on how many points they have
-            if (numberOfPtsBar > 80)
-            {
-                pointsBar.Foreground = Brushes.Green;
-            }
-            else if (numberOfPtsBar > 60)
-            {
-                pointsBar.Foreground = Brushes.GreenYellow;
-            }
-            else if (numberOfPtsBar > 40)
-            {
-                pointsBar.Foreground = Brushes.Yellow;
-            }
-            else if (numberOfPtsBar > 20)
-            {
-                pointsBar.Foreground = Brushes.Orange;
-            }
-            else
-            {
-                pointsBar.Foreground = Brushes.Red;
-            }
+            points.Text = numberOfPts + "Pts.";          
         }
 
         
@@ -1362,9 +1373,7 @@ namespace KinectFitness
             StopKinect(kinectSensorChooser1.Kinect); 
         }
 
-
-        //When called, it starts the Suggestion Box Animation
-        private void startAnimation(double anglePrecision, double speedPrecision)
+        private void getSuggestion(double anglePrecision, double speedPrecision, JointSpeeds js)
         {
             double averagePrecision = (anglePrecision + speedPrecision) / 2;
             if (averagePrecision > 80)
@@ -1397,6 +1406,12 @@ namespace KinectFitness
                 suggestionBox.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFF80000");
                 suggestionBox.Text = "Start Moving!";
             }
+        }
+
+        //When called, it starts the Suggestion Box Animation
+        private void startAnimation()
+        {
+            
             animator = new System.Windows.Threading.DispatcherTimer();
             animator.Tick += new EventHandler(animateShowSuggestionBox);
             animator.Interval = new TimeSpan(0, 0, 0, 0, 10);
@@ -1592,9 +1607,59 @@ namespace KinectFitness
             bigPlayIcon.Location = new Point(-200, -200);
         }
 
-        
+        /**
+         * Get the average speed of the joints and returns 
+         * a JointSpeeds object with the average difference in
+         * speed for each joint compared with the recorded skeleton
+         */
+        private JointSpeeds speedComparisonsAccuracy(int numberOfComparisons)
+        {
+            double leftHandSpeed = 0;
+            double rightHandSpeed = 0;
+            double leftShoulderSpeed = 0;
+            double rightShoulderSpeed = 0;
+            double leftHipSpeed = 0;
+            double rightHipSpeed = 0;
+            double leftKneeSpeed = 0;
+            double rightKneeSpeed = 0;
+            double leftFootSpeed = 0;
+            double rightFootSpeed = 0;
 
-        //Get Speed Accuracy
+            //Get average speed relative to recorded skeleton
+            for (int i = patientSpeedData.Count() - 1; (i >= patientSpeedData.Count() - numberOfComparisons) && (i >= 0); i--)
+            {
+                leftHandSpeed += patientSpeedData.ElementAt(i).leftHandComparison;
+                rightHandSpeed += patientSpeedData.ElementAt(i).rightHandComparison;
+                leftShoulderSpeed += patientSpeedData.ElementAt(i).leftShoulderComparison;
+                rightShoulderSpeed += patientSpeedData.ElementAt(i).rightShoulderComparison;
+                leftHipSpeed += patientSpeedData.ElementAt(i).leftHipComparison;
+                rightHipSpeed += patientSpeedData.ElementAt(i).rightHipComparison;
+                leftKneeSpeed += patientSpeedData.ElementAt(i).leftKneeComparison;
+                rightKneeSpeed += patientSpeedData.ElementAt(i).rightKneeComparison;
+                leftFootSpeed += patientSpeedData.ElementAt(i).leftFootComparison;
+                rightFootSpeed += patientSpeedData.ElementAt(i).rightFootComparison;
+            }
+
+            //Get average speed for each joint
+            JointSpeeds js = new JointSpeeds();
+            js.leftHandComparison = leftHandSpeed / numberOfComparisons;
+            js.rightHandComparison = rightHandSpeed / numberOfComparisons;
+            js.leftShoulderComparison = leftShoulderSpeed / numberOfComparisons;
+            js.rightShoulderComparison = rightShoulderSpeed / numberOfComparisons;
+            js.leftHipComparison = leftHipSpeed / numberOfComparisons;
+            js.rightHipComparison = rightHipSpeed / numberOfComparisons;
+            js.leftKneeComparison = leftKneeSpeed / numberOfComparisons;
+            js.rightKneeComparison = rightKneeSpeed / numberOfComparisons;
+            js.leftFootComparison = leftFootSpeed / numberOfComparisons;
+            js.rightFootComparison = rightFootSpeed / numberOfComparisons;
+
+            return js;
+            
+        }
+
+        /**
+         * Get Speed Accuracy and return as double between 0% and 100%
+         */
         private double speedAccuracy(int numberOfSpeedData)
         {
             double leftHandSpeed = 0;
@@ -1643,6 +1708,9 @@ namespace KinectFitness
             return speedAccuracy;
         }
 
+        /**
+         * Get the angle accuracy and return as a double between 0% and 100%
+         */
         private double angleAccuracy(int numberOfAngleData)
         {
             double leftElbowAngle = 0;
