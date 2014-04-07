@@ -8,10 +8,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BluetoothServer {
 
     public static ObjectOutputStream doctorOutput;
+
+    public BluetoothServer() {
+    }
 
     public BluetoothServer(ObjectOutputStream docout) {
         this.doctorOutput = docout;
@@ -49,9 +59,23 @@ public class BluetoothServer {
                 System.err.println("Oximeter Rate: " + oxiRate);
 
                 // send the received information to the doctor
-                Info patient_info = new Info();
-                patient_info.heart_rate = heartRate;
-                patient_info.O2 = oxiRate;
+                final Info patient_info = new Info();
+                if (heartRate != "") {
+                    patient_info.heart_rate = heartRate;
+                }
+                if (oxiRate != "") {
+                    patient_info.O2 = oxiRate;
+                }
+
+                final ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+                service.scheduleWithFixedDelay(new Runnable() {
+                    @Override
+                    public void run() {
+                        patient_info.blood_pressure[0] = randInt(90, 180);
+                        patient_info.blood_pressure[1] = randInt(40, 120);
+                    }
+                }, 0, 10, TimeUnit.SECONDS);
+
                 BluetoothServer.doctorOutput.writeObject(patient_info);
                 BluetoothServer.doctorOutput.reset();
 
@@ -102,18 +126,32 @@ public class BluetoothServer {
 //        Socket dataclient = dataserver.accept();
 //        System.err.println("Accepted connection from client");
 //        
-        int counter = 0;
-        while (true) {
+        //int counter = 0;
+        //while (counter < 10000) {
 
-            String heartRate = randInt(60, 180);
-            String oxiRate = randInt(50, 100);
+//            String heartRate = randInt(60, 180);
+//            String oxiRate = randInt(50, 100);
+//
+        final Info patient_info = new Info();
+//            patient_info.heart_rate = heartRate;
+//            patient_info.O2 = oxiRate;
 
-            Info patient_info = new Info();
-            patient_info.heart_rate = heartRate;
-            patient_info.O2 = oxiRate;
-            BluetoothServer.doctorOutput.writeObject(patient_info);
-            BluetoothServer.doctorOutput.reset();
 
+        patient_info.heart_rate = randInt(60, 180);
+        patient_info.O2 = randInt(50, 100);
+        patient_info.blood_pressure[0] = randInt(90, 180);
+        patient_info.blood_pressure[1] = randInt(40, 120);
+
+
+
+        //BluetoothServer.doctorOutput.writeObject(patient_info);
+
+        //BluetoothServer.doctorOutput.reset();
+
+        System.out.println("patient info");
+        System.out.println("heart rate: " + patient_info.heart_rate);
+        System.out.println("oximeter rate: " + patient_info.O2);
+        System.out.println("blood pressure: " + patient_info.blood_pressure[0] + "/" + patient_info.blood_pressure[1]);
 
 //            ObjectOutputStream oos = new ObjectOutputStream(dataclient.getOutputStream());
 //            String outputString = heartRate.trim() + ", " + oxiRate.trim();
@@ -122,7 +160,7 @@ public class BluetoothServer {
 //            oos.write(b);
 //            oos.reset();
 //            
-            counter ++;
+        //counter++;
 
 //            while (true) {
 //                Socket dataclient = dataserver.accept();
@@ -131,10 +169,10 @@ public class BluetoothServer {
 //                oos.writeBytes(heartRate + ", " + oxiRate + "\n");
 //                oos.reset();
 //            }
-        }
+        // }
 //        dataclient.close();
 //        dataserver.close();
-        
+
 
     }
 }

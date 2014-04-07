@@ -26,7 +26,9 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import com.sun.jna.NativeLibrary;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
 /**
@@ -48,15 +50,17 @@ public class Patient extends VlcjTest {
 
 
     private final CanvasVideoSurface remoteVideoSurface;
-
+    /*
     private final JPanel pnl_info;
+    
     private final JLabel lbl_hr_title;
     private final JLabel lbl_bp_title;
     private final JLabel lbl_o2;
     private final JLabel lbl_o2_title;
     private final JLabel lbl_heart_rate;
     private final JLabel lbl_blood_pressure;
-
+    /**/
+ 
     private final Color bkg_color = Color.white;
 
     public void Patient(String docIP) throws Exception {
@@ -91,7 +95,7 @@ public class Patient extends VlcjTest {
 
         remoteCanvas = new Canvas();
         remoteCanvas.setBackground(Color.BLACK);
-        remoteCanvas.setSize(640, 360);
+        remoteCanvas.setSize(320, 180);
  
         remoteVideoSurface = mediaPlayerFactoryIn.newVideoSurface(remoteCanvas);
         remoteMediaPlayer.setVideoSurface(remoteVideoSurface);
@@ -99,16 +103,28 @@ public class Patient extends VlcjTest {
         contentPane.add(remoteCanvas, BorderLayout.CENTER);
 
         frame = new JFrame("Patient View");
-        frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
+        
+        frame.setUndecorated(true);
+        frame.setAlwaysOnTop(true);
+        
+        
+        Toolkit kit = Toolkit.getDefaultToolkit();
+        Dimension screen = kit.getScreenSize();
+        
+        frame.setLocation((int)screen.getWidth() - 320 - 20, 30);
+        
+        //frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         frame.pack();
-
+        /*
         pnl_info = new JPanel();
         pnl_info.setBackground(bkg_color);
         pnl_info.setBorder(new EmptyBorder(16, 16, 16, 16));
         pnl_info.setLayout(new GridLayout(12, 1));
 
+        
         lbl_hr_title = new javax.swing.JLabel();
         lbl_bp_title = new javax.swing.JLabel();
         lbl_o2_title = new javax.swing.JLabel();
@@ -137,8 +153,10 @@ public class Patient extends VlcjTest {
         pnl_info.add(lbl_blood_pressure);
         pnl_info.add(lbl_o2_title);
         pnl_info.add(lbl_o2);
+        
 
         contentPane.add(pnl_info, BorderLayout.LINE_END);
+        /**/
     }
     
     private void start() {

@@ -49,9 +49,9 @@ public class FitnessMainJava {
                 switch (value) {
                     case "patient1":
                         try {
-                            //Patient patient = new Patient();
-                            //patient.Patient("192.168.1.66");
-                            //Patient.startPatient(patient);
+                            Patient patient = new Patient();
+                            patient.Patient("192.168.1.66");
+                            Patient.startPatient(patient);
                             FitnessMainJava.startKinectApp();
 
                             dialogWindow.dispose();
@@ -68,6 +68,7 @@ public class FitnessMainJava {
                         
                         window.sendInfo(182, 2);
                         window.sendInfo(150, 2);
+                        dialogWindow.dispose();
                         
                         break;
                     default:

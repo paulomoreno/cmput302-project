@@ -91,3 +91,5 @@ C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\bin\Release\SlimDX.dll
 C:\Users\Marcus\Desktop\cmput302-project\c#\KinectFitness\bin\Release\Microsoft.Samples.Kinect.WpfViewers.pdb
 C:\Users\Brad\302\c#\KinectFitness\bin\Release\SlimDX.dll
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\KinectFitness.csprojResolveAssemblyReference.cache
+C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.exe
+C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Release\KinectFitness.pdb
