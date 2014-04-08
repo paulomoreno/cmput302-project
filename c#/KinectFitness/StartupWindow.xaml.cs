@@ -28,16 +28,23 @@ namespace KinectFitness
         Skeleton first;
         //AudioCommands myCommands;
 
-        //Buttons
+        //Start Up Buttons
         Rect playButton;
         Rect recordButton;
         Rect quitButton;
         Rect optionsButton;
         Rect rightHandPos;
 
+        //Select Level Buttons
+        Rect warmUp;
+        Rect moderateCardio;
+        Rect intenseCardio;
+        Rect backButton;
+
         //Hover Checker Timer
         Stopwatch hoverTimer;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        System.Windows.Threading.DispatcherTimer animator;
 
         //Controller variables
         //private Controller control;
@@ -45,54 +52,21 @@ namespace KinectFitness
         //private AudioCommands myCommands;
         int buttons;
 
+        //List of buttons that user can press
+        List<Rect> buttonsList = new List<Rect>();
+        //List of corresponding actions that each button performs
+        List<Action<object, RoutedEventArgs>> actionsList = new List<Action<object, RoutedEventArgs>>();
 
         public StartupWindow()
-        {
-            //control = new Controller();
-           
+        {           
             InitializeComponent();
             InitializeUI();
-            //InitializeAudioCommands();
-            /*
-            if (control.isConnected() == true)
-            {
-                Console.WriteLine("control null");
-                InitializeHoverChecker(0);
-                int result = 10;
-
-                buttons = 0; // 0 == play; 1 == options; 2 == record; 3 == quit 
-                playborder.Opacity = 1;
-
-                newThread = new Thread(() =>
-                {
-                    control.updateStates();
-                    while (true && control != null)
-                    {
-                        Application.Current.Dispatcher.Invoke((Action)(() =>
-                        {
-
-                            result = control.getPOV();
-                            updateHighlights(result);
-                            checkButtonPressed(buttons, control.getButton(0), control.getButton(1));
-                            // Console.WriteLine(control.getButton());
-
-                        }));
-
-                    }
-
-                });
-
-                newThread.Start(); 
-            }
-            else */InitializeHoverChecker(1);
-            
-           
+            InitializeStartUpUI();            
+            InitializeHoverChecker(1);          
 
             var navWindow = Window.GetWindow(this) as NavigationWindow;
             if (navWindow != null) navWindow.ShowsNavigationUI = false;
-            this.WindowState = System.Windows.WindowState.Maximized;
-
-            
+            this.WindowState = System.Windows.WindowState.Maximized;            
         }
 
         // 0 == play; 1 == options; 2 == record; 3 == quit 
@@ -187,7 +161,7 @@ namespace KinectFitness
                         Button_Record(new object(), new RoutedEventArgs());
                         break;
                     case 3:
-                        QuitApplication(new object(), new RoutedEventArgs());
+                        Button_Quit(new object(), new RoutedEventArgs());
                         break;
 
                     default:
@@ -212,12 +186,22 @@ namespace KinectFitness
 
         private void InitializeUI()
         {
+            loadBackground();
+
+
+            //Get position of hand
+            rightHandPos = new Rect();
+            rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
+        }        
+
+        /**
+         * Initializer for StartUp UI
+         */
+        private void InitializeStartUpUI()
+        {
             rightHandProgressBar.Width = 0;
 
-            //Get positions of buttons and hands
-            rightHandPos = new Rect();
-            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
-            rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
+            //Get positions of buttons
             playButton = new Rect();
             playButton.Location = new Point(Canvas.GetLeft(playButtonImg), Canvas.GetTop(playButtonImg));
             playButton.Size = new Size(playButtonImg.Width, playButtonImg.Height);
@@ -230,7 +214,135 @@ namespace KinectFitness
             optionsButton = new Rect();
             optionsButton.Location = new Point(Canvas.GetLeft(optionsButtonImg), Canvas.GetTop(optionsButtonImg));
             optionsButton.Size = new Size(optionsButtonImg.Width, optionsButtonImg.Height);
+
+            
+            buttonsList.Add(playButton);
+            buttonsList.Add(recordButton);
+            buttonsList.Add(quitButton);
+            buttonsList.Add(optionsButton);
+
+            actionsList.Add(Button_Play);
+            actionsList.Add(Button_Record);
+            actionsList.Add(Button_Quit);
+            actionsList.Add(Button_Options);
+
+            StartUp.Margin = new Thickness(0, 0, 0, 0);
+            SelectLevel.Margin = new Thickness(1300, 0, 0, 0);
         }
+
+        private void deInitializeStartUpUI()
+        {
+            buttonsList.Clear();
+            actionsList.Clear();
+        }
+
+        private void initializeSelectLevelUI()
+        {        
+            rightHandProgressBar.Width = 0;
+
+            //Get positions of buttons
+            warmUp = new Rect();            
+            warmUp.Location = new Point(Canvas.GetLeft(warmUpImg), Canvas.GetTop(warmUpImg));
+            warmUp.Size = new Size(warmUpImg.Width, warmUpImg.Height);
+            moderateCardio = new Rect();
+            moderateCardio.Location = new Point(Canvas.GetLeft(moderateImg), Canvas.GetTop(moderateImg));
+            moderateCardio.Size = new Size(moderateImg.Width, moderateImg.Height);
+            intenseCardio = new Rect();
+            intenseCardio.Location = new Point(Canvas.GetLeft(intenseImg), Canvas.GetTop(intenseImg));
+            intenseCardio.Size = new Size(intenseImg.Width, intenseImg.Height);
+            backButton = new Rect();
+            backButton.Location = new Point(Canvas.GetLeft(backButtonImg), Canvas.GetTop(backButtonImg));
+            backButton.Size = new Size(backButtonImg.Width, backButtonImg.Height);
+
+            buttonsList.Add(warmUp);
+            buttonsList.Add(moderateCardio);
+            buttonsList.Add(intenseCardio);
+            buttonsList.Add(backButton);
+            
+            actionsList.Add(warmUpWorkout);
+            actionsList.Add(moderateWorkout);
+            actionsList.Add(intenseWorkout);
+            actionsList.Add(backButtonPressed);
+        }
+
+        private void deInitializeSelectLevelUI()
+        {
+            buttonsList.Clear();
+            actionsList.Clear();
+        }
+
+        private void loadBackground()
+        {
+            String path = System.AppDomain.CurrentDomain.BaseDirectory;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+
+            background.Source = new Uri(path + "\\KinectFitness\\background.mp4");
+            background.Play();
+        }
+
+        /**
+        * Take the old screen and hide it
+        * Take the new screen and show it
+        */
+        private void startNewCanvas(Canvas newScreen, Canvas oldScreen, bool goBack)
+        {
+            //If not going back a screen
+            //then do the forward animation
+            if (goBack == false)
+            {
+                animator = new System.Windows.Threading.DispatcherTimer();
+                animator.Tick += (s, args) => animateShowNewCanvas(newScreen, oldScreen);
+                animator.Interval = new TimeSpan(0, 0, 0, 0, 10);
+                animator.Start();
+            }
+            //Else do the backward animation
+            else
+            {
+                animator = new System.Windows.Threading.DispatcherTimer();
+                animator.Tick += (s, args) => animateShowNewCanvasBack(newScreen, oldScreen);
+                animator.Interval = new TimeSpan(0, 0, 0, 0, 10);
+                animator.Start();
+            }
+        }
+
+        private void animateShowNewCanvas(Canvas newScreen, Canvas oldScreen)
+        {
+            if (oldScreen.Margin.Left > -1300)
+            {
+                oldScreen.Margin = new Thickness(oldScreen.Margin.Left - 60, 0, 0, 0);
+                newScreen.Margin = new Thickness(newScreen.Margin.Left - 60, 0, 0, 0);
+            }
+            else
+            {
+                animator.Stop();
+            }
+        }
+
+        private void animateShowNewCanvasBack(Canvas newScreen, Canvas oldScreen)
+        {
+            if (oldScreen.Margin.Left < 1300)
+            {
+                oldScreen.Margin = new Thickness(oldScreen.Margin.Left + 60, 0, 0, 0);
+                newScreen.Margin = new Thickness(newScreen.Margin.Left + 60, 0, 0, 0);
+            }
+            else
+            {
+                animator.Stop();
+            }
+        }
+
+        /**
+         * Loop the background
+         */
+        private void Media_Ended(object sender, EventArgs e)
+        {
+            background.Position = new TimeSpan(0, 0, 0);
+            background.Play();
+        }
+
 
         void InitializeHoverChecker(int control)
         {
@@ -242,8 +354,7 @@ namespace KinectFitness
             {
                 dispatcherTimer.Tick += new EventHandler(checkHands);
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
-            }
-          
+            }         
           
             dispatcherTimer.Start();
 
@@ -257,87 +368,33 @@ namespace KinectFitness
         {
             try
             {
-
-                if (rightHandPos.IntersectsWith(playButton))
+                //Boolean to check if a button is being hovered
+                bool noButtonsBeingHovered = true;
+                for (int i = 0; i < buttonsList.Count(); i++)
                 {
-                    hoverTimer.Start();
-                    //Highlight the correct image and unhighlight the others
-                    hoverImage(playButtonImg, new RoutedEventArgs());
-
-                    //Set progress bar to increase on hands to indicate if hand is hovering on button
-
-                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
-
-
-                    //Check if hand has been hovering on target for 2 seconds or more   
-                    if (hoverTimer.ElapsedMilliseconds >= 2000)
+                    if (rightHandPos.IntersectsWith(buttonsList.ElementAt(i)))
                     {
-                        Button_Play(new object(), new RoutedEventArgs());
-                        hoverTimer.Reset();
+                        hoverTimer.Start();
+                        //Set to false
+                        noButtonsBeingHovered = false;
+
+                        hoverImage(buttonsList.ElementAt(i), new RoutedEventArgs());
+
+                        setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
+
+                        if (hoverTimer.ElapsedMilliseconds >= 2000)
+                        {
+                            //Call the appropriate function for the button being pressed
+                            buttonPressed(buttonsList.ElementAt(i), new RoutedEventArgs());
+                            hoverTimer.Reset();
+                        }
                     }
                 }
-                else if (rightHandPos.IntersectsWith(recordButton))
-                {
-                    hoverTimer.Start();
-                    //Highlight the correct image and unhighlight the others
-                    hoverImage(recordButtonImg, new RoutedEventArgs());
-
-                    //Set progress bar to increase on hands to indicate if hand is hovering on button
-
-                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
-
-
-                    //Check if hand has been hovering on target for 2 seconds or more   
-                    if (hoverTimer.ElapsedMilliseconds >= 2000)
-                    {
-                        Button_Record(new object(), new RoutedEventArgs());
-
-                        //this.NavigationService.Navigate(kw);
-                        this.Content = null;
-                        hoverTimer.Reset();
-                    }
-                }
-                else if (rightHandPos.IntersectsWith(quitButton))
-                {
-                    hoverTimer.Start();
-                    //Highlight the correct image and unhighlight the others
-                    hoverImage(quitButtonImg, new RoutedEventArgs());
-                    //Set progress bar to increase on hands to indicate if hand is hovering on button
-                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
-
-
-                    //Check if hand has been hovering on target for 2 seconds or more   
-                    if (hoverTimer.ElapsedMilliseconds >= 2000)
-                    {
-                        QuitApplication(new object(), new RoutedEventArgs());
-                    }
-                }
-                else if (rightHandPos.IntersectsWith(optionsButton))
-                {
-                    hoverTimer.Start();
-                    //Highlight the correct image and unhighlight the others
-                    hoverImage(optionsButtonImg, new RoutedEventArgs());
-
-                    //Set progress bar to increase on hands to indicate if hand is hovering on button
-                    setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
-
-
-                    //Check if hand has been hovering on target for 2 seconds or more   
-                    if (hoverTimer.ElapsedMilliseconds >= 2000)
-                    {
-                        hoverTimer.Reset();
-                    }
-                }
-                else  //If hand is not hovering on any button.  Reset timer.
+                if (noButtonsBeingHovered)
                 {
                     resetHandProgressBars();
                     hoverTimer.Reset();
-                    //Unhighlight all images
-                    leaveImage(playButtonImg, new RoutedEventArgs());
-                    leaveImage(optionsButtonImg, new RoutedEventArgs());
-                    leaveImage(quitButtonImg, new RoutedEventArgs());
-                    leaveImage(recordButtonImg, new RoutedEventArgs());
-
+                    resetImages();
                 }
             }
             catch (NullReferenceException)
@@ -346,7 +403,19 @@ namespace KinectFitness
             }
         }
 
-        private void QuitApplication(object sender, RoutedEventArgs e)
+        private void buttonPressed(object sender, RoutedEventArgs e)
+        {
+            Rect r = (Rect)sender;
+            for (int i = 0; i < buttonsList.Count(); i++)
+            {
+                if (r.Equals(buttonsList.ElementAt(i)))
+                {
+                    actionsList.ElementAt(i)(new object(), new RoutedEventArgs());
+                }
+            }
+        }
+
+        private void Button_Quit(object sender, RoutedEventArgs e)
         {
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
@@ -364,16 +433,9 @@ namespace KinectFitness
         }
         private void Button_Play(object sender, RoutedEventArgs e)
         {
-            closing = true; 
-            StopKinect(kinectSensorChooser1.Kinect);
-            dispatcherTimer.Stop();
-            //myCommands.StopSpeechRecognition();
-            SelectLevelWindow slw = new SelectLevelWindow();
-            //newThread.Abort();
-            //control.ReleaseDevice();
-            this.Close();
-            slw.Show();
-            //this.NavigationService.Navigate(slw);            
+            startNewCanvas(SelectLevel, StartUp, false);
+            deInitializeStartUpUI();
+            initializeSelectLevelUI();
         }
 
         private void Button_Record(object sender, RoutedEventArgs e)
@@ -398,21 +460,22 @@ namespace KinectFitness
          */
         private void hoverImage(object sender, RoutedEventArgs e)
         {
-            Image i = (Image)sender;
+            Rect r = (Rect)sender;
 
-            if (i.Name.Equals(playButtonImg.Name))
+
+            if (r.Equals(playButton))
             {
                 playborder.Opacity = 1;
             }
-            else if (i.Name.Equals(optionsButtonImg.Name))
+            else if (r.Equals(optionsButton))
             {
                 optionsborder.Opacity = 1;
             }
-            else if (i.Name.Equals(quitButtonImg.Name))
+            else if (r.Equals(quitButton))
             {
                 quitborder.Opacity = 1;
             }
-            else if (i.Name.Equals(recordButtonImg.Name))
+            else if (r.Equals(recordButton))
             {
                 recordborder.Opacity = 1;
             }
@@ -421,25 +484,13 @@ namespace KinectFitness
         /**
          * Stops highlighting the images when the mouse leaves
          */
-        private void leaveImage(object sender, RoutedEventArgs e)
+        private void resetImages()
         {
-                Image i = (Image)sender;   
-                if(i.Name.Equals(playButtonImg.Name))
-                {
                     playborder.Opacity = 0;
-                }
-                else if (i.Name.Equals(optionsButtonImg.Name))
-                {
                     optionsborder.Opacity = 0;
-                }
-                else if (i.Name.Equals(quitButtonImg.Name))
-                {
                     quitborder.Opacity = 0;
-                }
-                else if (i.Name.Equals(recordButtonImg.Name))
-                {
                     recordborder.Opacity = 0;
-                }
+
 
         }
 
@@ -518,7 +569,8 @@ namespace KinectFitness
 
             ScalePosition(rightHand, first.Joints[JointType.HandRight]);
             ScalePosition(rightHandProgressBar, first.Joints[JointType.HandRight]);
-            rightHandPos.Location = new Point(Canvas.GetLeft(rightHand), Canvas.GetTop(rightHand));
+            rightHandProgressBar.Margin = new Thickness(rightHandProgressBar.Margin.Left, rightHandProgressBar.Margin.Top + 40, 0, 0);
+            rightHandPos.Location = new Point(rightHand.Margin.Left, rightHand.Margin.Top);
         }
 
         void GetCameraPoint(Skeleton first, AllFramesReadyEventArgs e)
@@ -610,9 +662,7 @@ namespace KinectFitness
         private void ScalePosition(FrameworkElement element, Joint joint)
         {
             Joint scaledJoint = joint.ScaleTo(900, 800, .3f, .3f);
-
-            Canvas.SetLeft(element, scaledJoint.Position.X);
-            Canvas.SetTop(element, scaledJoint.Position.Y);
+            element.Margin = new Thickness(scaledJoint.Position.X, scaledJoint.Position.Y, 0, 0);
 
         }
 
@@ -632,6 +682,55 @@ namespace KinectFitness
             
             //AudioCommands.StopSpeechRecognition(myCommands);
             //myCommands = null;
+        }
+
+        private void SetFile(Image exercise)
+        {
+            List<string> video = new List<string>();
+
+            String path = System.AppDomain.CurrentDomain.BaseDirectory;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+
+            if (exercise.Name == warmUpImg.Name)
+            {
+                video.Add(warmUpImg.Name);
+                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
+            }
+            else if (exercise.Name == moderateImg.Name)
+            {
+                video.Add(moderateImg.Name);
+                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
+            }
+            else if (exercise.Name == intenseImg.Name)
+            {
+                video.Add(intenseImg.Name);
+                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
+            }
+        }
+
+        private void intenseWorkout(object sender, RoutedEventArgs e)
+        {
+            SetFile(intenseImg);
+        }
+
+        private void moderateWorkout(object sender, RoutedEventArgs e)
+        {
+            SetFile(moderateImg);
+        }
+
+        private void warmUpWorkout(object sender, RoutedEventArgs e)
+        {
+            SetFile(warmUpImg);
+        }
+
+        private void backButtonPressed(object sender, RoutedEventArgs e)
+        {
+            startNewCanvas(StartUp, SelectLevel, true);
+            deInitializeSelectLevelUI();
+            InitializeStartUpUI();
         }
 
 
