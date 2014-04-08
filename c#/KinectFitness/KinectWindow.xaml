@@ -29,7 +29,7 @@
             <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="pauseicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/pauseicon.png" Opacity="0" />
             <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="hoverpauseicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/hoverpauseicon.png" Opacity="0" />
             <Image Canvas.Left="1904" Canvas.Top="511" Height="150" Name="heartgauge" Stretch="Fill" Width="200" Source="/KinectFitness;component/heartpressuregauge.gif" Panel.ZIndex="-10" />
-            <Rectangle Name="videoProgressBar" Stroke="{x:Null}" Panel.ZIndex="5" Fill="#FF00AAFF" Canvas.Left="182" Canvas.Top="591" Height="84" Width="668" />
+            <Rectangle Name="videoProgressBar" Stroke="{x:Null}" Panel.ZIndex="5" Fill="#FFFF8B00" Canvas.Left="182" Canvas.Top="591" Height="84" Width="668" />
             <Rectangle Canvas.Left="204" Canvas.Top="6" Margin="0,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="52" Height="12" Fill="#FF07FF1C" Panel.ZIndex="10" />
             <Rectangle Name="userBackground" Stroke="{x:Null}" OpacityMask="{x:Null}" Fill="#FF414141" Panel.ZIndex="-3" Margin="854,2,183,25" Opacity="0.8" Canvas.Left="-4" Canvas.Top="-2" Height="674" Width="268" />
             <my:KinectDepthViewer Width="263" Height="204" Canvas.Left="850" Canvas.Top="216" Name="kinectDepthViewer1" Kinect="{Binding ElementName=kinectSensorChooser1, Path=Kinect}" Unloaded="kinectSkeletonViewer1_Unloaded"/>

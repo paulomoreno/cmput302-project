@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("background.mp4")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("warmupvideo.mp4")]
 
 
