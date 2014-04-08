@@ -5,15 +5,18 @@ winexe
 C#
 .cs
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\
+
 KinectFitness
 none
 false
 TRACE
+
 C:\Users\Brad\302\c#\KinectFitness\App.xaml
 5-167060286
 1-2147425260
 14-2052519560
 171816817712
+
 KinectWindow.xaml;MainWindow.xaml;RecordWindow.xaml;SelectLevelWindow.xaml;StartupWindow.xaml;
 
 False

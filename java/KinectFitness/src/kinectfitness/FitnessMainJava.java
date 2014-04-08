@@ -49,10 +49,17 @@ public class FitnessMainJava {
                 switch (value) {
                     case "patient1":
                         try {
-                            //Patient patient = new Patient();
-                            //patient.Patient("192.168.1.66");
-                            //Patient.startPatient(patient);
                             FitnessMainJava.startKinectApp();
+                            
+                            // ----------------------------------------------
+                            // April 7
+                            // currently set for testing without 
+                            // bluetooth --> uncomment code in patient.start()
+                            // ----------------------------------------------
+                            Patient patient = new Patient();
+                            patient.Patient("142.244.151.88");
+                            Patient.startPatient(patient);
+                            
 
                             dialogWindow.dispose();
                         } catch (IOException ex) {
@@ -68,6 +75,7 @@ public class FitnessMainJava {
                         
                         window.sendInfo(182, 2);
                         window.sendInfo(150, 2);
+                        dialogWindow.dispose();
                         
                         break;
                     default:
@@ -103,7 +111,7 @@ public class FitnessMainJava {
             exeFilePath += "/" + filepathinfo[i];
         }
 
-        exeFilePath += "/c#/KinectFitness2/bin/x64/Release/KinectFitness.exe";
+        exeFilePath += "/c#/KinectFitness/bin/x64/Release/KinectFitness.exe";
         Process process = Runtime.getRuntime().exec(exeFilePath);
     }
 }

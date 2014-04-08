@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 class Info implements Serializable {
      String heart_rate;
-     //int[] blood_pressure = new int[2];
+     String[] blood_pressure = new String[2];
      //int ECG;
      String O2;
 }

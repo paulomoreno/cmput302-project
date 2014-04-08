@@ -41,7 +41,7 @@ namespace KinectFitness
         //Controller variables
         private Controller control;
         private Thread newThread;
-        private AudioCommands myCommands;
+        //private AudioCommands myCommands;
         int buttons;
 
 
@@ -51,7 +51,7 @@ namespace KinectFitness
            
             InitializeComponent();
             InitializeUI();
-            InitializeAudioCommands();
+            //InitializeAudioCommands();
             
             if (control.isConnected() == true)
             {
@@ -200,14 +200,14 @@ namespace KinectFitness
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
 
-        
+        /*
         private void InitializeAudioCommands()
         {
             myCommands = new AudioCommands(0.82, "quit", "play", "record");//instantiate an AudioCommands object with the possible commands
             myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
             myCommands.setFunction("record", Button_Record);
             myCommands.setFunction("quit", QuitApplication);
-        }
+        }*/
 
         private void InitializeUI()
         {
@@ -626,8 +626,8 @@ namespace KinectFitness
             } 
             catch (Exception ex) { }
             
-            AudioCommands.StopSpeechRecognition(myCommands);
-            myCommands = null;
+            //AudioCommands.StopSpeechRecognition(myCommands);
+            //myCommands = null;
         }
 
 

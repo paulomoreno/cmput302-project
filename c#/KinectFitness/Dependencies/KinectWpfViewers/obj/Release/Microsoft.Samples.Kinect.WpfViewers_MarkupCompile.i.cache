@@ -4,7 +4,9 @@
 library
 C#
 .cs
+
 C:\Users\Brad\302\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\Release\
+
 Microsoft.Samples.Kinect.WpfViewers
 none
 false
@@ -13,6 +15,7 @@ TRACE
 7-1694449150
 
 14350929758
+
 13-216429321
 KinectSensorChooser.xaml;KinectAudioViewer.xaml;KinectDepthViewer.xaml;KinectColorViewer.xaml;KinectDiagnosticViewer.xaml;KinectSettings.xaml;KinectSkeletonViewer.xaml;
 

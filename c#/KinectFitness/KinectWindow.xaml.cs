@@ -77,7 +77,7 @@ namespace KinectFitness
 
 
         //Audio Command Listener
-        private AudioCommands myCommands;
+        //private AudioCommands myCommands;
         
 
         public KinectWindow()
@@ -85,7 +85,7 @@ namespace KinectFitness
             control = new Controller();
 
             InitializeComponent();
-            InitializeAudioCommands();
+            //InitializeAudioCommands();
             initializeUI();
             
             if (control.isConnected() == true)
@@ -184,14 +184,14 @@ namespace KinectFitness
             FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
         }
 
-        
+        /**
         private void InitializeAudioCommands()
         {
             myCommands = new AudioCommands(0.82, "play", "pause", "back");//instantiate an AudioCommands object with the possible commands
             myCommands.setFunction("play", btnPlay_Play);
             myCommands.setFunction("pause", btnPlay_Pause);
             myCommands.setFunction("back", leavePage);
-        }
+        }*/
          
 
         private void loadExercise(String exercise)
@@ -841,23 +841,23 @@ namespace KinectFitness
 
 
             System.IO.StreamReader file =
-               new System.IO.StreamReader(path + "\\KinectFitness\\FitnessVideos\\video.txt");
+               new System.IO.StreamReader(path + "\\FitnessVideos\\video.txt");
             while ((line = file.ReadLine()) != null)
             {
                 if (line.Contains("warmUp"))
                 {
-                    loadExercise("\\KinectFitness\\FitnessVideos\\WarmUp5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
+                    loadExercise("\\FitnessVideos\\WarmUp5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("moderate"))
                 {
-                    loadExercise("\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
+                    loadExercise("\\FitnessVideos\\ModerateCardio5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("intense"))
                 {
-                    loadExercise("\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
+                    loadExercise("\\FitnessVideos\\IntenseCardio5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
                 }
             }
             file.Close();
@@ -1731,8 +1731,8 @@ namespace KinectFitness
                 control.ReleaseDevice();
             }
             catch (Exception ex) { }
-            AudioCommands.StopSpeechRecognition(myCommands);
-            myCommands = null;
+            //AudioCommands.StopSpeechRecognition(myCommands);
+           // myCommands = null;
         }
 
     }
