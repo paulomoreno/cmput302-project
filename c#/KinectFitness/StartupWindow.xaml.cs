@@ -15,6 +15,7 @@ using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Diagnostics;
 using System.Threading;
+using System.Media;
 
 namespace KinectFitness
 {
@@ -29,6 +30,12 @@ namespace KinectFitness
         Stopwatch hoverTimer;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
         System.Windows.Threading.DispatcherTimer canvasAnimator;
+
+
+        //Sound effects
+        SoundPlayer hoverSound;
+        SoundPlayer clickSound;
+        SoundPlayer goBackSound;
 
         //Start Up Buttons
         Rect playButton;
@@ -114,17 +121,20 @@ namespace KinectFitness
              * ************/
             if (startUpScreenIsActive)
             {
+                
                 //button play
                 if (buttons == 0)
-                {
+                {                    
                     if (result == 0)
                     {
+                        hoverSound.Play();
                         playborder.Opacity = 0;
                         optionsborder.Opacity = 1;
                         buttons = 1;
                     }
                     else if (result == 9000)
                     {
+                        hoverSound.Play();
                         playborder.Opacity = 0;
                         quitborder.Opacity = 1;
                         buttons = 3;
@@ -136,12 +146,14 @@ namespace KinectFitness
                 {
                     if (result == 18000)
                     {
+                        hoverSound.Play();
                         playborder.Opacity = 1;
                         optionsborder.Opacity = 0;
                         buttons = 0;
                     }
                     else if (result == 9000)
                     {
+                        hoverSound.Play();
                         optionsborder.Opacity = 0;
                         recordborder.Opacity = 1;
                         buttons = 2;
@@ -153,12 +165,14 @@ namespace KinectFitness
                 {
                     if (result == 27000)
                     {
+                        hoverSound.Play();
                         recordborder.Opacity = 0;
                         optionsborder.Opacity = 1;
                         buttons = 1;
                     }
                     else if (result == 18000)
                     {
+                        hoverSound.Play();
                         recordborder.Opacity = 0;
                         quitborder.Opacity = 1;
                         buttons = 3;
@@ -170,12 +184,14 @@ namespace KinectFitness
                 {
                     if (result == 0)
                     {
+                        hoverSound.Play();
                         quitborder.Opacity = 0;
                         recordborder.Opacity = 1;
                         buttons = 2;
                     }
                     else if (result == 27000)
                     {
+                        hoverSound.Play();
                         quitborder.Opacity = 0;
                         playborder.Opacity = 1;
                         buttons = 0;
@@ -188,6 +204,7 @@ namespace KinectFitness
                 {
                     if (result == 9000)
                     {
+                        hoverSound.Play();
                         warmUpImgBorder.Opacity = 0;
                         moderateImgBorder.Opacity = 1;
                         buttons = 1;
@@ -198,6 +215,7 @@ namespace KinectFitness
                 {
                     if (result == 9000)
                     {
+                        hoverSound.Play();
                         moderateImgBorder.Opacity = 0;
                         intenseImgBorder.Opacity = 1;
                         buttons = 2;
@@ -205,6 +223,7 @@ namespace KinectFitness
                     }
                     else if (result == 27000)
                     {
+                        hoverSound.Play();
                         moderateImgBorder.Opacity = 0;
                         warmUpImgBorder.Opacity = 1;
                         buttons = 0;
@@ -215,6 +234,7 @@ namespace KinectFitness
                 {
                     if (result == 27000)
                     {
+                        hoverSound.Play();
                         intenseImgBorder.Opacity = 0;
                         moderateImgBorder.Opacity = 1;
                         buttons = 1;
@@ -245,17 +265,21 @@ namespace KinectFitness
                     {
 
                         case 0:
+                            clickSound.Play();
                             Button_Play(new object(), new RoutedEventArgs());
                             break;
 
                         case 1:
+                            clickSound.Play();
                             Button_Options(new object(), new RoutedEventArgs());
                             break;
 
                         case 2:
+                            clickSound.Play();
                             Button_Record(new object(), new RoutedEventArgs());
                             break;
                         case 3:
+                            goBackSound.Play();
                             Button_Quit(new object(), new RoutedEventArgs());
                             break;
 
@@ -269,6 +293,7 @@ namespace KinectFitness
             {
                 if (button_2 == true)
                 {
+                    goBackSound.Play();
                     backButtonPressed(new object(), new RoutedEventArgs());
                     Thread.Sleep(250);
                 }
@@ -279,14 +304,17 @@ namespace KinectFitness
                     switch (buttons)
                     {
                         case 0:
+                            clickSound.Play();
                             warmUpWorkout(new object(), new RoutedEventArgs());
                             break;
 
                         case 1:
+                            clickSound.Play();
                             moderateWorkout(new object(), new RoutedEventArgs());
                             break;
 
                         case 2:
+                            clickSound.Play();
                             intenseWorkout(new object(), new RoutedEventArgs());
                             break;
 
@@ -300,94 +328,19 @@ namespace KinectFitness
             {
                 if (button_2 == true)
                 {
+                    goBackSound.Play();
                     KinectButton_Back(new object(), new RoutedEventArgs());
                     Thread.Sleep(250);
                 }
                 else if (button == true)
                 {
+                    clickSound.Play();
                     btnPlay_Click(new object(), new RoutedEventArgs());
                     Thread.Sleep(150);
                 }
             }
         }
 
-
-        /****************************************************
-         * Controller Code for Select Level Screen
-         * *************************************************/
-
-        private void checkButtonPressedSelectLevel(int buttons, bool button, bool button_2)
-        {             //Console.WriteLine("Hey, I'm here!");
-            if (button_2 == true)
-            {
-                backButtonPressed(new object(), new RoutedEventArgs());
-            }
-
-            if (button == true)
-            {
-                //Console.WriteLine("HEy, I'm here as well!: " + button_number);
-                switch (buttons)
-                {
-                    case 0:
-                        warmUpWorkout(new object(), new RoutedEventArgs());
-                        break;
-
-                    case 1:
-                        moderateWorkout(new object(), new RoutedEventArgs());
-                        break;
-
-                    case 2:
-                        intenseWorkout(new object(), new RoutedEventArgs());
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
-
-        //0 == warm up, 1 == moderate, 2 == last one
-        private void updateHighlightsSelectLevel(int result)
-        {
-            if (buttons == 0)
-            {
-                if (result == 9000)
-                {
-                    warmUpImgBorder.Opacity = 0;
-                    moderateImgBorder.Opacity = 1;
-                    buttons = 1;
-                    Thread.Sleep(250);
-                }
-            }
-            else if (buttons == 1)
-            {
-                if (result == 9000)
-                {
-                    moderateImgBorder.Opacity = 0;
-                    intenseImgBorder.Opacity = 1;
-                    buttons = 2;
-                    Thread.Sleep(250);
-                }
-                else if (result == 27000)
-                {
-                    moderateImgBorder.Opacity = 0;
-                    warmUpImgBorder.Opacity = 1;
-                    buttons = 0;
-                    Thread.Sleep(250);
-                }
-            }
-            else if (buttons == 2)
-            {
-                if (result == 27000)
-                {
-                    intenseImgBorder.Opacity = 0;
-                    moderateImgBorder.Opacity = 1;
-                    buttons = 1;
-                    Thread.Sleep(250);
-                }
-            }
-
-        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -430,8 +383,9 @@ namespace KinectFitness
 
                 newThread.Start();
             }
-            else InitializeHoverChecker(1);    
+            else InitializeHoverChecker(1);
 
+            loadSounds();
 
             //Get position of hand
             rightHandPos = new Rect();
@@ -440,7 +394,23 @@ namespace KinectFitness
             //Set other screens to correct position so they are not seen
             SelectLevel.Margin = new Thickness(1400, 0, 0, 0);
             Kinect.Margin = new Thickness(1400, 0, 0, 0);
-        }        
+        }    
+    
+        /**
+         * Loads the sound effects for buttons
+         */
+        private void loadSounds()
+        {
+            String path = System.AppDomain.CurrentDomain.BaseDirectory;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+
+            hoverSound = new SoundPlayer(path + "\\KinectFitness\\hoverSound.wav");
+            clickSound = new SoundPlayer(path + "\\KinectFitness\\clickSound.wav");
+            goBackSound = new SoundPlayer(path + "\\KinectFitness\\goBackSound.wav");
+        }
 
         /**
          * Initializer for StartUp UI
@@ -495,7 +465,7 @@ namespace KinectFitness
             rightHandProgressBar.Width = 0;
 
 
-            
+            warmUpImgBorder.Opacity = 1;
 
             //Get positions of buttons
             warmUp = new Rect();            

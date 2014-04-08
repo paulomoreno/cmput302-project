@@ -231,6 +231,7 @@
     <Resource Include="donebutton.gif" />
     <Resource Include="donebuttonhover.gif" />
     <Content Include="background.mp4" />
+    <Content Include="hoverSound.wav" />
     <Content Include="warmUpVideo.mp4" />
   </ItemGroup>
   <ItemGroup>

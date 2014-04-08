@@ -12,8 +12,8 @@
         <Grid Margin="10,0,10,10">
 
         <MediaElement Name="background" UnloadedBehavior="Manual" LoadedBehavior="Manual" MediaEnded="Media_Ended" Panel.ZIndex="-5" Margin="-190,-127,-241,-94" />
-        <Image Height="56" HorizontalAlignment="Left"  Name="rightHand" Stretch="Fill" VerticalAlignment="Top" Width="57" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="5"/>
-        <Rectangle Height="15" HorizontalAlignment="Left" Margin="0,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="57" Fill="#FF0BD40B"  Panel.ZIndex="5" />
+        <Image Margin="-100,0,0,0" Height="56" HorizontalAlignment="Left"  Name="rightHand" Stretch="Fill" VerticalAlignment="Top" Width="57" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="5"/>
+        <Rectangle Height="15" HorizontalAlignment="Left" Margin="-100,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="57" Fill="#FF0BD40B"  Panel.ZIndex="5" />
 
         <Canvas Name="StartUp" Margin="0">
             <Image Canvas.Left="422" Canvas.Top="356" Grid.Row="1" Height="164" HorizontalAlignment="Left" Name="playButtonImg" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/playbutton.png"   Mouse.MouseUp="Button_Play" />
