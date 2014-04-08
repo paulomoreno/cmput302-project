@@ -30,6 +30,8 @@ namespace KinectFitness
         Skeleton first;
         Stopwatch hoverTimer;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        
+        //AudioCommands myCommands;
 
 
         //Hand Positions
@@ -55,8 +57,10 @@ namespace KinectFitness
 
             InitializeComponent();
             InitializeUI();
-            InitializeAudioCommands();
-            
+
+
+            //InitializeAudioCommands();
+            /*
             if (control.isConnected() == true)
             {
                 Console.WriteLine("control null");
@@ -86,7 +90,7 @@ namespace KinectFitness
                 });
                 newThread.Start();
             }
-            else InitializeHoverChecker(1);
+            else */InitializeHoverChecker(1);
 
             this.WindowState = System.Windows.WindowState.Maximized;
 
@@ -182,7 +186,8 @@ namespace KinectFitness
         private void InitializeUI()
         {
             rightHandProgressBar.Width = 0;
-
+            //load Dynamic Background
+            loadBackground();
 
             //Get positions of buttons and hands
             rightHandPos = new Rect();
@@ -201,6 +206,27 @@ namespace KinectFitness
             backButton.Location = new Point(Canvas.GetLeft(backButtonImg), Canvas.GetTop(backButtonImg));
             backButton.Size = new Size(backButtonImg.Width, backButtonImg.Height);
 
+        }
+
+        private void loadBackground()
+        {
+            String path = System.AppDomain.CurrentDomain.BaseDirectory;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+            path = System.IO.Directory.GetParent(path).FullName;
+
+            background.Source = new Uri(path + "\\KinectFitness\\background.mp4");
+            background.Play();
+        }
+
+        /**
+         * Loop the background
+         */
+        private void Media_Ended(object sender, EventArgs e)
+        {
+            background.Position = new TimeSpan(0, 0, 0);
+            background.Play();
         }
 
         void InitializeHoverChecker(int control)
@@ -461,9 +487,7 @@ namespace KinectFitness
                 JitterRadius = 1.0f,
                 MaxDeviationRadius = 1.0f
             };
-            //sensor.SkeletonStream.Enable(parameters);
-
-            sensor.SkeletonStream.Enable();
+            sensor.SkeletonStream.Enable(parameters);
 
             sensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
             sensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
@@ -583,9 +607,12 @@ namespace KinectFitness
                 }
             }
         }
+       
+           
 
         private void CameraPosition(FrameworkElement element, ColorImagePoint point)
         {
+            
             //Divide by 2 for width and height so point is right in the middle 
             // instead of in top/left corner
             Canvas.SetLeft(element, point.X - element.Width / 2);
@@ -625,11 +652,11 @@ namespace KinectFitness
 
         private void moderateWorkout(object sender,RoutedEventArgs e)
         {
-            SetFile(moderateImg);
+            //SetFile(moderateImg);
             
-            KinectWindow kw = new KinectWindow();
-            kw.Show();
-            closeWindow();
+            //KinectWindow kw = new KinectWindow();
+            //kw.Show();
+            //closeWindow();
         }
 
         private void warmUpWorkout(object sender,RoutedEventArgs e)

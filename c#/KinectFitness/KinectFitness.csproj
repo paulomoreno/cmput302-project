@@ -70,7 +70,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Coding4Fun.Kinect.Wpf">
-      <HintPath>..\..\..\..\workspace\cmput302-project-master\c#\KinectFitness\Dependencies\Coding4Fun.Kinect.Wpf.dll</HintPath>
+      <HintPath>Dependencies\Coding4Fun.Kinect.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Samples.Kinect.WpfViewers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -79,7 +79,7 @@
     </Reference>
     <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\SlimDX.dll</HintPath>
+      <HintPath>..\..\..\Documents\Downloads\SlimDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -248,6 +248,8 @@
     <Resource Include="bigplaybuttonhover.png" />
     <Resource Include="donebutton.gif" />
     <Resource Include="donebuttonhover.gif" />
+    <Content Include="background.mp4" />
+    <Content Include="hoverSound.wav" />
     <Content Include="warmUpVideo.mp4" />
   </ItemGroup>
   <ItemGroup>

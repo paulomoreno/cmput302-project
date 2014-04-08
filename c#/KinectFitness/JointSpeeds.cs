@@ -18,6 +18,20 @@ namespace KinectFitness
         public double rightKnee;
         public double rightFoot;
 
+
+        //Used for comparisons between User and Recorded Skeleton
+        // -1 = Slow, 0 = Good, 1 = Fast
+        public double leftShoulderComparison;
+        public double leftHandComparison;
+        public double leftHipComparison;
+        public double leftFootComparison;
+        public double leftKneeComparison;
+        public double rightShoulderComparison;
+        public double rightHandComparison;
+        public double rightHipComparison;
+        public double rightKneeComparison;
+        public double rightFootComparison;
+
         public JointSpeeds(int leftShoulder, int leftElbow, int leftHip, int leftKnee, int leftFoot,
             int rightShoulder, int rightElbow, int rightHip, int rightKnee, int rightFoot)
         {

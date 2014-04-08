@@ -6,31 +6,71 @@
       mc:Ignorable="d" Loaded="Page_Loaded"  Title="Kinect Fitness" Height="800" Width="1300"  Closing="Window_Closing" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
     
     
-    
+ 
     
 
         <Grid Margin="10,0,10,10">
-        <Grid.Background>
-            <ImageBrush ImageSource="/KinectFitness;component/backgroundImage.jpg"/>
-        </Grid.Background>
-        <Canvas Margin="0">
+
+        <MediaElement Name="background" UnloadedBehavior="Manual" LoadedBehavior="Manual" MediaEnded="Media_Ended" Panel.ZIndex="-5" Margin="-190,-127,-241,-94" />
+        <Image Margin="-100,0,0,0" Height="56" HorizontalAlignment="Left"  Name="rightHand" Stretch="Fill" VerticalAlignment="Top" Width="57" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="5"/>
+        <Rectangle Height="15" HorizontalAlignment="Left" Margin="-100,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="57" Fill="#FF0BD40B"  Panel.ZIndex="5" />
+
+        <Canvas Name="StartUp" Margin="0">
+            <Image Canvas.Left="400" Canvas.Top="430" Grid.Row="1" Height="250" HorizontalAlignment="Left" Name="playButtonImg" Stretch="Fill" VerticalAlignment="Top" Width="250" Source="/KinectFitness;component/playbutton.png"   Mouse.MouseUp="Button_Play" />
+            <Image Canvas.Left="400" Canvas.Top="150" Height="250" HorizontalAlignment="Left" Name="optionsButtonImg" Stretch="Fill" VerticalAlignment="Top" Width="250" Source="/KinectFitness;component/optionsbutton.png" Grid.Row="1"  />
+            <Image Canvas.Left="732" Canvas.Top="430" Grid.Row="1" Height="250" HorizontalAlignment="Left"  Name="quitButtonImg" Stretch="Fill" VerticalAlignment="Top" Width="250" Source="/KinectFitness;component/quitbutton.png" Mouse.MouseUp="Button_Quit"/>
+            <Image Canvas.Left="732" Canvas.Top="150" Grid.Row="1" Height="250" HorizontalAlignment="Left"  Name="recordButtonImg" Stretch="Fill" VerticalAlignment="Top" Width="250" Source="/KinectFitness;component/recordbutton.png" Mouse.MouseUp="Button_Record"/>
+            <Border Canvas.Left="400" Canvas.Top="430" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="250" HorizontalAlignment="Left"  Name="playborder" VerticalAlignment="Top" Width="250" Background="{x:Null}" OpacityMask="White" Opacity="0"  />
+            <Border Canvas.Left="400" Canvas.Top="150" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="250" HorizontalAlignment="Left"  Name="optionsborder" VerticalAlignment="Top" Width="250" Background="{x:Null}" OpacityMask="White" Opacity="0"  />
+            <Border Canvas.Left="732" Canvas.Top="430" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="250" HorizontalAlignment="Left" Name="quitborder" VerticalAlignment="Top" Width="250" Background="{x:Null}" OpacityMask="White" Opacity="0"/>
+            <Border Canvas.Left="732" Canvas.Top="150" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="250" HorizontalAlignment="Left" Name="recordborder" VerticalAlignment="Top" Width="250" Background="{x:Null}" OpacityMask="White" Opacity="0" />
+            <Image Grid.Row="1" Height="106" HorizontalAlignment="Left" Margin="6,6,0,0" Name="logo" Stretch="Fill" VerticalAlignment="Top" Width="542" Source="/KinectFitness;component/logo.png" />
+            <my:KinectSensorChooser Grid.Row="1" HorizontalAlignment="Left" Margin="6,525,0,0" Name="kinectSensorChooser1" VerticalAlignment="Top" Width="248" Height="234" Canvas.Top="-519" Canvas.Left="998" />
+            </Canvas>
             
+        <Canvas Name="SelectLevel" Margin="0">
+            <TextBox Canvas.Left="1" Canvas.Top="324" Height="152" Name="debugger1" Width="372" Text="asdf" FontSize="48" />
 
-            <Image Canvas.Left="422" Canvas.Top="456" Grid.Row="1" Height="164" HorizontalAlignment="Left" Name="playButtonImg" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/playbutton.png"   Mouse.MouseUp="Button_Play" />
-            <Image Canvas.Left="422" Canvas.Top="194" Height="164" HorizontalAlignment="Left" Name="optionsButtonImg" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/optionsbutton.png" Grid.Row="1"  />
-            <Image Canvas.Left="732" Canvas.Top="456" Grid.Row="1" Height="164" HorizontalAlignment="Left"  Name="quitButtonImg" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/quitbutton.png" Mouse.MouseUp="QuitApplication"/>
-            <Image Canvas.Left="732" Canvas.Top="194" Grid.Row="1" Height="164" HorizontalAlignment="Left"  Name="recordButtonImg" Stretch="Fill" VerticalAlignment="Top" Width="172" Source="/KinectFitness;component/recordbutton.png" Mouse.MouseUp="Button_Record"/>
-            <Border Canvas.Left="422" Canvas.Top="456" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left"  Name="playborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0"  />
-            <Border Canvas.Left="422" Canvas.Top="194" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left"  Name="optionsborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0"  />
-            <Border Canvas.Left="732" Canvas.Top="456" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Name="quitborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0"/>
-            <Border Canvas.Left="732" Canvas.Top="194" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="164" HorizontalAlignment="Left" Name="recordborder" VerticalAlignment="Top" Width="172" Background="{x:Null}" OpacityMask="White" Opacity="0" />
-            <Image Grid.Row="1" Height="99" HorizontalAlignment="Left" Margin="6,6,0,0" Name="logo" Stretch="Fill" VerticalAlignment="Top" Width="357" Source="/KinectFitness;component/logo.png" />
-        <my:KinectSensorChooser Grid.Row="1" HorizontalAlignment="Left" Margin="6,525,0,0" Name="kinectSensorChooser1" VerticalAlignment="Top" Width="248" Height="234" Canvas.Top="-519" Canvas.Left="998" />
-
-        <Image Height="56" HorizontalAlignment="Left" Canvas.Left="204" Canvas.Top="6" Name="rightHand" Stretch="Fill" VerticalAlignment="Top" Width="57" Source="/KinectFitness;component/right%20hand.gif" Panel.ZIndex="5"/>
-        <Rectangle Height="15" HorizontalAlignment="Left" Margin="0,50,0,0" Name="rightHandProgressBar" Stroke="{x:Null}" VerticalAlignment="Top" Width="57" Fill="#FF0BD40B"  Panel.ZIndex="5" />
-
-
+            <TextBlock Height="150" HorizontalAlignment="Left" Margin="355,6,0,0" Name="title" Text="SELECT EXERCISE" VerticalAlignment="Top" Width="778" Foreground="White" FontSize="72" />
+            <Image Name="intenseImg" Height="206" HorizontalAlignment="Left"  Stretch="Fill" VerticalAlignment="Top" Width="316" Source="/KinectFitness;component/intenseCardioImage.png" Opacity="1" Canvas.Left="942" Canvas.Top="400" Mouse.MouseUp="intenseWorkout" />
+            <Image Name="moderateImg" Stretch="Fill" Width="316" Source="/KinectFitness;component/moderateCardioImage.png"  Canvas.Left="544" Canvas.Top="400" Height="206" Mouse.MouseUp="moderateWorkout" />
+            <Image Name="warmUpImg" Height="206" HorizontalAlignment="Left"   Stretch="Fill" VerticalAlignment="Top" Width="316" Source="/KinectFitness;component/WarmUpImage.png" Canvas.Left="131" Canvas.Top="400" Mouse.MouseUp="warmUpWorkout" />
+            <Border Name="warmUpImgBorder" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="206" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="316" Background="{x:Null}" OpacityMask="White" Opacity="0" Canvas.Left="131" Canvas.Top="400" />
+            <Border Name="moderateImgBorder" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="206" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="316" Background="{x:Null}" OpacityMask="White" Opacity="0" Canvas.Left="544" Canvas.Top="400" />
+            <Border Name="intenseImgBorder" BorderBrush="White" BorderThickness="5" Grid.Row="1" Height="206" HorizontalAlignment="Left"   VerticalAlignment="Top" Width="316" Background="{x:Null}" OpacityMask="White" Opacity="0" Canvas.Left="942" Canvas.Top="400" />
+            <Image Canvas.Left="32" Canvas.Top="12" Height="100" Name="backButtonImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbutton.gif" />
+            <Image Canvas.Left="32" Canvas.Top="12" Height="100" Name="backButtonHoverImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbuttonhover.gif" Opacity="0" Mouse.MouseUp="backButtonPressed"/>
         </Canvas>
-        </Grid>
+
+        <Canvas Name="Kinect" Margin="0,0,0,0">
+            <MediaElement Height="499"  MediaEnded="videoEnd" HorizontalAlignment="Left" Name="FitnessPlayer" VerticalAlignment="Top" Width="750" UnloadedBehavior="Manual" LoadedBehavior="Manual" OpacityMask="{x:Null}" Panel.ZIndex="1" IsMuted="False" Grid.ColumnSpan="2" Canvas.Left="100" Canvas.Top="90" />
+
+            <Image Canvas.Left="850" Canvas.Top="0" Height="198" Name="Doctor" Stretch="Fill" Width="260" Source="/KinectFitness;component/no-avatar.jpg" />
+            <Button Canvas.Left="1128" Canvas.Top="32" Content="Camera Up" Height="24" Name="btnUp" Click="motorUp_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
+            <Button Canvas.Left="1128" Canvas.Top="98" Content="Camera Down" Height="24" Name="btnDown" Click="motorDown_Click" Width="81" Background="#FF1CB841" Foreground="White" BorderBrush="#FF1CB841" />
+            <TextBlock Canvas.Left="856" Canvas.Top="509" Height="80" Name="points" Text="0 Pts." Width="261" Foreground="White" FontSize="64" FontFamily="Corbel" />
+            <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="playicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/playicon.png"  Mouse.MouseUp="btnPlay_Click" Panel.ZIndex="1" />
+            <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="hoverplayicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/hoverplayicon.png" Opacity="0" />
+            <Rectangle Canvas.Left="100" Canvas.Top="0" Height="675" Name="mediaBackground" Stroke="{x:Null}" Width="750" OpacityMask="{x:Null}" Fill="#FF414141" Panel.ZIndex="-3" />
+            <Rectangle Canvas.Left="100" Canvas.Top="591" Height="84" Name="rectanglePlayer" Stroke="{x:Null}" Width="750" Fill="#FF7F7F7F" Panel.ZIndex="-2" />
+            <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="pauseicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/pauseicon.png" Opacity="0" />
+            <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="hoverpauseicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/hoverpauseicon.png" Opacity="0" />
+            <Image Canvas.Left="1904" Canvas.Top="511" Height="150" Name="heartgauge" Stretch="Fill" Width="200" Source="/KinectFitness;component/heartpressuregauge.gif" Panel.ZIndex="-10" />
+            <Rectangle Name="videoProgressBar" Stroke="{x:Null}" Panel.ZIndex="5" Fill="#FFFF8B00" Canvas.Left="182" Canvas.Top="591" Height="84" Width="668" />
+            <Rectangle Name="userBackground" Stroke="{x:Null}" OpacityMask="{x:Null}" Fill="#FF414141" Panel.ZIndex="-3" Margin="854,2,183,25" Opacity="0.8" Canvas.Left="-4" Canvas.Top="-2" Height="674" Width="268" />
+            <my:KinectDepthViewer Width="263" Height="204" Canvas.Left="850" Canvas.Top="216" Name="kinectDepthViewer1" Kinect="{Binding ElementName=kinectSensorChooser1, Path=Kinect}" Unloaded="kinectSkeletonViewer1_Unloaded"/>
+            <Image Height="100" Name="backButtonKinectHoverImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbuttonhover.gif" Opacity="0" Canvas.Left="1" Canvas.Top="12" />
+            <Image Height="100" Name="backButtonKinectImg" Stretch="Fill" Width="100" Source="/KinectFitness;component/backbutton.gif" Canvas.Left="1" Canvas.Top="12" Mouse.MouseUp="KinectButton_Back" />
+            <TextBox Canvas.Left="1" Canvas.Top="324" Height="152" Name="debugger" Width="372" Text="asdf" FontSize="48" />
+            <Image Canvas.Left="378" Canvas.Top="216" Height="204" Name="bigPlayIconHoverImg" Stretch="Fill" Width="204" Source="/KinectFitness;component/bigplaybutton.png" Opacity="0" Panel.ZIndex="1" />
+            <Image Canvas.Left="390" Canvas.Top="228" Height="184" Name="bigPlayIconImg" Stretch="Fill" Width="184" Source="/KinectFitness;component/bigplaybuttonhover.png" Panel.ZIndex="1" Mouse.MouseUp="btnPlay_Click" />
+            <Rectangle Height="666" Name="statsBackground" Stroke="Black" Width="1358" Panel.ZIndex="-5" Canvas.Left="-106" Canvas.Top="-2" Fill="Black" Opacity="0" />
+            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="462" Width="368" Panel.ZIndex="-5" Foreground="White" Background="#FF217EE8" FontSize="40" Name="angleStatsBox" Opacity="0" />
+            <TextBlock Canvas.Left="500" Canvas.Top="106" Height="538" Width="368" Panel.ZIndex="-5" Foreground="White" Background="#FF217EE8" FontSize="40" Name="speedStatsBox" Opacity="0" />
+            <TextBox Canvas.Left="356" Canvas.Top="0" Height="110" Name="statsTitle" Width="494" Panel.ZIndex="-5" Background="{x:Null}" Foreground="White" Text="Statistics" FontSize="72" BorderBrush="{x:Null}" Opacity="0"/>
+            <Image Canvas.Left="910" Canvas.Top="554" Height="90" Name="doneButtonImg" Stretch="Fill" Width="200" Panel.ZIndex="-5" Source="/KinectFitness;component/donebutton.gif" Opacity="0" Mouse.MouseUp="goHome" />
+            <Image Canvas.Left="910" Canvas.Top="554" Height="90" Name="doneButtonHoverImg" Stretch="Fill" Width="200" Source="/KinectFitness;component/donebuttonhover.gif" Panel.ZIndex="-5" Opacity="0" />
+            <TextBox Canvas.Left="856" Canvas.Top="426" Height="70" Name="suggestionBox" Width="0" BorderBrush="{x:Null}" Background="#FFFFEB00" Foreground="Black" Text="Great Job!" FontSize="24" FontWeight="Bold" TextAlignment="Center" />
+        </Canvas>
+    </Grid>
 </Window>
