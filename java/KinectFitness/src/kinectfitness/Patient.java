@@ -50,16 +50,6 @@ public class Patient extends VlcjTest {
 
 
     private final CanvasVideoSurface remoteVideoSurface;
-    /*
-    private final JPanel pnl_info;
-    
-    private final JLabel lbl_hr_title;
-    private final JLabel lbl_bp_title;
-    private final JLabel lbl_o2;
-    private final JLabel lbl_o2_title;
-    private final JLabel lbl_heart_rate;
-    private final JLabel lbl_blood_pressure;
-    /**/
  
     private final Color bkg_color = Color.white;
 
@@ -118,53 +108,14 @@ public class Patient extends VlcjTest {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         frame.pack();
-        /*
-        pnl_info = new JPanel();
-        pnl_info.setBackground(bkg_color);
-        pnl_info.setBorder(new EmptyBorder(16, 16, 16, 16));
-        pnl_info.setLayout(new GridLayout(12, 1));
-
-        
-        lbl_hr_title = new javax.swing.JLabel();
-        lbl_bp_title = new javax.swing.JLabel();
-        lbl_o2_title = new javax.swing.JLabel();
-        lbl_heart_rate = new javax.swing.JLabel();
-        lbl_blood_pressure = new javax.swing.JLabel();
-        lbl_o2 = new javax.swing.JLabel();
-
-        lbl_hr_title.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbl_hr_title.setText("Heart Rate");
-
-        lbl_bp_title.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbl_bp_title.setText("Blood Pressure");
-
-        lbl_o2_title.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lbl_o2_title.setText("O2");
-
-        lbl_heart_rate.setText("120 / bpm");
-
-        lbl_blood_pressure.setText("120 / 80");
-
-        lbl_o2.setText("76%");
-
-        pnl_info.add(lbl_hr_title);
-        pnl_info.add(lbl_heart_rate);
-        pnl_info.add(lbl_bp_title);
-        pnl_info.add(lbl_blood_pressure);
-        pnl_info.add(lbl_o2_title);
-        pnl_info.add(lbl_o2);
-        
-
-        contentPane.add(pnl_info, BorderLayout.LINE_END);
-        /**/
     }
     
     private void start() {
-        send();//send video
+        //send();//send video
         Patient_info pi = new Patient_info(this.doctorIP);
         pi.start();//send information from patient
-        receive();//receive video
-        frame.setVisible(true);
+        //receive();//receive video
+        //frame.setVisible(true);
     }
     
     private void send() {
