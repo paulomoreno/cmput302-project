@@ -44,10 +44,8 @@ C:\Users\Brad\302\c#\KinectFitness\bin\Debug\Microsoft.Expression.Drawing.dll
 C:\Users\Brad\302\c#\KinectFitness\bin\Debug\Coding4Fun.Kinect.Wpf.pdb
 C:\Users\Brad\302\c#\KinectFitness\bin\Debug\Microsoft.Samples.Kinect.WpfViewers.pdb
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.csprojResolveAssemblyReference.cache
-C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\MainWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\StartupWindow.baml
-C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectWindow.g.cs
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\MainWindow.g.cs
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\StartupWindow.g.cs
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\App.g.cs
@@ -57,8 +55,6 @@ C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.Properties.Resour
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness.csproj.GenerateResource.Cache
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\RecordWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\RecordWindow.g.cs
-C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\SelectLevelWindow.baml
-C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\SelectLevelWindow.g.cs
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Debug\KinectFitness_Content.g.cs
 C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.exe
 C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.pdb

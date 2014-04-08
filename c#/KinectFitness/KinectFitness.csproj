@@ -105,22 +105,12 @@
     <Compile Include="Controller.cs" />
     <Compile Include="JointAngles.cs" />
     <Compile Include="JointSpeeds.cs" />
-    <Compile Include="KinectWindow.xaml.cs">
-      <DependentUpon>KinectWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="RecordWindow.xaml.cs">
       <DependentUpon>RecordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SelectLevelWindow.xaml.cs">
-      <DependentUpon>SelectLevelWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="StartupWindow.xaml.cs">
       <DependentUpon>StartupWindow.xaml</DependentUpon>
     </Compile>
-    <Page Include="KinectWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -134,10 +124,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RecordWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SelectLevelWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
