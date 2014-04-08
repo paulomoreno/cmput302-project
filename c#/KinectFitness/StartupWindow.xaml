@@ -29,6 +29,8 @@
             </Canvas>
             
         <Canvas Name="SelectLevel" Margin="0">
+            <TextBox Canvas.Left="1" Canvas.Top="324" Height="152" Name="debugger1" Width="372" Text="asdf" FontSize="48" />
+
             <TextBlock Height="150" HorizontalAlignment="Left" Margin="355,6,0,0" Name="title" Text="SELECT EXERCISE" VerticalAlignment="Top" Width="778" Foreground="White" FontSize="72" />
             <Image Name="intenseImg" Height="206" HorizontalAlignment="Left"  Stretch="Fill" VerticalAlignment="Top" Width="316" Source="/KinectFitness;component/intenseCardioImage.png" Opacity="1" Canvas.Left="942" Canvas.Top="164" Mouse.MouseUp="intenseWorkout" />
             <Image Name="moderateImg" Stretch="Fill" Width="316" Source="/KinectFitness;component/moderateCardioImage.png"  Canvas.Left="544" Canvas.Top="164" Height="206" Mouse.MouseUp="moderateWorkout" />

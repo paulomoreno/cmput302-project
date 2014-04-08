@@ -75,10 +75,12 @@ namespace KinectFitness
         System.Windows.Threading.DispatcherTimer suggestionAnimator;        
 
         //Controller variables
-        //private Controller control;
-        //private Thread newThread;
-        //private AudioCommands myCommands;
+        private Controller control;
+        private Thread newThread;
         int buttons;
+        bool startUpScreenIsActive;
+        bool selectLevelScreenIsActive;
+        bool kinectScreenIsActive;
 
         //List of buttons that user can press
         List<Rect> buttonsList = new List<Rect>();
@@ -86,110 +88,256 @@ namespace KinectFitness
         List<Action<object, RoutedEventArgs>> actionsList = new List<Action<object, RoutedEventArgs>>();
 
         public StartupWindow()
-        {           
+        {
+            control = new Controller();
+
             InitializeComponent();
             InitializeUI();
-            InitializeStartUpUI();            
-            InitializeHoverChecker(1);          
+            InitializeStartUpUI();
+
+                
 
             var navWindow = Window.GetWindow(this) as NavigationWindow;
             if (navWindow != null) navWindow.ShowsNavigationUI = false;
             this.WindowState = System.Windows.WindowState.Maximized;            
         }
 
+
+        /****************************************************
+         * Controller Code
+         ***************************************************/
         // 0 == play; 1 == options; 2 == record; 3 == quit 
         private void updateHighlights(int result) {
-           //button play
-            if (buttons == 0) {
-                if (result == 0) {
-                    playborder.Opacity = 0;
-                    optionsborder.Opacity = 1;
-                    buttons = 1;
-                }
-                else if (result == 9000) 
+           
+            /**************
+             * Start Up Screen
+             * ************/
+            if (startUpScreenIsActive)
+            {
+                //button play
+                if (buttons == 0)
                 {
-                    playborder.Opacity = 0;
-                    quitborder.Opacity = 1;
-                    buttons = 3;
+                    if (result == 0)
+                    {
+                        playborder.Opacity = 0;
+                        optionsborder.Opacity = 1;
+                        buttons = 1;
+                    }
+                    else if (result == 9000)
+                    {
+                        playborder.Opacity = 0;
+                        quitborder.Opacity = 1;
+                        buttons = 3;
+                    }
+                }
+
+                //button options
+                if (buttons == 1)
+                {
+                    if (result == 18000)
+                    {
+                        playborder.Opacity = 1;
+                        optionsborder.Opacity = 0;
+                        buttons = 0;
+                    }
+                    else if (result == 9000)
+                    {
+                        optionsborder.Opacity = 0;
+                        recordborder.Opacity = 1;
+                        buttons = 2;
+                    }
+                }
+
+                //button record
+                if (buttons == 2)
+                {
+                    if (result == 27000)
+                    {
+                        recordborder.Opacity = 0;
+                        optionsborder.Opacity = 1;
+                        buttons = 1;
+                    }
+                    else if (result == 18000)
+                    {
+                        recordborder.Opacity = 0;
+                        quitborder.Opacity = 1;
+                        buttons = 3;
+                    }
+                }
+
+                //button quit
+                if (buttons == 3)
+                {
+                    if (result == 0)
+                    {
+                        quitborder.Opacity = 0;
+                        recordborder.Opacity = 1;
+                        buttons = 2;
+                    }
+                    else if (result == 27000)
+                    {
+                        quitborder.Opacity = 0;
+                        playborder.Opacity = 1;
+                        buttons = 0;
+                    }
                 }
             }
-
-            //button options
-            if (buttons == 1)
+            else if (selectLevelScreenIsActive)
             {
-                if (result == 18000)
+                if (buttons == 0)
                 {
-                    playborder.Opacity = 1;
-                    optionsborder.Opacity = 0;
-                    buttons = 0;
+                    if (result == 9000)
+                    {
+                        warmUpImgBorder.Opacity = 0;
+                        moderateImgBorder.Opacity = 1;
+                        buttons = 1;
+                        Thread.Sleep(250);
+                    }
                 }
-                else if (result == 9000)
+                else if (buttons == 1)
                 {
-                    optionsborder.Opacity = 0;
-                    recordborder.Opacity = 1;
-                    buttons = 2;
+                    if (result == 9000)
+                    {
+                        moderateImgBorder.Opacity = 0;
+                        intenseImgBorder.Opacity = 1;
+                        buttons = 2;
+                        Thread.Sleep(250);
+                    }
+                    else if (result == 27000)
+                    {
+                        moderateImgBorder.Opacity = 0;
+                        warmUpImgBorder.Opacity = 1;
+                        buttons = 0;
+                        Thread.Sleep(250);
+                    }
+                }
+                else if (buttons == 2)
+                {
+                    if (result == 27000)
+                    {
+                        intenseImgBorder.Opacity = 0;
+                        moderateImgBorder.Opacity = 1;
+                        buttons = 1;
+                        Thread.Sleep(250);
+                    }
                 }
             }
-
-            //button record
-            if (buttons == 2)
+            else if (kinectScreenIsActive)
             {
-                if (result == 27000)
-                {
-                    recordborder.Opacity = 0;
-                    optionsborder.Opacity = 1;
-                    buttons = 1;
-                }
-                else if (result == 18000)
-                {
-                    recordborder.Opacity = 0;
-                    quitborder.Opacity = 1;
-                    buttons = 3;
-                }
+
             }
 
-            //button quit
-            if (buttons == 3)
-            {
-                if (result == 0)
-                {
-                    quitborder.Opacity = 0;
-                    recordborder.Opacity = 1;
-                    buttons = 2;
-                }
-                else if (result == 27000)
-                {
-                    quitborder.Opacity = 0;
-                    playborder.Opacity = 1;
-                    buttons = 0;
-                }
-            }     
         }
 
         private void checkButtonPressed(int button_number, bool button, bool button_2) 
         {
-            if (button_2 == true) { 
-            
+            if (startUpScreenIsActive)
+            {
+                if (button_2 == true)
+                {
+
+                }
+                //Console.WriteLine("Hey, I'm here!");
+                if (button == true)
+                {
+                    //Console.WriteLine("HEy, I'm here as well!: " + button_number);
+                    switch (button_number)
+                    {
+
+                        case 0:
+                            Button_Play(new object(), new RoutedEventArgs());
+                            break;
+
+                        case 1:
+                            Button_Options(new object(), new RoutedEventArgs());
+                            break;
+
+                        case 2:
+                            Button_Record(new object(), new RoutedEventArgs());
+                            break;
+                        case 3:
+                            Button_Quit(new object(), new RoutedEventArgs());
+                            break;
+
+                        default:
+                            break;
+                    }
+                    Thread.Sleep(250);
+                }
             }
-            //Console.WriteLine("Hey, I'm here!");
-            if(button == true){
+            else if (selectLevelScreenIsActive)
+            {
+                if (button_2 == true)
+                {
+                    backButtonPressed(new object(), new RoutedEventArgs());
+                    Thread.Sleep(250);
+                }
+
+                if (button == true)
+                {
+                    //Console.WriteLine("HEy, I'm here as well!: " + button_number);
+                    switch (buttons)
+                    {
+                        case 0:
+                            warmUpWorkout(new object(), new RoutedEventArgs());
+                            break;
+
+                        case 1:
+                            moderateWorkout(new object(), new RoutedEventArgs());
+                            break;
+
+                        case 2:
+                            intenseWorkout(new object(), new RoutedEventArgs());
+                            break;
+
+                        default:
+                            break;
+                    }
+                    Thread.Sleep(250);
+                }
+            }
+            else if (kinectScreenIsActive)
+            {
+                if (button_2 == true)
+                {
+                    KinectButton_Back(new object(), new RoutedEventArgs());
+                    Thread.Sleep(250);
+                }
+                else if (button == true)
+                {
+                    btnPlay_Click(new object(), new RoutedEventArgs());
+                    Thread.Sleep(150);
+                }
+            }
+        }
+
+
+        /****************************************************
+         * Controller Code for Select Level Screen
+         * *************************************************/
+
+        private void checkButtonPressedSelectLevel(int buttons, bool button, bool button_2)
+        {             //Console.WriteLine("Hey, I'm here!");
+            if (button_2 == true)
+            {
+                backButtonPressed(new object(), new RoutedEventArgs());
+            }
+
+            if (button == true)
+            {
                 //Console.WriteLine("HEy, I'm here as well!: " + button_number);
-                switch (button_number)
-                { 
-                    
+                switch (buttons)
+                {
                     case 0:
-                        Button_Play(new object(), new RoutedEventArgs());
+                        warmUpWorkout(new object(), new RoutedEventArgs());
                         break;
 
                     case 1:
-                        Button_Options(new object(), new RoutedEventArgs());
+                        moderateWorkout(new object(), new RoutedEventArgs());
                         break;
 
                     case 2:
-                        Button_Record(new object(), new RoutedEventArgs());
-                        break;
-                    case 3:
-                        Button_Quit(new object(), new RoutedEventArgs());
+                        intenseWorkout(new object(), new RoutedEventArgs());
                         break;
 
                     default:
@@ -198,23 +346,91 @@ namespace KinectFitness
             }
         }
 
+        //0 == warm up, 1 == moderate, 2 == last one
+        private void updateHighlightsSelectLevel(int result)
+        {
+            if (buttons == 0)
+            {
+                if (result == 9000)
+                {
+                    warmUpImgBorder.Opacity = 0;
+                    moderateImgBorder.Opacity = 1;
+                    buttons = 1;
+                    Thread.Sleep(250);
+                }
+            }
+            else if (buttons == 1)
+            {
+                if (result == 9000)
+                {
+                    moderateImgBorder.Opacity = 0;
+                    intenseImgBorder.Opacity = 1;
+                    buttons = 2;
+                    Thread.Sleep(250);
+                }
+                else if (result == 27000)
+                {
+                    moderateImgBorder.Opacity = 0;
+                    warmUpImgBorder.Opacity = 1;
+                    buttons = 0;
+                    Thread.Sleep(250);
+                }
+            }
+            else if (buttons == 2)
+            {
+                if (result == 27000)
+                {
+                    intenseImgBorder.Opacity = 0;
+                    moderateImgBorder.Opacity = 1;
+                    buttons = 1;
+                    Thread.Sleep(250);
+                }
+            }
+
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
         }
 
-        /*
-        private void InitializeAudioCommands()
-        {
-            myCommands = new AudioCommands(0.82, "quit", "play", "record");//instantiate an AudioCommands object with the possible commands
-            myCommands.setFunction("play", Button_Play);//tell AudioCommands what to do when the speech "play" is recognized. The second parameter is a function
-            myCommands.setFunction("record", Button_Record);
-            myCommands.setFunction("quit", QuitApplication);
-        }*/
 
         private void InitializeUI()
         {
             loadBackground();
+
+            //Check if controller is connected
+            if (control.isConnected() == true)
+            {
+                Console.WriteLine("control null");
+                InitializeHoverChecker(0);
+                int result = 10;
+
+                buttons = 0; // 0 == play; 1 == options; 2 == record; 3 == quit 
+                playborder.Opacity = 1;
+
+                newThread = new Thread(() =>
+                {
+                    control.updateStates();
+                    while (true && control != null)
+                    {
+                        Application.Current.Dispatcher.Invoke((Action)(() =>
+                        {
+
+                            result = control.getPOV();
+                            updateHighlights(result);
+                            checkButtonPressed(buttons, control.getButton(0), control.getButton(1));
+                            // Console.WriteLine(control.getButton());
+
+                        }));
+
+                    }
+
+                });
+
+                newThread.Start();
+            }
+            else InitializeHoverChecker(1);    
 
 
             //Get position of hand
@@ -231,7 +447,10 @@ namespace KinectFitness
          */
         private void InitializeStartUpUI()
         {
+            startUpScreenIsActive = true;
             rightHandProgressBar.Width = 0;
+
+            
 
             //Get positions of buttons
             playButton = new Rect();
@@ -267,11 +486,16 @@ namespace KinectFitness
         {
             buttonsList.Clear();
             actionsList.Clear();
+            startUpScreenIsActive = false;
         }
 
         private void initializeSelectLevelUI()
-        {        
+        {
+            selectLevelScreenIsActive = true;
             rightHandProgressBar.Width = 0;
+
+
+            
 
             //Get positions of buttons
             warmUp = new Rect();            
@@ -300,12 +524,14 @@ namespace KinectFitness
 
         private void deInitializeSelectLevelUI()
         {
+            selectLevelScreenIsActive = false;
             buttonsList.Clear();
             actionsList.Clear();
         }
 
         private void InitializeKinectUI()
         {
+            kinectScreenIsActive = true;
             //Set the number of points for the patient to 0
             numberOfPts = 0;
 
@@ -362,6 +588,7 @@ namespace KinectFitness
 
         private void deInitializeKinectUI()
         {
+            kinectScreenIsActive = false;
             actionsList.Clear();
             buttonsList.Clear();
 
@@ -541,8 +768,8 @@ namespace KinectFitness
 
             try
             {
-                //newThread.Abort();
-                //control.ReleaseDevice();
+                newThread.Abort();
+                control.ReleaseDevice();
             }
             catch (Exception ex) { }
 
@@ -553,6 +780,8 @@ namespace KinectFitness
             startNewCanvas(SelectLevel, StartUp, false);
             deInitializeStartUpUI();
             initializeSelectLevelUI();
+
+            
         }
 
         private void Button_Record(object sender, RoutedEventArgs e)
@@ -874,13 +1103,11 @@ namespace KinectFitness
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try { 
-                //newThread.Abort(); 
-                //control.ReleaseDevice(); 
+                newThread.Abort(); 
+                control.ReleaseDevice(); 
             } 
             catch (Exception ex) { }
             
-            //AudioCommands.StopSpeechRecognition(myCommands);
-            //myCommands = null;
         }
 
         private void SetFile(Image exercise)
@@ -2265,16 +2492,6 @@ namespace KinectFitness
             startNewCanvas(SelectLevel, Kinect, true);
             deInitializeKinectUI();
             initializeSelectLevelUI();
-        }
-
-        /**
-        * Go back to the Select Level Page
-        */
-        private void leaveKinectPage(object sender, RoutedEventArgs e)
-        {
-            
-
-
         }
 
     }
