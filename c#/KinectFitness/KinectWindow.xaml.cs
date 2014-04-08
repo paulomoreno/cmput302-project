@@ -41,6 +41,8 @@ namespace KinectFitness
         const int skeletonCount = 6;
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
+
+
         double numberOfPts;
         double totalMovieTime;
         Stopwatch hoverTimer;
@@ -181,8 +183,8 @@ namespace KinectFitness
             playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
             playIconPos.Size = new Size(playicon.Width, playicon.Height);
             backButton = new Rect();
-            backButton.Location = new Point(Grid.GetRow(backButtonImg), Grid.GetColumn(backButtonImg));
-            backButton.Size = new Size(backButtonImg.Width, backButtonImg.Height);
+            backButton.Location = new Point(Grid.GetRow(backButtonKinectImg), Grid.GetColumn(backButtonKinectImg));
+            backButton.Size = new Size(backButtonKinectImg.Width, backButtonKinectImg.Height);
             bigPlayIcon = new Rect();
             bigPlayIcon.Location = new Point(Canvas.GetLeft(bigPlayIconImg), Canvas.GetTop(bigPlayIconImg));
             bigPlayIcon.Size = new Size(bigPlayIconImg.Width, bigPlayIconImg.Height);
@@ -972,7 +974,7 @@ namespace KinectFitness
             else if (rightHandPos.IntersectsWith(backButton))
             {
                 hoverTimer.Start();
-                hoverButton(backButtonImg, new RoutedEventArgs());
+                hoverButton(backButtonKinectImg, new RoutedEventArgs());
 
                 //Set progress bar to increase on hands to indicate if hand is hovering on button
                     setHandProgressBar(false, hoverTimer.ElapsedMilliseconds);
@@ -1022,7 +1024,7 @@ namespace KinectFitness
                 resetHandProgressBars();
                 hoverTimer.Reset();                
                 leaveButton(playicon, new RoutedEventArgs());
-                leaveButton(backButtonImg, new RoutedEventArgs());
+                leaveButton(backButtonKinectImg, new RoutedEventArgs());
                 leaveButton(bigPlayIconImg, new RoutedEventArgs());
                 leaveButton(doneButtonImg, new RoutedEventArgs());
             }                       
@@ -1106,10 +1108,10 @@ namespace KinectFitness
                     hoverpauseicon.Opacity = 1;
                 }
             }
-            else if (i.Name.Equals(backButtonImg.Name))
+            else if (i.Name.Equals(backButtonKinectImg.Name))
             {
-                backButtonImg.Opacity = 0;
-                backButtonHoverImg.Opacity = 1;
+                backButtonKinectImg.Opacity = 0;
+                backButtonKinectHoverImg.Opacity = 1;
             }
             else if (i.Name.Equals(bigPlayIconImg.Name))
             {
@@ -1148,10 +1150,10 @@ namespace KinectFitness
                     hoverpauseicon.Opacity = 0;
                 }
             }
-            else if (i.Name.Equals(backButtonImg.Name))
+            else if (i.Name.Equals(backButtonKinectImg.Name))
             {
-                backButtonImg.Opacity = 1;
-                backButtonHoverImg.Opacity = 0;
+                backButtonKinectImg.Opacity = 1;
+                backButtonKinectHoverImg.Opacity = 0;
             }
             else if (i.Name.Equals(bigPlayIconImg.Name))
             {
