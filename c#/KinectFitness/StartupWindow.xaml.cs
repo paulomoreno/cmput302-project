@@ -222,8 +222,8 @@ namespace KinectFitness
             rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
 
             //Set other screens to correct position so they are not seen
-            SelectLevel.Margin = new Thickness(1300, 0, 0, 0);
-            Kinect.Margin = new Thickness(1300, 0, 0, 0);
+            SelectLevel.Margin = new Thickness(1400, 0, 0, 0);
+            Kinect.Margin = new Thickness(1400, 0, 0, 0);
         }        
 
         /**
@@ -334,9 +334,9 @@ namespace KinectFitness
             playIconPos = new Rect();
             playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
             playIconPos.Size = new Size(playicon.Width, playicon.Height);
-            selectLevelBackButton = new Rect();
-            selectLevelBackButton.Location = new Point(Grid.GetRow(backButtonKinectImg), Grid.GetColumn(backButtonKinectImg));
-            selectLevelBackButton.Size = new Size(backButtonKinectImg.Width, backButtonKinectImg.Height);
+            kinectBackButton = new Rect();
+            kinectBackButton.Location = new Point(Canvas.GetLeft(backButtonKinectImg), Canvas.GetTop(backButtonKinectImg));
+            kinectBackButton.Size = new Size(backButtonKinectImg.Width, backButtonKinectImg.Height);
             bigPlayIcon = new Rect();
             bigPlayIcon.Location = new Point(Canvas.GetLeft(bigPlayIconImg), Canvas.GetTop(bigPlayIconImg));
             bigPlayIcon.Size = new Size(bigPlayIconImg.Width, bigPlayIconImg.Height);
@@ -349,14 +349,14 @@ namespace KinectFitness
             FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
 
             buttonsList.Add(playIconPos);
-            buttonsList.Add(selectLevelBackButton);
+            buttonsList.Add(kinectBackButton);
             buttonsList.Add(bigPlayIcon);
             buttonsList.Add(doneButton);
 
-            actionsList.Add(Button_Play);
-            actionsList.Add(Button_Record);
-            actionsList.Add(Button_Quit);
-            actionsList.Add(Button_Options);
+            actionsList.Add(btnPlay_Click);
+            actionsList.Add(KinectButton_Back);
+            actionsList.Add(btnPlay_Click);
+            actionsList.Add(goHome);
         
         }
 
@@ -364,6 +364,25 @@ namespace KinectFitness
         {
             actionsList.Clear();
             buttonsList.Clear();
+
+            //Check if video is playing 
+            //and stop it if it is
+            if (videoPlaying)
+            {
+                FitnessPlayer.Stop();
+            }
+            if (skeletonMatcherTimer != null)
+            {
+                skeletonMatcherTimer.Stop();
+            }
+            if (videoProgressBarTracker != null)
+            {
+                videoProgressBarTracker.Stop();
+            }
+            if (accuracyChecker != null)
+            {
+                accuracyChecker.Stop();
+            }
         }
 
         private void loadBackground()
@@ -406,10 +425,10 @@ namespace KinectFitness
         private void animateShowNewCanvas(Canvas newScreen, Canvas oldScreen)
         {
             debugger.Text = oldScreen.Margin.Left.ToString();
-            if (oldScreen.Margin.Left > -1300)
+            if (oldScreen.Margin.Left > -1400)
             {
-                oldScreen.Margin = new Thickness(oldScreen.Margin.Left - 60, 0, 0, 0);
-                newScreen.Margin = new Thickness(newScreen.Margin.Left - 60, 0, 0, 0);
+                oldScreen.Margin = new Thickness(oldScreen.Margin.Left - 80, 0, 0, 0);
+                newScreen.Margin = new Thickness(newScreen.Margin.Left - 80, 0, 0, 0);
             }
             else
             {
@@ -420,11 +439,11 @@ namespace KinectFitness
         private void animateShowNewCanvasBack(Canvas newScreen, Canvas oldScreen)
         {
             debugger.Text = oldScreen.Margin.Left.ToString();
-            if (oldScreen.Margin.Left < 1300)
+            if (oldScreen.Margin.Left < 1400)
             {
 
-                oldScreen.Margin = new Thickness(oldScreen.Margin.Left + 60, 0, 0, 0);
-                newScreen.Margin = new Thickness(newScreen.Margin.Left + 60, 0, 0, 0);
+                oldScreen.Margin = new Thickness(oldScreen.Margin.Left + 80, 0, 0, 0);
+                newScreen.Margin = new Thickness(newScreen.Margin.Left + 80, 0, 0, 0);
             }
             else
             {
@@ -492,7 +511,7 @@ namespace KinectFitness
                 {
                     resetHandProgressBars();
                     hoverTimer.Reset();
-                    resetImages();
+                    resetImages(new object(), new RoutedEventArgs());
                 }
             }
             catch (NullReferenceException)
@@ -558,7 +577,8 @@ namespace KinectFitness
          */
         private void hoverImage(object sender, RoutedEventArgs e)
         {
-            Rect r = (Rect)sender;
+            Rect r = new Rect();
+                r = (Rect)sender;
 
 
             if (r.Equals(playButton))
@@ -577,18 +597,99 @@ namespace KinectFitness
             {
                 recordborder.Opacity = 1;
             }
+            else if (r.Equals(warmUp))
+            {
+                warmUpImgBorder.Opacity = 1;
+            }
+            else if (r.Equals(moderateCardio))
+            {
+                moderateImgBorder.Opacity = 1;
+            }
+            else if (r.Equals(intenseCardio))
+            {
+                intenseImgBorder.Opacity = 1;
+            }
+            else if (r.Equals(selectLevelBackButton))
+            {
+                backButtonImg.Opacity = 0;
+                backButtonHoverImg.Opacity = 1;
+            }
+            else if (r.Equals(playIconPos))
+            {
+                if (!videoPlaying)
+                {
+                    playicon.Opacity = 0;
+                    hoverplayicon.Opacity = 1;
+                    pauseicon.Opacity = 0;
+                    hoverpauseicon.Opacity = 0;
+                }
+                else
+                {
+                    playicon.Opacity = 0;
+                    hoverplayicon.Opacity = 0;
+                    pauseicon.Opacity = 0;
+                    hoverpauseicon.Opacity = 1;
+                }
+            }
+            else if (r.Equals(bigPlayIcon))
+            {
+                bigPlayIconImg.Opacity = 0;
+                bigPlayIconHoverImg.Opacity = 1;
+            }
+            else if (r.Equals(kinectBackButton))
+            {
+                backButtonKinectImg.Opacity = 0;
+                backButtonKinectHoverImg.Opacity = 1;
+            }
+            else if (r.Equals(doneButton))
+            {
+                doneButtonHoverImg.Opacity = 1;
+                doneButtonImg.Opacity = 0;
+            }
         }
 
         /**
          * Stops highlighting the images when the mouse leaves
          */
-        private void resetImages()
+        private void resetImages(object sender, RoutedEventArgs e)
         {
                     playborder.Opacity = 0;
                     optionsborder.Opacity = 0;
                     quitborder.Opacity = 0;
                     recordborder.Opacity = 0;
 
+                warmUpImgBorder.Opacity = 0;
+
+                moderateImgBorder.Opacity = 0;
+
+                intenseImgBorder.Opacity = 0;
+
+                backButtonImg.Opacity = 1;
+                backButtonHoverImg.Opacity = 0;
+
+                if (!videoPlaying)
+                    {
+                        playicon.Opacity = 1;
+                        hoverplayicon.Opacity = 0;
+                        pauseicon.Opacity = 0;
+                        hoverpauseicon.Opacity = 0;
+                    }
+                else
+                {
+                    playicon.Opacity = 0;
+                    hoverplayicon.Opacity = 0;
+                    pauseicon.Opacity = 1;
+                    hoverpauseicon.Opacity = 0;
+                }
+
+                bigPlayIconImg.Opacity = 1;
+                bigPlayIconHoverImg.Opacity = 0;
+
+                backButtonKinectImg.Opacity = 1;
+                backButtonKinectHoverImg.Opacity = 0;
+
+                doneButtonHoverImg.Opacity = 0;
+                doneButtonImg.Opacity = 1;                      
 
         }
 
@@ -667,7 +768,7 @@ namespace KinectFitness
 
             ScalePosition(rightHand, first.Joints[JointType.HandRight]);
             ScalePosition(rightHandProgressBar, first.Joints[JointType.HandRight]);
-            rightHandProgressBar.Margin = new Thickness(rightHandProgressBar.Margin.Left, rightHandProgressBar.Margin.Top + 40, 0, 0);
+            rightHandProgressBar.Margin = new Thickness(rightHandProgressBar.Margin.Left, rightHandProgressBar.Margin.Top + 60, 0, 0);
             rightHandPos.Location = new Point(rightHand.Margin.Left, rightHand.Margin.Top);
         }
 
@@ -823,8 +924,9 @@ namespace KinectFitness
         {
             SetFile(warmUpImg);
             startNewCanvas(Kinect, SelectLevel, false);
-            InitializeKinectUI();
+            
             deInitializeSelectLevelUI();
+            InitializeKinectUI();
         }
 
         private void backButtonPressed(object sender, RoutedEventArgs e)
@@ -1347,8 +1449,8 @@ namespace KinectFitness
             //debugger.Text = "Left Elbow:" + patientData.Last().leftElbow + "\nLeft Shoulder:" + patientData.Last().leftShoulder + "\nLeft Hip:" + patientData.Last().leftHip + "\nKnee:" + patientData.Last().leftKnee;
 
             //Check for Pause Gesture
-            if ((leftShoulder < 110) && (rightShoulder < 110) && (leftElbow > 145) && (rightElbow > 145)
-                && (leftHip > 145) && (rightHip > 145) && (leftKnee > 145) && (rightKnee > 145))
+            if ((leftShoulder < 105) && (rightShoulder < 105) && (leftElbow > 140) && (rightElbow > 140)
+                && (leftHip > 140) && (rightHip > 140) && (leftKnee > 140) && (rightKnee > 140))
             {
                 btnPlay_Click(new object(), new RoutedEventArgs());
             }
@@ -2125,85 +2227,9 @@ namespace KinectFitness
             }
         }
 
-        /**
-         * Stops highlighting the images when the mouse leaves
-         */
-        private void leaveButton(object sender, RoutedEventArgs e)
-        {
-            Image i = (Image)sender;
+        
 
-            if (i.Name.Equals(playicon.Name))
-            {
-                if (!videoPlaying)
-                {
-                    playicon.Opacity = 1;
-                    hoverplayicon.Opacity = 0;
-                    pauseicon.Opacity = 0;
-                    hoverpauseicon.Opacity = 0;
-                }
-                else
-                {
-                    playicon.Opacity = 0;
-                    hoverplayicon.Opacity = 0;
-                    pauseicon.Opacity = 1;
-                    hoverpauseicon.Opacity = 0;
-                }
-            }
-            else if (i.Name.Equals(backButtonKinectImg.Name))
-            {
-                backButtonKinectImg.Opacity = 1;
-                backButtonKinectHoverImg.Opacity = 0;
-            }
-            else if (i.Name.Equals(bigPlayIconImg.Name))
-            {
-                bigPlayIconHoverImg.Opacity = 0;
-                bigPlayIconImg.Opacity = 1;
-            }
-            else if (i.Name.Equals(doneButtonImg.Name))
-            {
-                doneButtonHoverImg.Opacity = 0;
-                doneButtonImg.Opacity = 1;
-            }
-        }
-
-        private void hoverButton(object sender, RoutedEventArgs e)
-        {
-            Image i = (Image)sender;
-
-            if (i.Name.Equals(playicon.Name))
-            {
-                if (!videoPlaying)
-                {
-                    playicon.Opacity = 0;
-                    hoverplayicon.Opacity = 1;
-                    pauseicon.Opacity = 0;
-                    hoverpauseicon.Opacity = 0;
-                }
-                else
-                {
-                    playicon.Opacity = 0;
-                    hoverplayicon.Opacity = 0;
-                    pauseicon.Opacity = 0;
-                    hoverpauseicon.Opacity = 1;
-                }
-            }
-            else if (i.Name.Equals(backButtonKinectImg.Name))
-            {
-                backButtonKinectImg.Opacity = 0;
-                backButtonKinectHoverImg.Opacity = 1;
-            }
-            else if (i.Name.Equals(bigPlayIconImg.Name))
-            {
-                bigPlayIconHoverImg.Opacity = 1;
-                bigPlayIconImg.Opacity = 0;
-            }
-            else if (i.Name.Equals(doneButtonImg.Name))
-            {
-                doneButtonImg.Opacity = 0;
-                doneButtonHoverImg.Opacity = 1;
-            }
-
-        }
+        
 
         /**
          * Go back to the home screen
@@ -2234,36 +2260,21 @@ namespace KinectFitness
             sw.Show();
         }
 
-        private void backButton_Click(object sender, MouseButtonEventArgs e)
+        private void KinectButton_Back(object sender, RoutedEventArgs e)
         {
-            leavePage(new object(), new RoutedEventArgs());
+            startNewCanvas(SelectLevel, Kinect, true);
+            deInitializeKinectUI();
+            initializeSelectLevelUI();
         }
 
         /**
         * Go back to the Select Level Page
         */
-        private void leavePage(object sender, RoutedEventArgs e)
+        private void leaveKinectPage(object sender, RoutedEventArgs e)
         {
-            if (videoPlaying)
-            {
-                FitnessPlayer.Stop();
-            }
-            if (skeletonMatcherTimer != null)
-            {
-                skeletonMatcherTimer.Stop();
-            }
-            if (videoProgressBarTracker != null)
-            {
-                videoProgressBarTracker.Stop();
-            }
-            closing = true;
-            dispatcherTimer.Stop();
-            StopKinect(kinectSensorChooser1.Kinect);
-            //myCommands.StopSpeechRecognition();
-            SelectLevelWindow sw = new SelectLevelWindow();
-            sw.Show();
-            hoverTimer.Reset();
-            this.Close();
+            
+
+
         }
 
     }
