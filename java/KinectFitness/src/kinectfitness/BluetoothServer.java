@@ -47,11 +47,11 @@ public class BluetoothServer {
                     System.err.println("Started server on port " + port);
 
                     // open socket to send the data to C# application
-                    Socket destinationSocket = new Socket("127.0.0.1", 5000);
+                    //Socket destinationSocket = new Socket("127.0.0.1", 5000);
 
-                    DataOutputStream dataOutputStream = new DataOutputStream(destinationSocket.getOutputStream());
+                    //DataOutputStream dataOutputStream = new DataOutputStream(destinationSocket.getOutputStream());
                     // DEBUG
-                    System.err.println("Started server on port 5000");
+                    //System.err.println("Started server on port 5000");
 
 
                     // repeatedly wait for connections, and process
@@ -100,7 +100,7 @@ public class BluetoothServer {
                             BluetoothServer.doctorOutput.reset();
 
                             // send patient heart rate data to the C# Kinect application
-                            dataOutputStream.writeBytes(patient_info.heart_rate + "\n");
+                            //dataOutputStream.writeBytes(patient_info.heart_rate + "\n");
 
                         }
                         System.err.println("Closing connection with client");
