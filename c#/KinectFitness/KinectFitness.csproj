@@ -105,6 +105,8 @@
     <Compile Include="Controller.cs" />
     <Compile Include="JointAngles.cs" />
     <Compile Include="JointSpeeds.cs" />
+    <Compile Include="Kinect2JavaClient.cs" />
+    <Compile Include="PatientTcpServer.cs" />
     <Compile Include="RecordWindow.xaml.cs">
       <DependentUpon>RecordWindow.xaml</DependentUpon>
     </Compile>

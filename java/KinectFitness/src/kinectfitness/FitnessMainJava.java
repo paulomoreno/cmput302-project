@@ -3,8 +3,12 @@ package kinectfitness;
 import com.sun.jna.NativeLibrary;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
@@ -17,17 +21,6 @@ public class FitnessMainJava {
         NativeLibrary.addSearchPath("libvlc", "./");
         NativeLibrary.addSearchPath("libvlccore", "libvlccore");
         createInputDialog();
-
-
-
-
-        // TODO Auto-generated method stub
-        // 1. ask them for password --> to branch off to doctor vs patient
-        // 2a. if patient, ask for their age
-        // 3a. popup with ip address, instruction to add this number to android app
-        // 3b. instruction to put heart monitor & V02 and starting the android phone
-        // 3c. if continue is pressed, execute C# application
-        // 2b. if doctor, display panels?
     }
 
     private static void createInputDialog() {
@@ -47,36 +40,79 @@ public class FitnessMainJava {
                 String value = textField.getText();
 
                 switch (value) {
+                    case "": // DEBUGGING ONLY
                     case "patient1":
                         try {
-                            FitnessMainJava.startKinectApp();
-                            
-                            // ----------------------------------------------
-                            // April 7
-                            // currently set for testing without 
-                            // bluetooth --> uncomment code in patient.start()
-                            // ----------------------------------------------
-                            Patient patient = new Patient();
-                            patient.Patient("142.244.151.88");
-                            Patient.startPatient(patient);
-                            
-
                             dialogWindow.dispose();
-                        } catch (IOException ex) {
-                            Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (URISyntaxException ex) {
-                            Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                            
+                            new Thread() {
+                                public void run(){
+                                    try {
+                                        FitnessMainJava.startKinectApp();
+                                    } catch (IOException ex) {
+                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                                    } catch (URISyntaxException ex) {
+                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }.start();
+                            
+                            
+                            new Thread() {
+                                public void run() {
+                                    try {
+                                        //server to listen for flags given by C# application
+
+                                        ServerSocket netServer = new ServerSocket(5001);
+                                        
+                                        String flag="";
+                                        while("".equals(flag))
+                                        {
+
+                                            Socket clientSocket = netServer.accept();
+                                            
+                                            System.err.println("accepted connection");
+                                            
+                                            In in = new In(clientSocket);
+                                            String value = in.readLine();
+                                            if(value != null)
+                                            {
+                                                flag = value;
+                                                System.err.println("received: ("+value+")");
+                                                break;
+                                            }
+                                            
+                                        }
+                                        
+                                        System.err.println("main 1");
+                                        Patient patient = new Patient();
+                                         System.err.println("main 2");
+                                        patient.Patient("172.16.42.3");
+                                         System.err.println("main 3");
+                                        Patient.startPatient(patient);
+                                         System.err.println("main 4");
+                                        /**/
+                                        
+                                    } catch (Exception ex) {
+                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                                    }
+                                }
+                            }.start();
+
+                            
+                            
                         } catch (Exception ex) {
                             Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         break;
+                    
                     case "doctor":
-                        DoctorViewFrame window = new DoctorViewFrame();            
-                        
+                        DoctorViewFrame window = new DoctorViewFrame();
+
                         window.sendInfo(182, 2);
                         window.sendInfo(150, 2);
                         dialogWindow.dispose();
-                        
+
                         break;
                     default:
                         break;
@@ -112,6 +148,8 @@ public class FitnessMainJava {
         }
 
         exeFilePath += "/c#/KinectFitness/bin/x64/Release/KinectFitness.exe";
-        Process process = Runtime.getRuntime().exec(exeFilePath);
+        final Process process = Runtime.getRuntime().exec(exeFilePath);
+
     }
+   
 }

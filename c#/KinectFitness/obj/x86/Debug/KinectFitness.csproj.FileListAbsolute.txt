@@ -82,3 +82,5 @@ C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Debug
 C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.csproj.GenerateResource.Cache
 C:\Users\Brad\302\c#\KinectFitness\bin\Debug\SlimDX.dll
 C:\Users\Brad\302\c#\KinectFitness\bin\Debug\Coding4Fun.Kinect.Wpf.dll
+C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.exe
+C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\obj\x86\Debug\KinectFitness.pdb
