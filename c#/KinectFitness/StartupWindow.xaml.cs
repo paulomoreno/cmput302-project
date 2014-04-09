@@ -37,6 +37,8 @@ namespace KinectFitness
         SoundPlayer hoverSound;
         SoundPlayer clickSound;
         SoundPlayer goBackSound;
+        SoundPlayer doneSound;
+        SoundPlayer suggestionSound;
 
         //Start Up Buttons
         Rect playButton;
@@ -80,15 +82,18 @@ namespace KinectFitness
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
         System.Windows.Threading.DispatcherTimer videoProgressBarTracker;
         System.Windows.Threading.DispatcherTimer accuracyChecker;
-        System.Windows.Threading.DispatcherTimer suggestionAnimator;        
+        System.Windows.Threading.DispatcherTimer suggestionAnimator;
+        System.Windows.Threading.DispatcherTimer doneAnimator;  
+     
 
         //Controller variables
         private Controller control;
         private Thread newThread;
         int buttons;
         bool startUpScreenIsActive;
-        bool selectLevelScreenIsActive;
-        bool kinectScreenIsActive;
+        bool selectLevelScreenIsActive = false;
+        bool kinectScreenIsActive = false;
+        bool doneScreenIsActive = false;
 
         //List of buttons that user can press
         List<Rect> buttonsList = new List<Rect>();
@@ -341,6 +346,13 @@ namespace KinectFitness
                     Thread.Sleep(150);
                 }
             }
+            else if (doneScreenIsActive)
+                if (button == true)
+                {
+                    doneSound.Play();
+                    goHome(new object(), new RoutedEventArgs());
+                    Thread.Sleep(250);
+                }
         }
 
 
@@ -394,8 +406,9 @@ namespace KinectFitness
             rightHandPos.Size = new Size(rightHand.Width, rightHand.Height);
 
             //Set other screens to correct position so they are not seen
-            SelectLevel.Margin = new Thickness(1400, 0, 0, 0);
-            Kinect.Margin = new Thickness(1400, 0, 0, 0);
+            SelectLevel.Margin = new Thickness(1500, 0, 0, 0);
+            Kinect.Margin = new Thickness(3000, 0, 0, 0);
+            Stats.Margin = new Thickness(4500, 0, 0, 0);
         }    
     
         /**
@@ -409,9 +422,11 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
 
-            hoverSound = new SoundPlayer(path + "\\KinectFitness\\hoverSound.wav");
-            clickSound = new SoundPlayer(path + "\\KinectFitness\\clickSound.wav");
-            goBackSound = new SoundPlayer(path + "\\KinectFitness\\goBackSound.wav");
+            hoverSound = new SoundPlayer(path + "\\hoverSound.wav");
+            clickSound = new SoundPlayer(path + "\\clickSound.wav");
+            goBackSound = new SoundPlayer(path + "\\goBackSound.wav");
+            doneSound = new SoundPlayer(path + "\\doneSound.wav");
+            suggestionSound = new SoundPlayer(path + "\\suggestionSound.wav");
         }
 
         /**
@@ -524,10 +539,10 @@ namespace KinectFitness
             standingStillTimer = new Stopwatch();
 
             //Hide Done Button
-            doneButtonHoverImg.Opacity = 0;
-            doneButtonImg.Opacity = 0;
-            doneButtonImg.Width = 0;
-            doneButtonHoverImg.Width = 0;
+            doneButtonHoverImg.Opacity = 1;
+            doneButtonImg.Opacity = 1;
+            doneButtonImg.Width = 1;
+            doneButtonHoverImg.Width = 1;
 
             playIconPos = new Rect();
             playIconPos.Location = new Point(Canvas.GetLeft(playicon), Canvas.GetTop(playicon));
@@ -584,6 +599,57 @@ namespace KinectFitness
             }
         }
 
+        /**
+         * Initialize the final Screen
+         */
+        private void initializeDoneUI()
+        {
+            doneScreenIsActive = true;
+
+            
+            startDoneAnimator();
+
+
+            angleStatsBox.Width = 0;
+            speedStatsBox.Width = 0;
+        }
+
+        private void startDoneAnimator()
+        {            
+            doneAnimator = new System.Windows.Threading.DispatcherTimer();
+            doneAnimator.Tick += (s, args) => animateStats();
+            doneAnimator.Interval = new TimeSpan(0, 0, 0, 0, 25);
+            doneAnimator.Start();
+        }
+
+        /**
+         * Animate the stats boxes after exercising
+         */
+        private void animateStats()
+        {
+            if (angleStatsBox.Width < 350 || speedStatsBox.Width < 350)
+            {
+                angleStatsBox.Width += 8;
+                speedStatsBox.Width += 8;
+            }
+            
+            else
+            {
+                doneAnimator.Stop();
+            }
+        
+        }
+
+        /**
+         * De-initialize the final screen
+         */
+        private void deInitializeDoneUI()
+        {
+            doneScreenIsActive = false;
+        }
+
+
+
         private void loadBackground()
         {
             String path = System.AppDomain.CurrentDomain.BaseDirectory;
@@ -592,7 +658,7 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
 
-            background.Source = new Uri(path + "\\KinectFitness\\background.mp4");
+            background.Source = new Uri(path + "\\background.mp4");
             background.Play();
         }
 
@@ -623,26 +689,29 @@ namespace KinectFitness
 
         private void animateShowNewCanvas(Canvas newScreen, Canvas oldScreen)
         {
-            debugger.Text = oldScreen.Margin.Left.ToString();
-            if (oldScreen.Margin.Left > -1400)
+            double distanceToGoal = Math.Abs(newScreen.Margin.Left - 0);
+            if (newScreen.Margin.Left > 40)
             {
-                oldScreen.Margin = new Thickness(oldScreen.Margin.Left - 80, 0, 0, 0);
-                newScreen.Margin = new Thickness(newScreen.Margin.Left - 80, 0, 0, 0);
+                StartUp.Margin = new Thickness(StartUp.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
+                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
+                Kinect.Margin = new Thickness(Kinect.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
+                Stats.Margin = new Thickness(Stats.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);                
             }
             else
             {
-                canvasAnimator.Stop();                
+                canvasAnimator.Stop();
             }
         }
 
         private void animateShowNewCanvasBack(Canvas newScreen, Canvas oldScreen)
         {
-            debugger.Text = oldScreen.Margin.Left.ToString();
-            if (oldScreen.Margin.Left < 1400)
+            double distanceToGoal = Math.Abs(newScreen.Margin.Left - 0);
+            if (newScreen.Margin.Left < 0)
             {
-
-                oldScreen.Margin = new Thickness(oldScreen.Margin.Left + 80, 0, 0, 0);
-                newScreen.Margin = new Thickness(newScreen.Margin.Left + 80, 0, 0, 0);
+                StartUp.Margin = new Thickness(StartUp.Margin.Left + 2*Math.Sqrt(distanceToGoal), 0, 0, 0);
+                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left + 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
+                Kinect.Margin = new Thickness(Kinect.Margin.Left + 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
+                Stats.Margin = new Thickness(Stats.Margin.Left + 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);   
             }
             else
             {
@@ -1094,17 +1163,17 @@ namespace KinectFitness
             if (exercise.Name == warmUpImg.Name)
             {
                 video.Add(warmUpImg.Name);
-                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
             }
             else if (exercise.Name == moderateImg.Name)
             {
                 video.Add(moderateImg.Name);
-                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
             }
             else if (exercise.Name == intenseImg.Name)
             {
                 video.Add(intenseImg.Name);
-                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
             }
         }
 
@@ -1115,7 +1184,12 @@ namespace KinectFitness
 
         private void moderateWorkout(object sender, RoutedEventArgs e)
         {
+            
             SetFile(moderateImg);
+            startNewCanvas(Kinect, SelectLevel, false);
+
+            deInitializeSelectLevelUI();
+            InitializeKinectUI();
         }
 
         private void warmUpWorkout(object sender, RoutedEventArgs e)
@@ -1191,23 +1265,23 @@ namespace KinectFitness
 
 
             System.IO.StreamReader file =
-               new System.IO.StreamReader(path + "\\KinectFitness\\FitnessVideos\\video.txt");
+               new System.IO.StreamReader(path + "\\FitnessVideos\\video.txt");
             while ((line = file.ReadLine()) != null)
             {
                 if (line.Contains("warmUp"))
                 {
-                    loadExercise("\\KinectFitness\\FitnessVideos\\WarmUp5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
+                    loadExercise("\\FitnessVideos\\WarmUp5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("moderate"))
                 {
-                    loadExercise("\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
+                    loadExercise("\\FitnessVideos\\ModerateCardio5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("intense"))
                 {
-                    loadExercise("\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
+                    loadExercise("\\FitnessVideos\\IntenseCardio5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
                 }
             }
             file.Close();
@@ -2042,7 +2116,7 @@ namespace KinectFitness
                         suggestionBox.Text = "Nice Form!";
                     }
                     else
-                        suggestionBox.Text = "Nice Pace!";
+                        suggestionBox.Text = "Make sure to match\nthe trainer's form";
                 }
                 suggestionBox.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFFFEB00");
             }
@@ -2122,7 +2196,7 @@ namespace KinectFitness
         //When called, it starts the Suggestion Box Animation
         private void startAnimation()
         {
-
+            suggestionSound.Play();
             suggestionAnimator = new System.Windows.Threading.DispatcherTimer();
             suggestionAnimator.Tick += new EventHandler(animateShowSuggestionBox);
             suggestionAnimator.Interval = new TimeSpan(0, 0, 0, 0, 10);
@@ -2178,6 +2252,8 @@ namespace KinectFitness
             showStats();
             //Start up the hover checker
             startHoverChecker();
+            //Video is not playing
+            videoPlaying = false;
         }
 
         /**
@@ -2192,13 +2268,6 @@ namespace KinectFitness
             doneButton.Location = new Point(Canvas.GetLeft(doneButtonImg), Canvas.GetTop(doneButtonImg));
             doneButtonImg.Width = 200;
             doneButtonHoverImg.Width = 200;
-
-            playIconPos.Size = new Size(0, 0);
-            playIconPos.Location = new Point(-200, -200);
-            kinectBackButton.Size = new Size(0, 0);
-            kinectBackButton.Location = new Point(-200, -200);
-            bigPlayIcon.Size = new Size(0, 0);
-            bigPlayIcon.Location = new Point(-200, -200);
         }
 
         /**
@@ -2236,16 +2305,23 @@ namespace KinectFitness
 
             //Get average speed for each joint
             JointSpeeds js = new JointSpeeds();
-            js.leftHandComparison = leftHandSpeed / numberOfComparisons;
-            js.rightHandComparison = rightHandSpeed / numberOfComparisons;
-            js.leftShoulderComparison = leftShoulderSpeed / numberOfComparisons;
-            js.rightShoulderComparison = rightShoulderSpeed / numberOfComparisons;
-            js.leftHipComparison = leftHipSpeed / numberOfComparisons;
-            js.rightHipComparison = rightHipSpeed / numberOfComparisons;
-            js.leftKneeComparison = leftKneeSpeed / numberOfComparisons;
-            js.rightKneeComparison = rightKneeSpeed / numberOfComparisons;
-            js.leftFootComparison = leftFootSpeed / numberOfComparisons;
-            js.rightFootComparison = rightFootSpeed / numberOfComparisons;
+            try
+            {
+                js.leftHandComparison = leftHandSpeed / numberOfComparisons;
+                js.rightHandComparison = rightHandSpeed / numberOfComparisons;
+                js.leftShoulderComparison = leftShoulderSpeed / numberOfComparisons;
+                js.rightShoulderComparison = rightShoulderSpeed / numberOfComparisons;
+                js.leftHipComparison = leftHipSpeed / numberOfComparisons;
+                js.rightHipComparison = rightHipSpeed / numberOfComparisons;
+                js.leftKneeComparison = leftKneeSpeed / numberOfComparisons;
+                js.rightKneeComparison = rightKneeSpeed / numberOfComparisons;
+                js.leftFootComparison = leftFootSpeed / numberOfComparisons;
+                js.rightFootComparison = rightFootSpeed / numberOfComparisons;
+            }
+            catch (OverflowException)
+            {
+
+            }
 
             return js;
 
@@ -2282,24 +2358,33 @@ namespace KinectFitness
                 rightFootSpeed += patientSpeedData.ElementAt(i).rightFoot;
             }
 
+            try
+            {
+                int leftHandSpeedStat = Convert.ToInt16(Math.Round((leftHandSpeed / numberOfSpeedData * 100), 0));
+                int rightHandSpeedStat = Convert.ToInt16(Math.Round((rightHandSpeed / numberOfSpeedData * 100), 0));
+                int leftShoulderSpeedStat = Convert.ToInt16(Math.Round((leftShoulderSpeed / numberOfSpeedData * 100), 0));
+                int rightShoulderSpeedStat = Convert.ToInt16(Math.Round((rightShoulderSpeed / numberOfSpeedData * 100), 0));
+                int leftHipSpeedStat = Convert.ToInt16(Math.Round((leftHipSpeed / numberOfSpeedData * 100), 0));
+                int rightHipSpeedStat = Convert.ToInt16(Math.Round((rightHipSpeed / numberOfSpeedData * 100), 0));
+                int leftKneeSpeedStat = Convert.ToInt16(Math.Round((leftKneeSpeed / numberOfSpeedData * 100), 0));
+                int rightKneeSpeedStat = Convert.ToInt16(Math.Round((rightKneeSpeed / numberOfSpeedData * 100), 0));
+                int leftFootSpeedStat = Convert.ToInt16(Math.Round((leftFootSpeed / numberOfSpeedData * 100), 0));
+                int rightFootSpeedStat = Convert.ToInt16(Math.Round((rightFootSpeed / numberOfSpeedData * 100), 0));
 
-            int leftHandSpeedStat = Convert.ToInt16(Math.Round((leftHandSpeed / numberOfSpeedData * 100), 0));
-            int rightHandSpeedStat = Convert.ToInt16(Math.Round((rightHandSpeed / numberOfSpeedData * 100), 0));
-            int leftShoulderSpeedStat = Convert.ToInt16(Math.Round((leftShoulderSpeed / numberOfSpeedData * 100), 0));
-            int rightShoulderSpeedStat = Convert.ToInt16(Math.Round((rightShoulderSpeed / numberOfSpeedData * 100), 0));
-            int leftHipSpeedStat = Convert.ToInt16(Math.Round((leftHipSpeed / numberOfSpeedData * 100), 0));
-            int rightHipSpeedStat = Convert.ToInt16(Math.Round((rightHipSpeed / numberOfSpeedData * 100), 0));
-            int leftKneeSpeedStat = Convert.ToInt16(Math.Round((leftKneeSpeed / numberOfSpeedData * 100), 0));
-            int rightKneeSpeedStat = Convert.ToInt16(Math.Round((rightKneeSpeed / numberOfSpeedData * 100), 0));
-            int leftFootSpeedStat = Convert.ToInt16(Math.Round((leftFootSpeed / numberOfSpeedData * 100), 0));
-            int rightFootSpeedStat = Convert.ToInt16(Math.Round((rightFootSpeed / numberOfSpeedData * 100), 0));
-
-            //Get the Speed Accuracy
-            double speedAccuracy = (leftHandSpeedStat + rightHandSpeedStat + leftShoulderSpeedStat + rightShoulderSpeedStat
+                double speedAccuracy = (leftHandSpeedStat + rightHandSpeedStat + leftShoulderSpeedStat + rightShoulderSpeedStat
                 + leftHipSpeedStat + rightHipSpeedStat + leftKneeSpeedStat + rightKneeSpeedStat + leftFootSpeedStat
                 + rightFootSpeedStat) / 10;
 
-            return speedAccuracy;
+                return speedAccuracy;
+            }
+            catch (OverflowException)
+            {
+
+            }
+            //Get the Speed Accuracy
+            return 0;
+
+            
         }
 
         /**
@@ -2329,21 +2414,31 @@ namespace KinectFitness
                 rightKneeAngle += patientAnglesData.ElementAt(i).rightKnee;
             }
 
-            //Get Percentage of correct comparisons for each joint
-            int leftElbowAngleStat = Convert.ToInt16(Math.Round((leftElbowAngle / numberOfAngleData * 100), 0));
-            int rightElbowAngleStat = Convert.ToInt16(Math.Round((rightElbowAngle / numberOfAngleData * 100), 0));
-            int leftShoulderAngleStat = Convert.ToInt16(Math.Round((leftShoulderAngle / numberOfAngleData * 100), 0));
-            int rightShoulderAngleStat = Convert.ToInt16(Math.Round((rightShoulderAngle / numberOfAngleData * 100), 0));
-            int leftHipAngleStat = Convert.ToInt16(Math.Round((leftHipAngle / numberOfAngleData * 100), 0));
-            int rightHipAngleStat = Convert.ToInt16(Math.Round((rightHipAngle / numberOfAngleData * 100), 0));
-            int leftKneeAngleStat = Convert.ToInt16(Math.Round((leftKneeAngle / numberOfAngleData * 100), 0));
-            int rightKneeAngleStat = Convert.ToInt16(Math.Round((rightKneeAngle / numberOfAngleData * 100), 0));
+            try
+            {
+                //Get Percentage of correct comparisons for each joint
+                int leftElbowAngleStat = Convert.ToInt16(Math.Round((leftElbowAngle / numberOfAngleData * 100), 0));
+                int rightElbowAngleStat = Convert.ToInt16(Math.Round((rightElbowAngle / numberOfAngleData * 100), 0));
+                int leftShoulderAngleStat = Convert.ToInt16(Math.Round((leftShoulderAngle / numberOfAngleData * 100), 0));
+                int rightShoulderAngleStat = Convert.ToInt16(Math.Round((rightShoulderAngle / numberOfAngleData * 100), 0));
+                int leftHipAngleStat = Convert.ToInt16(Math.Round((leftHipAngle / numberOfAngleData * 100), 0));
+                int rightHipAngleStat = Convert.ToInt16(Math.Round((rightHipAngle / numberOfAngleData * 100), 0));
+                int leftKneeAngleStat = Convert.ToInt16(Math.Round((leftKneeAngle / numberOfAngleData * 100), 0));
+                int rightKneeAngleStat = Convert.ToInt16(Math.Round((rightKneeAngle / numberOfAngleData * 100), 0));
 
-            //Get the Joint Accuracy
-            double angleAccuracy = (leftElbowAngleStat + rightElbowAngleStat + leftShoulderAngleStat + rightShoulderAngleStat
-                + leftHipAngleStat + rightHipAngleStat + leftKneeAngleStat + rightKneeAngleStat) / 8;
+                //Get the Joint Accuracy
+                double angleAccuracy = (leftElbowAngleStat + rightElbowAngleStat + leftShoulderAngleStat + rightShoulderAngleStat
+                    + leftHipAngleStat + rightHipAngleStat + leftKneeAngleStat + rightKneeAngleStat) / 8;
 
-            return angleAccuracy;
+                return angleAccuracy;
+            }
+            catch (OverflowException)
+            {
+
+            }
+
+            return 0;
+            
         }
 
         /**
@@ -2358,18 +2453,9 @@ namespace KinectFitness
             speedStatsBox.Text = "Speed Accuracy: " + speedPrecision;
 
 
-            statsBackground.Opacity = 1;
-            angleStatsBox.Opacity = 1;
-            speedStatsBox.Opacity = 1;
-            statsTitle.Opacity = 1;
-            doneButtonImg.Opacity = 1;
-            doneButtonHoverImg.Opacity = 0;
-            Canvas.SetZIndex(statsBackground, 9);
-            Canvas.SetZIndex(angleStatsBox, 9);
-            Canvas.SetZIndex(speedStatsBox, 9);
-            Canvas.SetZIndex(statsTitle, 9);
-            Canvas.SetZIndex(doneButtonImg, 9);
-            Canvas.SetZIndex(doneButtonHoverImg, 9);
+            startNewCanvas(Stats, Kinect, false);
+            deInitializeKinectUI();
+            initializeDoneUI();
         }
 
         /**
@@ -2448,14 +2534,18 @@ namespace KinectFitness
             {
                 videoProgressBarTracker.Stop();
             }
-            closing = true;
-            StopKinect(kinectSensorChooser1.Kinect);
-            dispatcherTimer.Stop();
+            if (accuracyChecker != null)
+            {
+                accuracyChecker.Stop();
+            }
+            if (suggestionAnimator != null)
+            {
+                suggestionAnimator.Stop();
+            }
 
-            //myCommands.StopSpeechRecognition();
-            StartupWindow sw = new StartupWindow();
-            this.Close();
-            sw.Show();
+            startNewCanvas(StartUp, Stats, true);
+            deInitializeDoneUI();
+            InitializeStartUpUI();
         }
 
         private void KinectButton_Back(object sender, RoutedEventArgs e)
