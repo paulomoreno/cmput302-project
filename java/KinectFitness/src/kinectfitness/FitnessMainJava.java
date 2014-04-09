@@ -49,57 +49,62 @@ public class FitnessMainJava {
                                 public void run(){
                                     try {
                                         FitnessMainJava.startKinectApp();
+                                        Patient patient = new Patient();
+                                        patient.Patient("192.168.1.66");
+                                        Patient.startPatient(patient);
                                     } catch (IOException ex) {
                                         Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
                                     } catch (URISyntaxException ex) {
                                         Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-                                }
-                            }.start();
-                            
-                            
-                            new Thread() {
-                                public void run() {
-                                    try {
-                                        //server to listen for flags given by C# application
-
-                                        ServerSocket netServer = new ServerSocket(5001);
-                                        
-                                        String flag="";
-                                        while("".equals(flag))
-                                        {
-
-                                            Socket clientSocket = netServer.accept();
-                                            
-                                            System.err.println("accepted connection");
-                                            
-                                            In in = new In(clientSocket);
-                                            String value = in.readLine();
-                                            if(value != null)
-                                            {
-                                                flag = value;
-                                                
-                                                if(flag == "quit")
-                                                {
-                                                    System.err.println("received: ("+value+")");
-                                                    System.exit(0);
-                                                }
-                                                
-                                                System.err.println("received: ("+value+")");
-                                                break;
-                                            }
-                                            
-                                        }
-                                        
-                                        Patient patient = new Patient();
-                                        patient.Patient("172.16.42.3");
-                                        Patient.startPatient(patient);
-                                        
                                     } catch (Exception ex) {
                                         Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
                                     }
                                 }
                             }.start();
+                            
+                            
+//                            new Thread() {
+//                                public void run() {
+//                                    try {
+//                                        //server to listen for flags given by C# application
+//
+//                                        ServerSocket netServer = new ServerSocket(5001);
+//                                        
+//                                        String flag="";
+//                                        while("".equals(flag))
+//                                        {
+//
+//                                            Socket clientSocket = netServer.accept();
+//                                            
+//                                            System.err.println("accepted connection");
+//                                            
+//                                            In in = new In(clientSocket);
+//                                            String value = in.readLine();
+//                                            if(value != null)
+//                                            {
+//                                                flag = value;
+//                                                
+//                                                if(flag == "quit")
+//                                                {
+//                                                    System.err.println("received: ("+value+")");
+//                                                    System.exit(0);
+//                                                }
+//                                                
+//                                                System.err.println("received: ("+value+")");
+//                                                break;
+//                                            }
+//                                            
+//                                        }
+//                                        
+//                                        Patient patient = new Patient();
+//                                        patient.Patient("192.168.1.66");
+//                                        Patient.startPatient(patient);
+//                                        
+//                                    } catch (Exception ex) {
+//                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+//                                    }
+//                                }
+//                            }.start();
 
                             
                             

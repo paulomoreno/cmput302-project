@@ -108,7 +108,7 @@ namespace KinectFitness
             InitializeUI();
             InitializeStartUpUI();
 
-            //Kinect2JavaClient data = new Kinect2JavaClient("Start");
+           //Kinect2JavaClient data = new Kinect2JavaClient("Start");
             //data.sendFlag();
 
 
@@ -820,13 +820,14 @@ namespace KinectFitness
 
             try
             {
+                /*
                 Kinect2JavaClient quitMessage = new Kinect2JavaClient("quit");
                 quitMessage.sendFlag();
 
                 if(Kinect2JavaClient.socketForServer.Connected)
                 {
                     Kinect2JavaClient.socketForServer.Close();
-                }
+                }/**/
                 newThread.Abort();
                 control.ReleaseDevice();
             }

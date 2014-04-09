@@ -36,14 +36,14 @@ public class Patient_info extends Thread {
         int portNumber = 5020;
         try {
             // send patients alert to connect their bluetooth devices
-            //socket1 = new Socket(doctorIP, portNumber);
-            //ObjectOutputStream oos = new ObjectOutputStream(socket1.getOutputStream());
+            socket1 = new Socket(doctorIP, portNumber);
+            ObjectOutputStream oos = new ObjectOutputStream(socket1.getOutputStream());
             
-            BluetoothServer server = new BluetoothServer();
+            BluetoothServer server = new BluetoothServer(oos);
             server.runTest();
             //server.connectToPhone();
 
-            //socket1.close();
+            socket1.close();
         } catch (IOException ex) {
             Logger.getLogger(Patient.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InterruptedException ex) {
