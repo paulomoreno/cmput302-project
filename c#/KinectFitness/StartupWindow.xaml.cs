@@ -26,6 +26,7 @@ namespace KinectFitness
         Skeleton[] allSkeletons = new Skeleton[skeletonCount];
         KinectSensor ksensor;
         Skeleton first;
+        //AudioCommands myCommands;
 
         //Buttons
         Rect playButton;
@@ -52,7 +53,7 @@ namespace KinectFitness
             InitializeComponent();
             InitializeUI();
             //InitializeAudioCommands();
-            
+
             if (control.isConnected() == true)
             {
                 Console.WriteLine("control null");
@@ -349,12 +350,13 @@ namespace KinectFitness
         {
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
+            //myCommands.StopSpeechRecognition();
             this.Close();
 
             try
             {
-                //newThread.Abort();
-                //control.ReleaseDevice();
+                newThread.Abort();
+                control.ReleaseDevice();
             }
             catch (Exception ex) { }
 
@@ -365,9 +367,10 @@ namespace KinectFitness
             closing = true; 
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
+            //myCommands.StopSpeechRecognition();
             SelectLevelWindow slw = new SelectLevelWindow();
-            newThread.Abort();
-            control.ReleaseDevice();
+            //newThread.Abort();
+            //control.ReleaseDevice();
             this.Close();
             slw.Show();
             //this.NavigationService.Navigate(slw);            
@@ -378,6 +381,7 @@ namespace KinectFitness
             closing = true; 
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
+            //myCommands.StopSpeechRecognition();
             RecordWindow rw = new RecordWindow();
             this.Close();
             rw.Show();

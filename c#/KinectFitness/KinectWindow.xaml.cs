@@ -54,13 +54,14 @@ namespace KinectFitness
         List<JointAngles> patientAnglesData;
         List<JointSpeeds> patientSpeedData;
 
+        //Audio Command Listener
+        //AudioCommands myCommands;
 
         //Timers for matching skeleton and tracking video progress
         System.Windows.Threading.DispatcherTimer skeletonMatcherTimer;
         System.Windows.Threading.DispatcherTimer videoProgressBarTracker;
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
         System.Windows.Threading.DispatcherTimer accuracyChecker;
-        System.Windows.Threading.DispatcherTimer animator;
 
         //Hand Position
         Rect rightHandPos;
@@ -87,7 +88,7 @@ namespace KinectFitness
             InitializeComponent();
             //InitializeAudioCommands();
             initializeUI();
-            
+
             if (control.isConnected() == true)
             {
                 Console.WriteLine("control null");
@@ -179,7 +180,9 @@ namespace KinectFitness
             doneButton.Location = new Point(-900, -900);
 
             //Set video source for video player
+            
             LoadVideo();
+           
             //Get Length of Video
             FitnessPlayer.MediaOpened += new System.Windows.RoutedEventHandler(media_MediaOpened);
         }
@@ -209,11 +212,17 @@ namespace KinectFitness
             JointSpeeds js = new JointSpeeds();
             loadedSkeletonAngles = new List<JointAngles>();
             loadedSkeletonSpeeds = new List<JointSpeeds>();
+
+
             // Read the file and display it line by line.
             System.IO.StreamReader file =
                new System.IO.StreamReader(path + exercise);
+
+
             while ((line = file.ReadLine()) != null)
             {
+
+               
                 if(line.Contains("LSA"))
                 {
                     ja.leftShoulder = Convert.ToInt32(file.ReadLine());
@@ -296,9 +305,9 @@ namespace KinectFitness
             }
 
             file.Close();
-
             // Suspend the screen.
-            Console.ReadLine();
+            // Console.ReadLine();
+
         }
 
         /**
@@ -335,39 +344,25 @@ namespace KinectFitness
             skeletonMatcherTimer.Start();
         }
 
-        private void startAccuracyChecker()
+        private void startPointsBarDecliner()
         {
-            accuracyChecker = new System.Windows.Threading.DispatcherTimer();
-            accuracyChecker.Tick += new EventHandler(checkAccuracy);
-            accuracyChecker.Interval = new TimeSpan(0, 0, 7);
-            accuracyChecker.Start();
+            System.Windows.Threading.DispatcherTimer pointsBarDecliner;
+            pointsBarDecliner = new System.Windows.Threading.DispatcherTimer();
+            pointsBarDecliner.Tick += new EventHandler(declinePointsBar);
+            pointsBarDecliner.Interval = new TimeSpan(0, 0, 0, 0, 34);
+            pointsBarDecliner.Start();
         }
 
-        private void stopAccuracyChecker()
-        {
-            accuracyChecker.Stop();
-        }
 
         /**
-         * Check the Accuracy of the player periodically
+         * Slowly reduce points bar if player is not getting any points
+         * so player knows if they are not doing well
          */
-        private void checkAccuracy(object sender, EventArgs e)
+        private void declinePointsBar(object sender, EventArgs e)
         {
-            //Get angle and speed accuracy for last 100 frames
-            double anglePrecision = angleAccuracy(100);
-            double speedPrecision = speedAccuracy(100);
-            //debugger.Text = "Speed: " + speedPrecision.ToString();
-            //debugger.Text = "Angle: " + anglePrecision.ToString();
-            if (suggestionBox.Width <= 0)
-            {
-                startAnimation(anglePrecision, speedPrecision);
-            }
-            else
-            {
-                hideAnimation();
-            }
+            numberOfPtsBar -= 5;
+            setPoints();
         }
-
         /**
          * Starts the timer for the progress bar
          */
@@ -385,22 +380,6 @@ namespace KinectFitness
         private void updateVideoProgressBar(object sender, EventArgs e)
         {            
             videoProgressBar.Width = (FitnessPlayer.Position.TotalSeconds / totalMovieTime) * 668;
-        }
-
-        private void calibrateSkeletonSpeeds()
-        {
-            if (first == null)
-                return;
-            previousFrameJoints[0] = first.Joints[JointType.HandLeft];
-            previousFrameJoints[1] = first.Joints[JointType.HandRight];
-            previousFrameJoints[2] = first.Joints[JointType.ShoulderLeft];
-            previousFrameJoints[3] = first.Joints[JointType.ShoulderRight];
-            previousFrameJoints[4] = first.Joints[JointType.HipLeft];
-            previousFrameJoints[5] = first.Joints[JointType.HipRight];
-            previousFrameJoints[6] = first.Joints[JointType.KneeLeft];
-            previousFrameJoints[7] = first.Joints[JointType.KneeRight];
-            previousFrameJoints[8] = first.Joints[JointType.FootLeft];
-            previousFrameJoints[9] = first.Joints[JointType.FootRight];
         }
 
         /**
@@ -432,23 +411,19 @@ namespace KinectFitness
                     //debugger.Text = "Failure";
                 }
                 //Check Speeds
-                if (MatchSkeletonSpeeds(loadedSkeletonSpeeds.ElementAt(secondsPassedInVideo)) || MatchSkeletonSpeeds(loadedSkeletonSpeeds.ElementAt(secondsPassedInVideo - 1)) || MatchSkeletonSpeeds(loadedSkeletonSpeeds.ElementAt(secondsPassedInVideo + 1)))
+                if (MatchSkeletonSpeeds(loadedSkeletonSpeeds.ElementAt(secondsPassedInVideo)))
                 {
 
                 }
                 else
                 {
                 }
-                //Needed for getting skeleton speed in next frame
-                calibrateSkeletonSpeeds();
             }
             catch (ArgumentOutOfRangeException)
             {
                 debugger.Text = "done";
             }
         }
-
-
 
         /**
          * Checks if the skeleton data matches within certain
@@ -457,7 +432,7 @@ namespace KinectFitness
          */
         private bool MatchSkeletonAngles(JointAngles ja)
         {
-            patientAnglesData.Add(new JointAngles(0, 0, 0, 0, 0, 0, 0, 0));
+            patientAnglesData.Add(new JointAngles(1,1,1,1,1,1,1,1));
             int numberOfMatches = 0;
             if (first == null)
             {
@@ -465,20 +440,20 @@ namespace KinectFitness
             }
             int leftElbow = AngleBetweenJoints(first.Joints[JointType.HandLeft], first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft]);
             int rightElbow = AngleBetweenJoints(first.Joints[JointType.HandRight], first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight]);
-            int rightShoulder = AngleBetweenJoints(first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight], first.Joints[JointType.ShoulderCenter]);
+            int rightShoulder = AngleBetweenJoints(first.Joints[JointType.ElbowRight], first.Joints[JointType.ShoulderRight], first.Joints[JointType.ShoulderCenter]);          
             int leftShoulder = AngleBetweenJoints(first.Joints[JointType.ElbowLeft], first.Joints[JointType.ShoulderLeft], first.Joints[JointType.ShoulderCenter]);
             int leftHip = AngleBetweenJoints(first.Joints[JointType.ShoulderLeft], first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft]);
-            int rightHip = AngleBetweenJoints(first.Joints[JointType.ShoulderRight], first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight]);
+            int rightHip = AngleBetweenJoints(first.Joints[JointType.ShoulderRight], first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight]); 
             int leftKnee = AngleBetweenJoints(first.Joints[JointType.HipLeft], first.Joints[JointType.KneeLeft], first.Joints[JointType.FootLeft]);
             int rightKnee = AngleBetweenJoints(first.Joints[JointType.HipRight], first.Joints[JointType.KneeRight], first.Joints[JointType.FootRight]);
-
+                
             //Check if patient's joint angle is within +- 20 degrees of the exercise
             if (leftElbow < (ja.leftElbow - 20) || leftElbow > (ja.leftElbow + 20))
             {
                 patientAnglesData.Last().leftElbow = 0;
             }
             else
-            {
+            {                
                 //Number of matches goes up 1
                 numberOfMatches += 1;
                 //Points are added to the progress bar
@@ -486,7 +461,7 @@ namespace KinectFitness
                 //Points are added 
                 numberOfPts += 5;
                 setPoints();
-            }
+            }            
             if (rightElbow < (ja.rightElbow - 20) || rightElbow > (ja.rightElbow + 20))
             {
                 patientAnglesData.Last().rightElbow = 0;
@@ -538,6 +513,7 @@ namespace KinectFitness
             else
             {
                 numberOfMatches += 1;
+                numberOfPtsBar += 2;
                 numberOfPts += 5;
                 setPoints();
             }
@@ -564,10 +540,10 @@ namespace KinectFitness
                 setPoints();
             }
             //debugger.Text = "Left Elbow:" + patientData.Last().leftElbow + "\nLeft Shoulder:" + patientData.Last().leftShoulder + "\nLeft Hip:" + patientData.Last().leftHip + "\nKnee:" + patientData.Last().leftKnee;
-
+            
             //Check for Pause Gesture
-            if ((leftShoulder < 110) && (rightShoulder < 110) && (leftElbow > 145) && (rightElbow > 145)
-                && (leftHip > 145) && (rightHip > 145) && (leftKnee > 145) && (rightKnee > 145))
+            if ((leftShoulder < 100) && (rightShoulder < 100) && (leftElbow > 155) && (rightElbow > 155)
+                && (leftHip > 155) && (rightHip > 155) && (leftKnee > 155) && (rightKnee > 155))
             {
                 btnPlay_Click(new object(), new RoutedEventArgs());
             }
@@ -590,12 +566,11 @@ namespace KinectFitness
          */
         private bool MatchSkeletonSpeeds(JointSpeeds js)
         {
-            patientSpeedData.Add(new JointSpeeds(0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+            patientSpeedData.Add(new JointSpeeds(1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
             if (first == null)
             {
                 return false;
             }
-
             int leftHand = SpeedOfJoint(first.Joints[JointType.HandLeft], previousFrameJoints.ElementAt(0));
             int rightHand = SpeedOfJoint(first.Joints[JointType.HandRight], previousFrameJoints.ElementAt(1));
             int leftShoulder = SpeedOfJoint(first.Joints[JointType.ShoulderLeft], previousFrameJoints.ElementAt(2));
@@ -607,14 +582,8 @@ namespace KinectFitness
             int leftFoot = SpeedOfJoint(first.Joints[JointType.FootLeft], previousFrameJoints.ElementAt(8));
             int rightFoot = SpeedOfJoint(first.Joints[JointType.FootRight], previousFrameJoints.ElementAt(9));
 
-            if (leftHand < -3)
-                debugger.Text = "Left";
-            else if (leftHand <= 3)
-                debugger.Text = "Stopped";
-            else
-                debugger.Text = "Right";
             //Check to see if participant is standing still
-            //If they are standing still for more than 7 seconds, start penalizing them
+            //If they are standing still for more than 10 seconds, start penalizing them
             if (leftHand < 5 && rightHand < 5 && leftFoot < 5 && rightFoot < 5 && leftHip < 5 && rightHip < 5)
             {
                 //Start the timer if it has not started
@@ -624,130 +593,157 @@ namespace KinectFitness
                 }
                 //If the person has been standing still for 10 seconds or more
                 //Give them 0 points for this frame
-                if (standingStillTimer.ElapsedMilliseconds > 7000)
+                if (standingStillTimer.ElapsedMilliseconds > 10000)
                 {
-                    //debugger.Text = "Standing Still!";
+                    debugger.Text = "Standing Still!";
                     patientSpeedData[patientSpeedData.Count - 1] = new JointSpeeds(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-                    patientAnglesData[patientAnglesData.Count - 1] = new JointAngles(0, 0, 0, 0, 0, 0, 0, 0);
                 }
             }
-            //If patient is moving at least a little
+                //If patient is moving at least a little
             else
             {
-                //debugger.Text = "Moving!";
+                debugger.Text = "Moving!";
                 standingStillTimer.Reset();
             }
-            if ((leftHand > js.leftHand - 5) && (leftHand < js.leftHand + 5))
-            {
-                patientSpeedData.Last().leftHand = 1;
+
+            if ((leftHand >= 5 && js.leftHand >= 5) || (leftHand < 5 && js.leftHand < 5) || ((leftHand > js.leftHand - 3) && (leftHand < js.leftHand + 3)) )
+            {                
             }
-            else if (leftHand >= 5 || leftHand <= -5)
+            else if (leftHand >= 5)
             {
                 //Half Points for effort
                 patientSpeedData.Last().leftHand = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for left hand speed
+                patientSpeedData.Last().leftHand = 0;
             }
-            if (((rightHand > js.rightHand - 5) && (rightHand < js.rightHand + 5)))
+            if ((rightHand >= 5 && js.rightHand >= 5) || (rightHand <= 5 && js.rightHand <= 5) || ((rightHand > js.rightHand - 3) && (rightHand < js.rightHand + 3)) )
             {
-                patientSpeedData.Last().rightHand = 1;
+
             }
-            else if (rightHand >= 5 || rightHand <= -5)
+            else if (rightHand >= 5)
             {
                 patientSpeedData.Last().rightHand = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for right hand speed
+                patientSpeedData.Last().rightHand = 0;
             }
-            if (((leftShoulder > js.leftShoulder - 5) && (leftShoulder < js.leftShoulder + 5)))
-            {
-                patientSpeedData.Last().leftShoulder = 1;
+            if ((leftShoulder >= 5 && js.leftShoulder >= 5) || (leftShoulder <= 5 && js.leftShoulder <= 5) || ((leftShoulder > js.leftShoulder - 3) && (leftShoulder < js.leftShoulder + 3)) )
+            {                
             }
-            else if (leftShoulder >= 5 || leftShoulder <= -5)
+            else if (leftShoulder >= 5)
             {
                 patientSpeedData.Last().leftShoulder = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for left shoulder speed
+                patientSpeedData.Last().leftShoulder = 0;
             }
-            if (((rightShoulder > js.rightShoulder - 5) && (rightShoulder < js.rightShoulder + 5)))
+            if ((rightShoulder >= 5 && js.rightShoulder >= 5) || (rightShoulder <= 5 && js.rightShoulder <= 5) || ((rightShoulder > js.rightShoulder - 3) && (rightShoulder < js.rightShoulder + 3)))
             {
-                patientSpeedData.Last().rightShoulder = 1;
             }
-            else if (rightShoulder >= 5 || rightShoulder <= -5)
+            else if (rightShoulder >= 5)
             {
                 patientSpeedData.Last().rightShoulder = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for right shoulder speed
+                patientSpeedData.Last().rightShoulder = 0;
             }
-            if (((leftHip > js.leftHip - 5) && (leftHip < js.leftHip + 5)))
+            if ((leftHip >= 5 && js.leftHip >= 5) || (leftHip <= 5 && js.leftHip <= 5) || ((leftHip > js.leftHip - 3) && (leftHip < js.leftHip + 3)))
             {
-                patientSpeedData.Last().leftHip = 1;
             }
-            else if (leftHip >= 5 || leftHip <= -5)
+            else if (leftHip >= 5)
             {
                 patientSpeedData.Last().leftHip = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for left hip speed
+                patientSpeedData.Last().leftHip = 0;
             }
-            if (((rightHip > js.rightHip - 5) && (rightHip < js.rightHip + 5)))
+            if ((rightHip >= 5 && js.rightHip >= 5) || (rightHip <= 5 && js.rightHip <= 5) || ((rightHip > js.rightHip - 3) && (rightHip < js.rightHip + 3)))
             {
-                patientSpeedData.Last().rightHip = 1;
+                
             }
-            else if (rightHip >= 5 || rightHip <= -5)
+            else if (rightHip >= 5)
             {
                 patientSpeedData.Last().rightHip = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for right hip speed
+                patientSpeedData.Last().rightHip = 0;
             }
-            if (((leftKnee > js.leftKnee - 5) && (leftKnee < js.leftKnee + 5)))
-            {
-                patientSpeedData.Last().leftKnee = 1;
+            if ((leftKnee >= 5 && js.leftKnee >= 5) || (leftKnee <= 5 && js.leftKnee <= 5) || ((leftKnee > js.leftKnee - 3) && (leftKnee < js.leftKnee + 3)))
+            {                
             }
-            else if (leftKnee >= 5 || leftKnee <= -5)
+            else if (leftKnee >= 5)
             {
                 patientSpeedData.Last().leftKnee = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for left Knee speed
+                patientSpeedData.Last().leftKnee = 0;
             }
-            if (((rightKnee > js.rightKnee - 5) && (rightKnee < js.rightKnee + 5)))
+            if ((rightKnee >= 5 && js.rightKnee >= 5) || (rightKnee <= 5 && js.rightKnee <= 5) || ((rightKnee > js.rightKnee - 3) && (rightKnee < js.rightKnee + 3)))
             {
-                patientSpeedData.Last().rightKnee = 1;
+
             }
-            else if (rightKnee >= 5 || rightKnee <= -5)
+            else if (rightKnee >= 5)
             {
                 patientSpeedData.Last().rightKnee = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for right Knee speed
+                patientSpeedData.Last().rightKnee = 0;
             }
-            if ((leftFoot > js.leftFoot - 5) && (leftFoot < js.leftFoot + 5))
+            if ((leftFoot >= 5 && js.leftFoot >= 5) || (leftFoot <= 5 && js.leftFoot <= 5) || ((leftFoot > js.leftFoot - 3) && (leftFoot < js.leftFoot + 3)))
             {
-                patientSpeedData.Last().leftFoot = 1;
+                //debugger.Foreground = Brushes.Green;
             }
-            else if (leftFoot >= 5 || leftFoot <= -5)
+            else if (leftFoot >= 5)
             {
                 patientSpeedData.Last().leftFoot = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for leftFoot speed
+                patientSpeedData.Last().leftFoot = 0;
+                //debugger.Foreground = Brushes.Red;
             }
-            if (((rightFoot > js.rightFoot - 5) && (rightFoot < js.rightFoot + 5)))
+            if ((rightFoot >= 5 && js.rightFoot >= 5) || (rightFoot <= 5 && js.rightFoot <= 5) || ((rightFoot > js.rightFoot - 3) && (rightFoot < js.rightFoot + 3)))
             {
-                patientSpeedData.Last().rightFoot = 1;
+
             }
-            else if (rightFoot >= 5 || rightFoot <= -5)
+            else if (rightFoot >= 5)
             {
                 patientSpeedData.Last().rightFoot = 0.5;
             }
             else
             {
+                //Give patient a 0 score for this frame for right foot speed
+                patientSpeedData.Last().rightFoot = 0;
             }
+
+            previousFrameJoints[0] = first.Joints[JointType.HandLeft];
+            previousFrameJoints[1] = first.Joints[JointType.HandRight];
+            previousFrameJoints[2] = first.Joints[JointType.ShoulderLeft];
+            previousFrameJoints[3] = first.Joints[JointType.ShoulderRight];
+            previousFrameJoints[4] = first.Joints[JointType.HipLeft];
+            previousFrameJoints[5] = first.Joints[JointType.HipRight];
+            previousFrameJoints[6] = first.Joints[JointType.KneeLeft];
+            previousFrameJoints[7] = first.Joints[JointType.KneeRight];
+            previousFrameJoints[8] = first.Joints[JointType.FootLeft];
+            previousFrameJoints[9] = first.Joints[JointType.FootRight];
             return true;
         }
 
@@ -833,15 +829,17 @@ namespace KinectFitness
             string line;
             // Read the file and display it line by line.
 
+
             String path = System.AppDomain.CurrentDomain.BaseDirectory;
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
 
-
+            
             System.IO.StreamReader file =
                new System.IO.StreamReader(path + "\\FitnessVideos\\video.txt");
+
             while ((line = file.ReadLine()) != null)
             {
                 if (line.Contains("warmUp"))
@@ -863,7 +861,7 @@ namespace KinectFitness
             file.Close();
 
             // Suspend the screen.
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         //Find length of video
@@ -994,6 +992,7 @@ namespace KinectFitness
             closing = true;           
             dispatcherTimer.Stop();
             StopKinect(kinectSensorChooser1.Kinect);
+            //myCommands.StopSpeechRecognition();
             SelectLevelWindow sw = new SelectLevelWindow();            
             sw.Show();
             hoverTimer.Reset();
@@ -1205,16 +1204,9 @@ namespace KinectFitness
             dy = second.Position.Y - first.Position.Y;
             dz = second.Position.Z - first.Position.Z;
 
-            int i;
-            if (dx < 0)
-                i = -1;
-            else
-                i = 1;
-
-
             speed = Math.Sqrt((dx * dx) + (dy * dy) + (dz * dz)) * 100;
             int speedRounded = Convert.ToInt32(speed);
-            return i * speedRounded;
+            return speedRounded;
         }
 
 
@@ -1374,84 +1366,6 @@ namespace KinectFitness
         }
 
 
-        //When called, it starts the Suggestion Box Animation
-        private void startAnimation(double anglePrecision, double speedPrecision)
-        {
-            double averagePrecision = (anglePrecision + speedPrecision) / 2;
-            if (averagePrecision > 80)
-            {
-                suggestionBox.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF19B419");
-                suggestionBox.Text = "Great Work!";
-            }
-            else if (averagePrecision > 60)
-            {
-                suggestionBox.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF19B419");
-                suggestionBox.Text = "Not Bad!";
-            }
-            else if (averagePrecision > 40)
-            {
-                suggestionBox.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFF89F00");
-                suggestionBox.Text = "Okay..";
-            }
-            else if (averagePrecision > 20)
-            {
-                suggestionBox.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFF80000");
-                suggestionBox.Text = "Not Good";
-            }
-            else if (averagePrecision > 0)
-            {
-                suggestionBox.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFF80000");
-                suggestionBox.Text = "Are you \neven trying?";
-            }
-            else
-            {
-                suggestionBox.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFF80000");
-                suggestionBox.Text = "Start Moving!";
-            }
-            animator = new System.Windows.Threading.DispatcherTimer();
-            animator.Tick += new EventHandler(animateShowSuggestionBox);
-            animator.Interval = new TimeSpan(0, 0, 0, 0, 10);
-            animator.Start();
-        }
-
-        private void hideAnimation()
-        {
-            animator = new System.Windows.Threading.DispatcherTimer();
-            animator.Tick += new EventHandler(animateHideSuggestionBox);
-            animator.Interval = new TimeSpan(0, 0, 0, 0, 10);
-            animator.Start();
-        }
-
-        /**
-         * Show the suggestion box through animation
-         */
-        private void animateShowSuggestionBox(object sender, EventArgs e)
-        {
-            if (suggestionBox.Width < 254)
-            {
-                suggestionBox.Width += 8;
-            }
-            else
-            {
-                animator.Stop();
-            }
-        }
-
-        /**
-         * Hide the suggestion box through animation
-         */
-        private void animateHideSuggestionBox(object sender, EventArgs e)
-        {
-            if (suggestionBox.Width > 0)
-            {
-                suggestionBox.Width -= 8;
-            }
-            else
-            {
-                animator.Stop();
-            }
-        }
-
         /*
          * Media Player Stuff
          */
@@ -1490,6 +1404,8 @@ namespace KinectFitness
                 startPlaybackSkeleton();
                 //Start the video progress bar
                 startVideoProgressBar();
+                //Start the declining points bar
+                startPointsBarDecliner();
                 //Remove Big Play Button
                 removeBigPlayButton();
             }
@@ -1560,10 +1476,10 @@ namespace KinectFitness
             {
                 videoProgressBarTracker.Stop();
             }
-            closing = true;
-            StopKinect(kinectSensorChooser1.Kinect);
+            closing = true;           
             dispatcherTimer.Stop();
-            
+            StopKinect(kinectSensorChooser1.Kinect);
+            //myCommands.StopSpeechRecognition();
             StartupWindow sw = new StartupWindow();
             this.Close();
             sw.Show();        
@@ -1576,6 +1492,8 @@ namespace KinectFitness
         {
             //Create Done Button and remove other buttons
             createStatsView();
+            //Compile the stats for the patient
+            compileStats();
             //Display the stats
             showStats();
             //Start up the hover checker
@@ -1599,11 +1517,21 @@ namespace KinectFitness
             bigPlayIcon.Location = new Point(-200, -200);
         }
 
-        
-
-        //Get Speed Accuracy
-        private double speedAccuracy(int numberOfSpeedData)
+        /**
+         * Compile the patients stats on how they did 
+         * with the exercise
+         */
+        private void compileStats()
         {
+            double leftElbowAngle = 0;
+            double rightElbowAngle = 0;
+            double leftShoulderAngle = 0;
+            double rightShoulderAngle = 0;
+            double leftHipAngle = 0;
+            double rightHipAngle = 0;
+            double leftKneeAngle = 0;
+            double rightKneeAngle = 0;
+
             double leftHandSpeed = 0;
             double rightHandSpeed = 0;
             double leftShoulderSpeed = 0;
@@ -1616,53 +1544,7 @@ namespace KinectFitness
             double rightFootSpeed = 0;
 
             //Get Number of corrrect comparisons for each joint
-            for (int i = patientSpeedData.Count() - 1; (i >= patientSpeedData.Count() - numberOfSpeedData) && (i >= 0); i--)
-            {
-                leftHandSpeed += patientSpeedData.ElementAt(i).leftHand;
-                rightHandSpeed += patientSpeedData.ElementAt(i).rightHand;
-                leftShoulderSpeed += patientSpeedData.ElementAt(i).leftShoulder;
-                rightShoulderSpeed += patientSpeedData.ElementAt(i).rightShoulder;
-                leftHipSpeed += patientSpeedData.ElementAt(i).leftHip;
-                rightHipSpeed += patientSpeedData.ElementAt(i).rightHip;
-                leftKneeSpeed += patientSpeedData.ElementAt(i).leftKnee;
-                rightKneeSpeed += patientSpeedData.ElementAt(i).rightKnee;
-                leftFootSpeed += patientSpeedData.ElementAt(i).leftFoot;
-                rightFootSpeed += patientSpeedData.ElementAt(i).rightFoot;
-            }
-
-
-            int leftHandSpeedStat = Convert.ToInt16(Math.Round((leftHandSpeed / numberOfSpeedData * 100), 0));
-            int rightHandSpeedStat = Convert.ToInt16(Math.Round((rightHandSpeed / numberOfSpeedData * 100), 0));
-            int leftShoulderSpeedStat = Convert.ToInt16(Math.Round((leftShoulderSpeed / numberOfSpeedData * 100), 0));
-            int rightShoulderSpeedStat = Convert.ToInt16(Math.Round((rightShoulderSpeed / numberOfSpeedData * 100), 0));
-            int leftHipSpeedStat = Convert.ToInt16(Math.Round((leftHipSpeed / numberOfSpeedData * 100), 0));
-            int rightHipSpeedStat = Convert.ToInt16(Math.Round((rightHipSpeed / numberOfSpeedData * 100), 0));
-            int leftKneeSpeedStat = Convert.ToInt16(Math.Round((leftKneeSpeed / numberOfSpeedData * 100), 0));
-            int rightKneeSpeedStat = Convert.ToInt16(Math.Round((rightKneeSpeed / numberOfSpeedData * 100), 0));
-            int leftFootSpeedStat = Convert.ToInt16(Math.Round((leftFootSpeed / numberOfSpeedData * 100), 0));
-            int rightFootSpeedStat = Convert.ToInt16(Math.Round((rightFootSpeed / numberOfSpeedData * 100), 0));
-
-            //Get the Speed Accuracy
-            double speedAccuracy = (leftHandSpeedStat + rightHandSpeedStat + leftShoulderSpeedStat + rightShoulderSpeedStat
-                + leftHipSpeedStat + rightHipSpeedStat + leftKneeSpeedStat + rightKneeSpeedStat + leftFootSpeed
-                + rightFootSpeedStat) / 10;
-
-            return speedAccuracy;
-        }
-
-        private double angleAccuracy(int numberOfAngleData)
-        {
-            double leftElbowAngle = 0;
-            double rightElbowAngle = 0;
-            double leftShoulderAngle = 0;
-            double rightShoulderAngle = 0;
-            double leftHipAngle = 0;
-            double rightHipAngle = 0;
-            double leftKneeAngle = 0;
-            double rightKneeAngle = 0;
-
-            //Get Number of corrrect comparisons for each joint
-            for (int i = patientAnglesData.Count() - 1; (i >= patientAnglesData.Count() - numberOfAngleData) && (i >= 0); i--)
+            for (int i = 0; i < patientAnglesData.Count(); i++)
             {
                 leftElbowAngle += patientAnglesData.ElementAt(i).leftElbow;
                 rightElbowAngle += patientAnglesData.ElementAt(i).rightElbow;
@@ -1674,21 +1556,65 @@ namespace KinectFitness
                 rightKneeAngle += patientAnglesData.ElementAt(i).rightKnee;
             }
 
+            //Get Number of corrrect comparisons for each joint
+            for (int i = 0; i < patientSpeedData.Count(); i++)
+            {
+                leftHandSpeed += patientSpeedData.ElementAt(i).leftHand;
+                rightHandSpeed += patientSpeedData.ElementAt(i).rightHand;
+                leftShoulderSpeed += patientSpeedData.ElementAt(i).leftShoulder;
+                rightShoulderSpeed += patientSpeedData.ElementAt(i).rightShoulder;
+                leftHipSpeed += patientSpeedData.ElementAt(i).leftHip;
+                rightHipSpeed += patientSpeedData.ElementAt(i).rightHip;
+                leftKneeSpeed += patientSpeedData.ElementAt(i).leftKnee;
+                rightKneeSpeed += patientSpeedData.ElementAt(i).rightKnee;
+                leftFootSpeed += patientSpeedData.ElementAt(i).leftFoot;
+                rightFootSpeed += patientSpeedData.ElementAt(i).rightFoot;
+            } 
+
             //Get Percentage of correct comparisons for each joint
-            int leftElbowAngleStat = Convert.ToInt16(Math.Round((leftElbowAngle / numberOfAngleData * 100), 0));
-            int rightElbowAngleStat = Convert.ToInt16(Math.Round((rightElbowAngle / numberOfAngleData * 100), 0));
-            int leftShoulderAngleStat = Convert.ToInt16(Math.Round((leftShoulderAngle / numberOfAngleData * 100), 0));
-            int rightShoulderAngleStat = Convert.ToInt16(Math.Round((rightShoulderAngle / numberOfAngleData * 100), 0));
-            int leftHipAngleStat = Convert.ToInt16(Math.Round((leftHipAngle / numberOfAngleData * 100), 0));
-            int rightHipAngleStat = Convert.ToInt16(Math.Round((rightHipAngle / numberOfAngleData * 100), 0));
-            int leftKneeAngleStat = Convert.ToInt16(Math.Round((leftKneeAngle / numberOfAngleData * 100), 0));
-            int rightKneeAngleStat = Convert.ToInt16(Math.Round((rightKneeAngle / numberOfAngleData * 100), 0));
+            double totalAngleComparisons = patientAnglesData.Count();
+            int leftElbowAngleStat = Convert.ToInt16(Math.Round((leftElbowAngle / totalAngleComparisons * 100), 0));
+            int rightElbowAngleStat = Convert.ToInt16(Math.Round((rightElbowAngle / totalAngleComparisons * 100), 0));
+            int leftShoulderAngleStat = Convert.ToInt16(Math.Round((leftShoulderAngle / totalAngleComparisons * 100), 0));
+            int rightShoulderAngleStat = Convert.ToInt16(Math.Round((rightShoulderAngle / totalAngleComparisons * 100), 0));
+            int leftHipAngleStat = Convert.ToInt16(Math.Round((leftHipAngle / totalAngleComparisons * 100), 0));
+            int rightHipAngleStat = Convert.ToInt16(Math.Round((rightHipAngle / totalAngleComparisons * 100), 0));
+            int leftKneeAngleStat = Convert.ToInt16(Math.Round((leftKneeAngle / totalAngleComparisons * 100), 0));
+            int rightKneeAngleStat = Convert.ToInt16(Math.Round((rightKneeAngle / totalAngleComparisons * 100), 0));
 
-            //Get the Joint Accuracy
-            double angleAccuracy = (leftElbowAngleStat + rightElbowAngleStat + leftShoulderAngleStat + rightShoulderAngleStat
-                + leftHipAngleStat + rightHipAngleStat + leftKneeAngleStat + rightKneeAngleStat) / 8;
+            double totalSpeedComparisons = patientSpeedData.Count();
+            int leftHandSpeedStat = Convert.ToInt16(Math.Round((leftHandSpeed / totalSpeedComparisons * 100), 0));
+            int rightHandSpeedStat = Convert.ToInt16(Math.Round((rightHandSpeed / totalSpeedComparisons * 100), 0));
+            int leftShoulderSpeedStat = Convert.ToInt16(Math.Round((leftShoulderSpeed / totalSpeedComparisons * 100), 0));
+            int rightShoulderSpeedStat = Convert.ToInt16(Math.Round((rightShoulderSpeed / totalSpeedComparisons * 100), 0));
+            int leftHipSpeedStat = Convert.ToInt16(Math.Round((leftHipSpeed / totalSpeedComparisons * 100), 0));
+            int rightHipSpeedStat = Convert.ToInt16(Math.Round((rightHipSpeed / totalSpeedComparisons * 100), 0));
+            int leftKneeSpeedStat = Convert.ToInt16(Math.Round((leftKneeSpeed / totalSpeedComparisons * 100), 0));
+            int rightKneeSpeedStat = Convert.ToInt16(Math.Round((rightKneeSpeed / totalSpeedComparisons * 100), 0));
+            int leftFootSpeedStat = Convert.ToInt16(Math.Round((leftFootSpeed / totalSpeedComparisons * 100), 0));
+            int rightFootSpeedStat = Convert.ToInt16(Math.Round((rightFootSpeed / totalSpeedComparisons * 100), 0));
 
-            return angleAccuracy;
+            
+            // Put this into the Stats box at the end of the video
+            angleStatsBox.Text = "Angle Accuracy \nLeft Elbow: " + leftElbowAngleStat +
+                "%\nRight Elbow: " + rightElbowAngleStat +
+                "%\nLeft Shoulder: " + leftShoulderAngleStat +
+                "%\nRight Shoulder: " + rightShoulderAngleStat +
+                "%\nLeft Hip: " + leftHipAngleStat +
+                "%\nRight Hip: " + rightHipAngleStat +
+                "%\nLeft Knee: " + leftKneeAngleStat +
+                "%\nRight Knee: " + rightKneeAngleStat + "%";
+
+            speedStatsBox.Text = "Speed Accuracy \nLeft Hand: " + leftHandSpeedStat +
+                "%\nRight Hand: " + rightHandSpeedStat +
+                "%\nLeft Shoulder: " + leftShoulderSpeedStat +
+                "%\nRight Shoulder: " + rightShoulderSpeedStat +
+                "%\nLeft Hip: " + leftHipSpeedStat +
+                "%\nRight Hip: " + rightHipSpeedStat +
+                "%\nLeft Knee: " + leftKneeSpeedStat +
+                "%\nRight Knee: " + rightKneeSpeedStat + 
+                "%\nLeft Foot: " + leftFootSpeedStat + 
+                "%\nRight Foot: " + rightFootSpeedStat + "%";
         }
 
         /**
@@ -1696,13 +1622,6 @@ namespace KinectFitness
          */
         private void showStats()
         {
-            double anglePrecision = angleAccuracy(patientAnglesData.Count());
-            double speedPrecision = speedAccuracy(patientSpeedData.Count());
-            // Put this into the Stats box at the end of the video
-            angleStatsBox.Text = "Angle Accuracy: " + anglePrecision;
-            speedStatsBox.Text = "Speed Accuracy: " + speedPrecision;
-
-
             statsBackground.Opacity = 1;
             angleStatsBox.Opacity = 1;
             speedStatsBox.Opacity = 1;
@@ -1732,7 +1651,7 @@ namespace KinectFitness
             }
             catch (Exception ex) { }
             //AudioCommands.StopSpeechRecognition(myCommands);
-           // myCommands = null;
+            //myCommands = null;
         }
 
     }

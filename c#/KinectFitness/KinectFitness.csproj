@@ -70,7 +70,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Coding4Fun.Kinect.Wpf">
-      <HintPath>..\..\..\..\workspace\cmput302-project-master\c#\KinectFitness\Dependencies\Coding4Fun.Kinect.Wpf.dll</HintPath>
+      <HintPath>..\..\..\..\Downloads\HCI\KinectforWindowsSDKV1\KinectforWindowsSDKV1\Dependencies\Coding4Fun.Kinect.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Kinect, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Samples.Kinect.WpfViewers, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -105,9 +105,11 @@
     <Compile Include="Controller.cs" />
     <Compile Include="JointAngles.cs" />
     <Compile Include="JointSpeeds.cs" />
+    <Compile Include="Kinect2JavaClient.cs" />
     <Compile Include="KinectWindow.xaml.cs">
       <DependentUpon>KinectWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PatientTcpServer.cs" />
     <Compile Include="RecordWindow.xaml.cs">
       <DependentUpon>RecordWindow.xaml</DependentUpon>
     </Compile>

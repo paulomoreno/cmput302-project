@@ -1,5 +1,30 @@
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\bin\x64\Release\Microsoft.Samples.Kinect.WpfViewers.dll
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\bin\x64\Release\Microsoft.Samples.Kinect.WpfViewers.pdb
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectSettings.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectSensorChooser.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectAudioViewer.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectDepthViewer.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectColorViewer.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectDiagnosticViewer.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectSettings.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectSkeletonViewer.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\Microsoft.Samples.Kinect.WpfViewers_MarkupCompile.cache
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\Microsoft.Samples.Kinect.WpfViewers_MarkupCompile.lref
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectSensorChooser.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectAudioViewer.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectDepthViewer.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectColorViewer.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectDiagnosticViewer.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectSkeletonViewer.baml
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\Microsoft.Samples.Kinect.WpfViewers.g.resources
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\Microsoft.Samples.Kinect.WpfViewers.Properties.Resources.resources
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\Microsoft.Samples.Kinect.WpfViewers.csproj.GenerateResource.Cache
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\Microsoft.Samples.Kinect.WpfViewers.dll
+C:\Users\Vinicius Lovato\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\Microsoft.Samples.Kinect.WpfViewers.pdb
 C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\bin\x64\Release\Microsoft.Samples.Kinect.WpfViewers.dll
 C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\bin\x64\Release\Microsoft.Samples.Kinect.WpfViewers.pdb
+C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\Microsoft.Samples.Kinect.WpfViewers.csprojResolveAssemblyReference.cache
 C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectSettings.baml
 C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectSensorChooser.g.cs
 C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\Dependencies\KinectWpfViewers\obj\x64\Release\KinectAudioViewer.g.cs
