@@ -12,7 +12,8 @@ namespace KinectFitness
 {
     class PatientTcpServer
     {
-        static TcpListener tcpListener;
+        public static TcpListener tcpListener;
+        public static Thread thread;
         static String heartRate;
 
         public static void getHeartRate()
@@ -23,9 +24,8 @@ namespace KinectFitness
             tcpListener.Start();
       
             //create a new thread and insert this code there! otherwise it will freeze up the entire UI
-            Thread thread = new Thread(PatientTcpServer.listenToHeart);
+            thread = new Thread(PatientTcpServer.listenToHeart);
             thread.Start();
-            //client.Close();
             //tcpListener.Stop();
         }
 

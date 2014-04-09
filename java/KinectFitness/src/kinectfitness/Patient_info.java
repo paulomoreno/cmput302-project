@@ -38,11 +38,9 @@ public class Patient_info extends Thread {
             // send patients alert to connect their bluetooth devices
             //socket1 = new Socket(doctorIP, portNumber);
             //ObjectOutputStream oos = new ObjectOutputStream(socket1.getOutputStream());
-            System.err.println("1");
+            
             BluetoothServer server = new BluetoothServer();
-            System.err.println("2");
             server.runTest();
-            System.err.println("3");
             //server.connectToPhone();
 
             //socket1.close();

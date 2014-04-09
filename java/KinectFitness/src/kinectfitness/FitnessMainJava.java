@@ -78,20 +78,22 @@ public class FitnessMainJava {
                                             if(value != null)
                                             {
                                                 flag = value;
+                                                
+                                                if(flag == "quit")
+                                                {
+                                                    System.err.println("received: ("+value+")");
+                                                    System.exit(0);
+                                                }
+                                                
                                                 System.err.println("received: ("+value+")");
                                                 break;
                                             }
                                             
                                         }
                                         
-                                        System.err.println("main 1");
                                         Patient patient = new Patient();
-                                         System.err.println("main 2");
                                         patient.Patient("172.16.42.3");
-                                         System.err.println("main 3");
                                         Patient.startPatient(patient);
-                                         System.err.println("main 4");
-                                        /**/
                                         
                                     } catch (Exception ex) {
                                         Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);

@@ -171,10 +171,10 @@ public class BluetoothServer {
     public void runTest() throws IOException, InterruptedException {
         new Thread() {
             public void run() {
-                try {
+//                try {
                     //Open socket to send data to kinect application
-                    Socket destinationSocket = new Socket("127.0.0.1", 7003);
-                    DataOutputStream dataOutputStream = new DataOutputStream(destinationSocket.getOutputStream());
+                    //Socket destinationSocket = new Socket("127.0.0.1", 7003);
+                    //DataOutputStream dataOutputStream = new DataOutputStream(destinationSocket.getOutputStream());
 
                     //Integer i = 0;
                     while (true) {
@@ -191,21 +191,21 @@ public class BluetoothServer {
                         //BluetoothServer.doctorOutput.reset();
 
                         // send data to C# application
-                        dataOutputStream.writeBytes(String.valueOf(patient_info.heart_rate) + "||" + String.valueOf(patient_info.O2)
-                                + "||" + String.valueOf(patient_info.blood_pressure[0]) + "/" + patient_info.blood_pressure[1] + "\n");
+                        //dataOutputStream.writeBytes(String.valueOf(patient_info.heart_rate) + "||" + String.valueOf(patient_info.O2)
+                               // + "||" + String.valueOf(patient_info.blood_pressure[0]) + "/" + patient_info.blood_pressure[1] + "\n");
 
-                        System.out.println("patient info");
-                        System.out.println("heart rate: " + patient_info.heart_rate);
-                        System.out.println("oximeter rate: " + patient_info.O2);
-                        System.out.println("blood pressure: " + patient_info.blood_pressure[0] + "/" + patient_info.blood_pressure[1]);
+//                        System.out.println("patient info");
+//                        System.out.println("heart rate: " + patient_info.heart_rate);
+//                        System.out.println("oximeter rate: " + patient_info.O2);
+//                        System.out.println("blood pressure: " + patient_info.blood_pressure[0] + "/" + patient_info.blood_pressure[1]);
                         //i++;
                     }
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+//                } catch (UnknownHostException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
                 }
-            }
+//            }
         }.start();
 
         //Thread.sleep(5000);

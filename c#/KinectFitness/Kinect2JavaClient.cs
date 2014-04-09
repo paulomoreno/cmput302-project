@@ -10,6 +10,7 @@ namespace KinectFitness
 {
     class Kinect2JavaClient
     {
+        public static TcpClient socketForServer;
         String flag;
 
         public Kinect2JavaClient(String message)
@@ -20,7 +21,7 @@ namespace KinectFitness
 
         public void sendFlag()
         {
-            TcpClient socketForServer;
+            
             try
             {
                 socketForServer = new TcpClient("localHost", 5001);
