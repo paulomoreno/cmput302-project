@@ -50,7 +50,7 @@ public class FitnessMainJava {
                                     try {
                                         FitnessMainJava.startKinectApp();
                                         Patient patient = new Patient();
-                                        patient.Patient("192.168.1.66");
+                                        patient.Patient("142.244.154.95", 0);
                                         Patient.startPatient(patient);
                                     } catch (IOException ex) {
                                         Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);

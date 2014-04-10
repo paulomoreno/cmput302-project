@@ -428,7 +428,7 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
 
-            MessageBox.Show(path);
+            //MessageBox.Show(path);
 
             hoverSound = new SoundPlayer(path + "\\hoverSound.wav");
             clickSound = new SoundPlayer(path + "\\clickSound.wav");
@@ -812,7 +812,7 @@ namespace KinectFitness
 
         private void Button_Quit(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Quit");
+            //MessageBox.Show("Quit");
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
             //myCommands.StopSpeechRecognition();
