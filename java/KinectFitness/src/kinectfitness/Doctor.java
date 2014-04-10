@@ -35,6 +35,8 @@ import uk.co.caprica.vlcj.player.embedded.videosurface.CanvasVideoSurface;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import uk.co.caprica.vlcj.test.VlcjTest;
 import com.sun.jna.NativeLibrary;
+import static java.awt.Component.LEFT_ALIGNMENT;
+import static java.awt.Component.TOP_ALIGNMENT;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -122,14 +124,40 @@ class ChangeModeAction extends AbstractAction {
     }
 }
 
+class ChangeMuteAction extends AbstractAction {
+
+    private boolean mute;
+    private final int index;
+    private final Doctor doctor;
+    private final DoctorViewFrame window;
+
+    public ChangeMuteAction(boolean mute, Doctor doctor, int index, DoctorViewFrame window) {
+        super();
+
+        this.doctor = doctor;
+        this.window = window;
+        this.index = index;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        this.window.change_mute(index, this.doctor.isMute());
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
+
 public class Doctor extends VlcjTest {
 
     private int age = 40;
     private int maximum;
     private int max_target;
     private int min_target;
+    private boolean isMute;
     private float max_target_percentage = 0.85f;
     private float min_target_percentage = 0.5f;
+    
+    private ImageIcon mute_icon;
+    private ImageIcon unmute_icon;
 
     public static final int ALL_PATIENTS = 0;
     public static final int ONE_PATIENT = 1;
@@ -165,6 +193,7 @@ public class Doctor extends VlcjTest {
 
     private final JPanel pnl_btn;
     private final JButton btn_change_mode;
+    private final JButton btn_mute;
 
     private Color bkg_color = Color.WHITE; //new Color(150, 180, 255);
     private Color text_color = Color.BLACK;
@@ -192,6 +221,13 @@ public class Doctor extends VlcjTest {
 
     public JPanel getContent() {
         return this.contentPane;
+    }
+    
+    public void fullScreen(){
+        contentPane.setSize(1000, 700);
+        
+        contentPane.setAlignmentX(LEFT_ALIGNMENT);
+        contentPane.setAlignmentY(TOP_ALIGNMENT);
     }
 
     public Doctor(String port, int infoPort, int index, DoctorViewFrame window) {
@@ -222,7 +258,7 @@ public class Doctor extends VlcjTest {
 
         remoteVideoSurface = mediaPlayerFactoryIn.newVideoSurface(remoteCanvas);
         remoteMediaPlayer.setVideoSurface(remoteVideoSurface);
-
+        
         contentPane.add(lbl_connection_status, BorderLayout.PAGE_START);
         contentPane.add(remoteCanvas, BorderLayout.CENTER);
 
@@ -290,6 +326,27 @@ public class Doctor extends VlcjTest {
         btn_change_mode.setContentAreaFilled(false);
         btn_change_mode.setBorderPainted(false);
 
+        btn_mute = new JButton();
+        mute_icon = new ImageIcon("mute.png");
+        unmute_icon = new ImageIcon("unmute.png");
+
+        Image img2 = mute_icon.getImage();
+        Image newimg2 = img2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        mute_icon = new ImageIcon(newimg2);
+
+        img2 = unmute_icon.getImage();
+        newimg2 = img2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
+        unmute_icon = new ImageIcon(newimg2);
+
+        ChangeMuteAction btn_mute_action = new ChangeMuteAction(true, this, index, this.window);
+        btn_mute.setAction(btn_mute_action);
+        btn_mute.setIcon(mute_icon);
+        btn_mute.setSize(30, 30);
+        btn_mute.setOpaque(false);
+        btn_mute.setContentAreaFilled(false);
+        btn_mute.setBorderPainted(false);
+
+        pnl_btn.add(btn_mute);
         pnl_btn.add(btn_change_mode);
         pnl_btn.setBackground(bkg_color);
 
@@ -334,6 +391,10 @@ public class Doctor extends VlcjTest {
 
         }
     }
+    
+    public void setVisible(boolean var){
+        this.contentPane.setVisible(var);
+    }
 
     public void calculateRates() {
         this.maximum = 220 - this.age;
@@ -376,6 +437,7 @@ public class Doctor extends VlcjTest {
         System.out.println("LLLocal info port: " + localInfoPort);
         di.setLocalPort(this.localInfoPort);
         di.start();//get information from patient
+        this.mute(true);
 
     }
 
@@ -421,5 +483,22 @@ public class Doctor extends VlcjTest {
         sb.append(serverPort);
         sb.append(",mux=ts}}");
         return sb.toString();
+    }
+    
+    public void mute(boolean mute){
+        this.remoteMediaPlayer.mute(mute);
+        this.localMediaPlayer.mute(mute);
+        this.isMute = mute;
+        
+        if (mute) {
+            this.btn_mute.setIcon(mute_icon);
+        }else{
+            this.btn_mute.setIcon(unmute_icon);
+        }
+        
+    }
+    
+    public boolean isMute(){
+        return this.isMute;
     }
 }
