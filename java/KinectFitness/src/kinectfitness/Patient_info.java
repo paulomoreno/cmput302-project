@@ -32,9 +32,11 @@ public class Patient_info extends Thread {
             socket1 = new Socket(doctorIP, portNumber);
             ObjectOutputStream oos = new ObjectOutputStream(socket1.getOutputStream());
             BluetoothServer server = new BluetoothServer(oos);
-            server.connectToPhone();
-            //server.runTest();
-            socket1.close();
+            //server.connectToPhone();
+            
+//            BluetoothServer server = new BluetoothServer();
+            server.runTest();
+            //socket1.close();
         } catch (IOException ex) {
             Logger.getLogger(Patient.class.getName()).log(Level.SEVERE, null, ex);
 //        } catch (InterruptedException ex) {

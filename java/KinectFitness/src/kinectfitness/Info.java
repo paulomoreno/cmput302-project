@@ -15,4 +15,5 @@ class Info implements Serializable {
      String[] blood_pressure = new String[2];
      //int ECG;
      String O2;
+     String memo;
 }

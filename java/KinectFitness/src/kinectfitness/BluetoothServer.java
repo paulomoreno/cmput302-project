@@ -1,19 +1,13 @@
 package kinectfitness;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -176,8 +170,8 @@ public class BluetoothServer {
                     //Socket destinationSocket = new Socket("127.0.0.1", 7003);
                     //DataOutputStream dataOutputStream = new DataOutputStream(destinationSocket.getOutputStream());
 
-                    //Integer i = 0;
-                    while (true) {
+                    Integer i = 0;
+                    while (i < 30000) {
 
                         final Info patient_info = new Info();
 
@@ -192,13 +186,13 @@ public class BluetoothServer {
 
                         // send data to C# application
                         //dataOutputStream.writeBytes(String.valueOf(patient_info.heart_rate) + "||" + String.valueOf(patient_info.O2)
-                               // + "||" + String.valueOf(patient_info.blood_pressure[0]) + "/" + patient_info.blood_pressure[1] + "\n");
+                        // + "||" + String.valueOf(patient_info.blood_pressure[0]) + "/" + patient_info.blood_pressure[1] + "\n");
 
 //                        System.out.println("patient info");
 //                        System.out.println("heart rate: " + patient_info.heart_rate);
 //                        System.out.println("oximeter rate: " + patient_info.O2);
 //                        System.out.println("blood pressure: " + patient_info.blood_pressure[0] + "/" + patient_info.blood_pressure[1]);
-                        //i++;
+                        i++;
                     }
                 } catch (UnknownHostException e) {
                     e.printStackTrace();
