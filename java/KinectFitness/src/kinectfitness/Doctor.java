@@ -422,4 +422,8 @@ public class Doctor extends VlcjTest {
         sb.append(",mux=ts}}");
         return sb.toString();
     }
+    
+    public void setVisible(boolean var){
+        this.contentPane.setVisible(var);
+    }
 }

@@ -65,19 +65,27 @@ public class DoctorViewFrame extends JFrame {
         this.onePatientIndex = index;
 
         for (int i = 0; i < 8; i++) {
-            contentPane.remove(doctor[i].getContent());
+            
+            if (i != index)
+                //contentPane.remove(doctor[i].getContent());
+                doctor[i].setVisible(false);
         }
-        contentPane.add(doctor[this.onePatientIndex].getContent());
+        //contentPane.add(doctor[this.onePatientIndex].getContent());
+        //doctor[this.onePatientIndex].setVisible(true);
         contentPane.setLayout(OnePatientsLayout);
+        OnePatientsLayout.setHgap(-1350);
+        OnePatientsLayout.setVgap(-1350);
         contentPane.validate();
         contentPane.repaint();
     }
 
     public void changeLayoutToAll() {
-        contentPane.remove(doctor[this.onePatientIndex].getContent());
+        //contentPane.remove(doctor[this.onePatientIndex].getContent());
 
         for (int i = 0; i < 8; i++) {
-            contentPane.add(doctor[i].getContent());
+            //if (i != this.onePatientIndex)
+                doctor[i].setVisible(true);
+            //contentPane.add(doctor[i].getContent());
         }
         contentPane.setLayout(allPatientsLayout);
         contentPane.validate();
