@@ -102,6 +102,9 @@ namespace KinectFitness
 
         public StartupWindow()
         {
+            //Kinect2JavaClient client = new Kinect2JavaClient();
+            //client.receiveData();
+
             control = new Controller();
 
             InitializeComponent();
@@ -261,12 +264,6 @@ namespace KinectFitness
         {
             if (startUpScreenIsActive)
             {
-                /*
-                Console.WriteLine("here");
-                Console.WriteLine(button_number);
-                Console.WriteLine(button);
-                Console.WriteLine(button_2);
-                */
 
                 if (button_2 == true)
                 {
@@ -428,11 +425,13 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
+
             hoverSound = new SoundPlayer(path + "\\KinectFitness\\hoverSound.wav");
             clickSound = new SoundPlayer(path + "\\KinectFitness\\clickSound.wav");
             goBackSound = new SoundPlayer(path + "\\KinectFitness\\goBackSound.wav");
             doneSound = new SoundPlayer(path + "\\KinectFitness\\doneSound.wav");
             suggestionSound = new SoundPlayer(path + "\\KinectFitness\\suggestionSound.wav");
+
         }
 
         /**

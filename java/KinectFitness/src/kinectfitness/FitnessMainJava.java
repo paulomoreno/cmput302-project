@@ -39,80 +39,32 @@ public class FitnessMainJava {
             public void actionPerformed(ActionEvent e) {
                 String value = textField.getText();
 
+                int patientindex = 0;
                 switch (value) {
-                    case "": // DEBUGGING ONLY
                     case "patient1":
-                        try {
-                            dialogWindow.dispose();
-                            
-                            new Thread() {
-                                public void run(){
-                                    try {
-                                        FitnessMainJava.startKinectApp();
-                                        Patient patient = new Patient();
-                                        patient.Patient("142.244.154.95");
-                                        Patient.startPatient(patient);
-                                    } catch (IOException ex) {
-                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                                    } catch (URISyntaxException ex) {
-                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                                    } catch (Exception ex) {
-                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                                    }
-                                }
-                            }.start();
-                            
-                            
-//                            new Thread() {
-//                                public void run() {
-//                                    try {
-//                                        //server to listen for flags given by C# application
-//
-//                                        ServerSocket netServer = new ServerSocket(5001);
-//                                        
-//                                        String flag="";
-//                                        while("".equals(flag))
-//                                        {
-//
-//                                            Socket clientSocket = netServer.accept();
-//                                            
-//                                            System.err.println("accepted connection");
-//                                            
-//                                            In in = new In(clientSocket);
-//                                            String value = in.readLine();
-//                                            if(value != null)
-//                                            {
-//                                                flag = value;
-//                                                
-//                                                if(flag == "quit")
-//                                                {
-//                                                    System.err.println("received: ("+value+")");
-//                                                    System.exit(0);
-//                                                }
-//                                                
-//                                                System.err.println("received: ("+value+")");
-//                                                break;
-//                                            }
-//                                            
-//                                        }
-//                                        
-//                                        Patient patient = new Patient();
-//                                        patient.Patient("192.168.1.66");
-//                                        Patient.startPatient(patient);
-//                                        
-//                                    } catch (Exception ex) {
-//                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-//                                    }
-//                                }
-//                            }.start();
-
-                            
-                            
-                        } catch (Exception ex) {
-                            Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        patientindex = 0;
                         break;
-                    
+                    case "patient2":
+                        patientindex = 1;
+                        break;
+                    case "patient3":
+                        patientindex = 2;
+                        break;
+                    case "patient4":
+                        patientindex = 3;
+                        break;
+                    case "patient5":
+                        patientindex = 4;
+                        break;
+                    case "patient6":
+                        patientindex = 5;
+                        break;
+                    case "patient7":
+                        patientindex = 6;
+                        break;
+                    case "patient8":
+                        patientindex = 7;
+                        break;
                     case "doctor":
                         DoctorViewFrame window = new DoctorViewFrame();
 
@@ -122,8 +74,37 @@ public class FitnessMainJava {
 
                         break;
                     default:
+                        patientindex = 0;
                         break;
                 }
+
+                final int index = patientindex;
+                try {
+                    dialogWindow.dispose();
+
+                    new Thread() {
+                        public void run() {
+                            try {
+                                FitnessMainJava.startKinectApp();
+                                Patient patient = new Patient();
+                                patient.Patient("192.168.1.66", index);
+                                Patient.startPatient(patient);
+                            } catch (IOException ex) {
+                                System.out.println("IOException");
+                                Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (URISyntaxException ex) {
+                                System.out.println("URISyntax");
+                                Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                            } catch (Exception ex) {
+                                System.out.println("Exception: " + ex);
+                                Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    }.start();
+                } catch (Exception ex) {
+                    Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
         });
 
@@ -158,5 +139,4 @@ public class FitnessMainJava {
         final Process process = Runtime.getRuntime().exec(exeFilePath);
 
     }
-   
 }
