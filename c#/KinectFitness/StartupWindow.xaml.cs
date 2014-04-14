@@ -264,10 +264,6 @@ namespace KinectFitness
         {
             if (startUpScreenIsActive)
             {
-                Console.WriteLine("here");
-                Console.WriteLine(button_number);
-                Console.WriteLine(button);
-                Console.WriteLine(button_2);
 
                 if (button_2 == true)
                 {
@@ -378,7 +374,6 @@ namespace KinectFitness
             //Check if controller is connected
             if (control.isConnected() == true)
             {
-                Console.WriteLine("control null");
                 InitializeHoverChecker(0);
                 int result = 10;
 
@@ -431,13 +426,12 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
 
-            //MessageBox.Show(path);
-
             hoverSound = new SoundPlayer(path + "\\hoverSound.wav");
             clickSound = new SoundPlayer(path + "\\clickSound.wav");
             goBackSound = new SoundPlayer(path + "\\goBackSound.wav");
             doneSound = new SoundPlayer(path + "\\doneSound.wav");
             suggestionSound = new SoundPlayer(path + "\\suggestionSound.wav");
+
         }
 
         /**
@@ -703,12 +697,13 @@ namespace KinectFitness
         private void animateShowNewCanvas(Canvas newScreen, Canvas oldScreen)
         {
             double distanceToGoal = Math.Abs(newScreen.Margin.Left - 0);
+            double sqrt = Math.Sqrt(distanceToGoal);
             if (newScreen.Margin.Left > 40)
             {
-                StartUp.Margin = new Thickness(StartUp.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                Kinect.Margin = new Thickness(Kinect.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                Stats.Margin = new Thickness(Stats.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);                
+                StartUp.Margin = new Thickness(StartUp.Margin.Left - 2 * sqrt, 0, 0, 0);
+                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left - 2 * sqrt, 0, 0, 0);
+                Kinect.Margin = new Thickness(Kinect.Margin.Left - 2 * sqrt, 0, 0, 0);
+                Stats.Margin = new Thickness(Stats.Margin.Left - 2 * sqrt, 0, 0, 0);                
             }
             else
             {
@@ -719,12 +714,13 @@ namespace KinectFitness
         private void animateShowNewCanvasBack(Canvas newScreen, Canvas oldScreen)
         {
             double distanceToGoal = Math.Abs(newScreen.Margin.Left - 0);
+            double sqrt = Math.Sqrt(distanceToGoal);
             if (newScreen.Margin.Left < 0)
             {
-                StartUp.Margin = new Thickness(StartUp.Margin.Left + 2*Math.Sqrt(distanceToGoal), 0, 0, 0);
-                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left + 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                Kinect.Margin = new Thickness(Kinect.Margin.Left + 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                Stats.Margin = new Thickness(Stats.Margin.Left + 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);   
+                StartUp.Margin = new Thickness(StartUp.Margin.Left + 2*sqrt, 0, 0, 0);
+                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left + 2 * sqrt, 0, 0, 0);
+                Kinect.Margin = new Thickness(Kinect.Margin.Left + 2 * sqrt, 0, 0, 0);
+                Stats.Margin = new Thickness(Stats.Margin.Left + 2 * sqrt, 0, 0, 0);   
             }
             else
             {

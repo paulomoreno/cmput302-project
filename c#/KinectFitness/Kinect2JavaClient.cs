@@ -16,7 +16,7 @@ namespace KinectFitness
 
         public void receiveData()
         {
-            
+
             try
             {
                 socketForServer = new TcpClient("localHost", 5001);
@@ -34,7 +34,7 @@ namespace KinectFitness
 
             try
             {
-                while(streamReader.ReadLine() != null)
+                while (streamReader.ReadLine() != null)
                 {
                     String data = streamReader.ReadLine();
                     Console.WriteLine(data);
