@@ -5,14 +5,11 @@
  */
 package kinectfitness;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,11 +21,10 @@ import javax.swing.JPanel;
 public class DoctorViewFrame extends JFrame {
 
     private GridLayout allPatientsLayout;
-    private FlowLayout OnePatientsLayout;
+    private GridLayout OnePatientsLayout;
 
     private boolean allPatients = true;
     private int onePatientIndex;
-    private int onePatientUnmuteIndex;
 
     private JPanel contentPane;
 
@@ -38,9 +34,7 @@ public class DoctorViewFrame extends JFrame {
         super("HCI Fitness - Doctor view");
         
         allPatientsLayout = new GridLayout(2, 4, 5, 5);
-        OnePatientsLayout = new FlowLayout();
-        
-        
+        OnePatientsLayout = new GridLayout(1, 1);
 
         contentPane = new JPanel();
         contentPane.setBackground(new Color(255, 255,255));
@@ -69,23 +63,18 @@ public class DoctorViewFrame extends JFrame {
     public void changeLayoutToOne(int index) {
 
         this.onePatientIndex = index;
-        
+
         for (int i = 0; i < 8; i++) {
-            //contentPane.remove(doctor[i].getContent());
-            if (i != index){
-                doctor[i].setVisible(false); 
-                
-            }
+            
+            if (i != index)
+                //contentPane.remove(doctor[i].getContent());
+                doctor[i].setVisible(false);
         }
-        //doctor[index].fullScreen();
-        contentPane.getComponent(index).setLocation(5, 5);
-        contentPane.getComponent(index).setSize(1350, 700);
         //contentPane.add(doctor[this.onePatientIndex].getContent());
         //doctor[this.onePatientIndex].setVisible(true);
-        
-        contentPane.setLayout(null);
-        
-
+        contentPane.setLayout(OnePatientsLayout);
+        OnePatientsLayout.setHgap(-1350);
+        OnePatientsLayout.setVgap(-1350);
         contentPane.validate();
         contentPane.repaint();
     }
@@ -109,20 +98,6 @@ public class DoctorViewFrame extends JFrame {
         info.O2 = "58";
         
         doctor[index].updateInfo(info);
-    }
-    
-    public void change_mute(int index, boolean is_currently_mute){
-        if (is_currently_mute){
-            this.onePatientUnmuteIndex = index;
-            for (int i = 0; i < 8; i++) {
-                if (i != this.onePatientUnmuteIndex)
-                    doctor[i].mute(true);
-                //contentPane.add(doctor[i].getContent());
-            } 
-            doctor[onePatientUnmuteIndex].mute(false);
-        } else {
-            doctor[index].mute(true);
-        }
     }
 
 }

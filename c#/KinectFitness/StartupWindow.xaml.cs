@@ -102,6 +102,9 @@ namespace KinectFitness
 
         public StartupWindow()
         {
+            //Kinect2JavaClient client = new Kinect2JavaClient();
+            //client.receiveData();
+
             control = new Controller();
 
             InitializeComponent();

@@ -101,11 +101,11 @@ public class Patient extends VlcjTest {
     }
 
     private void start() {
-//        send();//send video
+        send();//send video
         Patient_info pi = new Patient_info(this.doctorIP, patient_index);
         pi.start();//send information from patient
-//        receive();//receive video
-//        frame.setVisible(true);
+        receive();//receive video
+        frame.setVisible(true);
     }
 
     private void send() {

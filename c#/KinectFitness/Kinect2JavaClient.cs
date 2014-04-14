@@ -11,15 +11,10 @@ namespace KinectFitness
     class Kinect2JavaClient
     {
         public static TcpClient socketForServer;
-        String flag;
 
-        public Kinect2JavaClient(String message)
-        {
-            this.flag = message;
-        }
         // code from http://stackoverflow.com/questions/8413096/how-do-i-use-socket-programming-to-send-messages
 
-        public void sendFlag()
+        public void receiveData()
         {
             
             try
@@ -34,14 +29,15 @@ namespace KinectFitness
             }
 
             NetworkStream networkStream = socketForServer.GetStream();
-            var streamWriter = new System.IO.StreamWriter(networkStream);
+            var streamReader = new System.IO.StreamReader(networkStream);
+            //var streamWriter = new System.IO.StreamWriter(networkStream);
 
             try
             {
-                // read the data from the host and display it
+                while(streamReader.ReadLine() != null)
                 {
-                    streamWriter.WriteLine(flag+"\n");
-                    streamWriter.Flush();
+                    String data = streamReader.ReadLine();
+                    Console.WriteLine(data);
                 }
             }
             catch
@@ -49,7 +45,7 @@ namespace KinectFitness
                 Console.WriteLine("Exception reading from Server");
             }
             // tidy up
-            streamWriter.Close();
+            streamReader.Close();
             networkStream.Close();
         }
     }
