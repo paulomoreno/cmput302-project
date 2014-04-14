@@ -106,8 +106,9 @@ class Doctor_info extends Thread {
 
                 // replace with timer function if can 
                 //(without making exercise, patient_into and exporter into final variables)
-                if(counter % 100 == 0)
+                if(counter == 1000)
                 {
+                   counter = 0;
                    exporter.createDataElement(exercise, patient_info); 
                 }
                 counter++;

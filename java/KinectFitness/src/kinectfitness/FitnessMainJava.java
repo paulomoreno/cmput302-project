@@ -39,7 +39,7 @@ public class FitnessMainJava {
             public void actionPerformed(ActionEvent e) {
                 String value = textField.getText();
 
-                int patientindex = 0;
+                int patientindex = 10;
                 switch (value) {
                     case "patient1":
                         patientindex = 0;
@@ -79,32 +79,34 @@ public class FitnessMainJava {
                 }
 
                 final int index = patientindex;
-                try {
-                    dialogWindow.dispose();
+                // doctor was chosen
+                if (index < 10) {
+                    try {
+                        dialogWindow.dispose();
 
-                    new Thread() {
-                        public void run() {
-                            try {
-                                FitnessMainJava.startKinectApp();
-                                Patient patient = new Patient();
-                                patient.Patient("192.168.1.66", index);
-                                Patient.startPatient(patient);
-                            } catch (IOException ex) {
-                                System.out.println("IOException");
-                                Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (URISyntaxException ex) {
-                                System.out.println("URISyntax");
-                                Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                            } catch (Exception ex) {
-                                System.out.println("Exception: " + ex);
-                                Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                        new Thread() {
+                            public void run() {
+                                try {
+                                    FitnessMainJava.startKinectApp();
+                                    Patient patient = new Patient();
+                                    patient.Patient("192.168.1.66", index);
+                                    Patient.startPatient(patient);
+                                } catch (IOException ex) {
+                                    System.out.println("IOException");
+                                    Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (URISyntaxException ex) {
+                                    System.out.println("URISyntax");
+                                    Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                                } catch (Exception ex) {
+                                    System.out.println("Exception: " + ex);
+                                    Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
-                        }
-                    }.start();
-                } catch (Exception ex) {
-                    Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                        }.start();
+                    } catch (Exception ex) {
+                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-
             }
         });
 

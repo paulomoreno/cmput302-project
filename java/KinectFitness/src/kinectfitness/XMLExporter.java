@@ -90,9 +90,10 @@ public class XMLExporter {
         bpElement.appendChild(document.createTextNode(bpValue));
         dataElement.appendChild(bpElement);
 
-        Element memoElement = document.createElement("memo");
-        memoElement.appendChild(document.createTextNode(patient_data.memo));
-        dataElement.appendChild(memoElement);
+        // enable when there are memos
+//        Element memoElement = document.createElement("memo");
+//        memoElement.appendChild(document.createTextNode(patient_data.memo));
+//        dataElement.appendChild(memoElement);
 
     }
 
