@@ -101,7 +101,7 @@ public class Patient extends VlcjTest {
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screen = kit.getScreenSize();
         
-        frame.setLocation((int)screen.getWidth() - 320 - 20, 30);
+        frame.setLocation((int)screen.getWidth() - 320 - 150, 0);
         
         //frame.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
         frame.setContentPane(contentPane);
@@ -111,11 +111,11 @@ public class Patient extends VlcjTest {
     }
     
     private void start() {
-        //send();//send video
+        send();//send video
         Patient_info pi = new Patient_info(this.doctorIP);
         pi.start();//send information from patient
-        //receive();//receive video
-        //frame.setVisible(true);
+        receive();//receive video
+        frame.setVisible(true);
     }
     
     private void send() {

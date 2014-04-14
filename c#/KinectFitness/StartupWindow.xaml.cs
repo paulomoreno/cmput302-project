@@ -108,7 +108,8 @@ namespace KinectFitness
             InitializeUI();
             InitializeStartUpUI();
 
-                
+           //Kinect2JavaClient data = new Kinect2JavaClient("Start");
+            //data.sendFlag();
 
 
             var navWindow = Window.GetWindow(this) as NavigationWindow;
@@ -260,6 +261,13 @@ namespace KinectFitness
         {
             if (startUpScreenIsActive)
             {
+                /*
+                Console.WriteLine("here");
+                Console.WriteLine(button_number);
+                Console.WriteLine(button);
+                Console.WriteLine(button_2);
+                */
+
                 if (button_2 == true)
                 {
 
@@ -369,7 +377,6 @@ namespace KinectFitness
             //Check if controller is connected
             if (control.isConnected() == true)
             {
-                Console.WriteLine("control null");
                 InitializeHoverChecker(0);
                 int result = 10;
 
@@ -421,7 +428,6 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
-
             hoverSound = new SoundPlayer(path + "\\KinectFitness\\hoverSound.wav");
             clickSound = new SoundPlayer(path + "\\KinectFitness\\clickSound.wav");
             goBackSound = new SoundPlayer(path + "\\KinectFitness\\goBackSound.wav");
@@ -507,6 +513,8 @@ namespace KinectFitness
             actionsList.Add(moderateWorkout);
             actionsList.Add(intenseWorkout);
             actionsList.Add(backButtonPressed);
+
+            /*PatientTcpServer.getHeartRate();*/
         }
 
         private void deInitializeSelectLevelUI()
@@ -690,12 +698,13 @@ namespace KinectFitness
         private void animateShowNewCanvas(Canvas newScreen, Canvas oldScreen)
         {
             double distanceToGoal = Math.Abs(newScreen.Margin.Left - 0);
+            double sqrt = Math.Sqrt(distanceToGoal);
             if (newScreen.Margin.Left > 40)
             {
-                StartUp.Margin = new Thickness(StartUp.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                Kinect.Margin = new Thickness(Kinect.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                Stats.Margin = new Thickness(Stats.Margin.Left - 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);                
+                StartUp.Margin = new Thickness(StartUp.Margin.Left - 2 * sqrt, 0, 0, 0);
+                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left - 2 * sqrt, 0, 0, 0);
+                Kinect.Margin = new Thickness(Kinect.Margin.Left - 2 * sqrt, 0, 0, 0);
+                Stats.Margin = new Thickness(Stats.Margin.Left - 2 * sqrt, 0, 0, 0);                
             }
             else
             {
@@ -706,12 +715,13 @@ namespace KinectFitness
         private void animateShowNewCanvasBack(Canvas newScreen, Canvas oldScreen)
         {
             double distanceToGoal = Math.Abs(newScreen.Margin.Left - 0);
+            double sqrt = Math.Sqrt(distanceToGoal);
             if (newScreen.Margin.Left < 0)
             {
-                StartUp.Margin = new Thickness(StartUp.Margin.Left + 2*Math.Sqrt(distanceToGoal), 0, 0, 0);
-                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left + 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                Kinect.Margin = new Thickness(Kinect.Margin.Left + 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);
-                Stats.Margin = new Thickness(Stats.Margin.Left + 2 * Math.Sqrt(distanceToGoal), 0, 0, 0);   
+                StartUp.Margin = new Thickness(StartUp.Margin.Left + 2*sqrt, 0, 0, 0);
+                SelectLevel.Margin = new Thickness(SelectLevel.Margin.Left + 2 * sqrt, 0, 0, 0);
+                Kinect.Margin = new Thickness(Kinect.Margin.Left + 2 * sqrt, 0, 0, 0);
+                Stats.Margin = new Thickness(Stats.Margin.Left + 2 * sqrt, 0, 0, 0);   
             }
             else
             {
@@ -802,6 +812,7 @@ namespace KinectFitness
 
         private void Button_Quit(object sender, RoutedEventArgs e)
         {
+            //MessageBox.Show("Quit");
             StopKinect(kinectSensorChooser1.Kinect);
             dispatcherTimer.Stop();
             //myCommands.StopSpeechRecognition();
@@ -809,6 +820,14 @@ namespace KinectFitness
 
             try
             {
+                /*
+                Kinect2JavaClient quitMessage = new Kinect2JavaClient("quit");
+                quitMessage.sendFlag();
+
+                if(Kinect2JavaClient.socketForServer.Connected)
+                {
+                    Kinect2JavaClient.socketForServer.Close();
+                }/**/
                 newThread.Abort();
                 control.ReleaseDevice();
             }
@@ -1203,6 +1222,12 @@ namespace KinectFitness
 
         private void backButtonPressed(object sender, RoutedEventArgs e)
         {
+            /*
+            if(PatientTcpServer.tcpListener.Pending())
+            {
+                PatientTcpServer.thread.Abort();
+            }/**/
+
             startNewCanvas(StartUp, SelectLevel, true);
             deInitializeSelectLevelUI();
             InitializeStartUpUI();
@@ -1287,7 +1312,7 @@ namespace KinectFitness
             file.Close();
 
             // Suspend the screen.
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         //Find length of video
@@ -1401,7 +1426,7 @@ namespace KinectFitness
             file.Close();
 
             // Suspend the screen.
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         /*
@@ -2254,6 +2279,13 @@ namespace KinectFitness
             startHoverChecker();
             //Video is not playing
             videoPlaying = false;
+
+            /*
+            if(PatientTcpServer.tcpListener.Pending())
+            {
+                PatientTcpServer.thread.Abort();
+                PatientTcpServer.tcpListener.Stop();
+            }/**/
         }
 
         /**
@@ -2511,10 +2543,6 @@ namespace KinectFitness
             }
         }
 
-        
-
-        
-
         /**
          * Go back to the home screen
          */
@@ -2543,6 +2571,13 @@ namespace KinectFitness
                 suggestionAnimator.Stop();
             }
 
+            /*
+            MessageBox.Show("go home method");
+            if (PatientTcpServer.tcpListener.Pending())
+            {
+                PatientTcpServer.thread.Abort();
+            }/**/
+
             startNewCanvas(StartUp, Stats, true);
             deInitializeDoneUI();
             InitializeStartUpUI();
@@ -2550,6 +2585,15 @@ namespace KinectFitness
 
         private void KinectButton_Back(object sender, RoutedEventArgs e)
         {
+            /*
+            MessageBox.Show("back button");
+            if (PatientTcpServer.tcpListener.Pending())
+            {
+                Kinect2JavaClient backmessage = new Kinect2JavaClient("back");
+                backmessage.sendFlag();
+                PatientTcpServer.thread.Abort();
+            }/**/
+
             startNewCanvas(SelectLevel, Kinect, true);
             deInitializeKinectUI();
             initializeSelectLevelUI();

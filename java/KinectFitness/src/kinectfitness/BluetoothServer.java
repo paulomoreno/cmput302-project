@@ -35,69 +35,115 @@ public class BluetoothServer {
         this.doctorOutput = docout;
     }
 
-    public static void connectToPhone() throws IOException {
+    public void connectToPhone() throws IOException, InterruptedException {
         // create socket
-        int port = 4444;
-        ServerSocket serverSocket = new ServerSocket(port);
-        // DEBUG
-        System.err.println("Started server on port " + port);
+        new Thread() {
+            public void run() {
+                int port = 4444;
+                ServerSocket serverSocket;
+                try {
+                    serverSocket = new ServerSocket(port);
+                    // DEBUG
+                    System.err.println("Started server on port " + port);
 
-        Socket destinationSocket = new Socket("127.0.0.1", 5000);
-        DataOutputStream dataOutputStream = new DataOutputStream(destinationSocket.getOutputStream());
-        // DEBUG
-        System.err.println("Started server on port 5000");
+                    // open socket to send the data to C# application
+                    //Socket destinationSocket = new Socket("127.0.0.1", 5000);
 
-        // repeatedly wait for connections, and process
-        while (true) {
-            // a "blocking" call which waits until a connection is requested
-            Socket clientSocket = serverSocket.accept();
-            // DEBUG
-            System.err.println("Accepted connection from client");
+                    //DataOutputStream dataOutputStream = new DataOutputStream(destinationSocket.getOutputStream());
+                    // DEBUG
+                    //System.err.println("Started server on port 5000");
 
-            // open up IO streams
-            In in = new In(clientSocket);
 
-            // waits for data and reads it in until connection dies
-            // readLine() blocks until the server receives a new line from client
-            String s = "";
-            while ((s = in.readLine()) != null) {
-                String heartRate = "";
-                String oxiRate = "";
-                if (s.substring(0, 2).equals("HR")) {
-                    heartRate = getHeartRate(s);
-                } else if (s.substring(0, 2).equals("OX")) {
-                    oxiRate = getOxiPercent(s);
+                    // repeatedly wait for connections, and process
+                    while (true) {
+                        // a "blocking" call which waits until a connection is requested
+                        Socket clientSocket = serverSocket.accept();
+                        // DEBUG
+                        System.err.println("Accepted connection from client");
+
+                        // open up IO streams
+                        In in = new In(clientSocket);
+
+                        // waits for data and reads it in until connection dies
+                        // readLine() blocks until the server receives a new line from client
+                        String s = "";
+                        String heartRate = "";
+                        String oxiRate = "";
+                        while ((s = in.readLine()) != null) {
+                            if (s.substring(0, 2).equals("HR")) {
+                                if (getHeartRate(s) != null) {
+                                    heartRate = getHeartRate(s);
+                                }
+                            } else if (s.substring(0, 2).equals("OX")) {
+                                if (getOxiPercent(s) != null) {
+                                    oxiRate = getOxiPercent(s);
+                                }
+                            }
+
+                            // DEBUG
+                            // Now this prints out just the number
+                            System.err.println("Heart Rate: " + heartRate);
+                            System.err.println("Oximeter Rate: " + oxiRate);
+
+                            // send the received information to the doctor
+                            final Info patient_info = new Info();
+                            if (heartRate != "") {
+                                patient_info.heart_rate = heartRate;
+                            }
+                            if (oxiRate != "") {
+                                patient_info.O2 = oxiRate;
+                            }
+                            patient_info.blood_pressure[0] = String.valueOf(systolic);
+                            patient_info.blood_pressure[1] = String.valueOf(diastolic);
+
+                            BluetoothServer.doctorOutput.writeObject(patient_info);
+                            BluetoothServer.doctorOutput.reset();
+
+                            // send patient heart rate data to the C# Kinect application
+                            //dataOutputStream.writeBytes(patient_info.heart_rate + "\n");
+
+                        }
+                        System.err.println("Closing connection with client");
+                        in.close();
+                        clientSocket.close();
+                    }
+
+                } catch (IOException ex) {
+                    Logger.getLogger(BluetoothServer.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
-                // DEBUG
-                // Now this prints out just the number
-                System.err.println("Heart Rate: " + heartRate);
-                System.err.println("Oximeter Rate: " + oxiRate);
-
-                // send the received information to the doctor
-                final Info patient_info = new Info();
-                if (heartRate != "") {
-                    patient_info.heart_rate = heartRate;
-                }
-                if (oxiRate != "") {
-                    patient_info.O2 = oxiRate;
-                }
-
-                BluetoothServer.doctorOutput.writeObject(patient_info);
-                BluetoothServer.doctorOutput.reset();
-
-                // send patient vitals data to the C# Kinect application
-                // (it's in string in "hr||o2||sysBP/diaBP")a
-                dataOutputStream.writeBytes(String.valueOf(patient_info.heart_rate) + "||" + String.valueOf(patient_info.O2)
-                        + "||" + String.valueOf(patient_info.blood_pressure[0]) + "/" + patient_info.blood_pressure[1] + "\n");
 
             }
+        }.start();
 
-            // close IO streams, then socket
-            System.err.println("Closing connection with client");
-            in.close();
-            clientSocket.close();
-        }
+        Thread.sleep(5000);
+
+        final Random r = new Random();
+        Timer timer = new Timer();
+
+        timer.schedule(
+                new TimerTask() {
+            public void run() {
+                // generates heart rate +- 1 from previous value
+                // within range of 90-175
+                systolic += r.nextInt(3) - 1;
+                if (systolic < 90) {
+                    systolic = 90;
+                } else if (systolic > 175) {
+                    systolic = 175;
+                }
+
+                // generates heart rate +- 1 from previous value
+                // within range of 50-105
+                diastolic += r.nextInt(3) - 1;
+                if (diastolic < 50) {
+                    diastolic = 50;
+                } else if (diastolic > 105) {
+                    diastolic = 105;
+                }
+
+            }
+        }, 0, 5000);
     }
 
     private static String getHeartRate(String hrInput) {
@@ -125,10 +171,12 @@ public class BluetoothServer {
     public void runTest() throws IOException, InterruptedException {
         new Thread() {
             public void run() {
-                try {
-                    Socket destinationSocket = new Socket("127.0.0.1", 5000);
-                    DataOutputStream dataOutputStream = new DataOutputStream(destinationSocket.getOutputStream());
+//                try {
+                    //Open socket to send data to kinect application
+                    //Socket destinationSocket = new Socket("127.0.0.1", 7003);
+                    //DataOutputStream dataOutputStream = new DataOutputStream(destinationSocket.getOutputStream());
 
+                    //Integer i = 0;
                     while (true) {
 
                         final Info patient_info = new Info();
@@ -138,30 +186,29 @@ public class BluetoothServer {
                         patient_info.blood_pressure[0] = String.valueOf(systolic);
                         patient_info.blood_pressure[1] = String.valueOf(diastolic);
 
+                        // send data to doctor
                         //BluetoothServer.doctorOutput.writeObject(patient_info);
-
                         //BluetoothServer.doctorOutput.reset();
 
                         // send data to C# application
-                        dataOutputStream.writeBytes("Heart rate:" + String.valueOf(patient_info.heart_rate) + "\n");
-                        dataOutputStream.writeBytes("Oxygen:" + String.valueOf(patient_info.O2) + "\n");
-                        dataOutputStream.writeBytes("Blood Pressure:" + String.valueOf(patient_info.blood_pressure[0]) + "/" + patient_info.blood_pressure[1] + "\n");
-                        
-                        System.out.println("patient info");
-                        System.out.println("heart rate: " + patient_info.heart_rate);
-                        System.out.println("oximeter rate: " + patient_info.O2);
-                        System.out.println("blood pressure: " + patient_info.blood_pressure[0] + "/" + patient_info.blood_pressure[1]);
+                        //dataOutputStream.writeBytes(String.valueOf(patient_info.heart_rate) + "||" + String.valueOf(patient_info.O2)
+                               // + "||" + String.valueOf(patient_info.blood_pressure[0]) + "/" + patient_info.blood_pressure[1] + "\n");
 
+//                        System.out.println("patient info");
+//                        System.out.println("heart rate: " + patient_info.heart_rate);
+//                        System.out.println("oximeter rate: " + patient_info.O2);
+//                        System.out.println("blood pressure: " + patient_info.blood_pressure[0] + "/" + patient_info.blood_pressure[1]);
+                        //i++;
                     }
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+//                } catch (UnknownHostException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
                 }
-            }
+//            }
         }.start();
-        
-        Thread.sleep(5000);
+
+        //Thread.sleep(5000);
         // "randomly" generate values every 5 seconds
         // --> somewhat intelligent generation where it
         // only takes +- 1 in a range
