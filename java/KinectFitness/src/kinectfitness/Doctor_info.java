@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -90,7 +92,8 @@ class Doctor_info extends Thread {
 
             exporter = new XMLExporter(patientId);
             Element exercise = exporter.startXML();
-            
+
+            int counter = 0;
             while ((patient_info = (Info) ois.readObject()) != null) {
                 if (!foundIP) {
                     foundIP = true;
@@ -100,7 +103,14 @@ class Doctor_info extends Thread {
                     doctor.updateStatus("Connected to: " + remoteIP);
                 }
                 doctor.updateInfo(patient_info);
-                exporter.createDataElement(exercise, patient_info);
+
+                // replace with timer function if can 
+                //(without making exercise, patient_into and exporter into final variables)
+                if(counter % 100 == 0)
+                {
+                   exporter.createDataElement(exercise, patient_info); 
+                }
+                counter++;
             }
 
             fromClientSocket.close();
@@ -108,8 +118,7 @@ class Doctor_info extends Thread {
             // for debugging
 //            Logger.getLogger(Doctor.class.getName()).log(Level.SEVERE, null, ex);
             // message for the user instead of error message
-            if(exporter != null)
-            {
+            if (exporter != null) {
                 exporter.exportXML();
             }
             System.out.println("Your patient has left the session.");
