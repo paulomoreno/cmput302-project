@@ -53,6 +53,9 @@ class Doctor_info extends Thread {
             servSocket = new ServerSocket(cTosPortNumber);
             fromClientSocket = servSocket.accept();
             ObjectInputStream ois = new ObjectInputStream(fromClientSocket.getInputStream()); 
+            
+            System.out.println("classname: " + ois.readObject().getClass().getName());
+            
             while ((patient_info = (Info) ois.readObject()) != null)
             {
                 if (!foundIP){

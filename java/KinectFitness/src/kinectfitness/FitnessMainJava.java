@@ -48,14 +48,14 @@ public class FitnessMainJava {
                             new Thread() {
                                 public void run(){
                                     try {
-                                        FitnessMainJava.startKinectApp();
+                                        //FitnessMainJava.startKinectApp();
                                         Patient patient = new Patient();
-                                        patient.Patient("142.244.154.95", 0);
+                                        patient.Patient("142.244.151.177", 0);
                                         Patient.startPatient(patient);
-                                    } catch (IOException ex) {
-                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
-                                    } catch (URISyntaxException ex) {
-                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+//                                    } catch (IOException ex) {
+//                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
+//                                    } catch (URISyntaxException ex) {
+//                                        Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
                                     } catch (Exception ex) {
                                         Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
                                     }
@@ -97,7 +97,7 @@ public class FitnessMainJava {
 //                                        }
 //                                        
 //                                        Patient patient = new Patient();
-//                                        patient.Patient("192.168.1.66");
+//                                        patient.Patient("142.244.151.177", 0);
 //                                        Patient.startPatient(patient);
 //                                        
 //                                    } catch (Exception ex) {

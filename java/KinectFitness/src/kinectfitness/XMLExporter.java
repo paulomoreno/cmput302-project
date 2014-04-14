@@ -33,15 +33,17 @@ import org.w3c.dom.Element;
 public class XMLExporter {
 
     String label;
+    Document document;
 
     public XMLExporter(String patient_name) throws ParserConfigurationException {
         this.label = patient_name;
-    }
-
-    public Document startXML() throws TransformerConfigurationException, TransformerException, ParserConfigurationException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = docFactory.newDocumentBuilder();
-        Document document = builder.newDocument();
+        Document doc = builder.newDocument();
+        this.document = doc;
+    }
+
+    public Element startXML() throws TransformerConfigurationException, TransformerException, ParserConfigurationException {
 
         Element rootElement = document.createElement("KinectFitness");
         document.appendChild(rootElement);
@@ -61,73 +63,41 @@ public class XMLExporter {
 
         Element exerciseDataElement = document.createElement("exerciseData");
         rootElement.appendChild(exerciseDataElement);
-
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-
-        DOMSource source = new DOMSource(document);
-//            StreamResult result = new StreamResult(new File(filepath));
-
-
-        StreamResult result = new StreamResult(System.out);
-
-        transformer.transform(source, result);
-        
-        return document;
+        return exerciseDataElement;
 
     }
 
-    public Document createDataElement(Document document, Info patient_data) throws TransformerConfigurationException, TransformerException, ParserConfigurationException {
+    public void createDataElement(Element exercise, Info patient_data) throws TransformerConfigurationException, TransformerException, ParserConfigurationException {
         Element dataElement = document.createElement("data");
-        document.appendChild(dataElement);
+        exercise.appendChild(dataElement);
 
-//        Element timeElement = newdoc.createElement("time");
-//        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
-//        Date date = new Date();
-//        timeElement.appendChild(newdoc.createTextNode(String.valueOf(dateFormat.format(date))));
-//        dataElement.appendChild(timeElement);
-//
-//        Element heartRateElement = newdoc.createElement("hr");
-//        heartRateElement.appendChild(newdoc.createTextNode(patient_data.heart_rate));
-//        dataElement.appendChild(heartRateElement);
-//
-//        Element oxygenElement = newdoc.createElement("o2");
-//        oxygenElement.appendChild(newdoc.createTextNode(patient_data.O2));
-//        dataElement.appendChild(oxygenElement);
-//
-//        Element bpElement = newdoc.createElement("bp");
-//        String bpValue = patient_data.blood_pressure[0] + "/" + patient_data.blood_pressure[1];
-//        bpElement.appendChild(newdoc.createTextNode(bpValue));
-//
-//        Element memoElement = newdoc.createElement("memo");
-//        memoElement.appendChild(newdoc.createTextNode(patient_data.memo));
-//        dataElement.appendChild(memoElement);
+        Element timeElement = document.createElement("time");
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+        timeElement.appendChild(document.createTextNode(String.valueOf(dateFormat.format(date))));
+        dataElement.appendChild(timeElement);
 
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
+        Element heartRateElement = document.createElement("hr");
+        heartRateElement.appendChild(document.createTextNode(patient_data.heart_rate));
+        dataElement.appendChild(heartRateElement);
 
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+        Element oxygenElement = document.createElement("o2");
+        oxygenElement.appendChild(document.createTextNode(patient_data.O2));
+        dataElement.appendChild(oxygenElement);
 
-        DOMSource source = new DOMSource(document);
-//            StreamResult result = new StreamResult(new File(filepath));
+        Element bpElement = document.createElement("bp");
+        String bpValue = patient_data.blood_pressure[0] + "/" + patient_data.blood_pressure[1];
+        bpElement.appendChild(document.createTextNode(bpValue));
+        dataElement.appendChild(bpElement);
 
+        Element memoElement = document.createElement("memo");
+        memoElement.appendChild(document.createTextNode(patient_data.memo));
+        dataElement.appendChild(memoElement);
 
-        StreamResult result = new StreamResult(System.out);
-
-        transformer.transform(source, result);
-
-        return document;
     }
 
-    public void exportXML(Document document) {
+    public void exportXML() {
         try {
-            Element exercise = (Element) document.getElementsByTagName("exerciseData").item(0);
-            Document newdoc = exercise.getOwnerDocument();
-
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             URL url = classLoader.getResource("");
             File file = new File(url.toURI());
@@ -155,11 +125,11 @@ public class XMLExporter {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 
-            DOMSource source = new DOMSource(newdoc);
-//            StreamResult result = new StreamResult(new File(filepath));
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(new File(filepath));
 
-
-            StreamResult result = new StreamResult(System.out);
+//            debugging
+//            StreamResult result = new StreamResult(System.out);
 
             transformer.transform(source, result);
 
