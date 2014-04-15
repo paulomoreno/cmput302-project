@@ -648,14 +648,12 @@ namespace KinectFitness
          * Animate the stats boxes after exercising
          */
         private void animateStats()
-        {
-            
+        {            
             if (Stats.Margin.Left < 60)
             {
                 double top = Canvas.GetTop(angleStatsBox);
                 if (top > 500)
                 {
-
                     Canvas.SetTop(angleStatsBox, Canvas.GetTop(angleStatsBox) - Math.Sqrt(top-480));
                     Canvas.SetTop(statsAnglesBackground, Canvas.GetTop(statsAnglesBackground) - Math.Sqrt(top-480));                    
                 }
@@ -682,7 +680,7 @@ namespace KinectFitness
         {
             doneAnimator = new System.Windows.Threading.DispatcherTimer();
             doneAnimator.Tick += (s, args) => animateStars();
-            doneAnimator.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            doneAnimator.Interval = new TimeSpan(0, 0, 0, 0, 250);
             doneAnimator.Start();            
         }
 
@@ -692,34 +690,33 @@ namespace KinectFitness
         private void animateStars()
         {
             double x = numberOfPts / totalPointsAvailable;
-            if (x > -1)
-            {
-                if (starTimer.ElapsedMilliseconds > 600 && star1.Opacity != 1)
+
+                if (starTimer.ElapsedMilliseconds > 600 && star1.Opacity != 1 && x > .1)
                 {
                     punchSound.Play();
                     star1.Opacity = 1;
                 }
-                else if (starTimer.ElapsedMilliseconds > 1200 && star2.Opacity != 1)
+                else if (starTimer.ElapsedMilliseconds > 1200 && star2.Opacity != 1 && x > .2)
                 {
                     punchSound.Play();
                     star2.Opacity = 1;
                 }
-                else if (starTimer.ElapsedMilliseconds > 1800 && star3.Opacity != 1)
+                else if (starTimer.ElapsedMilliseconds > 1800 && star3.Opacity != 1 && x > .4)
                 {
                     punchSound.Play();
                     star3.Opacity = 1;
                 }
-                else if (starTimer.ElapsedMilliseconds > 2400 && star4.Opacity != 1)
+                else if (starTimer.ElapsedMilliseconds > 2400 && star4.Opacity != 1  && x > .6)
                 {
                     punchSound.Play();
                     star4.Opacity = 1;
                 }
-                else if (starTimer.ElapsedMilliseconds > 3200 && star5.Opacity != 1)
+                else if (starTimer.ElapsedMilliseconds > 3200 && star5.Opacity != 1 && x > .8)
                 {
                     punchSound.Play();
                     star5.Opacity = 1;
                 }
-            }
+            
         }
 
         /**
@@ -752,6 +749,10 @@ namespace KinectFitness
         {
             //If not going back a screen
             //then do the forward animation
+            if (canvasAnimator != null)
+            {
+                canvasAnimator.Stop();
+            }
             if (goBack == false)
             {
                 canvasAnimator = new System.Windows.Threading.DispatcherTimer();
@@ -1818,12 +1819,14 @@ namespace KinectFitness
             }
             //debugger.Text = "Left Elbow:" + patientData.Last().leftElbow + "\nLeft Shoulder:" + patientData.Last().leftShoulder + "\nLeft Hip:" + patientData.Last().leftHip + "\nKnee:" + patientData.Last().leftKnee;
 
-            //Check for Pause Gesture
-            if ((leftShoulder < 105) && (rightShoulder < 105) && (leftElbow > 140) && (rightElbow > 140)
-                && (leftHip > 140) && (rightHip > 140) && (leftKnee > 140) && (rightKnee > 140))
+            
+            /*
+            if ((leftShoulder < 105) && (rightShoulder < 105) && (leftElbow > 150) && (rightElbow > 150)
+                && (leftHip > 150) && (rightHip > 150) && (leftKnee > 150) && (rightKnee > 150))
             {
                 btnPlay_Click(new object(), new RoutedEventArgs());
             }
+             */
         }
 
         /**
