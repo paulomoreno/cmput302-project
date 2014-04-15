@@ -434,6 +434,7 @@ namespace KinectFitness
             suggestionSound = new SoundPlayer(path + "\\KinectFitness\\suggestionSound.wav");
             whooshSound = new SoundPlayer(path + "\\KinectFitness\\whooshSound.wav");
 
+
         }
 
         /**
@@ -677,7 +678,7 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
 
-            background.Source = new Uri(path + "\\KinectFitness\\background.mp4");
+            background.Source = new Uri(path + "\\background.mp4");
             background.Play();
         }
 
@@ -1191,17 +1192,17 @@ namespace KinectFitness
             if (exercise.Name == warmUpImg.Name)
             {
                 video.Add(warmUpImg.Name);
-                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
             }
             else if (exercise.Name == moderateImg.Name)
             {
                 video.Add(moderateImg.Name);
-                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
             }
             else if (exercise.Name == intenseImg.Name)
             {
                 video.Add(intenseImg.Name);
-                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
             }
         }
 
@@ -1299,23 +1300,23 @@ namespace KinectFitness
 
 
             System.IO.StreamReader file =
-               new System.IO.StreamReader(path + "\\KinectFitness\\FitnessVideos\\video.txt");
+               new System.IO.StreamReader(path + "\\FitnessVideos\\video.txt");
             while ((line = file.ReadLine()) != null)
             {
                 if (line.Contains("warmUp"))
                 {
-                    loadExercise("\\KinectFitness\\FitnessVideos\\WarmUp5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
+                    loadExercise("\\FitnessVideos\\WarmUp5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("moderate"))
                 {
-                    loadExercise("\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
+                    loadExercise("\\FitnessVideos\\ModerateCardio5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("intense"))
                 {
-                    loadExercise("\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
+                    loadExercise("\\FitnessVideos\\IntenseCardio5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
                 }
             }
             file.Close();

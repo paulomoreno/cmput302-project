@@ -305,7 +305,7 @@ public class Doctor extends VlcjTest {
 
     public void updateInfo(Info patientInfo) {
         this.lbl_heart_rate.setText(patientInfo.heart_rate + " bpm");
-        //this.lbl_blood_pressure.setText(patientInfo.blood_pressure[0] + "/" + patientInfo.blood_pressure[1]);
+        this.lbl_blood_pressure.setText(patientInfo.blood_pressure[0] + "/" + patientInfo.blood_pressure[1]);
         this.lbl_o2.setText(patientInfo.O2 + "%");
 
         //If not normal, send messages and change the background to red

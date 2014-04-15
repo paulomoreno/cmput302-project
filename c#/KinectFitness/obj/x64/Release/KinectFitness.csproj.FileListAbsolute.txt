@@ -19,4 +19,3 @@ C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\obj\x64\Release
 C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\obj\x64\Release\KinectFitness.csproj.GenerateResource.Cache
 C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\obj\x64\Release\KinectFitness.exe
 C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\obj\x64\Release\KinectFitness.pdb
-C:\Users\silmeria-user\Desktop\cmput302-project\c#\KinectFitness\obj\x64\Release\KinectFitness.csprojResolveAssemblyReference.cache
