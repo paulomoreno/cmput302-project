@@ -39,7 +39,7 @@ namespace KinectFitness
         SoundPlayer goBackSound;
         SoundPlayer doneSound;
         SoundPlayer suggestionSound;
-        SoundPlayer whooshSound;
+        SoundPlayer punchSound;
 
         //Start Up Buttons
         Rect playButton;
@@ -58,7 +58,10 @@ namespace KinectFitness
         Rect playIconPos;
         Rect kinectBackButton;
         Rect bigPlayIcon;
+
+        //Done Screen
         Rect doneButton;
+        Stopwatch starTimer;
 
         //Kinect Data Stuff
         bool videoPlaying;
@@ -68,6 +71,7 @@ namespace KinectFitness
 
         double numberOfPts;
         double totalMovieTime;
+        double totalPointsAvailable;
         Stopwatch standingStillTimer;
         Random r;
 
@@ -432,7 +436,7 @@ namespace KinectFitness
             goBackSound = new SoundPlayer(path + "\\KinectFitness\\goBackSound.wav");
             doneSound = new SoundPlayer(path + "\\KinectFitness\\doneSound.wav");
             suggestionSound = new SoundPlayer(path + "\\KinectFitness\\suggestionSound.wav");
-            whooshSound = new SoundPlayer(path + "\\KinectFitness\\whooshSound.wav");
+            punchSound = new SoundPlayer(path + "\\KinectFitness\\punchSound.wav");
 
 
         }
@@ -614,14 +618,22 @@ namespace KinectFitness
         {
             doneScreenIsActive = true;
 
-            
-            startDoneAnimator();
-
+            starTimer = new Stopwatch();
+            //Set all icons up for beginning of animation
             Canvas.SetTop(statsAnglesBackground, 1000);
             Canvas.SetTop(statsSpeedBackground, 1000);
             Canvas.SetTop(angleStatsBox, 1000);
             Canvas.SetTop(speedStatsBox, 1000);
+            star1.Opacity = 0;
+            star2.Opacity = 0;
+            star3.Opacity = 0;
+            star4.Opacity = 0;
+            star5.Opacity = 0;
 
+
+            startDoneAnimator();
+
+            
         }
 
         private void startDoneAnimator()
@@ -637,27 +649,77 @@ namespace KinectFitness
          */
         private void animateStats()
         {
+            
             if (Stats.Margin.Left < 60)
             {
                 double top = Canvas.GetTop(angleStatsBox);
-                if (top > 200)
+                if (top > 500)
                 {
-                    Canvas.SetTop(angleStatsBox, Canvas.GetTop(angleStatsBox) - Math.Sqrt(top-180));
-                    Canvas.SetTop(statsAnglesBackground, Canvas.GetTop(statsAnglesBackground) - Math.Sqrt(top-180));                    
+
+                    Canvas.SetTop(angleStatsBox, Canvas.GetTop(angleStatsBox) - Math.Sqrt(top-480));
+                    Canvas.SetTop(statsAnglesBackground, Canvas.GetTop(statsAnglesBackground) - Math.Sqrt(top-480));                    
                 }
-                else if (Canvas.GetTop(speedStatsBox) > 350)
+                else if (Canvas.GetTop(speedStatsBox) > 650)
                 {
                     top = Canvas.GetTop(speedStatsBox);
-                    Canvas.SetTop(speedStatsBox, Canvas.GetTop(speedStatsBox) - Math.Sqrt(top-330));
-                    Canvas.SetTop(statsSpeedBackground, Canvas.GetTop(statsSpeedBackground) - Math.Sqrt(top-330));
-                }
+                    Canvas.SetTop(speedStatsBox, Canvas.GetTop(speedStatsBox) - Math.Sqrt(top-630));
+                    Canvas.SetTop(statsSpeedBackground, Canvas.GetTop(statsSpeedBackground) - Math.Sqrt(top-630));
+                }        
 
                 else
                 {
                     doneAnimator.Stop();
+                    startStarAnimator();
+                    starTimer.Start();
+                }
+            }        
+        }
+
+        /**
+         * Starts the Star animations
+         */
+        private void startStarAnimator()
+        {
+            doneAnimator = new System.Windows.Threading.DispatcherTimer();
+            doneAnimator.Tick += (s, args) => animateStars();
+            doneAnimator.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            doneAnimator.Start();            
+        }
+
+        /**
+         * Animates the stars at the end
+         */
+        private void animateStars()
+        {
+            double x = numberOfPts / totalPointsAvailable;
+            if (x > -1)
+            {
+                if (starTimer.ElapsedMilliseconds > 600 && star1.Opacity != 1)
+                {
+                    punchSound.Play();
+                    star1.Opacity = 1;
+                }
+                else if (starTimer.ElapsedMilliseconds > 1200 && star2.Opacity != 1)
+                {
+                    punchSound.Play();
+                    star2.Opacity = 1;
+                }
+                else if (starTimer.ElapsedMilliseconds > 1800 && star3.Opacity != 1)
+                {
+                    punchSound.Play();
+                    star3.Opacity = 1;
+                }
+                else if (starTimer.ElapsedMilliseconds > 2400 && star4.Opacity != 1)
+                {
+                    punchSound.Play();
+                    star4.Opacity = 1;
+                }
+                else if (starTimer.ElapsedMilliseconds > 3200 && star5.Opacity != 1)
+                {
+                    punchSound.Play();
+                    star5.Opacity = 1;
                 }
             }
-        
         }
 
         /**
@@ -678,7 +740,7 @@ namespace KinectFitness
             path = System.IO.Directory.GetParent(path).FullName;
             path = System.IO.Directory.GetParent(path).FullName;
 
-            background.Source = new Uri(path + "\\background.mp4");
+            background.Source = new Uri(path + "\\KinectFitness\\background.mp4");
             background.Play();
         }
 
@@ -1192,17 +1254,17 @@ namespace KinectFitness
             if (exercise.Name == warmUpImg.Name)
             {
                 video.Add(warmUpImg.Name);
-                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
             }
             else if (exercise.Name == moderateImg.Name)
             {
                 video.Add(moderateImg.Name);
-                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
             }
             else if (exercise.Name == intenseImg.Name)
             {
                 video.Add(intenseImg.Name);
-                System.IO.File.WriteAllLines(path + "\\FitnessVideos\\video.txt", video);
+                System.IO.File.WriteAllLines(path + "\\KinectFitness\\FitnessVideos\\video.txt", video);
             }
         }
 
@@ -1300,23 +1362,23 @@ namespace KinectFitness
 
 
             System.IO.StreamReader file =
-               new System.IO.StreamReader(path + "\\FitnessVideos\\video.txt");
+               new System.IO.StreamReader(path + "\\KinectFitness\\FitnessVideos\\video.txt");
             while ((line = file.ReadLine()) != null)
             {
                 if (line.Contains("warmUp"))
                 {
-                    loadExercise("\\FitnessVideos\\WarmUp5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
+                    loadExercise("\\KinectFitness\\FitnessVideos\\WarmUp5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\WarmUp5Min\\warmUpVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("moderate"))
                 {
-                    loadExercise("\\FitnessVideos\\ModerateCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
+                    loadExercise("\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\ModerateCardio5Min\\moderateVideo.mp4", UriKind.Relative);
                 }
                 else if (line.Contains("intense"))
                 {
-                    loadExercise("\\FitnessVideos\\IntenseCardio5Min\\exercise.txt");
-                    FitnessPlayer.Source = new Uri(path + "\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
+                    loadExercise("\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\exercise.txt");
+                    FitnessPlayer.Source = new Uri(path + "\\KinectFitness\\FitnessVideos\\IntenseCardio5Min\\intenseVideo.mp4", UriKind.Relative);
                 }
             }
             file.Close();
@@ -1330,6 +1392,7 @@ namespace KinectFitness
         {
             debugger.Text = "Video Opened";
             totalMovieTime = FitnessPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+            totalPointsAvailable = 900 * totalMovieTime;
         }
 
         private void loadExercise(String exercise)

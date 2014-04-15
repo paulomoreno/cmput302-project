@@ -239,6 +239,8 @@
     <Content Include="background.mp4" />
     <Content Include="hoverSound.wav" />
     <Resource Include="statsBackground.png" />
+    <Resource Include="star.png" />
+    <Resource Include="starempty.png" />
     <Content Include="warmUpVideo.mp4" />
   </ItemGroup>
   <ItemGroup>

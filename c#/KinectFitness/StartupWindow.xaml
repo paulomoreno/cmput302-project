@@ -66,12 +66,22 @@
         </Canvas>
 
         <Canvas Name="Stats" Margin="0,0,0,0">
-            <Image Name="statsSpeedBackground" Source="/KinectFitness;component/statsBackground.png"  Canvas.Left="100" Canvas.Top="106" Height="80" Width="368" Panel.ZIndex="-5" Stretch="Fill" />
-            <Image Name="statsAnglesBackground" Source="/KinectFitness;component/statsBackground.png"  Canvas.Left="100" Canvas.Top="106" Height="80" Width="368" Panel.ZIndex="-5" Stretch="Fill"/>
-            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="80" Width="368" Panel.ZIndex="-5" Foreground="White" Background="{x:Null}"  FontSize="45" Name="angleStatsBox" Opacity="1" />
-            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="80" Width="368" Panel.ZIndex="-5" Foreground="White" Background="{x:Null}" FontSize="45" Name="speedStatsBox" Opacity="1" />
+            <Image Name="statsSpeedBackground" Source="/KinectFitness;component/statsBackground.png"  Canvas.Left="100" Canvas.Top="106" Height="80" Width="330" Panel.ZIndex="-5" Stretch="Fill" />
+            <Image Name="statsAnglesBackground" Source="/KinectFitness;component/statsBackground.png"  Canvas.Left="100" Canvas.Top="106" Height="80" Width="330" Panel.ZIndex="-5" Stretch="Fill"/>
+            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="80" Width="330" Panel.ZIndex="-5" Foreground="White" Background="{x:Null}"  FontSize="45" Name="angleStatsBox" Opacity="1" />
+            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="80" Width="330" Panel.ZIndex="-5" Foreground="White" Background="{x:Null}" FontSize="45" Name="speedStatsBox" Opacity="1" />
             <TextBox Canvas.Left="356" Canvas.Top="0" Height="110" Name="statsTitle" Width="494" Panel.ZIndex="-5" Background="{x:Null}" Foreground="White" Text="Statistics" FontSize="72" BorderBrush="{x:Null}" Opacity="1"/>
             <Image Canvas.Left="910" Canvas.Top="554" Height="160" Name="doneButtonHoverImg" Stretch="Fill" Width="200" Source="/KinectFitness;component/donebuttonhover.gif" Panel.ZIndex="-5" Opacity="0" />
+            <Image Name="star1" Source="/KinectFitness;component/star.png" Canvas.Left="0" Canvas.Top="200" Height="200" />
+            <Image Name="star2" Source="/KinectFitness;component/star.png" Canvas.Left="250" Canvas.Top="200" Height="200" />
+            <Image Name="star3" Source="/KinectFitness;component/star.png" Canvas.Left="500" Canvas.Top="200" Height="200" />
+            <Image Name="star4" Source="/KinectFitness;component/star.png" Canvas.Left="750" Canvas.Top="200" Height="200" />
+            <Image Name="star5" Source="/KinectFitness;component/star.png" Canvas.Left="1000" Canvas.Top="200" Height="200" />
+            <Image Name="emptyStar1" Source="/KinectFitness;component/starempty.png" Canvas.Left="0" Canvas.Top="200" Height="200"  Opacity="0.8" Panel.ZIndex="-1"/>
+            <Image Name="emptyStar2" Source="/KinectFitness;component/starempty.png" Canvas.Left="250" Canvas.Top="200" Height="200" Opacity="0.8" Panel.ZIndex="-1" />
+            <Image Name="emptyStar3" Source="/KinectFitness;component/starempty.png" Canvas.Left="500" Canvas.Top="200" Height="200" Opacity="0.8" Panel.ZIndex="-1" />
+            <Image Name="emptyStar4" Source="/KinectFitness;component/starempty.png" Canvas.Left="750" Canvas.Top="200" Height="200" Opacity="0.8" Panel.ZIndex="-1" />
+            <Image Name="emptyStar5" Source="/KinectFitness;component/starempty.png" Canvas.Left="1000" Canvas.Top="200" Height="200" Opacity="0.8" Panel.ZIndex="-1" />
         </Canvas>
     </Grid>
 </Window>
