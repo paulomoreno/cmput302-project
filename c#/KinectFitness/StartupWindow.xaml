@@ -66,12 +66,12 @@
         </Canvas>
 
         <Canvas Name="Stats" Margin="0,0,0,0">
-            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="50" Width="368" Panel.ZIndex="-5" Foreground="White" Background="#FF217EE8" FontSize="40" Name="angleStatsBox" Opacity="1" />
-            <TextBlock Canvas.Left="500" Canvas.Top="106" Height="50" Width="368" Panel.ZIndex="-5" Foreground="White" Background="#FF217EE8" FontSize="40" Name="speedStatsBox" Opacity="1" />
+            <Image Name="statsSpeedBackground" Source="/KinectFitness;component/statsBackground.png"  Canvas.Left="100" Canvas.Top="106" Height="80" Width="368" Panel.ZIndex="-5" Stretch="Fill" />
+            <Image Name="statsAnglesBackground" Source="/KinectFitness;component/statsBackground.png"  Canvas.Left="100" Canvas.Top="106" Height="80" Width="368" Panel.ZIndex="-5" Stretch="Fill"/>
+            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="80" Width="368" Panel.ZIndex="-5" Foreground="White" Background="{x:Null}"  FontSize="45" Name="angleStatsBox" Opacity="1" />
+            <TextBlock Canvas.Left="100" Canvas.Top="106" Height="80" Width="368" Panel.ZIndex="-5" Foreground="White" Background="{x:Null}" FontSize="45" Name="speedStatsBox" Opacity="1" />
             <TextBox Canvas.Left="356" Canvas.Top="0" Height="110" Name="statsTitle" Width="494" Panel.ZIndex="-5" Background="{x:Null}" Foreground="White" Text="Statistics" FontSize="72" BorderBrush="{x:Null}" Opacity="1"/>
-            <Image Canvas.Left="910" Canvas.Top="554" Height="90" Name="doneButtonImg" Stretch="Fill" Width="200" Panel.ZIndex="-5" Source="/KinectFitness;component/donebutton.gif" Opacity="0" Mouse.MouseUp="goHome" />
-            <Image Canvas.Left="910" Canvas.Top="554" Height="90" Name="doneButtonHoverImg" Stretch="Fill" Width="200" Source="/KinectFitness;component/donebuttonhover.gif" Panel.ZIndex="-5" Opacity="0" />
-            
+            <Image Canvas.Left="910" Canvas.Top="554" Height="160" Name="doneButtonHoverImg" Stretch="Fill" Width="200" Source="/KinectFitness;component/donebuttonhover.gif" Panel.ZIndex="-5" Opacity="0" />
         </Canvas>
     </Grid>
 </Window>

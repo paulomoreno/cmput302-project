@@ -39,6 +39,7 @@ namespace KinectFitness
         SoundPlayer goBackSound;
         SoundPlayer doneSound;
         SoundPlayer suggestionSound;
+        SoundPlayer whooshSound;
 
         //Start Up Buttons
         Rect playButton;
@@ -431,6 +432,7 @@ namespace KinectFitness
             goBackSound = new SoundPlayer(path + "\\KinectFitness\\goBackSound.wav");
             doneSound = new SoundPlayer(path + "\\KinectFitness\\doneSound.wav");
             suggestionSound = new SoundPlayer(path + "\\KinectFitness\\suggestionSound.wav");
+            whooshSound = new SoundPlayer(path + "\\KinectFitness\\whooshSound.wav");
 
         }
 
@@ -547,8 +549,6 @@ namespace KinectFitness
 
             //Hide Done Button
             doneButtonHoverImg.Opacity = 1;
-            doneButtonImg.Opacity = 1;
-            doneButtonImg.Width = 1;
             doneButtonHoverImg.Width = 1;
 
             playIconPos = new Rect();
@@ -616,16 +616,18 @@ namespace KinectFitness
             
             startDoneAnimator();
 
+            Canvas.SetTop(statsAnglesBackground, 1000);
+            Canvas.SetTop(statsSpeedBackground, 1000);
+            Canvas.SetTop(angleStatsBox, 1000);
+            Canvas.SetTop(speedStatsBox, 1000);
 
-            angleStatsBox.Width = 0;
-            speedStatsBox.Width = 0;
         }
 
         private void startDoneAnimator()
         {            
             doneAnimator = new System.Windows.Threading.DispatcherTimer();
             doneAnimator.Tick += (s, args) => animateStats();
-            doneAnimator.Interval = new TimeSpan(0, 0, 0, 0, 25);
+            doneAnimator.Interval = new TimeSpan(0, 0, 0, 0, 5);
             doneAnimator.Start();
         }
 
@@ -634,15 +636,25 @@ namespace KinectFitness
          */
         private void animateStats()
         {
-            if (angleStatsBox.Width < 350 || speedStatsBox.Width < 350)
+            if (Stats.Margin.Left < 60)
             {
-                angleStatsBox.Width += 8;
-                speedStatsBox.Width += 8;
-            }
-            
-            else
-            {
-                doneAnimator.Stop();
+                double top = Canvas.GetTop(angleStatsBox);
+                if (top > 200)
+                {
+                    Canvas.SetTop(angleStatsBox, Canvas.GetTop(angleStatsBox) - Math.Sqrt(top-180));
+                    Canvas.SetTop(statsAnglesBackground, Canvas.GetTop(statsAnglesBackground) - Math.Sqrt(top-180));                    
+                }
+                else if (Canvas.GetTop(speedStatsBox) > 350)
+                {
+                    top = Canvas.GetTop(speedStatsBox);
+                    Canvas.SetTop(speedStatsBox, Canvas.GetTop(speedStatsBox) - Math.Sqrt(top-330));
+                    Canvas.SetTop(statsSpeedBackground, Canvas.GetTop(statsSpeedBackground) - Math.Sqrt(top-330));
+                }
+
+                else
+                {
+                    doneAnimator.Stop();
+                }
             }
         
         }
@@ -931,7 +943,7 @@ namespace KinectFitness
             else if (r.Equals(doneButton))
             {
                 doneButtonHoverImg.Opacity = 1;
-                doneButtonImg.Opacity = 0;
+
             }
         }
 
@@ -974,9 +986,7 @@ namespace KinectFitness
 
                 backButtonKinectImg.Opacity = 1;
                 backButtonKinectHoverImg.Opacity = 0;
-
-                doneButtonHoverImg.Opacity = 0;
-                doneButtonImg.Opacity = 1;                      
+                     
 
         }
 
@@ -2295,9 +2305,6 @@ namespace KinectFitness
         private void createStatsView()
         {
             //Initialize Done Button
-            doneButton.Size = new Size(doneButtonImg.Width, doneButtonImg.Height);
-            doneButton.Location = new Point(Canvas.GetLeft(doneButtonImg), Canvas.GetTop(doneButtonImg));
-            doneButtonImg.Width = 200;
             doneButtonHoverImg.Width = 200;
         }
 
@@ -2480,11 +2487,12 @@ namespace KinectFitness
             double anglePrecision = angleAccuracy(patientAnglesData.Count());
             double speedPrecision = speedAccuracy(patientSpeedData.Count());
             // Put this into the Stats box at the end of the video
-            angleStatsBox.Text = "Angle Accuracy: " + anglePrecision;
-            speedStatsBox.Text = "Speed Accuracy: " + speedPrecision;
+            angleStatsBox.Text = "Form\t    |" +  +anglePrecision + "%";
+            speedStatsBox.Text = "Pace\t    |" + speedPrecision + "%";
 
 
             startNewCanvas(Stats, Kinect, false);
+            doneSound.Play();
             deInitializeKinectUI();
             initializeDoneUI();
         }
