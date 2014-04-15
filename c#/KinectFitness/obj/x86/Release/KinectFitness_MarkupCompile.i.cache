@@ -5,30 +5,16 @@ winexe
 C#
 .cs
 C:\Users\Brad\302\c#\KinectFitness\obj\x86\Release\
-<<<<<<< HEAD
-
-=======
->>>>>>> TestBranch
 KinectFitness
 none
 false
 TRACE
-<<<<<<< HEAD
-
 C:\Users\Brad\302\c#\KinectFitness\App.xaml
-5-167060286
-1-2147425260
-14-2052519560
-171816817712
-
-=======
-C:\Users\Brad\302\c#\KinectFitness\App.xaml
-5-167060286
-2-1271185072
-14-2052519560
-171929032768
->>>>>>> TestBranch
-KinectWindow.xaml;MainWindow.xaml;RecordWindow.xaml;SelectLevelWindow.xaml;StartupWindow.xaml;
+3-2101039481
+31980609450
+14728429519
+171236794586
+MainWindow.xaml;RecordWindow.xaml;StartupWindow.xaml;
 
 False
 
