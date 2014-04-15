@@ -25,6 +25,7 @@ public class DoctorViewFrame extends JFrame {
 
     private boolean allPatients = true;
     private int onePatientIndex;
+    private int onePatientUnmuteIndex;
 
     private JPanel contentPane;
 
@@ -98,6 +99,20 @@ public class DoctorViewFrame extends JFrame {
         info.O2 = "58";
         
         doctor[index].updateInfo(info);
+    }
+    
+    public void change_mute(int index, boolean is_currently_mute){
+        if (is_currently_mute){
+            this.onePatientUnmuteIndex = index;
+            for (int i = 0; i < 8; i++) {
+                if (i != this.onePatientUnmuteIndex)
+                    doctor[i].mute(true);
+                //contentPane.add(doctor[i].getContent());
+            } 
+            doctor[onePatientUnmuteIndex].mute(false);
+        } else {
+            doctor[index].mute(true);
+        }
     }
 
 }
