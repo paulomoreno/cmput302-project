@@ -29,7 +29,6 @@ C:\Users\Brad\302\c#\KinectFitness\bin\x64\Release\SlimDX.dll
 C:\Users\Brad\302\c#\KinectFitness\bin\x64\Release\Microsoft.Expression.Drawing.dll
 C:\Users\Brad\302\c#\KinectFitness\bin\x64\Release\Coding4Fun.Kinect.Wpf.pdb
 C:\Users\Brad\302\c#\KinectFitness\bin\x64\Release\Microsoft.Samples.Kinect.WpfViewers.pdb
-C:\Users\Brad\302\c#\KinectFitness\obj\x64\Release\KinectFitness.csprojResolveAssemblyReference.cache
 C:\Users\Brad\302\c#\KinectFitness\obj\x64\Release\MainWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x64\Release\RecordWindow.baml
 C:\Users\Brad\302\c#\KinectFitness\obj\x64\Release\StartupWindow.baml
@@ -42,3 +41,4 @@ C:\Users\Brad\302\c#\KinectFitness\obj\x64\Release\KinectFitness_MarkupCompile.c
 C:\Users\Brad\302\c#\KinectFitness\obj\x64\Release\KinectFitness.g.resources
 C:\Users\Brad\302\c#\KinectFitness\obj\x64\Release\KinectFitness.Properties.Resources.resources
 C:\Users\Brad\302\c#\KinectFitness\obj\x64\Release\KinectFitness.csproj.GenerateResource.Cache
+C:\Users\Brad\302\c#\KinectFitness\obj\x64\Release\KinectFitness.csprojResolveAssemblyReference.cache

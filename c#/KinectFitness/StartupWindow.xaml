@@ -45,7 +45,6 @@
         <Canvas Name="Kinect" Margin="0,0,0,0">
             <MediaElement Height="499"  MediaEnded="videoEnd" HorizontalAlignment="Left" Name="FitnessPlayer" VerticalAlignment="Top" Width="750" UnloadedBehavior="Manual" LoadedBehavior="Manual" OpacityMask="{x:Null}" Panel.ZIndex="1" IsMuted="False" Grid.ColumnSpan="2" Canvas.Left="100" Canvas.Top="90" />
 
-            <Image Canvas.Left="850" Canvas.Top="0" Height="198" Name="Doctor" Stretch="Fill" Width="260" Source="/KinectFitness;component/no-avatar.jpg" />
             <TextBlock Canvas.Left="856" Canvas.Top="509" Height="80" Name="points" Text="0 Pts." Width="261" Foreground="White" FontSize="64" FontFamily="Corbel" />
             <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="playicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/playicon.png"  Mouse.MouseUp="btnPlay_Click" Panel.ZIndex="1" />
             <Image Canvas.Left="100" Canvas.Top="591" Height="84" Name="hoverplayicon" Stretch="Fill" Width="82" Source="/KinectFitness;component/hoverplayicon.png" Opacity="0" />

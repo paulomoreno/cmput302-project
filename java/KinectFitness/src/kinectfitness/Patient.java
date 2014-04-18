@@ -92,7 +92,7 @@ public class Patient extends VlcjTest {
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screen = kit.getScreenSize();
 
-        frame.setLocation((int) screen.getWidth() - 320 - 150, 0);
+        frame.setLocation((int) screen.getWidth() - 320 - 100, 0);
 
         frame.setContentPane(contentPane);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -89,7 +89,7 @@ public class FitnessMainJava {
                                 try {
                                     FitnessMainJava.startKinectApp();
                                     Patient patient = new Patient();
-                                    patient.Patient("142.244.153.10", index);
+                                    patient.Patient("10.0.1.4", index);
                                     Patient.startPatient(patient);
                                 } catch (IOException ex) {
                                     System.out.println("IOException");
