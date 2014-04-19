@@ -20,7 +20,9 @@ import javax.xml.transform.TransformerException;
 import org.w3c.dom.Element;
 
 /**
- *
+ * This class sets and gets information from the patient. 
+ * It receives the patient IP and then use it to establish the connection
+ * 
  * @author Marcus
  */
 class Doctor_info extends Thread {
@@ -29,15 +31,19 @@ class Doctor_info extends Thread {
     boolean foundIP = false;
     int localPort = 5020;
     String remoteIP = "";
-
+    
+    // return True if an IP was found 
     public boolean foundIP() {
         return this.foundIP;
     }
-
+    
+    
+    // set the LocalPort
     public void setLocalPort(int port) {
         this.localPort = port;
     }
 
+    // get the remote IP, it should be used to make the connection
     public String getRemoteIP() {
         return this.remoteIP;
     }
@@ -55,12 +61,18 @@ class Doctor_info extends Thread {
 
         int cTosPortNumber = this.localPort;
         try {
+            
+            // Create sockets and then waits for connection
             System.out.println("Info Port: " + cTosPortNumber);
             servSocket = new ServerSocket(cTosPortNumber);
             fromClientSocket = servSocket.accept();
+            
+            // Create new info class. The class is responsible for storing the patient info 
             ObjectInputStream ois = new ObjectInputStream(fromClientSocket.getInputStream());
             Info info = new Info();
-
+            
+            
+            // According to the patient number a specific port is reserved
             String patientId = "";
             switch (cTosPortNumber) {
                 case 5020:
@@ -94,7 +106,12 @@ class Doctor_info extends Thread {
             Element exercise = exporter.startXML();
 
             int counter = 0;
+            
+            
             while ((patient_info = (Info) ois.readObject()) != null) {
+                
+                // If the connection was established and an IP found then gets the remoteIP and 
+                //starts the video streaming 
                 if (!foundIP) {
                     foundIP = true;
                     remoteIP = fromClientSocket.getRemoteSocketAddress().toString().replaceAll("(/|(:[0-9]+))", "");
