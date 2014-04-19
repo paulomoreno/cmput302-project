@@ -40,6 +40,8 @@ public class FitnessMainJava {
      * @throws IOException 
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
+        
+        // Paths to use VLCj library
         NativeLibrary.addSearchPath("libvlc", "./");
         NativeLibrary.addSearchPath("libvlccore", "libvlccore");
         createInputDialog();
