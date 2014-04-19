@@ -1,6 +1,8 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * This class essentially represents the Kinect Fitness application for the
+ * patient side.  The VLCJ library creaet the framework for the video and audio
+ * chat to be established between the patient and the doctor and creates the UI
+ * for the video to be displayed in.
  */
 package kinectfitness;
 

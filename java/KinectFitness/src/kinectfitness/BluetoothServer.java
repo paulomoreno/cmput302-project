@@ -1,24 +1,30 @@
 package kinectfitness;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.Charset;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import org.w3c.dom.Element;
 
+/**
+ * This class is used to set up a socket connection with the 
+ * Samsung Galaxy S4 phone with the Sensor Read application.
+ * This class creates a socket server that listens at port 4444
+ * of localhost and once the client (the phone) connects to the
+ * server, then the data is sent from the phone (which receives
+ * directly from the Bluetooth devices) and is sent to the doctor
+ * application.  The methods of this class is called from the
+ * Patient_info class.
+ * 
+ * @author Ga Young Kim
+ */
 public class BluetoothServer {
 
+    // the stream for sending the data to the doctor
     public static ObjectOutputStream doctorOutput;
     // need the heart_rate and oxygen_percentage for testing
     Integer heart_rate = 100;
@@ -27,15 +33,25 @@ public class BluetoothServer {
     Integer systolic = 140;
     Integer diastolic = 100;
 
+    /**
+     * The main constructor for the BluetoothServer class.
+     * @param docout       the OutputStream where the data is sent to the
+     *                     doctor's side of the application.
+     */
     public BluetoothServer(ObjectOutputStream docout) {
         this.doctorOutput = docout;
     }
 
+    /**
+     * The method is used to connect to the phone as explained in the 
+     * class description above.  The socket server at port 4444 waits for
+     * the connection by the client to start the data transfer.
+     * @throws IOException 
+     */
     public void connectToPhone() throws IOException {
         // create socket
         int port = 4444;
         ServerSocket serverSocket = new ServerSocket(port);
-        System.err.println("Started server on port " + port);
 
         final Random r = new Random();
         Timer timer = new Timer();
@@ -103,33 +119,49 @@ public class BluetoothServer {
                 BluetoothServer.doctorOutput.writeObject(patient_info);
                 BluetoothServer.doctorOutput.reset();
 
-                // send the received information to the C# application
-//                ServerSocket dataserver = new ServerSocket(5000, 0, InetAddress.getByName("localhost"));
-//                System.err.println("Started server on port 5000");
-//
-//                while (true) {
-//                    Socket dataclient = dataserver.accept();
-//                    System.err.println("Accepted connection from client");
-//                }
             }
 
             // close IO streams, then socket
-            System.err.println("Closing connection with client");
             in.close();
             clientSocket.close();
         }
     }
 
+    /**
+     * This method is just used to only retrieve the relevant value
+     * from the heart rate monitor data.  The Sensor Read android application
+     * on the phone sends the data in form of HR XX so need to get the
+     * value XX.
+     * @param hrInput   the data string received from the phone starting with HR
+     * @return          the heart rate value
+     */
     private static String getHeartRate(String hrInput) {
         String processedString = hrInput.substring(3);
         return processedString;
     }
 
+    /**
+     * This method is used to retrieve the blood oxygen percentage from 
+     * the oximeter reading.  The Sensor Read application send the data 
+     * in the form of OX AA BB.  To get the correct oxygen percentage,
+     * one has to get the AA value.
+     * @param oxInput   the data string received from the phone starting with OX 
+     * @return          the blood oxygen percentage value
+     */
     private static String getOxiPercent(String oxInput) {
         String processedString = oxInput.substring(3, 6);
         return processedString;
     }
 
+    /**
+     * This function is used to randomly generate values.  It
+     * is used to mock blood pressure data and also in runTest to
+     * simulate the data being received for testing purposes without
+     * the phone.
+     * @param min           min value of the random number
+     * @param max           max value of the random number
+     * @return              randomly generated number within the min and max range
+     */
     public static String randInt(int min, int max) {
 
         // Usually this can be a field rather than a method variable
@@ -142,23 +174,19 @@ public class BluetoothServer {
         return String.valueOf(randomNum);
     }
 
+    /**
+     * This method is called by the Patient_info class when the 
+     * phone and the Bluetooth devices were not available for testing. It
+     * simulates the data sent from the phone to test the application.
+     */
     public void runTest() {
         try {
-            // currently when this code is enabled, it lags the video and also until the java application is shut off,
-            // the kinect side does not show up... probably need a thread
-//            ServerSocket dataserver = new ServerSocket(5001, 0, InetAddress.getByName("localhost"));
-//            Socket dataclient = dataserver.accept();
-//            
-//            System.err.println("Accepted connection from client");
-//            DataOutputStream dataOutputStream = new DataOutputStream(dataclient.getOutputStream());
-
             final Random r = new Random();
             Timer timer = new Timer();
 
             timer.schedule(
                     new TimerTask() {
                 public void run() {
-                    //        System.err.println("Accepted connection from client");
                     // within range of 90-175
                     systolic += r.nextInt(3) - 1;
                     if (systolic < 90) {
@@ -197,21 +225,15 @@ public class BluetoothServer {
                 }
             }, 0, 5000);
             while (true) {
-
+                // send mock data to the doctor
                 Info patient_info = new Info();
                 patient_info.heart_rate = String.valueOf(heart_rate);
                 patient_info.O2 = String.valueOf(oxygen_percentage);
                 patient_info.blood_pressure[0] = String.valueOf(systolic);
                 patient_info.blood_pressure[1] = String.valueOf(diastolic);
                 BluetoothServer.doctorOutput.writeObject(patient_info);
-                BluetoothServer.doctorOutput.reset();
-
-//                dataOutputStream.writeBytes(String.valueOf(patient_info.heart_rate) + "||" + String.valueOf(patient_info.O2)
-//                         + "||" + String.valueOf(patient_info.blood_pressure[0]) + "/" + patient_info.blood_pressure[1] + "\n");
-                
+                BluetoothServer.doctorOutput.reset(); 
             }
-            //        dataclient.close();
-            //        dataserver.close();
         } catch (IOException ex) {
             Logger.getLogger(BluetoothServer.class.getName()).log(Level.SEVERE, null, ex);
         }

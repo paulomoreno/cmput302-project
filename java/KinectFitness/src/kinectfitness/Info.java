@@ -1,13 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package kinectfitness;
 
 import java.io.Serializable;
 
 /**
- *
+ * This class represents the different data
+ * collected from the Bluetooth devices to monitor the 
+ * patients vital signs.
+ * 
  * @author Marcus
  */
 class Info implements Serializable {

@@ -15,15 +15,47 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
+/**
+ * This is the main class of the Kinect Fitness application.
+ * It creates the UI for the user to input the password to access 
+ * the different side of the application.  If patient1, patient2, patient3, patient4,
+ * patient5, patient6, patient7 or patient8 is entered by the user then the
+ * application launches the patient application by calling the methods in the
+ * Patient class.  Also, for the patient side application, the Kinect application is
+ * launched at the same time as well.
+ * If the password entered is doctor, then the application launches the
+ * method in the Doctor class.
+ * 
+ * @author Ga Young Kim
+ */
 public class FitnessMainJava {
 
+    /**
+     * The main method of the application.  It calls the method to create
+     * the main dialog window for the user to input the password and also loads
+     * the dlls for the VLCJ library.
+     * 
+     * @param args
+     * @throws URISyntaxException
+     * @throws IOException 
+     */
     public static void main(String[] args) throws URISyntaxException, IOException {
         NativeLibrary.addSearchPath("libvlc", "./");
         NativeLibrary.addSearchPath("libvlccore", "libvlccore");
         createInputDialog();
     }
 
+    /**
+     * This method creates the main UI for the user to input the password
+     * to identify themselves as either the patient or the doctor.  Also, 
+     * depending on which password for the patient they associated themselves with,
+     * the index number if different (from 0 to 7). This index number corresponds
+     * to the location where the patient video will be displayed in the doctor
+     * side application and which port would be used from 5020 to 5027 to establish
+     * the TCP connection.
+     */
     private static void createInputDialog() {
+        // create the main UI
         final JFrame dialogWindow = new JFrame("Kinect Fitness");
         dialogWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -35,6 +67,9 @@ public class FitnessMainJava {
 
         JButton button = new JButton("Enter");
         button.addActionListener(new ActionListener() {
+            // If the password is patients, then depending on the password,
+            // set a different index.  If it's for the doctor then the
+            // doctor application is launched
             @Override
             public void actionPerformed(ActionEvent e) {
                 String value = textField.getText();
@@ -66,6 +101,7 @@ public class FitnessMainJava {
                         patientindex = 7;
                         break;
                     case "doctor":
+                        // launch the doctor application
                         DoctorViewFrame window = new DoctorViewFrame();
 
                         window.sendInfo(182, 2);
@@ -87,7 +123,11 @@ public class FitnessMainJava {
                         new Thread() {
                             public void run() {
                                 try {
+                                    // launch the Kinect application
                                     FitnessMainJava.startKinectApp();
+                                    // launch the video and audio chat for the 
+                                    // patient and also establish a connection
+                                    // with the doctor application 
                                     Patient patient = new Patient();
                                     patient.Patient("10.0.1.4", index);
                                     Patient.startPatient(patient);
@@ -124,8 +164,13 @@ public class FitnessMainJava {
 
     }
 
-    // getting path to KinectFitness.exe file
+    /**
+     * This method is used to launch the Kinect application.
+     * @throws IOException
+     * @throws URISyntaxException 
+     */
     private static void startKinectApp() throws IOException, URISyntaxException {
+        // get the path to the root project directory
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         URL url = classLoader.getResource("");
         File file = new File(url.toURI());

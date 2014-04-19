@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * This class is responsible for the XML export system of the doctor side
+ * application.
  */
 package kinectfitness;
 
@@ -27,14 +27,43 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- *
+ * This class is called by the Doctor_info class to allow the data received
+ * from the patient to be exported as an XML file.  The structure of the XML is:
+ * <KinectFitness>
+ *       <patient>
+ *           <label>patient1</label>
+ *           <date>2014-04-10 19:16:40</date>
+ *       </patient>
+ *       <exerciseData>
+ *           <data>
+ *               <time>19:16:40</time>
+ *               <hr>100</hr>
+ *               <o2>93</o2>
+ *               <bp>140/100</bp>
+ *               <memo/>
+ *           </data>
+ *           (the data tag is generated with the values every 1/3 of a second)
+ *      </exerciseData>
+ *  </KinectFitness>
+ * The XML file is generated with the name "label-of-patient-timestamp.xml" and 
+ * within the PatientData directory in the root java project directory.
+ * 
  * @author Ga Young Kim
  */
 public class XMLExporter {
 
+    // label associated with the patient (patient1, patient2, ..., patient8)
     String label;
+    // DOMDocument object
     Document document;
 
+    /**
+     * Main constructor of the class which starts the DOMDocument to create the
+     * XML file.
+     * @param patient_name      label associated with the patient 
+     *                          (patient1, patient2, ..., patient8)
+     * @throws ParserConfigurationException 
+     */
     public XMLExporter(String patient_name) throws ParserConfigurationException {
         this.label = patient_name;
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -43,6 +72,15 @@ public class XMLExporter {
         this.document = doc;
     }
 
+    /**
+     * The method is used to start generating the XML file.  It creates the 
+     * KinectFitness, Patient elements (with all of its children elements) and 
+     * creates the empty exerciseData element.
+     * @return                  exerciseData DOMelement
+     * @throws TransformerConfigurationException
+     * @throws TransformerException
+     * @throws ParserConfigurationException 
+     */
     public Element startXML() throws TransformerConfigurationException, TransformerException, ParserConfigurationException {
 
         Element rootElement = document.createElement("KinectFitness");
@@ -67,6 +105,16 @@ public class XMLExporter {
 
     }
 
+    /**
+     * This method is used to create the data DOMElements that are the children
+     * nodes of the exerciseData element.  This data DOMElement is generated then
+     * appended to the exerciseData element every 1/3 of a second.
+     * @param exercise                  the exerciseData DOMElement
+     * @param patient_data              the patient data received
+     * @throws TransformerConfigurationException
+     * @throws TransformerException
+     * @throws ParserConfigurationException 
+     */
     public void createDataElement(Element exercise, Info patient_data) throws TransformerConfigurationException, TransformerException, ParserConfigurationException {
         Element dataElement = document.createElement("data");
         exercise.appendChild(dataElement);
@@ -89,14 +137,12 @@ public class XMLExporter {
         String bpValue = patient_data.blood_pressure[0] + "/" + patient_data.blood_pressure[1];
         bpElement.appendChild(document.createTextNode(bpValue));
         dataElement.appendChild(bpElement);
-
-        // enable when there are memos
-//        Element memoElement = document.createElement("memo");
-//        memoElement.appendChild(document.createTextNode(patient_data.memo));
-//        dataElement.appendChild(memoElement);
-
     }
 
+    /**
+     * This method is used to export the finished XML file at the end of the
+     * session.
+     */
     public void exportXML() {
         try {
             ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -129,9 +175,6 @@ public class XMLExporter {
             DOMSource source = new DOMSource(document);
             StreamResult result = new StreamResult(new File(filepath));
 
-//            debugging
-//            StreamResult result = new StreamResult(System.out);
-
             transformer.transform(source, result);
 
         } catch (URISyntaxException ex) {
@@ -141,7 +184,5 @@ public class XMLExporter {
         } catch (TransformerException ex) {
             Logger.getLogger(XMLExporter.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }
 }
