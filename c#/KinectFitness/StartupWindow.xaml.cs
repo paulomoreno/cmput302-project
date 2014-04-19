@@ -114,9 +114,6 @@ namespace KinectFitness
          */
         public StartupWindow()
         {
-            //Kinect2JavaClient client = new Kinect2JavaClient();
-            //client.receiveData();
-
             control = new Controller();
             
             //Initialize Kinect
@@ -127,10 +124,6 @@ namespace KinectFitness
             
             //Set up the UI for the Start Up Screen
             InitializeStartUpUI();
-
-           //Kinect2JavaClient data = new Kinect2JavaClient("Start");
-            //data.sendFlag();
-
 
             var navWindow = Window.GetWindow(this) as NavigationWindow;
             //Get rid of WPF's annoying navigation UI
@@ -527,8 +520,6 @@ namespace KinectFitness
             actionsList.Add(moderateWorkout);
             actionsList.Add(intenseWorkout);
             actionsList.Add(backButtonPressed);
-
-            /*PatientTcpServer.getHeartRate();*/
         }
 
         /**
@@ -1382,14 +1373,6 @@ namespace KinectFitness
 
             try
             {
-                /*
-                Kinect2JavaClient quitMessage = new Kinect2JavaClient("quit");
-                quitMessage.sendFlag();
-
-                if(Kinect2JavaClient.socketForServer.Connected)
-                {
-                    Kinect2JavaClient.socketForServer.Close();
-                }/**/
                 newThread.Abort();
                 control.ReleaseDevice();
             }
@@ -1703,12 +1686,6 @@ namespace KinectFitness
          */
         private void backButtonPressed(object sender, RoutedEventArgs e)
         {
-            /*
-            if(PatientTcpServer.tcpListener.Pending())
-            {
-                PatientTcpServer.thread.Abort();
-            }/**/
-
             startNewCanvas(StartUp, SelectLevel, true);
             deInitializeSelectLevelUI();
             InitializeStartUpUI();
@@ -2716,13 +2693,6 @@ namespace KinectFitness
             startHoverChecker();
             //Video is not playing
             videoPlaying = false;
-
-            /*
-            if(PatientTcpServer.tcpListener.Pending())
-            {
-                PatientTcpServer.thread.Abort();
-                PatientTcpServer.tcpListener.Stop();
-            }/**/
         }
 
        
@@ -2787,13 +2757,6 @@ namespace KinectFitness
                 suggestionAnimator.Stop();
             }
 
-            /*
-            MessageBox.Show("go home method");
-            if (PatientTcpServer.tcpListener.Pending())
-            {
-                PatientTcpServer.thread.Abort();
-            }/**/
-
             startNewCanvas(StartUp, Stats, true);
             deInitializeDoneUI();
             InitializeStartUpUI();
@@ -2805,15 +2768,6 @@ namespace KinectFitness
          */
         private void KinectButton_Back(object sender, RoutedEventArgs e)
         {
-            /*
-            MessageBox.Show("back button");
-            if (PatientTcpServer.tcpListener.Pending())
-            {
-                Kinect2JavaClient backmessage = new Kinect2JavaClient("back");
-                backmessage.sendFlag();
-                PatientTcpServer.thread.Abort();
-            }*/
-
             startNewCanvas(SelectLevel, Kinect, true);
             deInitializeKinectUI();
             initializeSelectLevelUI();

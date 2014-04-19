@@ -77,9 +77,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Microsoft.Samples.Kinect.WpfViewers.dll</HintPath>
     </Reference>
-    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Documents\Downloads\SlimDX.dll</HintPath>
+      <HintPath>.\SlimDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -105,8 +105,6 @@
     <Compile Include="Controller.cs" />
     <Compile Include="JointAngles.cs" />
     <Compile Include="JointSpeeds.cs" />
-    <Compile Include="Kinect2JavaClient.cs" />
-    <Compile Include="PatientTcpServer.cs" />
     <Compile Include="RecordWindow.xaml.cs">
       <DependentUpon>RecordWindow.xaml</DependentUpon>
     </Compile>
