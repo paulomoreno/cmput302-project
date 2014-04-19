@@ -26,18 +26,27 @@ import java.awt.Toolkit;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 
 /**
- *
+ * Class used to set a patient
  * @author Marcus
  */
 public class Patient extends VlcjTest {
 
+    // Default doctorIP
     private String doctorIP = "127.0.0.1";
+    
+    // Each patient has an index to manage the connections
     private int patient_index;
+    
+    // Each patient shuold use a different videoPort to connect to the doctor
     private String doctorVideoPort;
+    
+    // VLC varialbes to send and receive the video stream
     private final MediaPlayerFactory mediaPlayerFactoryOut;
     private final MediaPlayerFactory mediaPlayerFactoryIn;
     private final HeadlessMediaPlayer localMediaPlayer;
     private final EmbeddedMediaPlayer remoteMediaPlayer;
+    
+    // Patient Frame and PAnel
     private final JFrame frame;
     private final JPanel contentPane;
     private final Canvas remoteCanvas;
@@ -60,6 +69,7 @@ public class Patient extends VlcjTest {
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
+            // Start the patient
             public void run() {
                 p.start();
             }
@@ -67,12 +77,18 @@ public class Patient extends VlcjTest {
     }
 
     public Patient() {
+        
+        // Set the VLC arguments for the video streaming
         String[] VLC_ARGS = {"--vout", "dummy", "--aout", "dummy",};
+        
+        // Initialize video streaming varialbes
         mediaPlayerFactoryOut = new MediaPlayerFactory(VLC_ARGS);
         mediaPlayerFactoryIn = new MediaPlayerFactory();
+        
         localMediaPlayer = mediaPlayerFactoryOut.newHeadlessMediaPlayer();
         remoteMediaPlayer = mediaPlayerFactoryIn.newEmbeddedMediaPlayer();
 
+        // Create jswing panel and canvas
         contentPane = new JPanel();
         contentPane.setBackground(bkg_color);
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -81,19 +97,22 @@ public class Patient extends VlcjTest {
         remoteCanvas.setBackground(Color.BLACK);
         remoteCanvas.setSize(320, 200);
 
+        // Add videosurface to the canvas
         remoteVideoSurface = mediaPlayerFactoryIn.newVideoSurface(remoteCanvas);
         remoteMediaPlayer.setVideoSurface(remoteVideoSurface);
 
         contentPane.add(remoteCanvas, BorderLayout.CENTER);
 
+        // Create the patient frame
         frame = new JFrame("Patient View");
         frame.setUndecorated(true);
         frame.setAlwaysOnTop(true);
 
-
+        // Get the current dimenstion of the screen
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screen = kit.getScreenSize();
 
+        // Set the location of the frame according to the size of the screen
         frame.setLocation((int) screen.getWidth() - 320 - 100, 0);
 
         frame.setContentPane(contentPane);
@@ -102,6 +121,7 @@ public class Patient extends VlcjTest {
         frame.pack();
     }
 
+    // Start the streaming and create the class to get the patient information
     private void start() {
         send();//send video
         Patient_info pi = new Patient_info(this.doctorIP, patient_index);
@@ -110,17 +130,23 @@ public class Patient extends VlcjTest {
         frame.setVisible(true);
     }
 
+    // VLC method to send the video to the doctor
     private void send() {
+        
+        // get the webcam 
         String mrl = !RuntimeUtil.isWindows() ? "v4l2:///dev/video0" : "dshow://";
         if (mrl.length() > 0) {
+            
             System.out.println("Before streamTo: " + this.doctorIP);
             String streamTo = this.doctorIP + ":" + doctorVideoPort;
-
+            
+            // The format of the address is IP:Port, it is necessary to split the string
             String[] parts = streamTo.split(":");
             if (parts.length == 2) {
                 String host = parts[0];
                 int port = Integer.parseInt(parts[1]);
-
+            
+                // video streaming options
                 String[] localOptions = {formatRtpStream(host, port), ":no-sout-rtp-sap", ":no-sout-standard-sap", ":sout-all", ":sout-keep",};
 
                 localMediaPlayer.playMedia(mrl, localOptions);
@@ -131,12 +157,16 @@ public class Patient extends VlcjTest {
             JOptionPane.showMessageDialog(frame, "You must specify source media, e.g. v4l2:///dev/video0 on Linux or dshow:// on Windows.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
+    // VLC method to receive the video from the doctor
     private void receive() {
         String streamFrom = "230.0.0.1:5555";
+        
+        // latency redution options
         remoteMediaPlayer.playMedia("rtp://@" + streamFrom, ":sout-mux-caching=100", ":live-caching=100", ":network-caching=100", ":clock-jitter=0");
     }
 
+    // set the video configuration for the patient.
     private static String formatRtpStream(String serverAddress, int serverPort) {
         StringBuilder sb = new StringBuilder(60);
         sb.append(":sout=#transcode{vcodec=mp2v,vb=512,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=display,dst=rtp{dst=");
