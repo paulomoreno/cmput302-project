@@ -14,7 +14,7 @@ CMPUT 302 Project - Kinect Fitness
     1. Install Java 7 at https://www.java.com/en/download/
     2. Install Netbeans 7.4 at https://netbeans.org/downloads/7.4/
     3. Install the Kinect SDK at http://www.microsoft.com/en-us/kinectforwindowsdev/Downloads.aspx
-    4. Download the KinectFitness application at
+    4. Get a copy of the KinectFitness application
     5. Import the zip in the Netbeans
     6. Resolve all VLCJ jar file issues by clicking "Resolve problems" upon trigger then browsing to where the specified jar files are.
     7. "Clean and build" the project and run.
