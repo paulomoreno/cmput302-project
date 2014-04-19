@@ -79,8 +79,14 @@ import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
  *   :input-slave=alsa://hw:0,0
  * </pre>
  */
+ 
+ /*
+  * Class created to manage the fullscreen button
+  */
 class ChangeModeAction extends AbstractAction {
-
+    
+    
+    // Varibles to control current state of the window (fullscreen or 8 patients view)
     private int current_mode;
     private final int index;
     private final DoctorViewFrame window;
@@ -99,21 +105,30 @@ class ChangeModeAction extends AbstractAction {
         this.contract_icon = contract_icon;
     }
 
+    // set current visualization mode
     public void setCurrentMode(int new_current_mode) {
         this.current_mode = new_current_mode;
     }
 
     @Override
+    
+    // when the fullscreen button is pressed
     public void actionPerformed(ActionEvent ae) {
+        
+        // If the current mode is all the patient on the screen, then the patient selected will be in fullscreen mode
         if (this.current_mode == Doctor.ALL_PATIENTS) {
             this.setCurrentMode(Doctor.ONE_PATIENT);
-
+        
+            // change the layout to just one patient and the icon to contract
             this.window.changeLayoutToOne(this.index);
             this.btn_change_mode.setIcon(contract_icon);
 
-        } else if (this.current_mode == Doctor.ONE_PATIENT) {
+        } 
+        // If the current mode is one patient only, then it should go back to the regular view (8 patients)
+        else if (this.current_mode == Doctor.ONE_PATIENT) {
             this.setCurrentMode(Doctor.ALL_PATIENTS);
 
+            // change layout to all and the icon to expand
             this.window.changeLayoutToAll();
             this.btn_change_mode.setIcon(expand_icon);
 
@@ -122,6 +137,7 @@ class ChangeModeAction extends AbstractAction {
     }
 }
 
+// Class created to manage the mute button
 class ChangeMuteAction extends AbstractAction {
 
     private boolean mute;
@@ -138,6 +154,8 @@ class ChangeMuteAction extends AbstractAction {
     }
 
     @Override
+    
+    // when the button is pressed the function to change the mute value is called
     public void actionPerformed(ActionEvent ae) {
         this.window.change_mute(index, this.doctor.isMute());
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -155,16 +173,19 @@ public class Doctor extends VlcjTest {
     public static final int ALL_PATIENTS = 0;
     public static final int ONE_PATIENT = 1;
 
+    // Icons
     private ImageIcon mute_icon;
     private ImageIcon unmute_icon;
     private boolean isMute;
 
+    // Data to create the connection
     private String remoteIP;
     private final String localPort;
     private final int localInfoPort;
     private final int index;
     private final DoctorViewFrame window;
 
+    // Variables that receive and send the video streaming
     private final MediaPlayerFactory mediaPlayerFactoryOut;
     private final MediaPlayerFactory mediaPlayerFactoryIn;
     private final HeadlessMediaPlayer localMediaPlayer;
@@ -178,6 +199,7 @@ public class Doctor extends VlcjTest {
 
     private final CanvasVideoSurface remoteVideoSurface;
 
+    // Labels
     private final JPanel pnl_info;
     private final JLabel lbl_hr_title;
     private final JLabel lbl_bp_title;
@@ -195,13 +217,18 @@ public class Doctor extends VlcjTest {
     private Color bkg_color = Color.WHITE; //new Color(150, 180, 255);
     private Color text_color = Color.BLACK;
 
+    // Method called to start the doctor.
+    // The doctor then waits for a connection in the loaclPort and localInfoPort
     public Doctor startDoctor() throws Exception {
+        
+        // Path for the VLC libraries
         NativeLibrary.addSearchPath("libvlc", "./");
         NativeLibrary.addSearchPath("libvlccore", "libvlccore");
         setLookAndFeel();
-
+        
         final Doctor doc = new Doctor(localPort, localInfoPort, index, window);
 
+        // Each doctor should run in a separated thread
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -221,18 +248,23 @@ public class Doctor extends VlcjTest {
     }
 
     public Doctor(String port, int infoPort, int index, DoctorViewFrame window) {
+        
+        // Information for connection 
         this.localPort = port;
         this.localInfoPort = infoPort;
         this.index = index;
         this.window = window;
         this.calculateRates();
 
+        // VLC stuff
         String[] VLC_ARGS = {"--vout", "dummy", "--aout", "dummy",};
         mediaPlayerFactoryOut = new MediaPlayerFactory(VLC_ARGS);
         mediaPlayerFactoryIn = new MediaPlayerFactory();
         localMediaPlayer = mediaPlayerFactoryOut.newHeadlessMediaPlayer();
         remoteMediaPlayer = mediaPlayerFactoryIn.newEmbeddedMediaPlayer();
-
+        
+        // Create Panels, canvas and labels
+        
         contentPane = new RoundedCornerPanel();
         contentPane.setBackground(bkg_color);
         contentPane.setLayout(new BorderLayout(0, 0));
@@ -265,6 +297,8 @@ public class Doctor extends VlcjTest {
         pnl_bottom = new JPanel();
         pnl_bottom.setLayout(new BorderLayout(0, 0));
 
+        // Labels
+        
         lbl_hr_title = new javax.swing.JLabel();
         lbl_bp_title = new javax.swing.JLabel();
         lbl_o2_title = new javax.swing.JLabel();
@@ -286,6 +320,8 @@ public class Doctor extends VlcjTest {
         lbl_blood_pressure.setText("Not available");
 
         lbl_o2.setText("Not available");
+        
+        //Add labels to the panel
 
         pnl_info.add(lbl_hr_title);
         pnl_info.add(lbl_heart_rate);
@@ -293,21 +329,27 @@ public class Doctor extends VlcjTest {
         pnl_info.add(lbl_blood_pressure);
         pnl_info.add(lbl_o2_title);
         pnl_info.add(lbl_o2);
+        
+        // Create fullscreen button
 
         pnl_btn = new JPanel();
-
+    
+        // Set images
         btn_change_mode = new JButton();
         ImageIcon expand_icon = new ImageIcon("expand.png");
         ImageIcon contract_icon = new ImageIcon("contract.png");
 
+        // Set size of the icon
         Image img = expand_icon.getImage();
         Image newimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
         expand_icon = new ImageIcon(newimg);
 
+        // Set size of the icon
         img = contract_icon.getImage();
         newimg = img.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
         contract_icon = new ImageIcon(newimg);
 
+        // Initialize fullscreen button
         ChangeModeAction btn_action = new ChangeModeAction(Doctor.ALL_PATIENTS, window, index, btn_change_mode, expand_icon, contract_icon);
         btn_change_mode.setAction(btn_action);
         btn_change_mode.setIcon(expand_icon);
@@ -316,19 +358,25 @@ public class Doctor extends VlcjTest {
         btn_change_mode.setContentAreaFilled(false);
         btn_change_mode.setBorderPainted(false);
 
+        // Create mute button
         btn_mute = new JButton();
         mute_icon = new ImageIcon("mute.png");
         unmute_icon = new ImageIcon("unmute.png");
 
+        // Set size of mute icon
         Image img2 = mute_icon.getImage();
         Image newimg2 = img2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
         mute_icon = new ImageIcon(newimg2);
 
+        // Set size of unmute icon
         img2 = unmute_icon.getImage();
         newimg2 = img2.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);
         unmute_icon = new ImageIcon(newimg2);
 
+        // initialize mute or unmute button
         ChangeMuteAction btn_mute_action = new ChangeMuteAction(true, this, index, this.window);
+       
+        // Set size
         btn_mute.setAction(btn_mute_action);
         btn_mute.setIcon(mute_icon);
         btn_mute.setSize(30, 30);
@@ -336,6 +384,7 @@ public class Doctor extends VlcjTest {
         btn_mute.setContentAreaFilled(false);
         btn_mute.setBorderPainted(false);
 
+        // Add buttons to the panel
         pnl_btn.add(btn_mute);
         pnl_btn.add(btn_change_mode);
         pnl_btn.setBackground(bkg_color);
@@ -350,7 +399,10 @@ public class Doctor extends VlcjTest {
         contentPane.add(pnl_bottom, BorderLayout.SOUTH);
     }
 
+    // Method to update the patient info on the screen
     public void updateInfo(Info patientInfo) {
+        
+        // Write the information
         this.lbl_heart_rate.setText(patientInfo.heart_rate + " bpm");
         this.lbl_blood_pressure.setText(patientInfo.blood_pressure[0] + "/" + patientInfo.blood_pressure[1]);
         this.lbl_o2.setText(patientInfo.O2 + "%");
@@ -362,11 +414,14 @@ public class Doctor extends VlcjTest {
 
             this.updateColor(Color.RED, Color.WHITE);
 
+            // In case the patient heart_rate is higher than the max a dialog appers alerting the user
             JOptionPane.showMessageDialog(null,
                     "Patient " + Integer.toString(this.index + 1) + "'s " + type + " is " + high_low + "!",
                     "Warning",
                     JOptionPane.WARNING_MESSAGE);
-        } else if (Integer.parseInt(patientInfo.heart_rate) < this.min_target) {
+        } 
+        // In case the patient heart_rate is lower than the min a dialog appears
+        else if (Integer.parseInt(patientInfo.heart_rate) < this.min_target) {
             String high_low = "low";
             String type = "heartrate";
 
@@ -382,22 +437,27 @@ public class Doctor extends VlcjTest {
         }
     }
 
+    // Calculate minimum and maximum values for hearbeat
     public void calculateRates() {
         this.maximum = 220 - this.age;
         this.max_target = (int) (this.maximum * this.max_target_percentage);
         this.min_target = (int) (this.maximum * this.min_target_percentage);
     }
 
+    // Methor called when it is necessary to change the background colour
     private void updateColor(Color bkg_color, Color text_color) {
 
+        // update de background colour values
         this.bkg_color = bkg_color;
         this.text_color = text_color;
 
+        // set buttons panel new colour
         this.pnl_bottom.setBackground(bkg_color);
         this.pnl_info.setBackground(bkg_color);
         this.pnl_btn.setBackground(bkg_color);
         this.contentPane.setBackground(bkg_color);
 
+        // Change colour of the labels
         lbl_hr_title.setForeground(text_color);
         lbl_bp_title.setForeground(text_color);
         lbl_o2_title.setForeground(text_color);
@@ -406,6 +466,7 @@ public class Doctor extends VlcjTest {
         lbl_o2.setForeground(text_color);
         lbl_connection_status.setForeground(text_color);
 
+        // Repaint the panel using the new values
         this.contentPane.validate();
         this.contentPane.repaint();
     }
@@ -426,6 +487,7 @@ public class Doctor extends VlcjTest {
 
     }
 
+    // Called to start the streaming
     public void startStreaming(String remoteIP) {
         //System.out.println("IP = " + remoteIP);
         this.remoteIP = remoteIP + ":5555";
@@ -434,6 +496,7 @@ public class Doctor extends VlcjTest {
         receive();//receive video
     }
 
+    // Methor to send the video 
     private void send() {
         String mrl = !RuntimeUtil.isWindows() ? "v4l2:///dev/video0" : "dshow://";
         if (mrl.length() > 0) {
@@ -454,12 +517,13 @@ public class Doctor extends VlcjTest {
             //JOptionPane.showMessageDialog(frame, "You must specify source media, e.g. v4l2:///dev/video0 on Linux or dshow:// on Windows.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     private void receive() {
         String streamFrom = "230.0.0.1:" + this.localPort;
         remoteMediaPlayer.playMedia("rtp://@" + streamFrom, ":sout-mux-caching=100", ":live-caching=100", ":network-caching=100", ":clock-jitter=0");
     }
 
+    // VLC methor to send the video 
     private static String formatRtpStream(String serverAddress, int serverPort) {
         StringBuilder sb = new StringBuilder(60);
         sb.append(":sout=#transcode{vcodec=mp2v,vb=512,scale=1,acodec=mpga,ab=128,channels=2,samplerate=44100}:duplicate{dst=display,dst=rtp{dst=");
@@ -474,6 +538,7 @@ public class Doctor extends VlcjTest {
         this.contentPane.setVisible(var);
     }
     
+    // Method to mute or unmute the doctor frame
     public void mute(boolean mute){
         this.remoteMediaPlayer.mute(mute);
         this.localMediaPlayer.mute(mute);
@@ -487,6 +552,7 @@ public class Doctor extends VlcjTest {
         
     }
     
+    // return True if the doctor is mute
     public boolean isMute(){
         return this.isMute;
     }
