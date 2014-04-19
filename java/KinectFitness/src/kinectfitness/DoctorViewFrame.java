@@ -20,6 +20,7 @@ import javax.swing.JPanel;
  */
 public class DoctorViewFrame extends JFrame {
 
+    // Layouts are changed according to the number of patients displayed on the screen
     private GridLayout allPatientsLayout;
     private GridLayout OnePatientsLayout;
 
@@ -31,6 +32,7 @@ public class DoctorViewFrame extends JFrame {
 
     private final Doctor[] doctor = new Doctor[8];
 
+    // Doctor viewframe is responsible to create 8 doctor objects. Each doctor has a connection with the patient
     public DoctorViewFrame() {
         super("HCI Fitness - Doctor view");
         
@@ -41,9 +43,13 @@ public class DoctorViewFrame extends JFrame {
         contentPane.setBackground(new Color(255, 255,255));
         contentPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         contentPane.setLayout(allPatientsLayout);
-
+    
+    
+        // Create the 8 frames and initialize the doctor frames (wait for patient connection)
         for (int i = 0; i < 8; i++) {
             try {
+                // Initialize doctor
+                // Each doctor creates a TCP connection starting at 5555 and the video connection starting at 5020
                 doctor[i] = new Doctor(Integer.toString(5555 + i), 5020 + i, i, this).startDoctor();
                 contentPane.add(doctor[i].getContent());
 
@@ -51,7 +57,8 @@ public class DoctorViewFrame extends JFrame {
                 Logger.getLogger(FitnessMainJava.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+    
+        // Window Icon
         this.setIconImage(new ImageIcon(getClass().getResource("/icons/vlcj-logo.png")).getImage());
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,7 +67,8 @@ public class DoctorViewFrame extends JFrame {
         this.setVisible(true);
 
     }
-
+    
+    // Used to set one of the frames as fullscreen
     public void changeLayoutToOne(int index) {
 
         this.onePatientIndex = index;
@@ -74,12 +82,15 @@ public class DoctorViewFrame extends JFrame {
         //contentPane.add(doctor[this.onePatientIndex].getContent());
         //doctor[this.onePatientIndex].setVisible(true);
         contentPane.setLayout(OnePatientsLayout);
+        
+        // Used to make just the selected frame fullscreen
         OnePatientsLayout.setHgap(-1350);
         OnePatientsLayout.setVgap(-1350);
         contentPane.validate();
         contentPane.repaint();
     }
 
+    // Used to return to the regular view (8 patients)
     public void changeLayoutToAll() {
         //contentPane.remove(doctor[this.onePatientIndex].getContent());
 
@@ -93,6 +104,7 @@ public class DoctorViewFrame extends JFrame {
         contentPane.repaint();
     }
     
+    // Update patient information
     public void sendInfo(int heartrate, int index){
         Info info = new Info();
         info.heart_rate = Integer.toString(heartrate);
@@ -101,6 +113,7 @@ public class DoctorViewFrame extends JFrame {
         doctor[index].updateInfo(info);
     }
     
+    // Mute the patient. If the patient is already muted then unmuted. 
     public void change_mute(int index, boolean is_currently_mute){
         if (is_currently_mute){
             this.onePatientUnmuteIndex = index;
