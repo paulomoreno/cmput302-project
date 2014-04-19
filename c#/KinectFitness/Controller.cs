@@ -33,6 +33,7 @@ namespace KinectFitness
 
         private string test = null;
 
+        // joystick and joystick state
         private Joystick joystick;
         private JoystickState state;
 
@@ -62,7 +63,8 @@ namespace KinectFitness
                 }
                 catch (DirectInputException) { }
             }
-
+            
+            // return if the joystick was not found
             if (joystick == null)
             {
                // MessageBox.Show("There are no attached to the system");
@@ -84,7 +86,8 @@ namespace KinectFitness
 
             joystick.Acquire();
         }
-
+        
+        // Method used to release the joystick device
         public void ReleaseDevice()
         {
             newThread.Abort();
@@ -96,11 +99,14 @@ namespace KinectFitness
             joystick = null;
 
         }
-
+        
+        // Check if there is a jostick connected
         public bool isConnected()
         {
             return joystick == null ? false : true;
         }
+        
+        // update the state of the controller using a thread
         public void updateStates()
         {
 
@@ -113,7 +119,7 @@ namespace KinectFitness
             newThread.Start();
         }
 
-
+        // print the state for debugging purpose
         private void _print()
         {
             Console.WriteLine(stateX);
@@ -132,6 +138,7 @@ namespace KinectFitness
             }*/
 
         }
+        
         public int getPOV() {
 
             return this.pov[0];
@@ -141,7 +148,8 @@ namespace KinectFitness
         {
             return this.buttons[i];
         }
-
+        
+        // Keep getting the controller information
         private void _updateStates()
         {
 
