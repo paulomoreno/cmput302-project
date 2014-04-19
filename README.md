@@ -26,7 +26,7 @@ CMPUT 302 Project - Kinect Fitness
       4. Press the expand/collapse button if one wants to expand one patient's screen to full screen or collapse it back to multiple screen UI.
   2. Patient's side of the Application
       1. Connect the Xbox 360 Kinect and the controller to the laptop/desktop.
-      2. Change the IP in the FitnessMain.java class at line __________ to the IP address of the doctor and save the file.
+      2. Change the IP in the FitnessMain.java class at line 132 to the IP address of the doctor and save the file.
       3. Open the Command Prompt as an administrator then open a hosted network.
           1. Enter "netsh wlan set hostednetwork mode=allow ssid=kinectfitness key=kinect14". (just for the first time)
           2. Enter "netsh wlan start hostednetwork".
